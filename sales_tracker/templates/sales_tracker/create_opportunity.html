@@ -1,0 +1,61 @@
+{% extends "innerbase.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block css_link %}
+    <!-- <link rel="stylesheet" href="{% static 'sales_tracker/mining.css' %}"> -->
+{% endblock %}
+
+
+{% block title %}New Oppertunity{% endblock  %}
+
+
+{% block content %}
+<div class="container-fluid">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row mt-2 mb-2">
+      <div class="col-md-3">
+        <h3>Create Opportunity</h3>
+      </div>
+      <div class="col-md-7"> </div>
+      <div class="col-md-2">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row px-2">
+              <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">Submit</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row px-2">
+              <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6 pt-5 pb-5 px-4">
+          {{form.opportunity_name|as_crispy_field}}
+          {{form.amount|as_crispy_field}}
+          {{form.sales_stage|as_crispy_field}}
+          {{form.probability|as_crispy_field}}
+          {{form.next_step|as_crispy_field}}
+          {{form.lead_source|as_crispy_field}}
+        </div>
+        <div class="col-md-6 pt-5 px-4" style="border-left: 1px solid #d8d7d7;">
+          {{form.lead|as_crispy_field}}
+          {{form.description|as_crispy_field}}
+          {{form.expected_close_date|as_crispy_field}}
+        </div>
+      </div>
+  </form>
+</div>
+
+
+{% endblock %}
+        
+{% block javascript %}{% endblock %}

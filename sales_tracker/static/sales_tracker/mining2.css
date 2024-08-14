@@ -1,0 +1,165 @@
+body {
+    font-family: 'Arial', sans-serif; /* Change to a more elegant font if desired */
+    margin: 20px; 
+    background-color: #f9f9f9; /* Light background for better contrast */
+}
+
+input:invalid + .error,
+textarea:invalid + .error {
+    display: block;
+}
+
+input[type="text"]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #aaa;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: normal;
+}
+
+.form_control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form_control label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form_control input,
+.form_control textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form_control input:focus,
+.form_control textarea:focus {
+    border-color: #4CAF50;
+    background-color: #fff;
+    outline: none;
+}
+
+/* button[type="submit"],
+button[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+    background-color: #45a049;
+}
+
+button[type="button"] {
+    background-color: #f44336;
+}
+
+button[type="button"]:hover {
+    background-color: #d32f2f;
+} */
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 30px;
+}
+
+.errorlist {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.container-fluid {
+    padding: 0 20px;
+}
+
+.col-md-6 {
+    padding: 0 15px;
+}
+
+
+.form-group {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* font-family: comic sans ms; */
+    border: none;
+    flex: 0 0 auto;
+    outline: none;
+    background: transparent;
+    padding: 10px 0;
+    font-size: 16px;
+    /* font-weight: bold   ; */
+
+    /* color: red;/ */
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #ddd; /* Only bottom border to create a line effect */
+    border-radius: 0; /* No rounded corners */
+    padding: 0px 0; /* Adjust padding to fit the line appearance */
+    background: transparent; /* No background color */
+    box-shadow: none; /* Remove any box shadow */
+    transition: border-bottom-color 0.3s ease; /* Smooth transition on focus */
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-bottom-color: #007bff; /* Highlight the bottom border on focus */
+    outline: none; /* Remove default focus outline */
+}
+
+/* Optional: Ensure no box shadow on focus */
+.form-group input:focus,
+.form-group textarea:focus {
+    box-shadow: none; /* Ensure no shadow is applied */
+}
+
+
+.col-md-2 {
+    font-family: 'georgia';
+    font-weight: bolder;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100hw;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    color: rgb(54, 53, 53);
+}
+

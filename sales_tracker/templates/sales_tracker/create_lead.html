@@ -1,0 +1,80 @@
+{% extends "innerbase.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block css_link %}
+    <!-- <link rel="stylesheet" href="{% static 'sales_tracker/mining.css' %}"> -->
+{% endblock %}
+
+
+{% block title %}New Lead{% endblock  %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row mt-2 mb-2">
+      <div class="col-md-2">
+        <h3>Create Lead</h3>
+      </div>
+      <div class="col-md-8"> </div>
+      <div class="col-md-2">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row px-2">
+              <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Submit</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row px-2">
+              <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6 pt-5 pb-5 px-4">
+          {{form.lead_name|as_crispy_field}}
+          {{form.first_name|as_crispy_field}}
+          {{form.last_name|as_crispy_field}}
+          {{form.email_id|as_crispy_field}}
+          {{form.contact_number|as_crispy_field}}
+        </div>
+        <div class="col-md-6 pt-5 px-4" style="border-left: 1px solid #d8d7d7;">
+          {{form.job_title|as_crispy_field}}
+          {{form.address|as_crispy_field}}
+          {{form.contact_link|as_crispy_field}}
+        </div>
+      </div>
+  </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+        
+{% block javascript %}{% endblock %}
