@@ -16,7 +16,7 @@
     <title>{% block title %}title{% endblock %}</title>
   </head>
   <body>
-    
+    <script src="charts.js"></script>
     <nav class="navbar  navbar-expand-lg">
       <div class="container-fluid px-4">
         <!-- <a class="navbar-brand" href="/">Logo</a> -->
@@ -151,6 +151,62 @@
    
   
     <script>
+          // Weekly Data Chart
+    var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+    var weeklyChart = new Chart(ctxWeekly, {
+        type: 'doughnut',
+        data: {
+            labels: ['Completed', 'Remaining'],
+            datasets: [{
+                label: 'Weekly Data',
+                data: [{{ mining_count }}, 40 - {{ mining_count }}],
+                backgroundColor: ['#4CAF50', '#e0e0e0'],
+                borderColor: ['#4CAF50', '#e0e0e0'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            cutout: '70%',
+        }
+    });
+
+    // Monthly Data Chart
+    var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+    var monthlyChart = new Chart(ctxMonthly, {
+        type: 'doughnut',
+        data: {
+            labels: ['Completed', 'Remaining'],
+            datasets: [{
+                label: 'Monthly Data',
+                data: [{{ mining_count }}, 100 - {{ mining_count }}],
+                backgroundColor: ['#4CAF50', '#e0e0e0'],
+                borderColor: ['#4CAF50', '#e0e0e0'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            cutout: '70%',
+        }
+    });
+
+    // Quarterly Data Chart
+    var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
+    var quarterlyChart = new Chart(ctxQuarterly, {
+        type: 'doughnut',
+        data: {
+            labels: ['Completed', 'Remaining'],
+            datasets: [{
+                label: 'Quarterly Data',
+                data: [{{ mining_count }}, 300 - {{ mining_count }}],
+                backgroundColor: ['#4CAF50', '#e0e0e0'],
+                borderColor: ['#4CAF50', '#e0e0e0'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            cutout: '70%',
+        }
+    });
 
 
       let totalSeconds = {{timer.hrs}}*60*60 + {{timer.min}}*60 + {{timer.sec}}

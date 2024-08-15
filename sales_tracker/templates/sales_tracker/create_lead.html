@@ -18,7 +18,7 @@
   <form method="POST">
     {% csrf_token %}
     <div class="row mt-2 mb-2">
-      <div class="col-md-2">
+      <div class="col-md-2" style="color: white;">
         <h3>Create Lead</h3>
       </div>
       <div class="col-md-8"> </div>
@@ -38,14 +38,14 @@
       </div>
       <hr>
       <div class="row">
-        <div class="col-md-6 pt-5 pb-5 px-4">
+        <div class="col-md-6 pt-5 pb-5 px-4" style="color: white;">
           {{form.lead_name|as_crispy_field}}
           {{form.first_name|as_crispy_field}}
           {{form.last_name|as_crispy_field}}
           {{form.email_id|as_crispy_field}}
           {{form.contact_number|as_crispy_field}}
         </div>
-        <div class="col-md-6 pt-5 px-4" style="border-left: 1px solid #d8d7d7;">
+        <div class="col-md-6 pt-5 px-4" style="color:white ; border-left: 1px solid #d8d7d7">
           {{form.job_title|as_crispy_field}}
           {{form.address|as_crispy_field}}
           {{form.contact_link|as_crispy_field}}

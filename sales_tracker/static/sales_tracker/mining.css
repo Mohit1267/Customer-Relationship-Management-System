@@ -2,7 +2,7 @@
 body {
     font-family: sans-serif;
     margin: 20px; 
-    background-color:#ffffff;
+    background-color:hsl(0, 0%, 100%);
   }
   
   input:invalid + .error,
@@ -17,6 +17,7 @@ body {
     width: 15px;
     height: 15px;
     margin-right: 10px;
+    color: white;
   }
   
   .form {

@@ -4,7 +4,9 @@
 
 
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/index2.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/index3.css' %}">
+<script src="charts.js"></script>
+
 {% endblock %}
 
 
@@ -29,30 +31,67 @@
     <div class="flex-container cards-container">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Today's Mining</h5>
+                <h5 class="card-title" style="color: #262626;">Today's Mining</h5>
                 <p class="card-text">{{ mining_count }}/40</p>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Today's Opportunity</h5>
+                <h5 class="card-title" style="color: #262626;">Today's Opportunity</h5>
                 <p class="card-text">{{ Opportunity_count }}</p>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Today's Contacts</h5>
+                <h5 class="card-title" style="color: #262626;">Today's Contacts</h5>
                 <p class="card-text">{{ contact_count }}</p>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Today's Leads</h5>
+                <h5 class="card-title" style="color: #262626;">Today's Leads</h5>
                 <p class="card-text">{{ lead_count }}</p>
             </div>
         </div>
     </div>
-</div>{% endblock %}
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="flex-container cards-container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" style="color: #262626;">Weekly Data</h5>
+            <canvas id="weeklyChart" width="130" height="150"></canvas>
+            <p class="card-text"  >{{ mining_count }}/40</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" style="color: #262626;">Monthly Data</h5>
+            <canvas id="monthlyChart" width="130" height="100"></canvas>
+            <p class="card-text">{{ mining_count }}</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" style="color: #262626;">Quarterly Data</h5>
+            <canvas id="quarterlyChart" width="130" height="100"></canvas>
+            <p class="card-text">{{ mining_count }}</p>
+        </div>
+    </div>
+</div>
+
+
+
+  
+        
+
+
+
+{% endblock %}
 
 {%comment%}
 <header>
@@ -86,7 +125,4 @@
 {%endcomment%}
 
 
-
-        
-{% block javascript %}{% endblock %}
 

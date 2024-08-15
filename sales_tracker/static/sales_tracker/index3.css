@@ -1,0 +1,56 @@
+.welcome {
+    
+    font-size: 25px;          /* Adjust the font size as needed */
+    font-weight: bolder;        /* Optional: make the text bold */
+    text-align: center;    /* Center the text inside the paragraph */
+    color: white;
+
+}
+
+
+.flex-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between; /* Distribute space evenly between the cards */
+    justify-content: center;
+    align-items: center; /* Align the cards vertically centered */
+    flex-wrap: wrap; /* Allow wrapping if the screen is too small */
+    
+   
+}
+
+.cards-container {
+    width: 100%;
+    padding: 10px; /* Add some padding around the container */
+    
+}
+
+.card {
+    flex: 1; /* Allow cards to grow evenly */
+    margin: 10px; /* Add some space between the cards */
+    min-width: 200px; /* Ensure cards have a minimum width */
+    max-width: 250px; /* Set a maximum width for consistency */
+}
+
+.card-body {
+    padding: 20px; /* Space inside the cards */
+    text-align: center; /* Center the text inside the cards */
+    background-color: #007d7e;
+    border: none;
+    outline: none;
+}
+
+.card-text, .card-title {
+    color:white; /* Replace with your desired color */
+  }
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between items */    
+}
+
+.card canvas {
+    margin: 0 auto;
+    display: block;
+}

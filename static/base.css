@@ -1,6 +1,6 @@
-/* body{
-    background-color : red!important;
-}    */
+body{
+    background-color : #262626!important;
+}   
 
 .timer_count{
     background-color: yellow;
@@ -45,7 +45,7 @@
     margin-left: 30px;
     margin-right: 30px;
     margin-top: 20px;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    background-color: #007d7e; /* Semi-transparent background */
     border-radius: 15px; /* Curved edges */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Drop shadow */
     padding: 10px 20px; /* Extra padding to make it broader */
