@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path("", login_required(views.IndexView.as_view()), name="index"),
+    path("agent", login_required(views.Agent.as_view()), name="agent"),
     path("mining", login_required(views.mining_view), name = "mining"),
     path("data", login_required(views.DataView.as_view()), name = "data"),
     path("detail/<pk>", views.DetailDataView.as_view(), name = "detaildata"),
@@ -18,9 +19,10 @@ urlpatterns = [
     path("createopportunity", views.Create_opportunity_view, name = "create_opportunity"), 
     path("createquote", views.Create_quote_view, name = "create_quote"), 
     path("rev", views.MiningsView.as_view(), name = "view"), 
-    path("tocall", views.Tocall, name = "tocall"), 
+    path("tocall", views.Tocall.as_view(), name = "tocall"), 
     path("tocall/<pk>", views.Tocall_detail, name = "tocalldata"),
     path("cc", views.get_calling_agents, name ="cc"),
+    path('get_timer/', login_required(views.get_timer_value), name='get_timer'),
 ]
 
 
