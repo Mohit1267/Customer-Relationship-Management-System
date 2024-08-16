@@ -378,7 +378,6 @@ def Create_quote_view(request):
             shipping_tax = form.data.get("shipping_tax"),
             tax = form.data.get("tax"),
             grandtotal = form.data.get("grandtotal"),
-            
             date = now_date,
             assigned_to = get_user_model().objects.get(username=username)
 
@@ -525,9 +524,10 @@ def Tocall(request):
 
 
     # orgs = MiningData.objects.filter(date=now_date, assigned_to=user)
-    orgs = MiningData.objects.filter(date=now_date) 
+    # orgs = MiningData.objects.filter(date=now_date) 
+    orgs = ContactData.objects.filter(date=now_date) 
 
-    orgs_list = [orgsN.organisation_name for orgsN in orgs]
+    orgs_list = [orgsN.organization for orgsN in orgs]
     context['orgs_list'] = orgs_list
     return render(request, "sales_tracker/data2.html", context)
 
@@ -538,7 +538,6 @@ def Tocall_detail(request, pk):
     now_date_time = datetime.datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     mining_data = get_object_or_404(MiningData, organisation_name=pk)
-    
     # Retrieve the related ContactData entries
     contact_data_list = ContactData.objects.filter(organization=mining_data,date=now_date)
     
