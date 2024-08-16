@@ -24,11 +24,8 @@
     </div>
 {% endif %}
 
-<div class="outer-container">
-    <div class="flex-container">
-        <p class="welcome">Welcome {{user}}</p>
-    </div>
-    <div class="flex-container cards-container">
+  <div class="content " >
+    <div class="flex-container cards-container z-[-10] " >
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="color: #262626;">Today's Mining</h5>
@@ -54,35 +51,36 @@
             </div>
         </div>
     </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="flex-container charts-container">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="color: #262626;">Weekly Data</h5>
+                <canvas id="weeklyChart" width="130" height="150"></canvas>
+                <p class="card-text">{{ mining_count }}/40</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="color: #262626;">Monthly Data</h5>
+                <canvas id="monthlyChart" width="130" height="100"></canvas>
+                <p class="card-text">{{ mining_count }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="color: #262626;">Quarterly Data</h5>
+                <canvas id="quarterlyChart" width="130" height="100"></canvas>
+                <p class="card-text">{{ mining_count }}</p>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<div class="flex-container cards-container">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title" style="color: #262626;">Weekly Data</h5>
-            <canvas id="weeklyChart" width="130" height="150"></canvas>
-            <p class="card-text"  >{{ mining_count }}/40</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title" style="color: #262626;">Monthly Data</h5>
-            <canvas id="monthlyChart" width="130" height="100"></canvas>
-            <p class="card-text">{{ mining_count }}</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title" style="color: #262626;">Quarterly Data</h5>
-            <canvas id="quarterlyChart" width="130" height="100"></canvas>
-            <p class="card-text">{{ mining_count }}</p>
-        </div>
-    </div>
-</div>
 
 
 
