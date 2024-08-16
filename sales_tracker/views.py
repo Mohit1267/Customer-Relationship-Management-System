@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
-import pymysql
+# import pymysql
 from django.contrib.auth import get_user_model
 
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
@@ -235,7 +235,7 @@ def Create_contact_view(request):
             now_date_time = datetime.datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
-            claid = request.POST.get("calling_agent")
+            # claid = request.POST.get("calling_agent")
             contact_details = ContactData(
                 first_name = form.data.get("first_name"),
                 last_name = form.data.get("last_name"),
@@ -246,7 +246,7 @@ def Create_contact_view(request):
                 organization = MiningData.objects.get(organisation_name = form.data.get("organization")),
                 date = now_date,
                 assigned_to = get_user_model().objects.get(username=username),
-                calling_agent = CallingAgent.objects.get(calling_agent_id=claid),
+                # calling_agent = CallingAgent.objects.get(calling_agent_id=claid),
             )
                 # calling_agent=CallingAgent.objects.get(id=form.calling_agent.get("calling_agent"))
             contact_details.save()
