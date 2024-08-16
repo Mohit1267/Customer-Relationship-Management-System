@@ -14,10 +14,15 @@ class RegisterUser(AbstractUser):
     REQUIRED_FIELDS = ["username"]
 
 class Profile(models.Model):
+    USER_ROLES = (
+        ('admin', 'Admin'),
+        ('miner', 'Data Miner'),
+        ('agent', 'Calling Agent'),
+    )
     user = models.OneToOneField(RegisterUser, on_delete=models.CASCADE, default= get_user_model(), primary_key=True)
     emp_id = models.CharField(max_length=50,default="qw")
     dob = models.DateField()
-    branch = models.CharField(max_length=100)
+    branch = models.CharField(max_length=10, choices=USER_ROLES)
     can_login = models.BooleanField(default=True)
     can_logout = models.BooleanField(default=False)
 

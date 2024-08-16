@@ -178,6 +178,7 @@ def Logout(request):
 from django.contrib.auth import authenticate, login
     
 def manual_login(request):
+    error_message = None
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -198,10 +199,17 @@ def manual_login(request):
                     return redirect("profile")
                 if user_profile.can_login:
                     login(request, user)
+                    if user_profile.branch == "admin":
+                        return redirect("admin")
+                    elif user_profile.branch == "miner":
+                        return redirect("index")
+                    elif user_profile.branch == "agent":
+                        return redirect("agent")
+
                 else:
                     error_message = 'Your access is denied, Please contact Admin for access'
                     return render(request, 'users/login.html', {'form': form, 'error_message': error_message})
-                return redirect("index")
+                # return redirect("index")
             else:
                 error_message = 'Invalid username or password.'
         else:

@@ -16,13 +16,29 @@ from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesD
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 
 from .requirements import timer
-
+from django.http import HttpResponseForbidden
 import datetime
+
+
+def get_timer_value(request):
+    user = request.user
+    utc_login_time = user.last_login
+    elapsed_time = timer(utc_login_time)
+    return JsonResponse({
+        'hrs': int(elapsed_time[0]),
+        'min': int(elapsed_time[1]),
+        'sec': int(elapsed_time[2])
+    })
 
 
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "sales_tracker/index.html"
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.profile.branch != 'miner':
+            return HttpResponseForbidden("You do not have access to this page.")
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         request = self.request
@@ -46,6 +62,13 @@ class IndexView(TemplateView):
         today_Opportunity_count = today_Opportunity.count()
         context["Opportunity_count"] = today_Opportunity_count
         return context  
+    
+
+
+class Agent(TemplateView):
+    template_name = "sales_tracker/agent.html"
+
+
 
 # class MiningView(CreateView):
 #     model = MiningData
@@ -378,7 +401,6 @@ def Create_quote_view(request):
             shipping_tax = form.data.get("shipping_tax"),
             tax = form.data.get("tax"),
             grandtotal = form.data.get("grandtotal"),
-            
             date = now_date,
             assigned_to = get_user_model().objects.get(username=username)
 
@@ -488,48 +510,56 @@ class BaseListView(ListView):
 class DataView(BaseListView):
     template_name = "sales_tracker/data.html"
     model = MiningData
-    # context_object_name = "mined_data"
     count_context_name = 'mining_count'    
 
 class LeadView(BaseListView):
-    # print("hello")
     template_name = "sales_tracker/data.html"
     model = LeadsData
-    # context_object_name = "lead_data"
     count_context_name = 'lead_count'
 class OpportunityView(BaseListView):
-    # print("hello")
     template_name = "sales_tracker/data.html"
     model = OpportunityData
-    # context_object_name = "lead_data"
     count_context_name = 'opportunity_count'
-# class TocallView(BaseListView):
-#     template_name = "sales_tracker/data.html"
 
 
 
 
 
-# class Tocall(TemplateView):
-#     template_name = "sales_tracker/tocall.html"
-#     def get_context_data(self, **kwargs: Any):
-#         context = super().get_context_data(**kwargs)
-#         FirstName = ContactData.objects.filter(assigned_to = self.request.user)
-#         return context
-
-def Tocall(request):
-    context = {}
-    user = request.user
-    now_date_time = datetime.datetime.now()
-    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
 
 
-    # orgs = MiningData.objects.filter(date=now_date, assigned_to=user)
-    orgs = MiningData.objects.filter(date=now_date) 
+# def Tocall(request):
+#     context = {}
+#     user = request.user
+#     utc_login_time = user.last_login
+#     elapsed_time = timer(utc_login_time)
+#     formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+#     now_date_time = datetime.datetime.now()
+#     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}" 
+#     orgs = ContactData.objects.filter(date=now_date) 
+#     orgs_list = [orgsN.organization for orgsN in orgs]
+#     context['orgs_list'] = orgs_list
+#     context['timer'] = formated_timer
 
-    orgs_list = [orgsN.organisation_name for orgsN in orgs]
-    context['orgs_list'] = orgs_list
-    return render(request, "sales_tracker/data2.html", context)
+#     return render(request, "sales_tracker/data2.html", context)
+
+
+class Tocall(TemplateView):
+    template_name = "sales_tracker/data2.html"
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        request = self.request
+        user = request.user
+        utc_login_time = user.last_login
+        elapsed_time = timer(utc_login_time)
+        context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+        now_date_time = datetime.datetime.now()
+        now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}" 
+        orgs = ContactData.objects.filter(date=now_date) 
+        orgs_list = [orgsN.organization for orgsN in orgs]
+        context['orgs_list'] = orgs_list
+        return context
+
+
 
 def Tocall_detail(request, pk):
     context = {}
@@ -538,7 +568,6 @@ def Tocall_detail(request, pk):
     now_date_time = datetime.datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     mining_data = get_object_or_404(MiningData, organisation_name=pk)
-    
     # Retrieve the related ContactData entries
     contact_data_list = ContactData.objects.filter(organization=mining_data,date=now_date)
     

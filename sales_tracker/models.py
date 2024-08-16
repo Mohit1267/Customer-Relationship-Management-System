@@ -7,7 +7,6 @@ class CallingAgent(models.Model):
     calling_agent_name = models.CharField(max_length=50)
     calling_agent_email = models.EmailField(max_length=50)
     calling_agent_contact = models.CharField(max_length=15)
-    calling_agent_call_date = models.DateField()
 
     class Meta:
         managed = False  # Prevent Django from managing the table (no migrations)
