@@ -16,7 +16,7 @@ from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesD
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 
 from .requirements import timer
-
+from django.http import HttpResponseForbidden
 import datetime
 
 
@@ -34,6 +34,11 @@ def get_timer_value(request):
 # Create your views here.
 class IndexView(TemplateView):
     template_name = "sales_tracker/index.html"
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.profile.branch != 'miner':
+            return HttpResponseForbidden("You do not have access to this page.")
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         request = self.request
@@ -57,6 +62,13 @@ class IndexView(TemplateView):
         today_Opportunity_count = today_Opportunity.count()
         context["Opportunity_count"] = today_Opportunity_count
         return context  
+    
+
+
+class Agent(TemplateView):
+    template_name = "sales_tracker/agent.html"
+
+
 
 # class MiningView(CreateView):
 #     model = MiningData
