@@ -12,7 +12,7 @@ from django.shortcuts import render, get_object_or_404
 import pymysql
 from django.contrib.auth import get_user_model
 
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 
 from .requirements import timer
@@ -235,6 +235,7 @@ def Create_contact_view(request):
             now_date_time = datetime.datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
+            claid = request.POST.get("calling_agent")
             contact_details = ContactData(
                 first_name = form.data.get("first_name"),
                 last_name = form.data.get("last_name"),
@@ -244,19 +245,20 @@ def Create_contact_view(request):
                 address = form.data.get("address"),
                 organization = MiningData.objects.get(organisation_name = form.data.get("organization")),
                 date = now_date,
-                assigned_to = get_user_model().objects.get(username=username)
-                
+                assigned_to = get_user_model().objects.get(username=username),
+                calling_agent = CallingAgent.objects.get(calling_agent_id=claid),
             )
+                # calling_agent=CallingAgent.objects.get(id=form.calling_agent.get("calling_agent"))
             contact_details.save()
 
             return redirect("create_contact")
         
-        return render(request, "sales_tracker/create_contact.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+        return render(request, "sales_tracker/create_contact.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count,"calling_agents": CallingAgent.objects.all()})
 
 
     else:
         form = ContactForm()
-    return render(request, "sales_tracker/create_contact.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+    return render(request, "sales_tracker/create_contact.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count,"calling_agents": CallingAgent.objects.all()})
 
 
 def Create_lead_view(request):
@@ -522,22 +524,11 @@ def Tocall(request):
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
 
 
-    orgs = MiningData.objects.filter(date=now_date, assigned_to=user)
+    # orgs = MiningData.objects.filter(date=now_date, assigned_to=user)
+    orgs = MiningData.objects.filter(date=now_date) 
+
     orgs_list = [orgsN.organisation_name for orgsN in orgs]
     context['orgs_list'] = orgs_list
-
-    # # Filter ContactData based on the date and assigned user
-    # Ctlist = ContactData.objects.filter(date=now_date, assigned_to=user)
-
-    # # Create a list of dictionaries with the contact data
-    # contact_data_list = [{
-    #     'first_name': contact.first_name,
-    #     'last_name': contact.last_name,
-    #     'address': contact.address
-    # } for contact in Ctlist]
-        
-    # context['contact_data_list'] = contact_data_list
-    
     return render(request, "sales_tracker/data2.html", context)
 
 def Tocall_detail(request, pk):
@@ -549,7 +540,7 @@ def Tocall_detail(request, pk):
     mining_data = get_object_or_404(MiningData, organisation_name=pk)
     
     # Retrieve the related ContactData entries
-    contact_data_list = ContactData.objects.filter(organization=mining_data)
+    contact_data_list = ContactData.objects.filter(organization=mining_data,date=now_date)
     
     # Prepare the data to be sent to the template
     context = {

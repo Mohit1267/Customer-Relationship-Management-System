@@ -51,7 +51,15 @@
         <div class="col-md-6 pt-5 px-4" style= "color: white ; border-left: 1px solid #d8d7d7;">
           {{form.address|as_crispy_field}}
           {{form.organization|as_crispy_field}}
-          {{form.calling_agent|as_crispy_field}}
+          <div class="form-group">
+            <label for="calling_agent">Calling Agent</label>
+            <select name="calling_agent" id="calling_agent" class="form-control">
+              {% for agent in calling_agents %}
+                <option value="{{ agent.calling_agent_id }}">{{agent.calling_agent_id}}</option>
+              {% endfor %}
+            </select>
+          </div>
+           
         </div>
       </div>
   </form>
