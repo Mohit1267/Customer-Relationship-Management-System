@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 
 
 
-
+AUTHENTICATION_BACKENDS = ['users.authentication.EmailBackend', 'django.contrib.auth.backends.ModelBackend']
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

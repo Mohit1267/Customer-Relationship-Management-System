@@ -2,24 +2,20 @@
 
 {% load static %}
 
-
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'users/logout.css' %}">
+<link rel="stylesheet" href="{% static 'users/login.css' %}">
 {% endblock %}
 
-
-{% block title %}Logout{% endblock  %}
-
+{% block title %}Logout{% endblock %}
 
 {% block content %}
-<form method="POST" action="{% url 'reason' %}">
-    {% csrf_token %}
-    <label for="reason_form">Please provide your reason for not being able to log out:</label><br><br>
-    <textarea id="reason_form" name="reason_form" rows="4" cols="50" required></textarea><br><br>
-    <input type="submit" value="Submit">    
-</form>
-
+<div class="reason-container">
+    <h2>Logout Reason</h2>
+    <form method="POST" action="{% url 'reason' %}">
+        {% csrf_token %}
+        <label for="reason_form">Please provide your reason for early log out:</label>
+        <textarea id="reason_form" name="reason_form" rows="4" cols="50" required></textarea>
+        <input type="submit" value="Submit">    
+    </form>
+</div>
 {% endblock %}
-        
-        
-{% block javascript %}{% endblock %}

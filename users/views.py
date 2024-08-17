@@ -16,6 +16,8 @@ from sales_tracker.models import MiningData
 import pytz #used to set our required time zone
 import datetime
 from django.contrib.auth import get_user_model
+from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth import authenticate, login
 
 # MY CODE 
 
@@ -37,6 +39,9 @@ def register(request):
 #     model = Profile
 #     form_class = ProfileForm
 #     template_name = "users/profile.html"
+
+def index(request):
+    return render(request, 'users/index.html')
 
 @login_required
 def profile(request):
@@ -220,7 +225,17 @@ def manual_login(request):
 
     return render(request, 'users/login.html', {'form': form, 'error_message': error_message})
 
-
+class EmailBackend(ModelBackend):
+    def authenticate(self, request, email=None, password=None, **kwargs):
+        UserModel = get_user_model()
+        try:
+            user = UserModel.objects.get(email=email)
+        except UserModel.DoesNotExist:
+            return None
+        else:
+            if user.check_password(password):
+                return user
+        return None
 
 # from django.views.generic.edit import CreateView
 
