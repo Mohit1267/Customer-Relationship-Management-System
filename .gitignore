@@ -1,3 +1,21 @@
 db.sqlite3
 .db.sqlite3
 *.pyc
+
+# SQLite database files
+*.sqlite3
+
+# Local settings
+local_settings.py
+
+# Environment variables
+.env
+
+# IDE-specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS-specific files
+.DS
