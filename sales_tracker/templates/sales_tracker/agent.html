@@ -6,9 +6,11 @@
 {% endblock %} 
 
 {% block content %}
-
-<h1>{{user}}</h1>
-{%for tc in ToCall%}
-<li>{{tc.customer_first_name}}</li>
-{%endfor%}
+<ul>    
+    {%for tc in ToCall%}
+    <a href = "{% url "tocalldata" tc %}">
+        <li>{{tc.customer_first_name}}</li>
+    </a>
+    {%endfor%}
+</ul>
 {%endblock%}

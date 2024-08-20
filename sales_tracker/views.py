@@ -257,8 +257,6 @@ class Agent(TemplateView):
         context["user"] = u
         context["ToCall"] = ToCall
         return context
-
-
 # class ContactCreateView(CreateView):
 #     model = ContactData
 #     form_class = ContactForm
