@@ -1,19 +1,14 @@
-{% extends "innerbase.html" %}
+{% extends "innerbase2.html" %}
 {% load static %}
 {% block title %}Calling agent dashboard{% endblock %}
-
 {% block css_link %}
 <!-- <link rel="stylesheet" href="{% static 'sales_tracker/agent.css' %}"> -->
 {% endblock %} 
 
 {% block content %}
-<div id="calling-agent-dashboard">
-    <ul class="task-list">
-        {% for tc in Tocall %}
-        <li class="task-item">
-            <h1 class="task-title">{{ tc }}</h1>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
-{% endblock %}
+
+<h1>{{user}}</h1>
+{%for tc in ToCall%}
+<li>{{tc.customer_first_name}}</li>
+{%endfor%}
+{%endblock%}
