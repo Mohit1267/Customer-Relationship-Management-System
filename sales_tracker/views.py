@@ -1,5 +1,5 @@
 # from typing import Any
-//comment
+#comment
 # from django.db.models.query import QuerySet
 from typing import Any
 from django.db import connection

@@ -51,27 +51,35 @@ body{
     border-radius: 0px; /* Curved edges */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Drop shadow */
     padding: 10px 20px; /* Extra padding to make it broader */
-    overflow-y: auto; /* Enable vertical scrolling */
+     overflow-x:visible; /*Enable vertical scrolling*/
 }
 
 /* navbar right side dropdown */
 .nav-item.dropdown {
     position: relative;
+    z-index: 5; /* Set a higher z-index to ensure it appears above other elements */
 }
+
 
 .nav-item.dropdown .dropdown-menu {
     top: 0;
-    left: 100%; /* Positions the dropdown to the right of the parent menu */
+    left: 100%; /* Position the dropdown to the right of the parent menu */
     margin-left: 0; /* Ensures no gap between the menu and the dropdown */
     display: none; /* Hide dropdown initially */
     position: absolute;
-    white-space: nowrap; /* Prevents text from wrapping */
-    z-index: 10;
+    white-space: nowrap; /* Prevent text from wrapping */
+    z-index: 10; /* Ensure dropdown appears above other elements */
+    overflow: visible;
 }
-
 .nav-item.dropdown:hover .dropdown-menu {
     display: block; /* Show dropdown on hover */
-    z-index: 10;
+    z-index: 10; /* Make sure it's still above other content */
+}
+
+.dropdown-item {
+    z-index: 100;
+    right: auto;
+    overflow: visible;
 }
 
 
