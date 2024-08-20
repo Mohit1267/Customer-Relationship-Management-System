@@ -81,7 +81,8 @@ var fnToString = hasOwn.toString;
 
 var ObjectFunctionString = fnToString.call( Object );
 
-var support = {};
+var support = {}; 
+
 
 var isFunction = function isFunction( obj ) {
 
