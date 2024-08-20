@@ -1,8 +1,8 @@
 # from typing import Any
-#comment
 # from django.db.models.query import QuerySet
 from typing import Any
 from django.db import connection
+from django.db.models import Count
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 # import pymysql
 from django.contrib.auth import get_user_model
-
+from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 
@@ -68,6 +68,7 @@ class IndexView(TemplateView):
 
 class Agent(TemplateView):
     template_name = "sales_tracker/agent.html"
+    
 
 
 
@@ -90,6 +91,23 @@ class Agent(TemplateView):
 #         context["mining_count"] = today_mining_count
 #         return context
     
+
+
+def assign_miningCt():
+    # user = request.user
+    least_occurring_assigned_to_id = (
+    MiningData.objects
+    .filter(assigned_to__profile__branch='agent')
+    .values('assigned_to')
+    .annotate(count=Count('assigned_to'))
+    .order_by('count')
+    .first()
+)
+    # return least_occurring_assigned_to_id
+    assigned_to_id = least_occurring_assigned_to_id['assigned_to']
+    return RegisterUser.objects.get(id=assigned_to_id)
+    
+
 def mining_view(request):
     user = request.user
     utc_login_time = user.last_login
@@ -105,6 +123,7 @@ def mining_view(request):
             MiningData.objects.get(organisation_name = form.data.get("organisation_name"))
             print("hello world")
         except:
+            assignTo = assign_miningCt()
             now_date_time = datetime.datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
@@ -126,7 +145,7 @@ def mining_view(request):
                 IT_spending_budget = form.data.get("IT_spending_budget"),
                 source_of_data_mining = form.data.get("source_of_data_mining"),
                 date = now_date,
-                assigned_to = get_user_model().objects.get(username=username)
+                assigned_to = assignTo
             )
             mining_details.save()
             print("Hello world 4")
@@ -242,6 +261,19 @@ class Message(TemplateView):
 #     success_url = "message"
     
 
+# def assign_contact_to_agent():
+#     # Get all agents who are active and can accept contacts
+#     agents = Profile.objects.filter(branch='agent', can_login=True)
+
+#     # Find the agent with the least assigned contacts   
+#     agent = agents.annotate(num_contacts=Count('user_id')).order_by('num_contacts').first()
+#     print(agent,"this is agent ")
+
+#     return agent
+
+
+
+
 def Create_contact_view(request):
     user = request.user
     utc_login_time = user.last_login
@@ -256,6 +288,7 @@ def Create_contact_view(request):
         try:
             ContactData.objects.get(email_id = form.data.get("email_id"))
         except:
+            # assigned_agent = assign_contact_to_agent()
             now_date_time = datetime.datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
@@ -269,7 +302,9 @@ def Create_contact_view(request):
                 address = form.data.get("address"),
                 organization = MiningData.objects.get(organisation_name = form.data.get("organization")),
                 date = now_date,
-                assigned_to = get_user_model().objects.get(username=username),
+                # assigned_to=assigned_agent.user,
+                
+                # assigned_to = get_user_model().objects.get(username=username),
                 # calling_agent = CallingAgent.objects.get(calling_agent_id=claid),
             )
                 # calling_agent=CallingAgent.objects.get(id=form.calling_agent.get("calling_agent"))
