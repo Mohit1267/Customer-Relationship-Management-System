@@ -1,3 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
 .content{
     background-color: #262626;
 }
@@ -17,14 +24,16 @@
     justify-content: center;
     align-items: center; /* Align the cards vertically centered */
     flex-wrap: wrap; /* Allow wrapping if the screen is too small */
-    background-color: #262626;
+    /* background-color: #262626; */
 }
 
 .cards-container {
-    background-color: #262626; 
+    /* border-color: #262626; */
+    /* background-color: #262626;  */
     width: 100%;
-    padding: 10px; /* Add some padding around the container */
-    
+    padding: 0px; /* Add some padding around the container */
+     
+     
 }
 
 .card {
@@ -32,15 +41,23 @@
     margin: 10px; /* Add some space between the cards */
     min-width: 200px; /* Ensure cards have a minimum width */
     max-width: 250px; /* Set a maximum width for consistency */
-}
-
-.card-body {
-    padding: 20px; /* Space inside the cards */
-    text-align: center; /* Center the text inside the cards */
-    background-color: #007d7e;
+    padding: 0px; /* Add some padding around the container */
     border: none;
     outline: none;
-}
+    box-shadow: none;
+    background-color: #007d7e; 
+    overflow: hidden;
+
+ }
+
+    .card-body {
+        padding: 20px; /* Space inside the cards */
+        text-align: center; /* Center the text inside the cards */
+        background-color: #007d7e;
+        
+        
+        
+    }
 
 .card-text, .card-title {
     color:white; /* Replace with your desired color */
