@@ -147,8 +147,7 @@ def Reason(request):
         user_profile.can_logout = False
         user_profile.save()
         logout(request)
-        return render(request, 'users/logout.html', {'message': 'Successfully logged out.'})
-
+        return redirect("login")
 
 
 
