@@ -1,8 +1,11 @@
-{% extends "innerbase.html" %}
+{% extends "innerbase2.html" %}
 
 
 {% block title %}Calling agent dashboard{% endblock  %}
 
 {% block content %}
-<h1>Hello caller</h1>
+<h1>{{user}}</h1>
+{%for tc in ToCall%}
+<li>{{tc.customer_first_name}}</li>
+{%endfor%}
 {%endblock%}
