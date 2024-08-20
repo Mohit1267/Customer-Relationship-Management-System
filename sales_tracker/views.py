@@ -68,8 +68,16 @@ class IndexView(TemplateView):
 
 class Agent(TemplateView):
     template_name = "sales_tracker/agent.html"
-    
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        request = self.request
+        users = request.user
+        u = RegisterUser.objects.get(email=users)
+        u = u.id
+        ToCall = MiningData.objects.filter(assigned_to=u)
+        context["user"] = u
+        context["Tocall"] = ToCall
+        return context
 
 
 # class MiningView(CreateView):
