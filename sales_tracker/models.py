@@ -14,6 +14,7 @@ class CallingAgent(models.Model):
     def __str__(self):
         return f"{self.calling_agent_id}"
 
+#have to change this database 
 
 # Create your models here.
 
@@ -51,10 +52,10 @@ class ContactData(models.Model):
     date = models.DateField(default="2000-10-10")
     organization = models.ForeignKey(MiningData, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
-    calling_agent = models.ForeignKey(CallingAgent, on_delete=models.SET_NULL, null=True, blank=True)
+    # calling_agent = foreign key to agent profile to which call is assigned
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-    
+
 
 class LeadsData(models.Model):
     lead_name = models.CharField( max_length=50)

@@ -10,10 +10,7 @@
 
 {% block title %}Login{% endblock %}
 
-{% block content %}
-
-
-
+{% block content %} 
 <div class="container">
   <div class="row">
     <div class="col-md-4"></div>
@@ -56,37 +53,4 @@
 {% endblock %}
 {% block javascript %}{% endblock %}
 
-      <div class="col-md-4"><h3>{{message}}</h3></div>
-  </div>
-  <div class="row mt-5">
-    <div class="col-md-4"></div>
-    <div class="col-md-4 mt-5">
-      <div class="card">
-        <form method="POST">
-          <div class="card-body">
-            {% csrf_token %}
-            <div class="form_control">
-              {{ form| crispy }}
-            </div>
-            <div class="row mx-0">
-              <div class="col-md-7"></div>
-              <div class="col-md-5 text-center">
-                <div class="row"><button type="submit" class="btn btn-primary mb-1">Log in</button></div><br>
-              </div>
-            </div>
-            <div class="row mx-0 text-center">
-              <div class="row"><a href="{% url 'password_reset' %}" id="password-reset">Forgotten password?</a></div>
-            </div>
-          </div>
-          <div class="card-footer text-center">
-            <p class="pt-3">Don't have an account? <a href="{% url 'register' %}" id="create-account">Create Account</a></p>
-          </div>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+    
