@@ -94,7 +94,7 @@
       <div class="navbar-brand-container">
         <!-- <a class="navbar-brand" href="/">Logo</a> -->
         <a href="{% url 'index' %}">
-    <img src="static/Logo.png" alt="Brand Image" style="height: 40px;">
+    <img src="static/Logo.png" alt="Brand Image" style="height: 65px;">
         </a>
       </div>
         
@@ -102,19 +102,19 @@
 
         <div>
           {% if timer %}
-            <span id="count_down" class="nav-link px-2">00:00:00</span>
+            <span id="count_down " class="nav-link px-2">00:00:00</span>
           {% endif %}
         </div>
         <!-- profile offcanvas -->
         <div>
-          <a class="btn btn-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-            Profile
+          <a class="btn btn-dark profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+            <b>Profile</b>
           </a>
         </div>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav flex-column dropdown-menu-right">
             <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Mining
                </a>
                <ul class="dropdown-menu ">   <!-- changes made to this line-->
@@ -126,7 +126,7 @@
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Contacts
               </a>
               <ul class="dropdown-menu">
@@ -137,7 +137,7 @@
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Leads
               </a>
               <ul class="dropdown-menu">
@@ -149,7 +149,7 @@
 
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Opportunities
               </a>
               <ul class="dropdown-menu">
@@ -160,7 +160,7 @@
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Quotes
               </a>
               <ul class="dropdown-menu">
@@ -171,20 +171,14 @@
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Calender
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Calendar
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
               </ul>
-            </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'tocall' %}" aria-expanded="false">
-                  To call data
-                </a>
-              </li>
           </ul>
         </div>
 
