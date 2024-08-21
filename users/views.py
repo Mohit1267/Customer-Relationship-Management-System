@@ -130,7 +130,7 @@ def Reason(request):
         full_message = f"{elapsed_time}, {reason}"
         message = MIMEMultipart()
         message['From'] = sender_email
-        message['To'] = receiver_email  
+        message['To'] = receiver_email
         message['Subject'] = subject
         message.attach(MIMEText(full_message, 'html'))      
         try:
