@@ -36,7 +36,7 @@ class MiningData(models.Model):
     IT_spending_budget = models.CharField(max_length=30)
     source_of_data_mining = models.CharField(max_length=50)
     date = models.DateField()
-    assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
+    assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1, null = True, blank = True)
     
 
     def __str__(self):

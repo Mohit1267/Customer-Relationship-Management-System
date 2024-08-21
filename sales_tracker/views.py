@@ -1,5 +1,9 @@
 # from typing import Any
 # from django.db.models.query import QuerySet
+from django.http import JsonResponse
+from django.db.models import Count, OuterRef, Subquery
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import connection
 from typing import Any
 from django.db import connection
 from django.db.models import Count
@@ -114,7 +118,92 @@ def assign_miningCt():
     # return least_occurring_assigned_to_id
     assigned_to_id = least_occurring_assigned_to_id['assigned_to']
     return RegisterUser.objects.get(id=assigned_to_id)
+
+
+
+
+
+
+# def assign_miningCt():
+#     # Get IDs of profiles with branch='agent'
+#     agent_profile_ids = Profile.objects.filter(branch='agent').values_list('user_id', flat=True)
     
+#     # Subquery to get the least occurring assigned_to ID
+#     least_occurring_subquery = MiningData.objects.filter(
+#         assigned_to__in=agent_profile_ids
+#     ).values('assigned_to').annotate(count=Count('assigned_to')).order_by('count').values('assigned_to')[:1]
+
+#     # Use the subquery to get the least occurring assigned_to
+#     least_occurring_assigned_to_id = Subquery(least_occurring_subquery)
+
+#     # Get the corresponding RegisterUser
+#     assigned_to_user = RegisterUser.objects.filter(
+#         user_id=least_occurring_assigned_to_id
+#     ).first()
+
+#     return assigned_to_user
+
+
+# ---------------------------------------------------------------------
+# def assign_miningCt():
+#     # Raw SQL query to find the least occurring `assigned_to` ID
+#     with connection.cursor() as cursor:
+#         cursor.execute("""
+#             SELECT M.assigned_to_id
+#             FROM sales_tracker_miningdata as M
+#             LEFT JOIN users_profile as P
+#             ON M.assigned_to_id = P.user_id
+#             WHERE P.branch = 'agent'
+#             GROUP BY P.user_id
+#             LIMIT 1;
+#         """)
+        
+#         # Fetch the result
+#         result = cursor.fetchone()
+    
+#     if result:
+#         assigned_to_id = result[0]
+#         # Fetch and return the RegisterUser object
+#         return RegisterUser.objects.get(id=assigned_to_id)
+#     else:
+#         print("None is returned")
+#         return None
+
+
+
+
+# def assign_miningCt():
+#     # Raw SQL query to find the least occurring `assigned_to` ID
+#     with connection.cursor() as cursor:
+#         cursor.execute("""
+#             SELECT assigned_to_id
+#             FROM sales_tracker_miningdata
+#             JOIN users_registeruser ON sales_tracker_miningdata.assigned_to_id = users_registeruser.id
+#             JOIN users_profile ON users_registeruser.id = users_profile.user_id
+#             WHERE users_profile.branch = %s
+#             GROUP BY assigned_to_id
+#             ORDER BY COUNT(*) ASC
+#             LIMIT 1
+#         """, ['agent'])
+        
+#         # Fetch the result
+#         result = cursor.fetchone()
+#         if result:
+#             assigned_to_id = result[0]
+#             # Debugging: Print the fetched ID
+#             print(f"Fetched assigned_to_id: {assigned_to_id}")
+#             try:
+#                 # Fetch and return the RegisterUser object
+#                 return RegisterUser.objects.get(id=assigned_to_id)
+#             except RegisterUser.DoesNotExist:
+#                 # Handle case where the RegisterUser object is not found
+#                 print(f"RegisterUser with id {assigned_to_id} does not exist.")
+#                 return None
+#         else:
+#             print("No result returned from the query.")
+#             return None
+
+
 
 def mining_view(request):
     user = request.user
@@ -620,11 +709,13 @@ def Tocall_detail(request, pk):
     user = request.user
     now_date_time = datetime.datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+    print("hwllo")
     mining_data = get_object_or_404(MiningData, organisation_name=pk)
     # Retrieve the related ContactData entries
+
     contact_data_list = ContactData.objects.filter(organization=mining_data,date=now_date)
     
-    # Prepare the data to be sent to the template
+    # Prepare the data to be sent to the template       
     context = {
         'mining_data': mining_data,
         'contact_data_list': contact_data_list
@@ -633,8 +724,24 @@ def Tocall_detail(request, pk):
     # context['contact'] = contact
     return render(request, "sales_tracker/Detailtocall.html", context)
 
+def DetailCalling(request, pk):
+    context = {}
+    context['pk'] = pk
+    mining_data = get_object_or_404(MiningData, organisation_name=pk)
+    context = {
+        'mining_data': mining_data
+    }
 
-from django.http import JsonResponse
+    return render(request,"sales_tracker/detailcalling.html",context)
+
+    pass
+
+
+
+
+
+
+
 
 # def get_call_center_data():
 #     # Connect to the external MySQL database

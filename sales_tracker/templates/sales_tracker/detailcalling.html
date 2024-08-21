@@ -1,0 +1,28 @@
+{% extends "innerbase.html" %}
+
+{% load static %}
+
+
+{% block css_link %}
+
+<link rel="stylesheet" href="{% static 'sales_tracker/Detailtocall.css' %}"> 
+{% endblock %}
+
+{% block title %}Web Call{% endblock  %}
+
+{% block content %}
+<!-- <h1>Contact Details for {{ mining_data.organisation_name }}</h1> -->
+    <div class="card-container">
+        <h1>{{mining_data.organisation_name}}</h1>
+        <h1>{{mining_data.customer_contact_number}}</h1>
+    </div>
+
+<!-- <h1>Hello</h1> -->
+<!-- {% include "include/dash.html" %}
+
+<a href = "{% url "calling_details" %}">new meet</a>
+<a href = "{% url "joinmeet" %}">join meet</a> -->
+
+{% endblock %}
+        
+{% block javascript %}{% endblock %}

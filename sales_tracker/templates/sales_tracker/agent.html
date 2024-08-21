@@ -6,9 +6,10 @@
 {% endblock %} 
 
 {% block content %}
+<h1>Hello</h1>
 <ul>    
     {%for tc in ToCall%}
-    <a href = "{% url "tocalldata" tc %}">
+    <a href = "{% url "detail_agent" tc %}">
         <li>{{tc.customer_first_name}}</li>
     </a>
     {%endfor%}
