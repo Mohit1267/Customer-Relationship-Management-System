@@ -48,6 +48,22 @@ nav a:hover, .logout:hover {
     width: 80%;
     margin-top: 20px;
 }
+
+.animated-w {
+    display: inline-block;
+    animation: bounce 2s infinite;
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
 .statistics, .profile {
     background-color: white;
     border: 1px solid #ccc;

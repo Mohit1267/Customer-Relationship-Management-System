@@ -1,0 +1,58 @@
+/* Base styling for the calling agent dashboard */
+#calling-agent-dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Style for the task list */
+.task-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 80%;
+    max-width: 600px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Style for each task item */
+.task-item {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+/* Hover effect for task items */
+.task-item:hover {
+    background-color: #f0f8ff;
+}
+
+/* Style for the task title */
+.task-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: normal;
+    color: #333;
+}
+
+/* Responsive design: Adjust font size and padding for smaller screens */
+@media (max-width: 600px) {
+    .task-item {
+        padding: 15px;
+    }
+
+    .task-title {
+        font-size: 16px;
+    }
+}

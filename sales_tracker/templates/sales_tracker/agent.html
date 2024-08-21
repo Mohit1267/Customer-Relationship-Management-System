@@ -1,8 +1,16 @@
-{% extends "innerbase.html" %}
-
-
-{% block title %}Calling agent dashboard{% endblock  %}
+{% extends "innerbase2.html" %}
+{% load static %}
+{% block title %}Calling agent dashboard{% endblock %}
+{% block css_link %}
+<!-- <link rel="stylesheet" href="{% static 'sales_tracker/agent.css' %}"> -->
+{% endblock %} 
 
 {% block content %}
-<h1>Hello caller</h1>
+<ul>    
+    {%for tc in ToCall%}
+    <a href = "{% url "tocalldata" tc %}">
+        <li>{{tc.customer_first_name}}</li>
+    </a>
+    {%endfor%}
+</ul>
 {%endblock%}
