@@ -145,3 +145,8 @@ body{
     margin-left: 5px;
     height: 60px;
 }
+
+.timer{
+    position: relative;
+    margin-right: 15px;
+}

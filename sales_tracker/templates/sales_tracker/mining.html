@@ -128,4 +128,25 @@
   </div> -->
 {% endblock %}
         
-{% block javascript %}{% endblock %}
+{% block javascript %}
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const navbar = document.querySelector('.navbar');  // Ensure this selector matches your navbar
+      const form = document.querySelector('form');
+
+      if (navbar && form) {
+          form.addEventListener('focusin', function() {
+              console.log('Form field focused - hiding navbar');
+              navbar.style.display = 'none';
+          });
+
+          form.addEventListener('focusout', function() {
+              console.log('Form field unfocused - showing navbar');
+              navbar.style.display = 'block';
+          });
+      } else {
+          console.log('Navbar or form not found');
+      }
+  });
+</script>
+{% endblock %}
