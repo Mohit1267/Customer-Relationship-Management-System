@@ -98,17 +98,17 @@
 
         
         <!-- timer  -->
-        <div>
+        <!-- <div>
           {% if timer %}
             <span id="count_down" class="nav-link px-2">00:00:00</span>
           {% endif %}
         </div>
-        <!-- profile offcanvas -->
-        <div>
+        <-- profile offcanvas -->
+        <!-- <div>
           <a class="btn btn-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
             Profile
           </a>
-        </div>
+        </div> -->
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav flex-column dropdown-menu-right">
             <!-- <li class="nav-item dropdown">
@@ -123,6 +123,17 @@
                 <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
               </ul>
             </li> -->
+            <div>
+              {% if timer %}
+                <span id="count_down" class="nav-link px-2">00:00:00</span>
+              {% endif %}
+            </div>
+            <!-- profile offcanvas -->
+            <div>
+              <a class="btn btn-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                Profile
+              </a>
+            </div>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Contacts
