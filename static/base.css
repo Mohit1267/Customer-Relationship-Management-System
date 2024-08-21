@@ -121,10 +121,7 @@ body{
 }
 
 /* Profile offcanvas button styles */
-.btn-dark {
-    background-color: #333; /* Dark background for button */
-    border: none; /* Remove border */
-}
+
 
 .btn-dark:hover {
     background-color: #555; /* Slightly lighter on hover */
