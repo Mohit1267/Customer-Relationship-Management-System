@@ -51,13 +51,14 @@ body{
     border-radius: 0px; /* Curved edges */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Drop shadow */
     padding: 10px 20px; /* Extra padding to make it broader */
-     overflow-x:visible; /*Enable vertical scrolling*/
+    overflow-x:visible; /*Enable vertical scrolling*/
 }
 
 /* navbar right side dropdown */
 .nav-item.dropdown {
     position: relative;
     z-index: 5; /* Set a higher z-index to ensure it appears above other elements */
+    margin-bottom: 14px;
 }
 
 
@@ -125,4 +126,27 @@ body{
 
 .btn-dark:hover {
     background-color: #555; /* Slightly lighter on hover */
+}
+
+.profile1 {
+    margin-top: 30px;
+    margin-right: 8px;
+    width: 150px;
+    letter-spacing: 4px;
+}
+
+/* .count_down {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+} */
+
+.spacing {
+    letter-spacing: 3px;
+    margin-left: 5px;
+    height: 60px;
+}
+
+.timer{
+    position: relative;
+    margin-right: 15px;
 }
