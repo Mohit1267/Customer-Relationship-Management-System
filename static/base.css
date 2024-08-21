@@ -51,7 +51,7 @@ body{
     border-radius: 0px; /* Curved edges */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Drop shadow */
     padding: 10px 20px; /* Extra padding to make it broader */
-     overflow-x:visible; /*Enable vertical scrolling*/
+    overflow-x:visible; /*Enable vertical scrolling*/
 }
 
 /* navbar right side dropdown */
