@@ -104,7 +104,8 @@
           {% if timer %}
 
 
-            <span id="count_down " class="timer">00:00:00</span>
+          <div id="count_down"></div>
+
 
           {% endif %}
         </div>
@@ -350,14 +351,28 @@
 
     // Function to update the countdown display.
     function updateCountDown() {
+        if (totalSeconds <= 0) {
+            countDownEle.innerHTML = "00:00:00";
+            clearInterval(timerInterval); // Stop the interval when the countdown reaches zero.
+            return;
+        }
+        
         let formattedTimer = convertSecondsToHms(totalSeconds);
         countDownEle.innerHTML = formattedTimer;
-        totalSeconds++;
+        totalSeconds--; // Decrement the seconds.
     }
 
+    // Debugging: Print initial value of totalSeconds to console
+    console.log(`Initial totalSeconds: ${totalSeconds}`);
+
     // Update the countdown every second.
-    setInterval(updateCountDown, 1000);
+    const timerInterval = setInterval(updateCountDown, 1000);
+
+    // Debugging: Check if the setInterval is working
+    console.log(`Timer started with interval: ${timerInterval}`);
 </script>
+
+
 
     {% block javascript %}{% endblock %}
 

@@ -84,7 +84,7 @@
     /* border-color: #262626; */
     /* background-color: #262626;  */
     width: 100%;
-    padding: 0px; /* Add some padding around the container */
+    padding: 10px; /* Add some padding around the container */
      
      
 }
@@ -104,9 +104,10 @@
  }
 
     .card-body {
-        padding: 20px; /* Space inside the cards */
+        padding: 10px; /* Space inside the cards */
         text-align: center; /* Center the text inside the cards */
         background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
+        width: 100%;
         
         
         
