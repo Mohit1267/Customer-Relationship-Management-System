@@ -43,7 +43,9 @@ body{
 
 /* General styles for the navbar */
 .navbar {
-    z-index: 1;
+    position: fixed;
+    /* display: none; */
+    z-index: 1000;
     margin-left: 0px;
     margin-right: 30px;
     margin-top: 0px;

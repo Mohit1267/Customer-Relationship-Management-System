@@ -25,6 +25,9 @@ from django.http import HttpResponseForbidden
 import datetime
 
 
+class Admin(TemplateView):
+    
+
 def get_timer_value(request):
     user = request.user
     utc_login_time = user.last_login
@@ -40,7 +43,7 @@ def get_timer_value(request):
 class IndexView(TemplateView):
     template_name = "sales_tracker/index.html"
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.profile.branch != 'miner':
+        if self.request.user.profile.branch != ' Data miner':
             return HttpResponseForbidden("You do not have access to this page.")
         return super().dispatch(request, *args, **kwargs)
 
@@ -66,8 +69,7 @@ class IndexView(TemplateView):
         today_Opportunity = OpportunityData.objects.filter(date = now_date)
         today_Opportunity_count = today_Opportunity.count()
         context["Opportunity_count"] = today_Opportunity_count
-        return context  
-    
+        return context
 
 
 class Agent(TemplateView):
