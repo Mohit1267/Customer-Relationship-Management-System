@@ -8,7 +8,7 @@ const quarterlyChart = new Chart(document.getElementById('quarterlyChart'), {
             backgroundColor: [ // Custom colors for each segment
                 'rgba(255, 99, 132, 0.8)',  // Color for Q1
                 'rgba(54, 162, 235, 0.8)',  // Color for Q2
-                'rgba(255, 206, 86, 0.8)',  // Color for Q3
+                'rgba(255,206, 86, 0.8)',  // Color for Q3
                 'rgba(75, 192, 192, 0.8)'   // Color for Q4
             ],
             borderColor: [ // Border colors for each segment

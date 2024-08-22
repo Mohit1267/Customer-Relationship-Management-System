@@ -203,6 +203,9 @@ def manual_login(request):
                     return redirect("profile")
                 if user_profile.can_login:
                     login(request, user)
+                    Nuser = request.user.id
+                    print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
+                    print(Nuser)
                     if user_profile.branch == "admin":
                         return redirect("admin")
                     elif user_profile.branch == "miner":
