@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegisterForm, ProfileForm, LoginForm, CallingDetailsForm
-from .models import Profile, CallingDetail
+from .models import Profile, CallingDetail, AttendanceRecord
 from django.contrib.auth.decorators import login_required
 from users.models import Profile
 from django.views.generic.base import TemplateView
@@ -18,6 +18,9 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login
+from django.utils import timezone
+import datetime
+
 
 # MY CODE 
 
@@ -76,7 +79,6 @@ def forget_pass(request):
         return redirect("profile")
     else:
         return render(request, "users/forgetpassword.html")
-    
 
 
 
@@ -118,6 +120,16 @@ def Reason(request):
     elapsed_time = timer(utc_login_time)
     elapsed_time_in_sec = int(elapsed_time[0])*60*60 + int(elapsed_time[1])*60 + int(elapsed_time[2])
     if request.method == "POST":
+        current_datetime = timezone.localtime()
+        current_time = current_datetime.strftime('%H:%M:%S')
+        now_date_time = datetime.datetime.now()
+        now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+        print("Current Time:", current_time)
+        existing_record = AttendanceRecord.objects.filter(user=user, date=now_date).first()
+        if existing_record:
+            # Update the check_out_time with the current time
+            existing_record.check_out_time = current_time
+            existing_record.save()
         reason = request.POST.get("reason_form")
         password = "axzf ekbv uawt rugt"
         print("check")
@@ -192,6 +204,7 @@ def manual_login(request):
             # Implement secure user authentication logic using username and password
             # ...
             user = authenticate(request, email = email, password = password)
+            print("this is userrrrrrrr" ,user)
 
 
             if user is not None:
@@ -203,10 +216,29 @@ def manual_login(request):
                     return redirect("profile")
                 if user_profile.can_login:
                     login(request, user)
+                    # print(timezone.now().time())
+                    current_date = timezone.now().date()
                     Nuser = request.user.id
+                    current_datetime = timezone.now()
+                    current_date = current_datetime.date()
+                    current_time = current_datetime.time()
+                    now = datetime.datetime.now()
+                    # print("Current Time:", now.time())
+                    current_datetime = timezone.localtime()
+                    current_time = current_datetime.strftime('%H:%M:%S')
+                    print("Current Time:", current_time)
+                    existing_record = AttendanceRecord.objects.filter(user=user, date=current_date).first()
+                    if not existing_record:
+                        AttendanceRecord.objects.create(
+                            user=user,
+                            date=current_date,
+                            check_in_time=current_time,
+                            status='Present'
+                        )
                     print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
                     print(Nuser)
                     if user_profile.branch == "admin":
+                        
                         return redirect("admin")
                     elif user_profile.branch == "miner":
                         return redirect("index")

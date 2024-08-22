@@ -168,3 +168,6 @@ EMAIL_USE_TLS = True
 # EMAIL_HOST_PASSWORD = "vhax huoc shhq qjmh"
 EMAIL_HOST_USER = "pjisvgreat@gmail.com"
 EMAIL_HOST_PASSWORD = "axzf ekbv uawt rugt" 
+
+TIME_ZONE = 'Asia/Kolkata'
+USE_TZ = True
