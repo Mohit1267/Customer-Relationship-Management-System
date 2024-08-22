@@ -36,8 +36,8 @@ body{
 
 
 .offcanvas{
-    width:300px !important;
-    height:auto !important;
+    width:300px ;
+    height:auto ;
 } 
 
 
@@ -150,3 +150,9 @@ body{
     position: relative;
     margin-right: 15px;
 }
+
+.right_profile {
+    color: #008080;
+    text-decoration:none;
+    display:inline-block;
+} 
