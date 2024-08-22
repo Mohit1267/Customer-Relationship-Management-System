@@ -6,13 +6,13 @@ const quarterlyChart = new Chart(document.getElementById('quarterlyChart'), {
             label: 'Quarterly Data',
             data: [20, 10, 30, 40],  // Data for each segment
             backgroundColor: [ // Custom colors for each segment
-                'rgba(255, 99, 132, 0.8)',  // Color for Q1
-                'rgba(54, 162, 235, 0.8)',  // Color for Q2
-                'rgba(255, 206, 86, 0.8)',  // Color for Q3
-                'rgba(75, 192, 192, 0.8)'   // Color for Q4
+            'rgba(54, 162, 235, 0.2)', // Blue with 20% opacity
+            'rgba(255, 206, 86, 0.2)', // Yellow with 20% opacity
+            'rgba(75, 192, 192, 0.2)', // Green with 20% opacity
+            'rgba(153, 102, 255, 0.2)'  // Purple with 20% opacity
             ],
             borderColor: [ // Border colors for each segment
-                'rgba(255, 99, 132, 1)',
+                '#990000',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)'
@@ -24,11 +24,11 @@ const quarterlyChart = new Chart(document.getElementById('quarterlyChart'), {
         plugins: {
             legend: {
                 labels: {
-                    color: 'white' // Legend text color
+                    color: 'red' // Legend text color
                 }
             },
             tooltip: {
-                titleColor: 'white', // Tooltip title color
+                titleColor: '#990000', // Tooltip title color
                 bodyColor: 'white',  // Tooltip body color
                 backgroundColor: '#007d7e' // Tooltip background color
             }

@@ -4,6 +4,49 @@
     box-sizing: border-box;
 }
 
+.heading {
+   
+    background: linear-gradient(90deg, rgba(0, 102, 204, 1) 0%, rgba(173, 216, 230, 1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: 100%;
+    padding: 10px;
+    font-size:70px;
+    font-weight:bold;
+    text-align: center;
+    margin-left: -20px;
+    letter-spacing: 6px;
+    /* margin-top: 30px; */
+    
+    margin-bottom: 45px;
+
+}
+
+.title_animation {
+  
+        font-size: 36px;
+        font-weight: bold;
+        color: #333;
+        animation: pulse 15s infinite;
+  
+    }
+
+     @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+
+
+
 
 .content{
     background-color: #262626;
@@ -71,7 +114,7 @@
     .card-body {
         padding: 20px; /* Space inside the cards */
         text-align: center; /* Center the text inside the cards */
-background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
+        background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
         
         
         
