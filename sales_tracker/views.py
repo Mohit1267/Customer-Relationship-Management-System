@@ -23,10 +23,18 @@ from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class Admin(TemplateView):
+
+class Admin(LoginRequiredMixin, TemplateView):
+    template_name = "sales_tracker/admin.html"
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['admin_message'] = "Welcome to the Admin Page"
+        return context
+
 
 def get_timer_value(request):
     user = request.user
@@ -43,7 +51,7 @@ def get_timer_value(request):
 class IndexView(TemplateView):
     template_name = "sales_tracker/index.html"
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.profile.branch != ' Data miner':
+        if self.request.user.profile.branch != 'miner':
             return HttpResponseForbidden("You do not have access to this page.")
         return super().dispatch(request, *args, **kwargs)
 
