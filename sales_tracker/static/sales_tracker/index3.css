@@ -48,6 +48,7 @@
 
 
 
+
 .content{
     background-color: #262626;
     /* background: linear-gradient(90deg, rgba(200, 220, 255, 1) 0%, rgba(240, 240, 240, 1) 100%); */
@@ -59,15 +60,6 @@
     /* background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(230, 230, 250, 1) 100%); */
     /* background: linear-gradient(90deg, rgba(152, 251, 152, 1) 0%, rgba(173, 216, 230, 1) 100%); */
     /* background: linear-gradient(90deg, rgba(152, 251, 152, 1) 0%, rgba(173, 216, 230, 1) 100%); */
-
-
-
-
-
-
-
-
-
 }
 
 .welcome {

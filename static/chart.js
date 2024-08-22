@@ -6,6 +6,7 @@ const quarterlyChart = new Chart(document.getElementById('quarterlyChart'), {
             label: 'Quarterly Data',
             data: [20, 10, 30, 40],  // Data for each segment
             backgroundColor: [ // Custom colors for each segment
+
             'rgba(54, 162, 235, 0.2)', // Blue with 20% opacity
             'rgba(255, 206, 86, 0.2)', // Yellow with 20% opacity
             'rgba(75, 192, 192, 0.2)', // Green with 20% opacity
