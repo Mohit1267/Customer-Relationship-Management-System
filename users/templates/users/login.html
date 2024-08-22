@@ -28,28 +28,37 @@
       {{ error_message }}
   </div>
   {% endif %}
-
-  <div class="login-container">
-    <form class="login-form" method="POST">
-      {% csrf_token %}
-      <h2 class="login-title">Login</h2>
-      <div class="input-group">
-          <input type="email" name="email" placeholder="Email" class="login-input" required>
-          <span class="icon">📧</span>
-      </div>
-      <div class="input-group">
-          <input type="password" name="password" placeholder="Password" class="login-input" required>
-          <span class="icon">🔒</span>
-      </div>
-      <div class="login-options">
-          <label><input type="checkbox" name="remember_me"> Remember me</label>
-          <a href="{% url 'password_reset' %}" class="forgot-password">Forgot password?</a>
-      </div>
-      <button type="submit" class="login-button">Login</button>
-      <p class="register-link">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+  <div class="login-wrapper">
+    <form class="login-box" method="POST">
+        {% csrf_token %} <!-- Include CSRF token here -->
+      
+        <div>
+            <img class="hand" src="/static/hand.png" alt="Handshaking Image">
+        </div>
+        <div class="login-header">
+            <div class="welcome">Welcome Back</div>
+            <div class="input-box">
+                <input type="email" name="email" placeholder="Email" class="login-input" required>
+                <span class="icon"></span>
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" class="login-input" required>
+                <label>Password</label>
+            </div>
+            <button type="submit">Login</button>
+            <div class="forgot-password">
+                <a href="{% url 'password_reset' %}">Forgot password?</a>
+            </div>
+            <div class="signup-text">
+                Don't have an account? <a href="{% url 'register' %}">Sign up</a>
+            </div>
+        </div>
     </form>
-  </div>
 </div>
+
+
+
 {% endblock %}
 {% block javascript %}{% endblock %}
 
