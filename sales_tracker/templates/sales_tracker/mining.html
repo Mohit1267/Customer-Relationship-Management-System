@@ -23,22 +23,20 @@
   <form method="POST">
   {% csrf_token %}
     <div class="row mt-2 mb-2 ">
-      <div class="col-md-2 center-text " style="color: white;"><h3>Create Mining</h3></div>
+      <div class="col-md-2 center-text " style="color: white; margin-right:300px; margin-left: 270px; "><h3>Create Mining</h3></div>
       <div class="col-md-8"> </div>
       <div class="col-md-2"> 
       
-        <div class="row">
-          <div class="col-md-6">
-            <div class="row px-2">
-              <button type="submit" class="btn btn-success btn-sm button1">Submit</button>
-            </div>
+        <div class="row buttons ">
+          <div class="col-md-6 d-flex justify-content-end px-2 ">
+            <button type="submit" class="button1">Submit</button>
           </div>
-          <div class="col-md-6">
-            <div class="row px-2">
-              <button type="button" class="btn btn-danger btn-sm button2">Cancel</button>
-            </div>
+          <div class="col-md-6 d-flex align-items-end px-2">
+            <button type="button" class="button2">Cancel</button>
+          </div>
         </div>
-      </div>
+
+
     </div>
     <hr>
     <div class="row">

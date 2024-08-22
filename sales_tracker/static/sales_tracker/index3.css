@@ -53,11 +53,16 @@
     .card-body {
         padding: 20px; /* Space inside the cards */
         text-align: center; /* Center the text inside the cards */
-        background-color: #007d7e;
+background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
         
         
         
     }
+
+.card_bg {
+    background: linear-gradient(90deg, rgba(67, 193, 65, 1) 41%, rgba(0, 212, 211, 1) 99%, rgba(238, 130, 238, 1) 100%);
+
+}    
 
 .card-text, .card-title {
     color:white; /* Replace with your desired color */
