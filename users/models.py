@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 from django.contrib.auth import get_user_model
 
-
+from django.utils import timezone
 
 
 
@@ -32,6 +32,27 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+
+class AttendanceRecord(models.Model):
+    user = models.ForeignKey(RegisterUser, on_delete=models.CASCADE)
+    date = models.DateField(default=timezone.now)
+    check_in_time = models.TimeField(null=True, blank=True)
+    check_out_time = models.TimeField(null=True, blank=True)
+    status = models.CharField(
+        max_length=20,
+        choices=[('Present', 'Present'), ('Absent', 'Absent'), ('Late', 'Late')],
+        default='Present'  # Default to 'Absent' for existing records
+    )
+
+    def __str__(self):
+        return f"{self.user.email} - {self.date} - {self.status}"
+
+
+
+
+
+
     
 class CallingDetail(models.Model):
     caller = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default= get_user_model())

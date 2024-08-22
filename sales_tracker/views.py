@@ -803,4 +803,13 @@ def get_calling_agents(request):
         ]
         context['data'] = data
         return render(request, "sales_tracker/call_center.html",context)
+  
 
+
+
+def Attendence(request):
+    context = {}
+    user = request.user
+    u = RegisterUser.objects.get(email=user)
+    context['u'] = u.username
+    return render(request, "sales_tracker/MinerAttendence.html",context)
