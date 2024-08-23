@@ -6,22 +6,26 @@
 
 {% block css_link %}
     <link rel="stylesheet" href="{% static 'sales_tracker/calendar.css' %}">
+
 {% endblock %}
 
 
-{% block title %}New Quote{% endblock  %}
+{% block title %}New Contact{% endblock  %}
 
 
 {% block content %}
 
+<!-- <h1>Create Contact</h2>
+{% include "include/dash.html" %} -->
+
 <div class="container-fluid">
   <form method="POST">
     {% csrf_token %}
-    <div class="row mt-2 mb-2">
-      <div class="col-md-3" style="color: white;">
-        <h3>Create Quote</h3>
+    <div class="row mt-2 mb-2" style="color: white;">
+      <div class="col-md-2" style="color: white;">
+        <h3>Create Contact</h3>
       </div>
-      <div class="col-md-7"> </div>
+      <div class="col-md-8"> </div>
       <div class="col-md-2">
 
         <div class="row buttons ">
@@ -38,68 +42,71 @@
       <div class="row">
         <div class="col-md-6 pt-5 pb-5 px-4" style="color: white;">
           <div class="form-group">
-          {{form.title|as_crispy_field}}
+            {{ form.first_name|as_crispy_field }}
           </div>
           <div class="form-group">
-          {{form.valid_until|as_crispy_field}}
+            {{ form.last_name|as_crispy_field }}
           </div>
           <div class="form-group">
-          {{form.approval_status|as_crispy_field}}
+            {{ form.email_id|as_crispy_field }}
           </div>
           <div class="form-group">
-          {{form.opportunity|as_crispy_field}}
+            {{ form.contact_number|as_crispy_field }}
           </div>
           <div class="form-group">
-          {{form.quote_stage|as_crispy_field}}
+            {{ form.job_title|as_crispy_field }}
+          </div>
+        </div>
+        <div class="col-md-6 pt-5 px-4" style="color: white; border-left: 1px solid #d8d7d7;">
+          <div class="form-group">
+            {{ form.address|as_crispy_field }}
           </div>
           <div class="form-group">
-          {{form.invoice_status|as_crispy_field}}
+            {{ form.organization|as_crispy_field }}
           </div>
-          <div class="form-group">
-          {{form.approval_issues_description|as_crispy_field}}
-          </div>
-          <div class="form-group">
-          {{form.lead_source|as_crispy_field}}
-          </div>
-          <div class="form-group">
-          {{form.account|as_crispy_field}}
-          </div>
-          <div class="form-group">
-          {{form.contact|as_crispy_field}}
-           </div>
         </div>
-        <div class="col-md-6 pt-5 px-4" style= "color: white ; border-left: 1px solid #d8d7d7;">
-          <div class="form-group">
-          {{form.billing_address|as_crispy_field}}
-        </div>
-          <div class="form-group">
-          {{form.shipping_address|as_crispy_field}}
-        </div>
-          <div class="form-group">
-          {{form.total|as_crispy_field}}
-        </div>
-          <div class="form-group">
-          {{form.discount|as_crispy_field}}
-        </div>
-          <div class="form-group">
-          {{form.sub_total|as_crispy_field}}
-        </div>
-          <div class="form-group">
-          {{form.shipping|as_crispy_field}}
-        </div>
-          <div class="form-group">
-          {{form.shipping_tax|as_crispy_field}}
-        </div>
-          <div class="form-group">
-          {{form.tax|as_crispy_field}}
-        </div>
-          <div class="form-group">
-          {{form.grandtotal|as_crispy_field}}
-        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+           
         </div>
       </div>
   </form>
+</div>  
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+{%comment%}
+<form method = "POST" class = "form">
+    {% csrf_token %}
+    <div class = "form_control" >
+    {{form|crispy}}
+    </div>
+    <button type = "submit">Submit</button>
+</form>
+{%endcomment%}
+
+
 
 {% endblock %}
         
