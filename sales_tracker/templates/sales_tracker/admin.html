@@ -7,17 +7,18 @@
 {% endblock %}
 
 {% block content %}
-<h1>Attendance for {{ u }}</h1>
-
+<h1>Attendance List</h1>
 <table>
     <tr>
+        <th>User</th>
         <th>Date</th>
         <th>Status</th>
     </tr>
-    {% for record in attendance_records %}
+    {% for attendance in attendances %}
     <tr>
-        <td>{{ record.date }}</td>
-        <td>{{ record.status }}</td>
+        <td>{{ attendance.user.username }}</td>
+        <td>{{ attendance.date }}</td>
+        <td>{{ attendance.status }}</td>
     </tr>
     {% endfor %}
 </table>
