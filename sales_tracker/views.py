@@ -27,6 +27,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
+
 class Admin(LoginRequiredMixin, TemplateView):
     template_name = "sales_tracker/admin.html"
     
