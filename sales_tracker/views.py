@@ -23,6 +23,17 @@ from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
+class Admin(LoginRequiredMixin, TemplateView):
+    template_name = "sales_tracker/admin.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['admin_message'] = "Welcome to the Admin Page"
+        return context
 
 
 def get_timer_value(request):
@@ -66,8 +77,7 @@ class IndexView(TemplateView):
         today_Opportunity = OpportunityData.objects.filter(date = now_date)
         today_Opportunity_count = today_Opportunity.count()
         context["Opportunity_count"] = today_Opportunity_count
-        return context  
-    
+        return context
 
 
 class Agent(TemplateView):
