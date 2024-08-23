@@ -20,7 +20,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login
 from django.utils import timezone
 import datetime
-
+from sales_tracker.analysis import generate_bar_chart, TotalDays
 
 # MY CODE 
 
@@ -216,6 +216,7 @@ def manual_login(request):
                     return redirect("profile")
                 if user_profile.can_login:
                     login(request, user)
+                    generate_bar_chart(request)
                     # print(timezone.now().time())
                     current_date = timezone.now().date()
                     Nuser = request.user.id

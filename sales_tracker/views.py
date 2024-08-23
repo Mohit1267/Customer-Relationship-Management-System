@@ -19,7 +19,7 @@ from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
-
+from .analysis import generate_bar_chart, TotalDays
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
@@ -808,9 +808,12 @@ def get_calling_agents(request):
 
 
 
-def Attendence(request):
+def Attendence(request):    
+    # generate_bar_chart()
     context = {}
     user = request.user
+    days = TotalDays(request)
     u = RegisterUser.objects.get(email=user)
     context['u'] = u.username
+    context['days'] = days
     return render(request, "sales_tracker/MinerAttendence.html",context)
