@@ -88,11 +88,24 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',}
-}
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'Mohit@sql1267',
+#         'HOST' : 'localhost',
+#         'PORT': '3306',
+#     }
+
+# }
 
 
 # DATABASES = {
@@ -150,6 +163,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = "users.RegisterUser"
+# AUTH_USER_MODEL = 'your_custom_user_app.CustomUser'
+
 
 LOGIN_REDIRECT_URL = "index"
 
