@@ -1,6 +1,8 @@
 from django.db import models
 from .models_proxy import CallingAgentProxy
 from users.models import RegisterUser
+from django.conf import settings
+
 # from django.contrib.auth.models import User
 
 # class Attendance(models.Model):
@@ -9,7 +11,17 @@ from users.models import RegisterUser
 #     status = models.CharField(max_length=10, choices=[('Present', 'Present'), ('Absent', 'Absent')])
 
 #     def __str__(self):
-#         return f"{self.user.username} - {self.date} - {self.status}"
+#         return f"{self.user.username} - {self.date} - {self.status}"from django.conf import settings
+
+class Attendance(models.Model):
+    user = models.ForeignKey(RegisterUser, on_delete=models.CASCADE, default=1)
+    date = models.DateField()
+    status = models.CharField(max_length=10)  # e.g., "Present", "Absent", etc.
+
+    def __str__(self):
+        return f"{self.user.username} - {self.date} - {self.status}"
+
+
 
 class CallingAgent(models.Model):
     calling_agent_id = models.AutoField(primary_key=True)

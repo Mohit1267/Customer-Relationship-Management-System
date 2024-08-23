@@ -24,6 +24,7 @@ from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Attendance
 
 
 
@@ -812,4 +813,6 @@ def Attendence(request):
     user = request.user
     u = RegisterUser.objects.get(email=user)
     context['u'] = u.username
+    attendance_records = Attendance.objects.filter(user=u)
+    context['attendance_records'] = attendance_records
     return render(request, "sales_tracker/MinerAttendence.html",context)
