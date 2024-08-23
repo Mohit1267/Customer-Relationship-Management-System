@@ -36,11 +36,13 @@
           position: fixed; /* Fixes the navbar to the left of the screen */
           top: 0;
           left: 0;
-          background-color: #333; /* Background color of the navbar */
+          background-color: #454343; /* Background color of the navbar */
           padding-top: 20px;
           display: flex;
           flex-direction: column;
-          color: white;
+          /* color: white; */
+          /* background: linear-gradient(90deg, rgb(109, 19, 206) 0%, rgb(107, 9, 177) 50%, rgb(236, 24, 236) 100%); */
+
       }
 
       .navbar-brand-container {
@@ -186,11 +188,18 @@
               </ul>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'attendence' %}" aria-expanded="false">
-                Attendence
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Attendance
               </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Present</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Absent</a></li>
+              </ul>
             </li>
+
+            
           </ul>
         </div>
 
