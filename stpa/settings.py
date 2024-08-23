@@ -89,6 +89,7 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -97,15 +98,8 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'Mohit@sql1267',
-#         'HOST' : 'localhost',
-#         'PORT': '3306',
-#     }
-
-# }
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',}
 
 
 DATABASES = {
@@ -113,12 +107,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shanaya',
         'USER': 'root',
-        'PASSWORD':'Pj@123456',
+        'PASSWORD':'Mohit@sql1267',
         'HOST' : 'localhost',
         'PORT': '3306',
     }
-}
 
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

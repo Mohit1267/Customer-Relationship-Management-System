@@ -240,7 +240,7 @@ def manual_login(request):
                     print(Nuser)
                     if user_profile.branch == "admin":
                         
-                        return redirect("admin")
+                        return redirect("adminn")
                     elif user_profile.branch == "miner":
                         return redirect("index")
                     elif user_profile.branch == "agent":
