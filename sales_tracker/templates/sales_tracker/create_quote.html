@@ -5,7 +5,7 @@
 
 
 {% block css_link %}
-    <link rel="stylesheet" href="{% static 'sales_tracker/mining2.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_tracker/quote.css' %}">
 {% endblock %}
 
 
@@ -23,19 +23,16 @@
       </div>
       <div class="col-md-7"> </div>
       <div class="col-md-2">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="row px-2">
-              <button type="submit" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop">Submit</button>
-            </div>
+
+        <div class="row buttons ">
+          <div class="col-md-6 d-flex  px-2 ">
+            <button type="submit" class="quote_button1">Submit</button>
           </div>
-          <div class="col-md-6">
-            <div class="row px-2">
-              <button type="button" class="btn btn-danger btn-sm">Cancel</button>
-            </div>
+          <div class="col-md-6 d-flex  px-2">
+            <button type="button" class="quote_button2">Cancel</button>
           </div>
         </div>
+
       </div>
       <hr>
       <div class="row">
