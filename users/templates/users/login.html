@@ -29,6 +29,8 @@
   </div>
   {% endif %}
   <div class="login-wrapper">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
     <form class="login-box" method="POST">
         {% csrf_token %} <!-- Include CSRF token here -->
       
@@ -40,11 +42,11 @@
             <div class="input-box">
                 <input type="email" name="email" placeholder="Email" class="login-input" required>
                 <span class="icon"></span>
-                <label>Email</label>
+                <!-- <label>Email</label> -->
             </div>
             <div class="input-box">
                 <input type="password" name="password" placeholder="Password" class="login-input" required>
-                <label>Password</label>
+                <!-- <label>Password</label> -->
             </div>
             <button type="submit">Login</button>
             <div class="forgot-password">

@@ -163,8 +163,15 @@ body{
     margin-right: 15px;
 }
 
+.offcanvas-title {
+    font-size: 35px;
+    letter-spacing: 2px;
+}
+
 .right_profile {
-    color: #008080;
-    text-decoration:none;
+    color: #3291ba;
+    text-decoration:solid;
     display:inline-block;
+    font-size: 25px;
+    font-weight: bold;
 } 
