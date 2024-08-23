@@ -53,7 +53,7 @@
 
 .content{
     width: 100vw;
-    height: 100vw;
+    /* height: 100vw; */
     
     background-color: #262626;
     /* background-color: #88bcdd; */
