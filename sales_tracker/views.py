@@ -34,6 +34,8 @@ class Admin(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        attendances = AttendanceRecord.objects.all()
+        context['attendances'] = attendances
         context['admin_message'] = "Welcome to the Admin Page"
         return context
 
@@ -818,8 +820,3 @@ def Attendence(request):
     context['u'] = u.username
     context['days'] = days
     return render(request, "sales_tracker/MinerAttendence.html",context)
-
-
-def attendance_list(request):
-    attendances = AttendanceRecord.objects.all()
-    return render(request, "sales_tracker/ADMIN.html", {'attendances': attendances})
