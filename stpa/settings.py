@@ -97,17 +97,28 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'Mohit@sql1267',
+#         'HOST' : 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shanaya',
         'USER': 'root',
-        'PASSWORD':'Mohit@sql1267',
+        'PASSWORD':'Pj@123456',
         'HOST' : 'localhost',
         'PORT': '3306',
     }
-
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

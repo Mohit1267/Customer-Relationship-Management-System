@@ -29,13 +29,7 @@ from users.models import AttendanceRecord
 
 
 
-class Admin(LoginRequiredMixin, TemplateView):
-    template_name = "sales_tracker/admin.html"
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['admin_message'] = "Welcome to the Admin Page"
-        return context
+
 
 
 def get_timer_value(request):
@@ -823,3 +817,14 @@ def Attendence(request):
 def attendance_list(request):
     attendances = AttendanceRecord.objects.all()
     return render(request, "sales_tracker/ADMIN.html", {'attendances': attendances})
+
+
+
+class Admin(TemplateView):
+    template_name = "sales_tracker/admin.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        attendances = AttendanceRecord.objects.all()
+        context['admin_message'] = "Welcome to the Admin Page"
+        context['attendances'] = attendances
+        return context
