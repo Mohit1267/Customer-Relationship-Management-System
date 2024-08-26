@@ -154,3 +154,5 @@ Function:
 if (!sidebar.contains(event.target) && !hamburger.contains(event.target)) { ... } checks if the click happened outside both the sidebar and the hamburger button.
 sidebar.classList.remove('show'); hides the sidebar if the click was outside.
 document.querySelector('.main-content').classList.remove('shift'); restores the main content’s position if the sidebar is hidden.
+
+tauba tauba steps
