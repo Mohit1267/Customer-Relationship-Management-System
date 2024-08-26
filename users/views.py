@@ -186,7 +186,7 @@ def Logout(request):
             logout(request)
             return render(request, 'users/logout.html', {'message': 'Successfully logged out.'})
         else:
-            messages.warning(request, "You need to complete at least 40 mining tasks before logging out.")
+            # messages.warning(request, "You need to complete at least 40 mining tasks before logging out.")
             return render(request, 'users/reason.html')
 
     

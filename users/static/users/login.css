@@ -11,6 +11,18 @@ body {
     align-items: center;
 }
 
+
+
+
+.login-wrapper {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-left:400px;
+    /* margin-right: 20px; */
+}
+
 .welcome{
     width: 100%;
     color:#d6c9c9;
@@ -21,16 +33,6 @@ body {
     font-family: "Poppins", sans-serif;
 
  }
-
-
-.login-wrapper {
-    width: 100%;
-    max-width: 450px;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-left:400px;
-}
-
 
 /* Circles */
 .circle1 {
@@ -52,6 +54,11 @@ body {
       scale: 1.11;
     }
   }
+
+  .circle1:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+}
   
   .circle2 {
     position: absolute;
@@ -72,6 +79,11 @@ body {
     }
   }
   
+  .circle2:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+}
+
 
 
 .login-box {
@@ -149,6 +161,15 @@ button {
 button:hover {
     background: linear-gradient(115deg, #de6262, #ff6f61);
     transform: translateY(-3px);
+}
+
+.login-input:hover {                       /******************************************************/
+    /* border-color: #ffffff;  */
+    outline:#ffffff;
+    /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);  */
+    border:2px solid white ;
+    border-radius: 10%;
+    
 }
 
 .forgot-password {

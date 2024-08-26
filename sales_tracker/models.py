@@ -1,5 +1,4 @@
 from django.db import models
-from .models_proxy import CallingAgentProxy
 from users.models import RegisterUser
 # from django.contrib.auth.models import User
 
