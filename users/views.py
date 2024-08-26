@@ -20,7 +20,7 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import authenticate, login
 from django.utils import timezone
 import datetime
-
+from sales_tracker.analysis import generate_bar_chart, TotalDays
 
 # MY CODE 
 
@@ -186,7 +186,7 @@ def Logout(request):
             logout(request)
             return render(request, 'users/logout.html', {'message': 'Successfully logged out.'})
         else:
-            messages.warning(request, "You need to complete at least 40 mining tasks before logging out.")
+            # messages.warning(request, "You need to complete at least 40 mining tasks before logging out.")
             return render(request, 'users/reason.html')
 
     
@@ -216,6 +216,7 @@ def manual_login(request):
                     return redirect("profile")
                 if user_profile.can_login:
                     login(request, user)
+                    generate_bar_chart(request)
                     # print(timezone.now().time())
                     current_date = timezone.now().date()
                     Nuser = request.user.id
@@ -239,7 +240,7 @@ def manual_login(request):
                     print(Nuser)
                     if user_profile.branch == "admin":
                         
-                        return redirect("admin")
+                        return redirect("adminn")
                     elif user_profile.branch == "miner":
                         return redirect("index")
                     elif user_profile.branch == "agent":

@@ -19,21 +19,17 @@ from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
-
+from .analysis import generate_bar_chart, TotalDays
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
+from users.models import AttendanceRecord
 
 
 
-class Admin(LoginRequiredMixin, TemplateView):
-    template_name = "sales_tracker/admin.html"
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['admin_message'] = "Welcome to the Admin Page"
-        return context
+
+
 
 
 def get_timer_value(request):
@@ -807,9 +803,28 @@ def get_calling_agents(request):
 
 
 
-def Attendence(request):
+def Attendence(request):    
+    # generate_bar_chart()
     context = {}
     user = request.user
+    days = TotalDays(request)
     u = RegisterUser.objects.get(email=user)
     context['u'] = u.username
+    context['days'] = days
     return render(request, "sales_tracker/MinerAttendence.html",context)
+
+
+def attendance_list(request):
+    attendances = AttendanceRecord.objects.all()
+    return render(request, "sales_tracker/ADMIN.html", {'attendances': attendances})
+
+
+
+class Admin(TemplateView):
+    template_name = "sales_tracker/admin.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        attendances = AttendanceRecord.objects.all()
+        context['admin_message'] = "Welcome to the Admin Page"
+        context['attendances'] = attendances
+        return context

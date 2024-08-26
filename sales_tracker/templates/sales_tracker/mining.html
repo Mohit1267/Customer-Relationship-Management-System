@@ -23,7 +23,10 @@
   <form method="POST">
   {% csrf_token %}
     <div class="row mt-2 mb-2 ">
-      <div class="col-md-2 center-text heading_links moving_title " style="color: white; margin-right:300px; margin-left: 270px; "><h3>Create Mining</h3></div>
+      <div class="col-md-2 center-text  moving_title " 
+      style="color: white;">
+      Create Mining</div>
+
       <div class="col-md-8"> </div>
       <div class="col-md-2"> 
       
@@ -129,7 +132,7 @@
 {% block javascript %}
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-      const navbar = document.querySelector('.navbar');  // Ensure this selector matches your navbar
+      const navbar = document.querySelector('.nav-links');  // Ensure this selector matches your navbar
       const form = document.querySelector('form');
 
       if (navbar && form) {
