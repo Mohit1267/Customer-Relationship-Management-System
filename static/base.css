@@ -134,12 +134,14 @@ body{
 
 
 
+
 .nav-links li {
   /* margin: 15px 15px; */
   margin-right: 10px;
   color: rgb(13, 193, 221);
   line-height: 1.5;
-}
+
+
 
 /*working      5*/
 .nav-links a {    
