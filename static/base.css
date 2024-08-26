@@ -1,33 +1,250 @@
 body{
     background-color : #262626!important;
-    
+    width: 100vw;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    overflow-x:hidden;
+    overflow-y: hidden;
+    /* justify-content: center; */
+    /* align-items: center; */
 }   
 
-/* Navbar brand styles */
+/* 1 */
+/* .navbar {
+    background-color: #454343;
+    height: 100vh;
+    max-width: 200px;
+    max-width: 200px;
+    position: fixed; 
+    
+    
+    display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+    margin-right: 30px;
+    margin-top: 0px;
+    border-radius: 10px; 
+    box-shadow: 0 8px 8px rgba(140, 234, 239, 0.875); 
+    padding: 10px 20px; 
+    
+    
+} */
+
+.navbar {
+    background-color: #454343;
+    position: fixed; /* Fixes the navbar to the left of the screen */
+    height: 100vh; /* Full height of the viewport */
+    min-width: 250px;
+    width: 200px; /* Fixed width */
+    top: 0; /* Aligns the navbar to the top of the screen */
+    left: 0; /* Aligns the navbar to the left of the screen */
+    display: flex;
+    flex-direction: column;
+    margin: 0; /* Removes any extra margins */
+    border-radius: 10px; /* Keeps your rounded corners */
+    box-shadow: 0 8px 8px rgba(140, 234, 239, 0.875); /* Adds shadow for a 3D effect */
+    padding: 10px 20px; /* Adds padding inside the navbar */
+    overflow-y: auto; /* Adds scrolling if the content overflows vertically */
+}
+
+
+
+
+/*2*/
+.navbar-container {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+     position: fixed;
+}
+
+.navbarNavDropdown {
+    justify-content: flex-start;
+}
+
+/* 3 Navbar brand styles */
 .navbar-brand img {
     height: 40px;
 }
 
+/*9*/
 .timer#count_down {
-    color: #32c7c7;
+    color: #32c7c7; 
+    margin-top: 20px;
+    margin-left: 50px;
     font-weight: bold;
     font-size: 24px;
     font-family: 'Arial', sans-serif;
 }
-.timer_count{
-    background-color: yellow;
-    position: absolute;
-    left: 0px;
-    top: 0;
-    padding: 30px;
-    border-radius: 0 30px 30px 0px;
+
+.profile1 {
+    /* margin-top: 30px; */
+    margin-top: 20px;
+    margin-left: 28px;
+    margin-bottom: 80px;
+    width: 150px;
+    letter-spacing: 4px;
+    position: fixed;
 }
-.timer_count p{
+.hamburger {
+    margin-top: 100px;
+    margin-left: 90px;
+    
+    cursor: pointer; 
+}
+
+.hamburger div {
+    width: 30px;
+    height: 4px;
+    background-color: #f9f9f9;
+    margin: 5px 0;
+    transition: 0.4s;
+}
+
+.nav-item {
+    position: relative;
+    margin-bottom: 25px;
+    /* margin-right: 30px; */
+    margin-left: -40px;
+    width: 100%;
+    justify-content: flex-start;
+    
+    
+}  
+
+
+/*4*/
+
+.nav-links {
+    padding: 20 3;
+    margin-top: 40px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.spacing {
+    letter-spacing: 3px;
+    margin-left: 5px;
+    line-height: 2.9;
+    height: 70px;
+}
+
+
+
+
+.nav-links li {
+  /* margin: 15px 15px; */
+  margin-right: 10px;
+  color: rgb(13, 193, 221);
+  line-height: 1.5;
+
+
+
+/*working      5*/
+.nav-links a {    
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px;
+    display: block;
+    list-style: none;
+     margin-top: -10px;
+    display:block;
+    position: relative; 
+    margin-left: -10px;
+    /* Hidden by default */
+  }  
+
+
+  /*6*/
+
+  /*nav item and nav links*/
+/* .nav-item.dropdown {
+    position: relative;
+    margin-bottom: 25px;
+    margin-right:  90px;
+} */
+
+
+/*7*/
+.nav-item .dropdown-menu {
+    position: absolute;
+    left: 100%; 
+    top:-20px;
+    margin-left: 40px;
+    margin-right: 80px; 
+    display: none; /* Hide dropdown initially */
+     white-space: nowrap; /* Prevent text from wrapping */
+    z-index: 100; 
+    overflow: visible;
+    letter-spacing: 3px;
+    visibility: hidden; /* Initially hidden */
+    opacity: 0;
+    width: 235px;
+    transition: opacity 0.5s ease, visibility 0s ease 0.5s;
+}
+
+/*8*/
+/*menu pura box hai */
+.nav-item:hover .dropdown-menu {
+    position: absolute;
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    /* background-color: rgb(161, 229, 211); */
+    background-color: transparent;
+    border-radius: 20px;
+     margin-left: 10px;
+     transition: opacity 0.5s ease, visibility 0s ease 0s;  }
+  
+.dropdown-menu  .dropdown-item {
+    display: block;
+    color: rgb(255, 254, 254);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-decoration: none; 
+    padding: 5px 10px;
+    
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 18px;
+    width: 220px;
+    margin-left: 5px;
+    margin-top: 1px;
+   
+}
+
+.nav-item:hover .dropdown-menu,
+.nav-item .dropdown-menu:hover {
+    position: absolute;
+    display: block; /* Show dropdown */
+    visibility: visible; /* Make it visible */
+    opacity: 1; /* Make it fully opaque */
+    transition: opacity 0.5s ease, visibility 0s ease 0s; /* Adjusted transition for smooth appearance */
+}
+
+.dropdown-menu:hover .dropdown-item {
+    
+    color:  rgb(107, 228, 246);
+    /* background-color: rgb(145, 242, 203); */
+    background-color: transparent;
+
+}
+/* .nav-item:hover .dropdown-items,
+.dropdown-menu:hover {
+    visibility: visible;
+    opacity: 1;
+} */
+
+
+
+/* .timer_count p{
     margin: 0;
     padding: 0;
     display: inline;
     margin: 10px;
-}
+} */
 
 #password-reset{
     text-decoration: none;
@@ -52,112 +269,17 @@ body{
 } 
 
 
-/* General styles for the navbar */
-.navbar {
-    position: fixed;
-    /* display: none; */
-    z-index: 1000;
-    margin-left: 0px;
-    margin-right: 30px;
-    margin-top: 0px;
-    background-color: #007d7e; /* Semi-transparent background */
-    border-radius: 0px; /* Curved edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Drop shadow */
-    padding: 10px 20px; /* Extra padding to make it broader */
-    overflow-x:visible;
-}
-
-/* navbar right side dropdown */
-.nav-item.dropdown {
-    position: relative;
-    /* z-index: 5;  */
-    margin-bottom: 25px;
-}
-
-
-.nav-item.dropdown .dropdown-menu {
-    top: 0;
-    left: 100%; /* Position the dropdown to the right of the parent menu */
-    margin-left: 0; /* Ensures no gap between the menu and the dropdown */
-    display: none; /* Hide dropdown initially */
-    position: absolute;
-    white-space: nowrap; /* Prevent text from wrapping */
-    z-index: 10; /* Ensure dropdown appears above other elements */
-    overflow: visible;
-    letter-spacing: 2px;
-}
-.nav-item.dropdown:hover .dropdown-menu {
-    display: block; /* Show dropdown on hover */
-    z-index: 10; /* Make sure it's still above other content */
-}
-
-.dropdown-item {
-    z-index: 100;
-    right: auto;
-    overflow: visible;
-}
-
-
-
-
-
-/* Navbar-toggler button styles */
-.navbar-toggler {
+ .navbar-toggler {
     border: none; /* Remove border */
     background: transparent; /* Transparent background */
 }
 
-/* Navbar links */
-.navbar-nav .nav-link {
-    color: #fff; 
-    font-size: 20px;
-     
-}
-
-/* Dropdown menu styles */
-.navbar-nav .dropdown-menu {
-    border-radius: 15px; /* Curved edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Drop shadow */
-     
-}
-
-/* Adjustments for dropdown items */
-.navbar-nav .dropdown-item {
-    color: #333; /* Darker text color */
-}
-
-.navbar-nav .dropdown-item:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Light hover background */
-}
-
-/* Timer styling */
 #count_down {
     color: #fff; /* White text color for timer */
 }
 
-/* Profile offcanvas button styles */
-
-
 .btn-dark:hover {
     background-color: #555; /* Slightly lighter on hover */
-}
-
-.profile1 {
-    margin-top: 30px;
-    margin-right: 8px;
-    width: 150px;
-    letter-spacing: 4px;
-}
-
-/* .count_down {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-} */
-
-.spacing {
-    letter-spacing: 3px;
-    margin-left: 5px;
-    height: 60px;
 }
 
 .timer{
