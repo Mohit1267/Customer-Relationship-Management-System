@@ -221,8 +221,7 @@ body{
     height: 100%;
     /* margin-top: 60px; */
     justify-content: flex-start;
-    
-    
+
 }  
 
 
@@ -260,7 +259,7 @@ body{
     margin-top: 20px;
     color: #ffffff;
     padding: 10px;
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
     display: block;
     list-style: none;
      /* margin-top: -10px; */
@@ -286,7 +285,7 @@ body{
     position: absolute;
     left: 100%; 
     top:20px;
-    margin-left: 40px;
+    /* margin-left: 40px; */
     margin-right: 80px; 
     display: none; /* Hide dropdown initially */
      white-space: nowrap; /* Prevent text from wrapping */
@@ -294,7 +293,7 @@ body{
     overflow: visible;
     letter-spacing: 3px;
     visibility: hidden; /* Initially hidden */
-    opacity: 0;
+    /* opacity: 0; */
     width: 235px;
     transition: opacity 0.5s ease, visibility 0s ease 0.5s;
 }
@@ -306,6 +305,9 @@ body{
     display: block;
     visibility: visible;
     opacity: 1;
+    white-space: nowrap;
+    left: 100%;
+    top: 20px;
     /* background-color: rgb(161, 229, 211); */
     background-color: transparent;
     border-radius: 20px;
