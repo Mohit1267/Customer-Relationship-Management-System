@@ -10,7 +10,7 @@ urlpatterns = [
     path("agent/", login_required(views.Agent.as_view()), name="agent"),
     path("agent/<pk>", login_required(views.DetailCalling), name="detail_agent"),
 
-    path("Attendence/", login_required(views.Attendence), name="attendence"),
+    path("Attendence/", login_required(views.Attendence), name="attendance"),
 
     path("mining", login_required(views.mining_view), name = "mining"),
     path("data", login_required(views.DataView.as_view()), name = "data"),

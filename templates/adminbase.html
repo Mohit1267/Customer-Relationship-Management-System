@@ -87,30 +87,20 @@
         <div class="" id="navbarNavDropdown">   
           <ul class="nav-links flex-column"> 
             <li class="nav-item ">
-               <a class="nav-link  spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Mining
+               <a class="nav-link  spacing" href="{% url 'adminn'%}" role="button"  aria-expanded="false">
+                Dashboard
                </a>
-               <ul class="dropdown-menu ">   
-                  <li><a class="dropdown-item" href="{% url 'mining' %}">Create Mining</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
-               </ul>
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Contacts
+              <a class="nav-link dropdown-toggle spacing" href="{% url 'attendance' %}" role="button"  aria-expanded="false">
+                Attendance
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">View Contacts</a></li>
-              </ul>
             </li>
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Leads
+               Real time
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
@@ -122,7 +112,7 @@
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Opportunities
+                Analytics
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
@@ -133,7 +123,7 @@
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Quotes
+                Device
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
@@ -144,7 +134,7 @@
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Calendar
+                Manual Time
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
