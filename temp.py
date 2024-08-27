@@ -10,6 +10,7 @@ django.setup()
 
 # Now you can import your models
 from users.models import RegisterUser, Profile, AttendanceRecord
+from sales_tracker.models import MiningData 
 
 # Perform your ORM operations
 attendence_percentage = []
@@ -46,5 +47,23 @@ late.append((TWlate/Total_att)*100)
 perct_changeLate = ((late[1]- attendence_percentage[0])/late[0])*100
 print(late)
 print(perct_changeLate)
+
+
+
+#Reporting
+
+MinerC = Profile.objects.filter(branch = "miner").count()
+Miner = Profile.objects.filter(branch = "miner")
+print(Miner)
+MinerId = []
+miner_usernames = [miner.user.username for miner in Miner]
+print(miner_usernames)
+print(MiningData.objects.count())
+
+
+# for i in range(0,MinerC):
+#     MinerId.append(Miner[i].user_id)
+#     k = RegisterUser.objects.get(id = MinerId).username
+#     print(k)
 
 

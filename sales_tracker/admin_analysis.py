@@ -1,11 +1,12 @@
 import os
 import sys
 import matplotlib.pyplot as plt
-from users.models import RegisterUser,Profile,AttendanceRecord
 current_directory = os.path.dirname(os.path.abspath(__file__))
 project_directory = os.path.join(current_directory, "..")
 sys.path.append(project_directory)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'stpa.settings'
+from users.models import RegisterUser,AttendanceRecord, Profile
+from sales_tracker.models import MiningData,LeadsData
 from django.db import connection
 from django.utils import timezone
 from datetime import timedelta
@@ -90,6 +91,76 @@ def Late_perct():
     return perct_changeLate 
     print(late)
     print(perct_changeLate)
+
+
+
+
+
+
+
+
+# # Reports
+# Miner = Profile.objects.filter(branch = "miner")
+# print(Miner)
+
+
+
+
+def Mining_Count():
+    Total_Mining = MiningData.objects.count()
+    Exp_M = AttendanceRecord.objects.values('date').distinct().count()
+    MinerC = Profile.objects.filter(branch = "miner").count()
+    Exp_Mining = Exp_M*MinerC*40
+
+    # Data
+    labels = ['Total Mining', 'Expected Mining']
+    sizes = [Total_Mining, Exp_Mining]
+    colors = ['#ff9999','#66b3ff']
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
+    plt.gcf().set_facecolor('#262626')
+    ax.set_facecolor('#262626')
+
+    # Create a pie chart
+    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
+
+    # Beautify the plot
+    plt.setp(autotexts, size=10, weight="bold",)
+    plt.setp(texts, size=12, color='white')
+    ax.set_title("Mining vs Expected Mining", color='white')
+
+    # Show plot
+    plt.savefig('static/Mining_Count.png')
+
+def Leads_Count():
+    Total_Leads = LeadsData.objects.count()
+    Exp_L = AttendanceRecord.objects.values('date').distinct().count()
+    AgentC = Profile.objects.filter(branch = "agent").count()
+    Exp_Leads = Exp_L*AgentC*4
+
+    # Data
+    labels = ['Total Mining', 'Expected Mining']
+    sizes = [Total_Leads, Exp_Leads]
+    colors = ['#ff9999','#66b3ff']
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
+    plt.gcf().set_facecolor('#262626')
+    ax.set_facecolor('#262626')
+
+    # Create a pie chart
+    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
+
+    # Beautify the plot
+    plt.setp(autotexts, size=10, weight="bold",)
+    plt.setp(texts, size=12, color='white')
+    ax.set_title("Leads vs Expected Leads", color='white')
+
+    # Show plot
+    plt.savefig('static/Leads_Count.png')
+
+
 
 
 
