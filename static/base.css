@@ -262,6 +262,7 @@ body{
     margin-top: 20px;
     color: #ffffff;
     padding: 10px;
+    font-size: 1.2rem;
     display: block;
     list-style: none;
      /* margin-top: -10px; */
@@ -413,3 +414,75 @@ body{
     font-size: 25px;
     font-weight: bold;
 } 
+
+
+.header {
+    font-size: 24px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px;
+    }
+
+    .nav-links a {
+        font-size: 16px;
+        padding: 8px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .navbar-brand img {
+        height: 30px; /* Smaller logo for small screens */
+    }
+
+    .nav-links a {
+        font-size: 1rem; /* Smaller text for small screens */
+    }
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+@media (max-width: 768px) {
+    .navbar {
+        position: relative;
+        width: 100%;
+    }
+
+    .hamburger {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .nav-links {
+        display: none; /* Hide by default */
+        flex-direction: column;
+    }
+
+    .navbar.collapsed .nav-links {
+        display: flex; /* Show when the navbar is toggled */
+    }
+}
