@@ -58,7 +58,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-     position: fixed;
+     position: fixed; /*Position: absolute          Changes by Rohit*/
 }
 
 .navbarNavDropdown {
@@ -207,9 +207,6 @@ body{
     100% {width: 18px; transform: translate(0, 0px);}
   }
 
-.navbar.collapsed {
-    transform: translateX(-100%);
-}
 
 
 .nav-item {
@@ -221,6 +218,8 @@ body{
     height: 100%;
     /* margin-top: 60px; */
     justify-content: flex-start;
+    /* display: block;
+    visibility: visible;     Changes by Rohit*/
     
     
 }  
@@ -262,8 +261,8 @@ body{
     margin-top: 20px;
     color: #ffffff;
     padding: 10px;
-    font-size: 1.2rem;
     display: block;
+    /* font-size: 1.2rem;   Changes by Rohit */
     list-style: none;
      /* margin-top: -10px; */
     display:block;
@@ -285,10 +284,10 @@ body{
 
 /*7*/
 .nav-item .dropdown-menu {
-    position: absolute;
+    position: absolute;         /*Changes by Rohit */
     left: 100%; 
     top:20px;
-    margin-left: 40px;
+    /* margin-left: 40px; */
     margin-right: 80px; 
     display: none; /* Hide dropdown initially */
      white-space: nowrap; /* Prevent text from wrapping */
@@ -296,7 +295,7 @@ body{
     overflow: visible;
     letter-spacing: 3px;
     visibility: hidden; /* Initially hidden */
-    opacity: 0;
+    /* opacity: 0; */
     width: 235px;
     transition: opacity 0.5s ease, visibility 0s ease 0.5s;
 }
@@ -308,10 +307,16 @@ body{
     display: block;
     visibility: visible;
     opacity: 1;
+    white-space: nowrap;           /*Changes By Rohit*/
+    left: 100%;                      /*Changes By Rohit*/
+    top: 20px;                      /*Changes By Rohit*/
     /* background-color: rgb(161, 229, 211); */
     background-color: transparent;
     border-radius: 20px;
-     margin-left: 10px;
+     /* margin-left: 40px;         /*Changes By Rohit*/
+     /*margin-right: 80px;       /*Changes By Rohit*/
+     /*margin-top: -20px;       /*Changes By Rohit*/
+     /*width: 235px;           Changes By Rohit */
      transition: opacity 0.5s ease, visibility 0s ease 0s;  }
   
 .dropdown-menu  .dropdown-item {
@@ -414,75 +419,3 @@ body{
     font-size: 25px;
     font-weight: bold;
 } 
-
-
-.header {
-    font-size: 24px;
-    padding: 20px;
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-    .content {
-        margin-left: 0;
-        padding: 20px;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        margin-top: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
-        padding: 10px;
-    }
-
-    .nav-links a {
-        font-size: 16px;
-        padding: 8px;
-    }
-}
-
-
-@media (max-width: 768px) {
-    .navbar-brand img {
-        height: 30px; /* Smaller logo for small screens */
-    }
-
-    .nav-links a {
-        font-size: 1rem; /* Smaller text for small screens */
-    }
-}
-img {
-    max-width: 100%;
-    height: auto;
-}
-@media (max-width: 768px) {
-    .navbar {
-        position: relative;
-        width: 100%;
-    }
-
-    .hamburger {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
-
-    .nav-links {
-        display: none; /* Hide by default */
-        flex-direction: column;
-    }
-
-    .navbar.collapsed .nav-links {
-        display: flex; /* Show when the navbar is toggled */
-    }
-}
