@@ -289,7 +289,7 @@ body{
     margin-left: 40px;
     margin-right: 80px; 
     display: none; /* Hide dropdown initially */
-     white-space: nowrap; /* Prevent text from wrapping */
+    white-space: nowrap; /* Prevent text from wrapping */
     z-index: 100; 
     overflow: visible;
     letter-spacing: 3px;
@@ -306,11 +306,15 @@ body{
     display: block;
     visibility: visible;
     opacity: 1;
+    white-space: nowrap ;
+    left: 100% ;
+    top: 20px ;
     /* background-color: rgb(161, 229, 211); */
     background-color: transparent;
     border-radius: 20px;
-     margin-left: 10px;
-     transition: opacity 0.5s ease, visibility 0s ease 0s;  }
+    margin-left: 10px;
+    transition: opacity 0.5s ease, visibility 0s ease 0s; 
+ }
   
 .dropdown-menu  .dropdown-item {
     display: block;
@@ -484,3 +488,5 @@ img {
         display: flex; /* Show when the navbar is toggled */
     }
 }
+
+
