@@ -43,7 +43,7 @@ body{
     flex-direction: column;
     margin: 0; /* Removes any extra margins */
     border-radius: 10px; /* Keeps your rounded corners */
-    box-shadow: 0 8px 8px rgba(140, 234, 239, 0.875); /* Adds shadow for a 3D effect */
+    box-shadow: 0 8px 8px rgba(147, 244, 231, 0.875); /* Adds shadow for a 3D effect */
     padding: 10px 20px; /* Adds padding inside the navbar */
     overflow-y: auto; /* Adds scrolling if the content overflows vertically */
     overflow: visible;
@@ -431,9 +431,11 @@ body{
 
 @media (max-width: 970px) {
     .navbar {
-        width: 100%;
-        height: 100%;
+        width: 90%;
+        height: 0%;
         position: relative;
+        background: transparent;
+        box-shadow: none;
     }
 
     .content {
@@ -441,9 +443,29 @@ body{
         padding: 20px;
     }
 
+    .profile1 {
+        /* margin-top: 30px; */
+        margin-top: 20px;
+        /* margin-left: 28px; */
+        /* margin-right: 60px; */
+        margin-left: -90px;
+        margin-bottom: 80px;
+        margin-right: 70px;
+        width: 150px;
+        letter-spacing: 4px;
+        /* position: fixed; */
+    }
+
+    .hamburger {
+        margin-left: 65px;
+    }
+
+
+    
+
     .nav-links {
         flex-direction: column;
-        margin-top: 20px;
+        margin-top: 90px;
     }
     .nav-item .dropdown-menu {
         position: static; /* Change positioning to static */
@@ -464,50 +486,26 @@ body{
 
 }
 
-@media (max-width: 480px) {
-    .navbar {
-        padding: 10px;
-    }
-
-    .nav-links a {
-        font-size: 16px;
-        padding: 8px;
-    }
-}
-
-
 @media (max-width: 768px) {
-    .navbar-brand img {
-        height: 30px; /* Smaller logo for small screens */
+    .navbar-container {
+      max-height: 300px; /* Adjust for mobile */
+      
     }
-
-    .nav-links a {
-        font-size: 1rem; /* Smaller text for small screens */
+    .profile1 {
+        /* margin-top: 30px; */
+        margin-top: 20px;
+        /* margin-left: 28px; */
+        /* margin-right: 60px; */
+        margin-left: -80px;
+        margin-bottom: 80px;
+        width: 150px;
+        letter-spacing: 4px;
+        position: fixed;
     }
-}
-img {
-    max-width: 100%;
-    height: auto;
-}
-@media (max-width: 768px) {
-    .navbar {
-        position: relative;
-        width: 100%;
+  }
+  
+  @media (min-width: 769px) {
+    .navbar-container {
+      max-height: none; /* No limit on larger screens */
     }
-
-    .hamburger {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
-
-    .nav-links {
-        display: none; /* Hide by default */
-        flex-direction: column;
-    }
-
-    .navbar.collapsed .nav-links {
-        display: flex; /* Show when the navbar is toggled */
-    }
-}
+  }
