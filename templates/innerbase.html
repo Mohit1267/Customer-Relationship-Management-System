@@ -128,17 +128,7 @@
             </li>
 
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Opportunities
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
-              </ul>
-            </li>
-
+            
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Quotes
@@ -166,6 +156,18 @@
                 Attendance
               </a>
             </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Opportunities
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
+              </ul>
+            </li>
+
 
             
           </ul>
@@ -215,115 +217,123 @@
     {%endcomment%}
 
 
-    <!-- <script>
+    <script>
       // Function to toggle the navbar
       function toggleNavbar() {
-  const navbar = document.querySelector('.nav-links');
-  navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
-}
-
-    </script> -->
+    const navbar = document.querySelector('.nav-links');
+    navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
+  }
+    </script>
   
-
+/*hamburger*/
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
-        $(document).ready(function() {
+      $(document).ready(function() {
   $(".hamburger").click(function() {
-    $(".stick").toggleClass(function () {
-      return $(this).is('.open, .close') ? 'open close' : 'open';
+    $(".stick").each(function() {
+      if ($(this).hasClass('open')) {
+        $(this).removeClass('open').addClass('close');
+      } else {
+        $(this).removeClass('close').addClass('open');
+      }
     });
   });
 });
     </script>
 
-    <script>
-      // Weekly Data Chart
-      var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
-      var weeklyChart = new Chart(ctxWeekly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Weekly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
-                  backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#33CC33', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  
-      // Monthly Data Chart
-      var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
-      var monthlyChart = new Chart(ctxMonthly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Monthly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
-                 backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#4CAF50', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  
-      // Quarterly Data Chart
-      var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
-      var quarterlyChart = new Chart(ctxQuarterly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Quarterly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
-                  backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#4CAF50', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  </script>
+
+
+    <script>  
+    
+        // Weekly Data Chart
+        var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+        var weeklyChart = new Chart(ctxWeekly, {
+    type: 'doughnut',
+    data: {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{
+            label: 'Weekly Data',
+            data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
+            backgroundColor: ['#4CAF50', '#e0e0e0'],
+            borderColor: ['#33CC33', '#e0e0e0'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        cutout: '70%',
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#1f1d1c', // Font color for the legend
+                    font: {
+                        size: 14, // Font size for the legend
+                    }
+                }
+            }
+        }
+    }
+});
+
+        // Monthly Data Chart
+        var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+       var monthlyChart = new Chart(ctxMonthly, {
+    type: 'doughnut',
+    data: {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{
+            label: 'Monthly Data',
+            data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
+           backgroundColor: ['#4CAF50', '#e0e0e0'],
+            borderColor: ['#4CAF50', '#e0e0e0'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        cutout: '70%',
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#1f1d1c', // Font color for the legend
+                    font: {
+                        size: 14, // Font size for the legend
+                    }
+                }
+            }
+        }
+    }
+});
+
+        // Quarterly Data Chart
+        var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
+        var quarterlyChart = new Chart(ctxQuarterly, {
+    type: 'doughnut',
+    data: {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{
+            label: 'Quarterly Data',
+            data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
+            backgroundColor: ['#4CAF50', '#e0e0e0'],
+            borderColor: ['#4CAF50', '#e0e0e0'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        cutout: '70%',
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#1f1d1c', // Font color for the legend
+                    font: {
+                        size: 14, // Font size for the legend
+                    }
+                }
+            }
+        }
+    }
+});
+ 
+   </script>
   
   <script>
     // Convert Django template variables to integers and calculate total seconds.
@@ -370,10 +380,10 @@
     console.log(`Timer started with interval: ${timerInterval}`);
 </script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-
-
-
+<script src="% static  IBscript.js"></script>
     {% block javascript %}{% endblock %}
 
 

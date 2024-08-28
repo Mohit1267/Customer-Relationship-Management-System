@@ -33,7 +33,7 @@ body{
 
 .navbar {
     background-color: #454343;
-    position: fixed; /* Fixes the navbar to the left of the screen */
+    position: absolute; /* Fixes the navbar to the left of the screen */
     height: 100vh; /* Full height of the viewport */
     min-width: 250px;
     width: 15%; /* Fixed width */
@@ -46,6 +46,7 @@ body{
     box-shadow: 0 8px 8px rgba(140, 234, 239, 0.875); /* Adds shadow for a 3D effect */
     padding: 10px 20px; /* Adds padding inside the navbar */
     overflow-y: auto; /* Adds scrolling if the content overflows vertically */
+    overflow: visible;
 }
 
 
@@ -58,7 +59,11 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+<<<<<<< HEAD
      position: fixed; /*Position: absolute          Changes by Rohit*/
+=======
+    position: fixed;
+>>>>>>> 22dd0e448bea711286e8302af061fc65faf892b8
 }
 
 .navbarNavDropdown {
@@ -190,8 +195,8 @@ body{
   }
   
   @keyframes stick-2-close {
-    0%   {background-color: #ff1456; width: 80px;}
-    20%  {background-color: #ff1456; width: 8px; transform: translate(0, 0px) rotate(40deg);}
+    0%   {background-color: #7cf3f1; width: 80px;}
+    20%  {background-color: #7ee8d6; width: 8px; transform: translate(0, 0px) rotate(40deg);}
     40%  {background-color: #2DFDB9; width: 0px;}
     65%  {transform: translate(0, -70px); animation-timing-function: cubic-bezier(0,1,1,1);}
     80%  {width: 0px;}
@@ -222,6 +227,7 @@ body{
     visibility: visible;     Changes by Rohit*/
     
     
+    
 }  
 
 
@@ -250,6 +256,7 @@ body{
   margin-right: -10px;
   color: rgb(13, 193, 221);
   line-height: 1.5;
+  
 }
 
 
@@ -284,28 +291,28 @@ body{
 
 /*7*/
 .nav-item .dropdown-menu {
+
     position: absolute;         /*Changes by Rohit */
+
     left: 100%; 
     top:20px;
     /* margin-left: 40px; */
     margin-right: 80px; 
     display: none; /* Hide dropdown initially */
-     white-space: nowrap; /* Prevent text from wrapping */
-    z-index: 100; 
-    overflow: visible;
+    white-space: nowrap; /* Prevent text from wrapping */
+    z-index: 100;
     letter-spacing: 3px;
     visibility: hidden; /* Initially hidden */
-    /* opacity: 0; */
     width: 235px;
-    transition: opacity 0.5s ease, visibility 0s ease 0.5s;
-}
+ }
 
 /*8*/
 /*menu pura box hai */
 .nav-item:hover .dropdown-menu {
     position: absolute;
     display: block;
-    visibility: visible;
+    left: 100%; 
+    top:20px;
     opacity: 1;
     white-space: nowrap;           /*Changes By Rohit*/
     left: 100%;                      /*Changes By Rohit*/
@@ -318,6 +325,7 @@ body{
      /*margin-top: -20px;       /*Changes By Rohit*/
      /*width: 235px;           Changes By Rohit */
      transition: opacity 0.5s ease, visibility 0s ease 0s;  }
+
   
 .dropdown-menu  .dropdown-item {
     display: block;
@@ -418,4 +426,97 @@ body{
     display:inline-block;
     font-size: 25px;
     font-weight: bold;
+
 } 
+
+
+
+
+.header {
+    font-size: 24px;
+    padding: 20px;
+}
+
+@media (max-width: 970px) {
+    .navbar {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+    .nav-item .dropdown-menu {
+        position: static; /* Change positioning to static */
+        display: none; /* Hide by default */
+        width: 100%; /* Full width */
+        margin-top: 10px;
+        /* Adjust dropdown styling for smaller screens */
+    }
+
+    .nav-item.active .dropdown-menu {
+        display: block; /* Show when active */
+        position: fixed;
+    }
+    
+    .dropdown-menu.show {
+        display: block; /* Show dropdown when 'show' class is added */
+      }    
+
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px;
+    }
+
+    .nav-links a {
+        font-size: 16px;
+        padding: 8px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .navbar-brand img {
+        height: 30px; /* Smaller logo for small screens */
+    }
+
+    .nav-links a {
+        font-size: 1rem; /* Smaller text for small screens */
+    }
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+@media (max-width: 768px) {
+    .navbar {
+        position: relative;
+        width: 100%;
+    }
+
+    .hamburger {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .nav-links {
+        display: none; /* Hide by default */
+        flex-direction: column;
+    }
+
+    .navbar.collapsed .nav-links {
+        display: flex; /* Show when the navbar is toggled */
+    }
+}
+
