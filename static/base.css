@@ -222,9 +222,6 @@ body{
     height: 100%;
     /* margin-top: 60px; */
     justify-content: flex-start;
-    
-    
-    
 }  
 
 
@@ -263,7 +260,9 @@ body{
     margin-top: 20px;
     color: #ffffff;
     padding: 10px;
-     display: block;
+    /* font-size: 1.2rem; */
+    display: block;
+
     list-style: none;
      /* margin-top: -10px; */
     display:block;
@@ -306,7 +305,11 @@ body{
     left: 100%; 
     top:20px;
     opacity: 1;
-    white-space: nowrap; /* Prevent text from wrapping */
+
+    white-space: nowrap;
+    left: 100%;
+    top: 20px;
+    /* background-color: rgb(161, 229, 211); */
     letter-spacing: 3px;
       /* background-color: rgb(161, 229, 211); */
     background-color: transparent;
