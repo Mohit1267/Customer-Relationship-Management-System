@@ -33,7 +33,7 @@ body{
 
 .navbar {
     background-color: #454343;
-    position: fixed; /* Fixes the navbar to the left of the screen */
+    position: absolute; /* Fixes the navbar to the left of the screen */
     height: 100vh; /* Full height of the viewport */
     min-width: 250px;
     width: 15%; /* Fixed width */
@@ -43,9 +43,10 @@ body{
     flex-direction: column;
     margin: 0; /* Removes any extra margins */
     border-radius: 10px; /* Keeps your rounded corners */
-    box-shadow: 0 8px 8px rgba(140, 234, 239, 0.875); /* Adds shadow for a 3D effect */
+    box-shadow: 0 8px 8px rgba(147, 244, 231, 0.875); /* Adds shadow for a 3D effect */
     padding: 10px 20px; /* Adds padding inside the navbar */
     overflow-y: auto; /* Adds scrolling if the content overflows vertically */
+    overflow: visible;
 }
 
 
@@ -58,7 +59,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-     position: fixed;
+    position: fixed;
 }
 
 .navbarNavDropdown {
@@ -190,8 +191,8 @@ body{
   }
   
   @keyframes stick-2-close {
-    0%   {background-color: #ff1456; width: 80px;}
-    20%  {background-color: #ff1456; width: 8px; transform: translate(0, 0px) rotate(40deg);}
+    0%   {background-color: #7cf3f1; width: 80px;}
+    20%  {background-color: #7ee8d6; width: 8px; transform: translate(0, 0px) rotate(40deg);}
     40%  {background-color: #2DFDB9; width: 0px;}
     65%  {transform: translate(0, -70px); animation-timing-function: cubic-bezier(0,1,1,1);}
     80%  {width: 0px;}
@@ -221,8 +222,6 @@ body{
     height: 100%;
     /* margin-top: 60px; */
     justify-content: flex-start;
-    
-    
 }  
 
 
@@ -251,6 +250,7 @@ body{
   margin-right: -10px;
   color: rgb(13, 193, 221);
   line-height: 1.5;
+  
 }
 
 
@@ -260,8 +260,9 @@ body{
     margin-top: 20px;
     color: #ffffff;
     padding: 10px;
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
     display: block;
+
     list-style: none;
      /* margin-top: -10px; */
     display:block;
@@ -283,10 +284,10 @@ body{
 
 /*7*/
 .nav-item .dropdown-menu {
-    position: absolute;
+    position:absolute;
     left: 100%; 
     top:20px;
-    margin-left: 40px;
+    /* margin-left: 40px; */
     margin-right: 80px; 
     display: none; /* Hide dropdown initially */
     white-space: nowrap; /* Prevent text from wrapping */
@@ -294,27 +295,38 @@ body{
     overflow: visible;
     letter-spacing: 3px;
     visibility: hidden; /* Initially hidden */
-    opacity: 0;
     width: 235px;
-    transition: opacity 0.5s ease, visibility 0s ease 0.5s;
-}
+ }
 
 /*8*/
 /*menu pura box hai */
 .nav-item:hover .dropdown-menu {
     position: absolute;
     display: block;
-    visibility: visible;
+    left: 100%; 
+    top:20px;
     opacity: 1;
     white-space: nowrap ;
     left: 100% ;
     top: 20px ;
+
     /* background-color: rgb(161, 229, 211); */
+    letter-spacing: 3px;
+      /* background-color: rgb(161, 229, 211); */
     background-color: transparent;
     border-radius: 20px;
     margin-left: 10px;
     transition: opacity 0.5s ease, visibility 0s ease 0s; 
  }
+
+    /* margin-left: 10px;
+    margin-right: 80px; 
+    margin-top: -10px;
+    width: 235px; */
+    /* transition: opacity 0s ease, visibility 0s ease 0s;  
+    
+     } */
+
   
 .dropdown-menu  .dropdown-item {
     display: block;
@@ -423,11 +435,13 @@ body{
     padding: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 970px) {
     .navbar {
-        width: 100%;
-        height: auto;
+        width: 90%;
+        height: 0%;
         position: relative;
+        background: transparent;
+        box-shadow: none;
     }
 
     .content {
@@ -435,58 +449,71 @@ body{
         padding: 20px;
     }
 
-    .nav-links {
-        flex-direction: column;
+    .profile1 {
+        /* margin-top: 30px; */
         margin-top: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
-        padding: 10px;
-    }
-
-    .nav-links a {
-        font-size: 16px;
-        padding: 8px;
-    }
-}
-
-
-@media (max-width: 768px) {
-    .navbar-brand img {
-        height: 30px; /* Smaller logo for small screens */
-    }
-
-    .nav-links a {
-        font-size: 1rem; /* Smaller text for small screens */
-    }
-}
-img {
-    max-width: 100%;
-    height: auto;
-}
-@media (max-width: 768px) {
-    .navbar {
-        position: relative;
-        width: 100%;
+        /* margin-left: 28px; */
+        /* margin-right: 60px; */
+        margin-left: -90px;
+        margin-bottom: 80px;
+        margin-right: 70px;
+        width: 150px;
+        letter-spacing: 4px;
+        /* position: fixed; */
     }
 
     .hamburger {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
+        margin-left: 65px;
     }
+
+
+    
 
     .nav-links {
-        display: none; /* Hide by default */
         flex-direction: column;
+        margin-top: 90px;
+    }
+    .nav-item .dropdown-menu {
+        position: static; /* Change positioning to static */
+        display: none; /* Hide by default */
+        width: 100%; /* Full width */
+        margin-top: 10px;
+        /* Adjust dropdown styling for smaller screens */
     }
 
-    .navbar.collapsed .nav-links {
-        display: flex; /* Show when the navbar is toggled */
+    .nav-item.active .dropdown-menu {
+        display: block; /* Show when active */
+        position: fixed;
     }
+    
+    .dropdown-menu.show {
+        display: block; /* Show dropdown when 'show' class is added */
+      }    
+
 }
 
+
+@media (max-width: 768px) {
+    .navbar-container {
+      max-height: 300px; /* Adjust for mobile */
+      
+    }
+    .profile1 {
+        /* margin-top: 30px; */
+        margin-top: 20px;
+        /* margin-left: 28px; */
+        /* margin-right: 60px; */
+        margin-left: -80px;
+        margin-bottom: 80px;
+        width: 150px;
+        letter-spacing: 4px;
+        position: fixed;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .navbar-container {
+      max-height: none; /* No limit on larger screens */
+    }
+  }
 

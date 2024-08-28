@@ -51,6 +51,8 @@
     /* height: 100vw; */
     
     background-color: #262626;
+    position: relative;
+    z-index: -1;
     /* background-color: #88bcdd; */
     /* background-color: #5078f2;
     background-image: linear-gradient(315deg, #5078f2 0% , #efe9f4 90%); */
@@ -96,7 +98,7 @@
 }
 
 .card {
-    flex: 1; /* Allow cards to grow evenly */
+    /* flex: 1; Allow cards to grow evenly */
     margin: 10px; /* Add some space between the cards */
     min-width: 200px; /* Ensure cards have a minimum width */
     max-width: 250px; /* Set a maximum width for consistency */
@@ -139,4 +141,13 @@
     display: block;
 }
 
+<<<<<<< HEAD
 
+=======
+@media  (max-width:970px)
+{
+    .card {
+        min-width: 250px ;
+    }
+}
+>>>>>>> 0f98a337cfddcabbcf60342b6d2089146ec49699
