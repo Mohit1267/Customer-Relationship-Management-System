@@ -103,7 +103,7 @@
 }
 
 .card {
-    flex: 1; /* Allow cards to grow evenly */
+    /* flex: 1; Allow cards to grow evenly */
     margin: 10px; /* Add some space between the cards */
     min-width: 200px; /* Ensure cards have a minimum width */
     max-width: 250px; /* Set a maximum width for consistency */
@@ -144,4 +144,11 @@
 .card canvas {
     margin: 0 auto;
     display: block;
+}
+
+@media  (max-width:970px)
+{
+    .card {
+        min-width: 250px ;
+    }
 }
