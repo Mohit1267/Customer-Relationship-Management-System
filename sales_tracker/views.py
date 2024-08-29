@@ -32,7 +32,6 @@ from users.models import AttendanceRecord
 
 
 
-
 def get_timer_value(request):
     user = request.user
     utc_login_time = user.last_login
@@ -893,4 +892,5 @@ class EmployeeDetail(TemplateView):
         u = u.id
         generate_bar_chart2(pk)
         return context
+
 
