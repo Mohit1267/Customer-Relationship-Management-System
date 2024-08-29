@@ -111,6 +111,14 @@ DATABASES = {
         # 'PASSWORD':'Pj@123456',
         # 'HOST' : 'localhost',
         # 'PORT': '3306',
+
+        # 'PASSWORD':'Mohit@sql1267',
+
+        # 'HOST' : 'localhost',
+
+
+        # 'PORT': '3306',
+
     }
 }
 
