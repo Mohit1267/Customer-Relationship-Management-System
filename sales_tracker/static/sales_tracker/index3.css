@@ -141,13 +141,9 @@
     display: block;
 }
 
-<<<<<<< HEAD
-
-=======
 @media  (max-width:970px)
 {
     .card {
         min-width: 250px ;
     }
 }
->>>>>>> 0f98a337cfddcabbcf60342b6d2089146ec49699
