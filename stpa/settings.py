@@ -101,16 +101,24 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shanaya',
-
-
         'USER': 'root',
-
-        'PASSWORD':'Mohit@sql1267',
-
+        'PASSWORD':'Siddhi@2002',
         'HOST' : 'localhost',
+        # 'USER': 'admin',
+        # 'PASSWORD':'Hello8349',
+        # 'HOST' : 'shanaya.cdays8ewiw5f.ap-southeast-2.rds.amazonaws.com',
+        
+        # 'PASSWORD':'Pj@123456',
+        # 'HOST' : 'localhost',
+        # 'PORT': '3306',
+
+        # 'PASSWORD':'Mohit@sql1267',
+
+        # 'HOST' : 'localhost',
 
 
-        'PORT': '3306',
+        # 'PORT': '3306',
+
     }
 }
 
