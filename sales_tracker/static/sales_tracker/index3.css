@@ -8,11 +8,6 @@
    
     /* background: linear-gradient(90deg, #3e3a3a 0%, rgb(63, 59, 59) 100%); */
     background: linear-gradient(90deg, #32d2ef 0%, rgb(7, 242, 246) 100%);
-<<<<<<< HEAD
-=======
-
->>>>>>> aceb8e2281f32a71fc2afeaf6d5263da92888848
-    -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     width: 100%;
@@ -50,13 +45,6 @@
     }
     
 
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> aceb8e2281f32a71fc2afeaf6d5263da92888848
 .content{
     width: 100vw;
     /* height: 100vw; */
@@ -152,21 +140,9 @@
     display: block;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> aceb8e2281f32a71fc2afeaf6d5263da92888848
 @media  (max-width:970px)
 {
     .card {
         min-width: 250px ;
-<<<<<<< HEAD
     }
 }
-=======
-
-
-
-    }
-}
->>>>>>> aceb8e2281f32a71fc2afeaf6d5263da92888848
