@@ -112,9 +112,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shanaya',
-        'USER': 'admin',
-        'PASSWORD':'Hello8349',
-        'HOST' : 'shanaya.cdays8ewiw5f.ap-southeast-2.rds.amazonaws.com',
+        'USER': 'root',
+        'PASSWORD':'mysql',
+        'HOST' : 'localhost',
         'PORT': '3306',
     }
 }
