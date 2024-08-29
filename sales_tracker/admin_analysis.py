@@ -21,7 +21,7 @@ week_attendance = AttendanceRecord.objects.filter(date__range=[start_date, end_d
 from collections import defaultdict
 
 # Initialize dictionary to hold data
-data = defaultdict(lambda: {'Present': 0, 'Absent': 0})
+data = defaultdict(lambda: {'Present': 0, 'Absent': 0, 'Late': 0})
 
 for record in week_attendance:
     date = record.date
@@ -32,31 +32,26 @@ for record in week_attendance:
 dates = sorted(data.keys())
 present_counts = [data[date]['Present'] for date in dates]
 absent_counts = [data[date]['Absent'] for date in dates]
-
-
-import matplotlib.pyplot as plt
-from io import BytesIO
-from django.http import HttpResponse
+late_counts = [data[date]['Late'] for date in dates]  # New line for 'Late' status
 
 def admin_attendence_graph():
+    print("this is in admin attendece function")
     fig, ax = plt.subplots(figsize=(12, 6))
     plt.gcf().set_facecolor('#262626')
     ax = plt.gca()
     ax.set_facecolor('#262626')
+    
     ax.bar(dates, present_counts, label='Present')
     ax.bar(dates, absent_counts, bottom=present_counts, label='Absent')
+    ax.bar(dates, late_counts, bottom=[p + a for p, a in zip(present_counts, absent_counts)], label='Late')  # Stacked bar for 'Late'
+
     ax.set_xlabel('Date')
     ax.set_ylabel('Total Number of Employees')
     ax.set_title('Employee Attendance for Initial 7 Days')
     ax.legend(title='Status')
     ax.set_xticklabels(dates, rotation=45)
 
-    # Save the plot to a BytesIO object
-    # buf = BytesIO()
-    # plt.savefig(buf, format='png')
-    # buf.seek(0)
     plt.savefig('static/admin_attendence.png', bbox_inches='tight', facecolor='#262626')
-
 
 
 
@@ -95,13 +90,6 @@ def Late_perct():
 
 
 
-
-
-
-
-# # Reports
-# Miner = Profile.objects.filter(branch = "miner")
-# print(Miner)
 
 
 
@@ -159,7 +147,6 @@ def Leads_Count():
 
     # Show plot
     plt.savefig('static/Leads_Count.png')
-
 
 
 
