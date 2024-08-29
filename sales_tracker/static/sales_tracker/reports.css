@@ -11,8 +11,9 @@
 }
 
 .section h2 {
+    margin-top: 50px;
     margin-bottom: 20px;
-    color: #333;
+    color: white;
     font-size: 24px;
     border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
@@ -27,7 +28,7 @@
 
 /* Individual Card */
 .card {
-    background-color: #fff;
+    background: linear-gradient(90deg, rgba(184, 228, 243, 0.979) 0%, rgb(48, 186, 163) 100%) !important;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     flex: 1 1 calc(25% - 20px); /* Adjust the width as needed */
@@ -62,7 +63,7 @@
 .card-content p {
     margin: 0;
     font-size: 14px;
-    color: #666;
+    color: black;
 }
 
 /* Responsive Design */
