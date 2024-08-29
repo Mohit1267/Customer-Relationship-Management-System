@@ -1,11 +1,12 @@
 import os
 import sys
+import numpy as np
 import matplotlib.pyplot as plt
 current_directory = os.path.dirname(os.path.abspath(__file__))
 project_directory = os.path.join(current_directory, "..")
 sys.path.append(project_directory)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'stpa.settings'
-from users.models import RegisterUser,AttendanceRecord, Profile
+from users.models import RegisterUser,AttendanceRecord, Profile, DaysStatus
 from sales_tracker.models import MiningData,LeadsData
 from django.db import connection
 from django.utils import timezone
@@ -34,25 +35,35 @@ present_counts = [data[date]['Present'] for date in dates]
 absent_counts = [data[date]['Absent'] for date in dates]
 late_counts = [data[date]['Late'] for date in dates]  # New line for 'Late' status
 
+
+x = np.arange(len(dates))
+width = 0.25  # Width of the bars
 def admin_attendence_graph():
     print("this is in admin attendece function")
     fig, ax = plt.subplots(figsize=(12, 6))
     plt.gcf().set_facecolor('#262626')
     ax = plt.gca()
     ax.set_facecolor('#262626')
+
     
-    ax.bar(dates, present_counts, label='Present')
-    ax.bar(dates, absent_counts, bottom=present_counts, label='Absent')
-    ax.bar(dates, late_counts, bottom=[p + a for p, a in zip(present_counts, absent_counts)], label='Late')  # Stacked bar for 'Late'
+    ax.bar(x - width, present_counts, width, label='Present', color='#1f77b4')
+    ax.bar(x, absent_counts, width, label='Absent', color='#ff7f0e')
+    ax.bar(x + width, late_counts, width, label='Late', color='#2ca02c')
+
+    # ax.bar(dates, present_counts, label='Present')
+    # ax.bar(dates, absent_counts, bottom=present_counts, label='Absent')
+    # ax.bar(dates, late_counts, bottom=[p + a for p, a in zip(present_counts, absent_counts)], label='Late')  # Stacked bar for 'Late'
 
     ax.set_xlabel('Date')
     ax.set_ylabel('Total Number of Employees')
     ax.set_title('Employee Attendance for Initial 7 Days')
+    ax.set_xticks(x)
+    ax.set_xticklabels([date.strftime('%Y-%m-%d') for date in dates], rotation=45)
     ax.legend(title='Status')
-    ax.set_xticklabels(dates, rotation=45)
-
+    # ax.set_xticklabels(dates, rotation=45)
+    plt.tight_layout()
     plt.savefig('static/admin_attendence.png', bbox_inches='tight', facecolor='#262626')
-
+    
 
 
 
@@ -151,4 +162,44 @@ def Leads_Count():
 
 
 
-    
+def EachMinerTarget(id):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+        select A.status, COUNT(*) as count 
+        from users_attendancerecord as A
+        left join users_daysstatus as D
+        ON D.date = A.date
+        where A.user_id = %s and D.status = 'Working Day'
+        group by A.status;
+        """,[id])
+        data = cursor.fetchall()
+        print(data) 
+        target = sum(row[1] for row in data)*40
+        print(target)
+    acchieved = MiningData.objects.filter(created_by_id = id).count()
+    print(acchieved) 
+    each_miner = {"Target":target, "Acchieve":acchieved}
+    labels = [f'target:{target}', f'acchieved:{acchieved}']
+    sizes = [target, acchieved]
+    colors = ['#ff9999','#66b3ff']
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
+    plt.gcf().set_facecolor('#262626')
+    ax.set_facecolor('#262626')
+
+    # Create a pie chart
+    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
+
+    # Beautify the plot
+    plt.setp(autotexts, size=10, weight="bold",)
+    plt.setp(texts, size=12, color='white')
+    ax.set_title("Mining vs Expected Mining", color='white')
+
+    # Show plot
+    plt.savefig('static/EachMinerTarget.png')
+
+    return each_miner 
+    # wd = DaysStatus.objects.filter(status='Working Day')
+    # attendence = AttendanceRecord.objects.filter(user_id = id)
+    # print(attendence)

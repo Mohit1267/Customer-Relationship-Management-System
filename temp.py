@@ -4,12 +4,12 @@ from django.utils import timezone
 from datetime import timedelta
 # Set the settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stpa.settings')
-
+from django.db import connection
 # Setup Django
 django.setup()
 
 # Now you can import your models
-from users.models import RegisterUser, Profile, AttendanceRecord
+from users.models import RegisterUser, Profile, AttendanceRecord, DaysStatus
 from sales_tracker.models import MiningData 
 
 # Perform your ORM operations
@@ -67,3 +67,26 @@ print(MiningData.objects.count())
 #     print(k)
 
 
+
+def EachMinerTarget(id):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+        select A.status, COUNT(*) as count 
+        from users_attendancerecord as A
+        left join users_daysstatus as D
+        ON D.date = A.date
+        where A.user_id = %s and D.status = 'Working Day'
+        group by A.status;
+        """,[id])
+        data = cursor.fetchall()
+        print(data) 
+        target = sum(row[1] for row in data)*40
+        print(target)
+    acchieved = MiningData.objects.filter(created_by_id = id).count()
+    print(acchieved) 
+    each_miner = {"Target":target, "Acchieve":acchieved}
+    return each_miner 
+    # wd = DaysStatus.objects.filter(status='Working Day')
+    # attendence = AttendanceRecord.objects.filter(user_id = id)
+    # print(attendence)
+EachMinerTarget(13)

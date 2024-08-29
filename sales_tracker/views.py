@@ -20,7 +20,7 @@ from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
-from .admin_analysis import Att_perct,Late_perct ,Mining_Count,Leads_Count
+from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
@@ -891,6 +891,8 @@ class EmployeeDetail(TemplateView):
         u = RegisterUser.objects.get(email=users)
         u = u.id
         generate_bar_chart2(pk)
+        Miner_Details = EachMinerTarget(pk)
+        context["Miner_Details"] = Miner_Details
         return context
 
 
