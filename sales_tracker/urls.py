@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-# from .views import Admin
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -13,6 +12,7 @@ urlpatterns = [
     path("Attendence/", login_required(views.Attendence), name="attendance"),
     path("reports/", login_required(views.Admin_reports.as_view()), name="reports"),
     path("reports/MinerActivity/", login_required(views.MinerActivity.as_view()), name="MinerActivity"),
+    path("reports/MinerActivity/<pk>", login_required(views.EmployeeDetail.as_view()), name="EmployeeDetail"),
     path("reports/LeadsActivity/", login_required(views.LeadsActivity.as_view()), name="LeadsActivity"),
 
     path("mining", login_required(views.mining_view), name = "mining"),
