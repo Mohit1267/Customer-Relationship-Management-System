@@ -146,9 +146,13 @@
     display: block;
 }
 
+
 @media  (max-width:970px)
 {
     .card {
         min-width: 250px ;
+
+
+
     }
 }
