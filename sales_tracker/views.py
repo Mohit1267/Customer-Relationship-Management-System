@@ -19,7 +19,7 @@ from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
-from .analysis import generate_bar_chart, TotalDays
+from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count,Leads_Count
 from .requirements import timer
 from django.http import HttpResponseForbidden
@@ -253,7 +253,8 @@ def mining_view(request):
                 IT_spending_budget = form.data.get("IT_spending_budget"),
                 source_of_data_mining = form.data.get("source_of_data_mining"),
                 date = now_date,
-                assigned_to = assignTo
+                assigned_to = assignTo,
+                created_by = user,
             )
             mining_details.save()
             print("Hello world 4")
@@ -879,4 +880,17 @@ class LeadsActivity(TemplateView):
         # context['MinerC'] = MinerC
         return context
     
+
+class EmployeeDetail(TemplateView): 
+    template_name = "sales_tracker/employee_detail.html"
+    def get_context_data(self, **kwargs: Any):
+        context =  super().get_context_data(**kwargs)
+        request = self.request
+        users = request.user
+        pk = self.kwargs.get('pk')
+        u = RegisterUser.objects.get(email=users)
+        u = u.id
+        generate_bar_chart2(pk)
+        return context
+
 
