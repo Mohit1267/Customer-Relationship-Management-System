@@ -14,6 +14,7 @@ urlpatterns = [
     path("reports/MinerActivity/", login_required(views.MinerActivity.as_view()), name="MinerActivity"),
     path("reports/MinerActivity/<pk>", login_required(views.EmployeeDetail.as_view()), name="EmployeeDetail"),
     path("reports/LeadsActivity/", login_required(views.LeadsActivity.as_view()), name="LeadsActivity"),
+    path("reports/Analysis/", login_required(views.AdminAnalysis.as_view()), name="AdminAnalysis"),
 
     path("mining", login_required(views.mining_view), name = "mining"),
     path("data", login_required(views.DataView.as_view()), name = "data"),
