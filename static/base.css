@@ -59,11 +59,8 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-<<<<<<< HEAD
      position: fixed; /*Position: absolute          Changes by Rohit*/
-=======
-    position: fixed;
->>>>>>> 22dd0e448bea711286e8302af061fc65faf892b8
+
 }
 
 .navbarNavDropdown {
@@ -223,11 +220,10 @@ body{
     height: 100%;
     /* margin-top: 60px; */
     justify-content: flex-start;
+
     /* display: block;
     visibility: visible;     Changes by Rohit*/
-    
-    
-    
+
 }  
 
 
@@ -268,8 +264,10 @@ body{
     margin-top: 20px;
     color: #ffffff;
     padding: 10px;
+
     display: block;
     /* font-size: 1.2rem;   Changes by Rohit */
+
     list-style: none;
      /* margin-top: -10px; */
     display:block;
@@ -314,10 +312,12 @@ body{
     left: 100%; 
     top:20px;
     opacity: 1;
+
     white-space: nowrap;           /*Changes By Rohit*/
     left: 100%;                      /*Changes By Rohit*/
     top: 20px;                      /*Changes By Rohit*/
     /* background-color: rgb(161, 229, 211); */
+
     background-color: transparent;
     border-radius: 20px;
      /* margin-left: 40px;         /*Changes By Rohit*/
