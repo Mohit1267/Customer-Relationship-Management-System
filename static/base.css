@@ -59,11 +59,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-     position: fixed; /*Position: absolute          Changes by Rohit*/
-
-
     position: fixed;
-
 }
 
 .navbarNavDropdown {
@@ -212,12 +208,9 @@ body{
     100% {width: 18px; transform: translate(0, 0px);}
   }
 
-
 .navbar.collapsed {
     transform: translateX(-100%);
 }
-
-
 
 .nav-item {
     position: relative;
@@ -228,11 +221,6 @@ body{
     height: 100%;
     /* margin-top: 60px; */
     justify-content: flex-start;
-
-    /* display: block;
-    visibility: visible;     Changes by Rohit*/
-
-
 }  
 
 
@@ -264,22 +252,13 @@ body{
   
 }
 
-
-
-
-/*working   mining and contact ke beech ka space    5*/
-
-
 .nav-links a {    
     text-decoration: none;
     margin-top: 20px;
     color: #ffffff;
     padding: 10px;
-
-
+    /* font-size: 1.2rem; */
     display: block;
-    /* font-size: 1.2rem;   Changes by Rohit */
-
 
     list-style: none;
      /* margin-top: -10px; */
@@ -302,11 +281,9 @@ body{
 
 /*7*/
 .nav-item .dropdown-menu {
+    position:absolute;
 
-    position: absolute;         /*Changes by Rohit */
-
-
-    left: 100%; 
+   left: 100%; 
     top:20px;
     /* margin-left: 40px; */
     margin-right: 80px; 
@@ -326,19 +303,26 @@ body{
     left: 100%; 
     top:20px;
     opacity: 1;
+    white-space: nowrap ;
+    left: 100% ;
+    top: 20px ;
 
-    white-space: nowrap;           /*Changes By Rohit*/
-    left: 100%;                      /*Changes By Rohit*/
-    top: 20px;                      /*Changes By Rohit*/
     /* background-color: rgb(161, 229, 211); */
-
+    letter-spacing: 3px;
+      /* background-color: rgb(161, 229, 211); */
     background-color: transparent;
     border-radius: 20px;
-     /* margin-left: 40px;         /*Changes By Rohit*/
-     /*margin-right: 80px;       /*Changes By Rohit*/
-     /*margin-top: -20px;       /*Changes By Rohit*/
-     /*width: 235px;           Changes By Rohit */
-     transition: opacity 0.5s ease, visibility 0s ease 0s;  }
+    margin-left: 10px;
+    transition: opacity 0.5s ease, visibility 0s ease 0s; 
+ }
+
+    /* margin-left: 10px;
+    margin-right: 80px; 
+    margin-top: -10px;
+    width: 235px; */
+    /* transition: opacity 0s ease, visibility 0s ease 0s;  
+    
+     } */
 
 
   
@@ -441,10 +425,7 @@ body{
     display:inline-block;
     font-size: 25px;
     font-weight: bold;
-
-
-} 
-
+}
 
 .header {
     font-size: 24px;
@@ -481,9 +462,6 @@ body{
     .hamburger {
         margin-left: 65px;
     }
-
-
-    
 
     .nav-links {
         flex-direction: column;
