@@ -8,6 +8,18 @@ body {
     align-items: center;
 }
 
+.form_sec {
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+    margin: 0 15px;
+}
+
+
 .circle1 {
     position: absolute;
     width: 13em;
@@ -18,6 +30,7 @@ body {
     left: 30%;
     box-shadow: 0 0 50px #d84869;
     animation: circle1Animate 15s infinite;
+    z-index: -100;
   }
 
   @keyframes circle1Animate {
@@ -43,7 +56,7 @@ body {
     box-shadow: 0 0 50px #5648d8;
     background: linear-gradient(-25deg, #5648d8, #8641f4);
     animation: circle2Animate 15s infinite;
-    z-index: 999;
+    z-index: -100;
   }
   
   @keyframes circle2Animate {
@@ -58,17 +71,6 @@ body {
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
 
-.form_sec {
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 450px;
-    box-sizing: border-box;
-    margin: 0 15px;
-    z-index: 1000;
-}
 
 .form_sec h2 {
     font-size: 24px;
@@ -79,13 +81,14 @@ body {
 .form input[type="text"],
 .form input[type="password"],
 .form input[type="email"] {
-    position: relative;
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 10px;
-    border: 1px solid #000000;
+    padding: 10px 0;
     background: transparent;
+    border: none;
+    border-bottom: 2px solid #fff;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
 }
 
 .form input[type="checkbox"] {
@@ -93,7 +96,7 @@ body {
 }
 
 .signup-btn {
-    background-color: #000000;
+    background-color: #ff6f61;
     color: white;
     border: none;
     padding: 10px;
@@ -115,7 +118,7 @@ body {
 }
 
 .login-link a {
-    color: #0000ff;
+    color: #ff6f61;
     text-decoration: none;
 }
 
