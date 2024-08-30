@@ -1,7 +1,9 @@
 import os
 import sys
 import numpy as np
+import datetime
 import matplotlib.pyplot as plt
+from django.db.models import Count
 current_directory = os.path.dirname(os.path.abspath(__file__))
 project_directory = os.path.join(current_directory, "..")
 sys.path.append(project_directory)
@@ -251,3 +253,119 @@ def Time_worked():
         plt.yticks(color='white')
         plt.tight_layout()
         plt.savefig('static/Time_worked.png')
+
+
+def  TotalEmployees():
+    c = RegisterUser.objects.count()
+    print(c)
+    return c
+
+
+def DailyAttendance():
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+    # now_date = datetime.datetime.now().strftime('%Y-%m-%d')
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT A.status, count(*) as count  
+            FROM users_attendancerecord AS A
+            LEFT JOIN users_daysstatus AS D ON A.date = D.date
+            WHERE A.date = %s AND A.status IN ('Present', 'Late')
+            group by A.status;
+        """, [now_date])
+
+        data = cursor.fetchall()
+    if(DaysStatus.objects.filter(date = now_date).values('status')[0]['status']=='Working Day'):
+        x = TotalEmployees()
+        y = data[0][1]
+        fig,ax = plt.subplots(figsize = (4.5,4))
+        plt.gcf().set_facecolor('#262626')
+        ax.set_facecolor('#262626')
+        sizes = [x,y]
+        labels = ['Total', 'Present']
+        colors = ['#ff9999','#66b3ff']
+
+        wedge, texts, autotexts = ax.pie(sizes,labels = labels,colors=colors, autopct=lambda p: f'{int(p * sum(sizes) / 100)}', 
+                                         startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white') )
+        plt.setp(autotexts, size=10, weight="bold",)
+        plt.setp(texts, size=12, color='white')
+        ax.set_title("Total VS Present", color='white')
+        plt.savefig('static/DailyAttendence.png')
+    else:
+        return "Today is holiday"
+        # plt.savefig('static/DailyAttendence.png')
+
+    
+    now_date_time = datetime.datetime.now()
+    yesterdays_date = now_date_time - datetime.timedelta(days = 1)
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+    # now_date = datetime.datetime.now().strftime('%Y-%m-%d')
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT A.status, count(*) as count  
+            FROM users_attendancerecord AS A
+            LEFT JOIN users_daysstatus AS D ON A.date = D.date
+            WHERE A.date = %s AND A.status IN ('Present', 'Late')
+            group by A.status;
+        """, [yesterdays_date])
+        Ydata = cursor.fetchall()
+    
+    print(Ydata)
+
+
+
+def generate_date_range(start_date, end_date):
+    """Generate a list of dates from start_date to end_date."""
+    delta = end_date - start_date
+    return [start_date + timedelta(days=i) for i in range(delta.days + 1)]
+
+def Productivity():
+    end_date = timezone.now().date()
+    start_date = end_date - timedelta(days=6)
+
+    # Generate the full date range
+    date_range = generate_date_range(start_date, end_date)
+
+    # Fetch the counts for the existing dates
+    data = (
+        MiningData.objects.filter(date__range=[start_date, end_date])
+        .values('date')
+        .annotate(count=Count('created_by_id'))
+        .order_by('date')
+    )
+
+    # Convert the fetched data to a dictionary for easy lookup
+    data_dict = {entry['date']: entry['count'] for entry in data}
+
+    # Include dates with a count of 0
+    result = [{'date': d, 'count': data_dict.get(d, 0)} for d in date_range]
+    target_mining = 100
+    dates = [entry['date'] for entry in result]
+    counts = [entry['count'] for entry in result]
+    fig, ax = plt.subplots(figsize=(10, 6))
+    plt.gcf().set_facecolor('#262626')
+    ax.set_facecolor('#262626')
+
+    ax.plot(dates, counts, marker='o', linestyle='-', color='#66b3ff', label="Number of Minings")
+    ax.axhline(y=target_mining, color='red', linestyle='--', linewidth=2, label=f"Target Mining ({target_mining})")
+
+
+    # Beautify the chart
+    ax.set_xlabel('Date', color='white')
+    ax.set_ylabel('Number of Minings', color='white')
+    ax.set_title('Number of Minings vs. Days', color='white')
+    ax.tick_params(axis='x', colors='white')
+    ax.tick_params(axis='y', colors='white')
+
+    # Format the x-axis to display dates properly
+    ax.xaxis.set_major_formatter(plt.FixedFormatter(dates))
+    plt.xticks(rotation=45)  # Rotate the x-axis labels for better readability
+
+    # Show grid
+    ax.grid(True, linestyle='--', color='#555555')
+    plt.savefig('static/Productivity.png')
+
+
+Productivity()
