@@ -127,6 +127,7 @@ body {
     outline: none;
     color: #fff;
     font-size: 16px;
+    font-weight: bold;
 }
 
 .input-box label {
@@ -224,8 +225,8 @@ button:hover {
 .see-password {
     position: absolute;
     margin-right: 0px;
-    left: 150px;
-    /* right: 0px; */
+    /* left: 150px; */
+    right: 5px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -233,6 +234,10 @@ button:hover {
     cursor: pointer;
     /* font-size: 1.2rem; */
     color: #333;
+    margin: 100;
+    padding: 0;
+    width: auto;
+    display: flex;
 }
 
 
