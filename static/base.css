@@ -282,7 +282,6 @@ body{
 /*7*/
 .nav-item .dropdown-menu {
     position:absolute;
-
    left: 100%; 
     top:20px;
     /* margin-left: 40px; */
