@@ -44,21 +44,58 @@ def get_timer_value(request):
 
 
 # Create your views here.
-class IndexView(TemplateView):
-    template_name = "sales_tracker/index.html"
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user.profile.branch != 'miner': 
-            return HttpResponseForbidden("You do not have access to this page.")
-        return super().dispatch(request, *args, **kwargs)
-    # def dispatch(self, request, *args, **kwargs):
-    #     print("Thisis ")
-    #     if self.request.user.profile.branch == 'agent': 
-    #         self.template_name = "sales_tracker/agent.html"
-    #     return super().dispatch(request, *args, **kwargs)
+# class IndexView(TemplateView):
+#     template_name = "sales_tracker/index.html"
+#     def dispatch(self, request, *args, **kwargs):
+#         if self.request.user.profile.branch != 'miner': 
+#             return HttpResponseForbidden("You do not have access to this page.")
+#         return super().dispatch(request, *args, **kwargs)
+#     # def dispatch(self, request, *args, **kwargs):
+#     #     print("Thisis ")
+#     #     if self.request.user.profile.branch == 'agent': 
+#     #         self.template_name = "sales_tracker/agent.html"
+#     #     return super().dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        request = self.request
+#     def get_context_data(self, **kwargs):
+#         context =  super().get_context_data(**kwargs)
+#         request = self.request
+#         user = request.user
+#         context["user"] = user.username
+#         utc_login_time = user.last_login
+#         elapsed_time = timer(utc_login_time)
+#         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+#         now_date_time = datetime.datetime.now()
+#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+#         today_mining = MiningData.objects.filter(date = now_date)
+#         today_mining_count = today_mining.count()
+#         context["mining_count"] = today_mining_count
+#         today_lead = LeadsData.objects.filter(date = now_date)
+#         today_lead_count = today_lead.count()
+#         context["lead_count"] = today_lead_count
+#         today_contact = ContactData.objects.filter(date = now_date)
+#         today_contact_count = today_contact.count()
+#         context["contact_count"] = today_contact_count
+#         today_Opportunity = OpportunityData.objects.filter(date = now_date)
+#         today_Opportunity_count = today_Opportunity.count()
+#         context["Opportunity_count"] = today_Opportunity_count
+#         return context
+
+
+
+def Dashboards(request):
+    if (request.user.profile.branch == 'admin'):
+        context = {}
+        attendances = AttendanceRecord.objects.all()
+        att = Att_perct()
+        late = Late_perct()
+        context['admin_message'] = "Welcome to the Admin Page"
+        context['attendances'] = attendances
+        context['att'] = att
+        # context['late'] = Late_perct
+        context['late'] = late
+        return render(request,'sales_tracker/admin.html',context)
+    elif(request.user.profile.branch == 'miner'):
+        context = {}
         user = request.user
         context["user"] = user.username
         utc_login_time = user.last_login
@@ -78,8 +115,33 @@ class IndexView(TemplateView):
         today_Opportunity = OpportunityData.objects.filter(date = now_date)
         today_Opportunity_count = today_Opportunity.count()
         context["Opportunity_count"] = today_Opportunity_count
-        return context
+        return render(request,'sales_tracker/index.html',context)
+    elif(request.user.profile.branch == 'agent'):
+        context = {}
+        users = request.user
+        u = RegisterUser.objects.get(email=users)
+        u = u.id
+        ToCall = MiningData.objects.filter(assigned_to=u)
+        context["user"] = u
+        context["Tocall"] = ToCall
+        return render(request,'sales_tracker/agent.html',context)
 
+
+    # pass
+
+class Admin(TemplateView):
+    template_name = "sales_tracker/admin.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        attendances = AttendanceRecord.objects.all()
+        att = Att_perct()
+        late = Late_perct()
+        context['admin_message'] = "Welcome to the Admin Page"
+        context['attendances'] = attendances
+        context['att'] = att
+        context['late'] = Late_perct 
+        return context
+    
 
 class Agent(TemplateView):
     template_name = "sales_tracker/agent.html"

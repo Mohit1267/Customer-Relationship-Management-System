@@ -240,13 +240,14 @@ def manual_login(request):
                         )
                     print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
                     print(Nuser)
-                    if user_profile.branch == "admin":
+                    return redirect("Dashboards")
+                    # if user_profile.branch == "admin":
                         
-                        return redirect("adminn")
-                    elif user_profile.branch == "miner":
-                        return redirect("index")
-                    elif user_profile.branch == "agent":
-                        return redirect("agent")
+                    #     return redirect("adminn")
+                    # elif user_profile.branch == "miner":
+                    #     return redirect("index")
+                    # elif user_profile.branch == "agent":
+                    #     return redirect("agent")
 
                 else:
                     error_message = 'Your access is denied, Please contact Admin for access'
