@@ -20,12 +20,16 @@ from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
-from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked, DailyAttendance,Productivity
+from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
 from users.models import AttendanceRecord
+import random
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils.decorators import method_decorator
+
 
 
 
@@ -88,8 +92,10 @@ def Dashboards(request):
         attendances = AttendanceRecord.objects.all()
         att = Att_perct()
         late = Late_perct()
+        attendence_graph = admin_attendance_graph(request)
         context['admin_message'] = "Welcome to the Admin Page"
         context['attendances'] = attendances
+        context['attendence_graph'] = attendence_graph
         context['att'] = att
         # context['late'] = Late_perct
         context['late'] = late
@@ -124,37 +130,67 @@ def Dashboards(request):
         ToCall = MiningData.objects.filter(assigned_to=u)
         context["user"] = u
         context["Tocall"] = ToCall
+        print(ToCall, "This is the value of ToCall")
         return render(request,'sales_tracker/agent.html',context)
 
 
     # pass
 
-class Admin(TemplateView):
-    template_name = "sales_tracker/admin.html"
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        attendances = AttendanceRecord.objects.all()
-        att = Att_perct()
-        late = Late_perct()
-        context['admin_message'] = "Welcome to the Admin Page"
-        context['attendances'] = attendances
-        context['att'] = att
-        context['late'] = Late_perct 
-        return context
+
+
+def admin_required(view_func):
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.profile.branch == 'admin':
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("You are not authorized to view this page.")
+    return _wrapped_view
+
+def miner_required(view_func):
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.profile.branch == 'miner':
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("You are not authorized to view this page.")
+    return _wrapped_view
+
+def agent_required(view_func):
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.profile.branch == 'agent':
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("You are not authorized to view this page.")
+    return _wrapped_view
+
+
+
+# @admin_required
+# class Admin(TemplateView):
+#     template_name = "sales_tracker/admin.html"
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         attendances = AttendanceRecord.objects.all()
+#         att = Att_perct()
+#         late = Late_perct()
+#         context['admin_message'] = "Welcome to the Admin Page"
+#         context['attendances'] = attendances
+#         context['att'] = att
+#         context['late'] = Late_perct 
+#         return context
     
 
-class Agent(TemplateView):
-    template_name = "sales_tracker/agent.html"
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        request = self.request
-        users = request.user
-        u = RegisterUser.objects.get(email=users)
-        u = u.id
-        ToCall = MiningData.objects.filter(assigned_to=u)
-        context["user"] = u
-        context["Tocall"] = ToCall
-        return context
+# class Agent(TemplateView):
+#     template_name = "sales_tracker/agent.html"
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         request = self.request
+#         users = request.user
+#         u = RegisterUser.objects.get(email=users)
+#         u = u.id
+#         ToCall = MiningData.objects.filter(assigned_to=u)
+#         context["user"] = u
+#         context["Tocall"] = ToCall
+#         return context
 
 
 # class MiningView(CreateView):
@@ -178,17 +214,46 @@ class Agent(TemplateView):
     
 
 
+# def assign_miningCt():
+#     # user = request.user
+#     least_occurring_assigned_to_id = (
+#     MiningData.objects
+#     .filter(assigned_to__profile__branch='agent')
+#     .values('assigned_to')
+#     .annotate(count=Count('assigned_to'))
+#     .order_by('count')
+#     .first()
+# )
+#     # return least_occurring_assigned_to_id
+#     assigned_to_id = least_occurring_assigned_to_id['assigned_to']
+#     return RegisterUser.objects.get(id=assigned_to_id)
+
+
+
+
 def assign_miningCt():
-    # user = request.user
+    # Get the user with the least assignments
     least_occurring_assigned_to_id = (
-    MiningData.objects
-    .filter(assigned_to__profile__branch='agent')
-    .values('assigned_to')
-    .annotate(count=Count('assigned_to'))
-    .order_by('count')
-    .first()
-)
-    # return least_occurring_assigned_to_id
+        MiningData.objects
+        .filter(assigned_to__profile__branch='agent')
+        .values('assigned_to')
+        .annotate(count=Count('assigned_to'))
+        .order_by('count')
+        .first()
+    )
+
+    # If there are no records yet, assign randomly to one of the agents
+    if not least_occurring_assigned_to_id:
+        # Get all users with the 'agent' branch
+        agent_users = RegisterUser.objects.filter(profile__branch='agent')
+        if agent_users.exists():
+            # Randomly select one agent
+            return random.choice(agent_users)
+        else:
+            # Handle case where there are no agents
+            raise ObjectDoesNotExist("No agents found to assign.")
+
+    # Otherwise, assign to the least occurring agent
     assigned_to_id = least_occurring_assigned_to_id['assigned_to']
     return RegisterUser.objects.get(id=assigned_to_id)
 
@@ -888,19 +953,21 @@ def attendance_list(request):
 
 
 
-class Admin(TemplateView):
-    template_name = "sales_tracker/admin.html"
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        attendances = AttendanceRecord.objects.all()
-        att = Att_perct()
-        late = Late_perct()
-        context['admin_message'] = "Welcome to the Admin Page"
-        context['attendances'] = attendances
-        context['att'] = att
-        context['late'] = Late_perct 
-        return context
+# class Admin(TemplateView):
+#     template_name = "sales_tracker/admin.html"
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         attendances = AttendanceRecord.objects.all()
+#         att = Att_perct()
+#         late = Late_perct()
+#         context['admin_message'] = "Welcome to the Admin Page"
+#         context['attendances'] = attendances
+#         context['att'] = att
+#         context['late'] = Late_perct 
+#         return context
 
+
+@method_decorator(admin_required, name = 'dispatch')
 class Admin_reports(TemplateView):
     template_name = "sales_tracker/reports.html"
     def get_context_data(self, **kwargs):
@@ -908,7 +975,7 @@ class Admin_reports(TemplateView):
 
         return context
 
-
+@method_decorator(admin_required, name = 'dispatch')
 class MinerActivity(TemplateView):
     template_name = "sales_tracker/MinerActivity.html"
     def get_context_data(self, **kwargs):
@@ -923,10 +990,8 @@ class MinerActivity(TemplateView):
         context['Exp_Mining'] = Exp_Mining*MinerC*40
         # context['MinerC'] = MinerC
         return context
-    
 
-
-
+@method_decorator(admin_required, name = 'dispatch')
 class LeadsActivity(TemplateView):
     template_name = "sales_tracker/LeadsActivity.html"
     def get_context_data(self, **kwargs):
@@ -942,7 +1007,7 @@ class LeadsActivity(TemplateView):
         # context['MinerC'] = MinerC
         return context
     
-
+@method_decorator(admin_required, name = 'dispatch')
 class EmployeeDetail(TemplateView): 
     template_name = "sales_tracker/employee_detail.html"
     def get_context_data(self, **kwargs: Any):
@@ -957,15 +1022,21 @@ class EmployeeDetail(TemplateView):
         context["Miner_Details"] = Miner_Details
         return context
     
+
+# @admin_required
+@method_decorator(admin_required, name = 'dispatch')
 class AdminAnalysis(TemplateView):
     template_name = "sales_tracker/admin_analysis.html"
     def get_context_data(self, **kwargs: Any):
+        request = self.request
         context = super().get_context_data(**kwargs)
-        Time_worked()
-        Productivity()
+        time_graph = Time_worked(request)
+        graph_html = Productivity(request)
+        context['graph_html']=graph_html
+        context['time_graph']=time_graph
         return context
 
-class DailyAttendence(TemplateView):
-    DailyAttendance()
-    template_name = "sales_tracker/DailyAttendence.html"
+# class DailyAttendence(TemplateView):
+#     DailyAttendance()
+#     template_name = "sales_tracker/DailyAttendence.html"
     
