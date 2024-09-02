@@ -29,52 +29,6 @@ h2 {
   font-weight: 600;
 }
 
-.circle1, .circle2 {
-  position: absolute;
-  border-radius: 50%;
-  box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
-  animation: circleAnimate 15s infinite;
-  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
-  z-index: 1;
-}
-
-.circle1 {
-  width: 15em;
-  height: 15em;
-  background: linear-gradient(-25deg, #d84869, #f46641);
-  top: -50px;
-  left: -50px;
-}
-
-@keyframes circle1Animate {
-  50% {
-      left: 40%;
-      top: 10%;
-      scale: 1.11;
-  }
-}
-
-.circle2 {
-  width: 18em;
-  height: 18em;
-  background: linear-gradient(-25deg, #5648d8, #8641f4);
-  bottom: -60px;
-  right: -60px;
-}
-
-@keyframes circle2Animate {
-  50% {
-    bottom: 10%;
-    right: 40%;
-  }
-}
-
-
-.circle1:hover, .circle2:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.7);
-}
-
 .form-group {
   margin-bottom: 20px;
   position: relative;
