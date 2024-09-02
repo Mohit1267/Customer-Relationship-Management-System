@@ -21,7 +21,7 @@ from django.contrib.auth import authenticate, login
 from django.utils import timezone
 import datetime
 from sales_tracker.analysis import generate_bar_chart, TotalDays
-from sales_tracker.admin_analysis import admin_attendence_graph
+# from sales_tracker.admin_analysis import admin_attendence_graph
 
 # MY CODE 
 
@@ -172,6 +172,8 @@ def Mining_ct(user):
     return today_mining_count
     
 def Logout(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     context = {}
     user = request.user
     utc_login_time = user.last_login
@@ -218,7 +220,7 @@ def manual_login(request):
                 if user_profile.can_login:
                     login(request, user)
                     generate_bar_chart(request)
-                    admin_attendence_graph()
+                    # admin_attendence_graph()
                     # print(timezone.now().time())
                     current_date = timezone.now().date()
                     Nuser = request.user.id
@@ -240,13 +242,14 @@ def manual_login(request):
                         )
                     print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
                     print(Nuser)
-                    if user_profile.branch == "admin":
+                    return redirect("Dashboards")
+                    # if user_profile.branch == "admin":
                         
-                        return redirect("adminn")
-                    elif user_profile.branch == "miner":
-                        return redirect("index")
-                    elif user_profile.branch == "agent":
-                        return redirect("agent")
+                    #     return redirect("adminn")
+                    # elif user_profile.branch == "miner":
+                    #     return redirect("index")
+                    # elif user_profile.branch == "agent":
+                    #     return redirect("agent")
 
                 else:
                     error_message = 'Your access is denied, Please contact Admin for access'

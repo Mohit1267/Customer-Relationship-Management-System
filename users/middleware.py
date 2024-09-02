@@ -23,7 +23,7 @@ class InactivityMiddleware(MiddlewareMixin):
                 current_time = datetime.datetime.now().timestamp()
                 if (current_time - last_activity) > (15 * 60):  # 15 minutes
                     from django.contrib.auth import logout
-                    print("I am hereeeeeeeeeee")
+                    print("I am hereeeeeeeeeee, in middleware")
                     logout(request)
                     response = redirect('login')  # Redirect to login or another page
         return response
