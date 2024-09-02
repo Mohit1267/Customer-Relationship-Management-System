@@ -110,6 +110,9 @@ body {
     margin-right: 50px;
 }
 
+.chart1 {
+    margin-left: -50px;
+}
 
 /* Styling for the chart container */
 /* .chart-container {
