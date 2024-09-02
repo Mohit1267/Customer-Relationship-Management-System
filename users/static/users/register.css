@@ -8,6 +8,9 @@ body {
     align-items: center;
 }
 
+
+
+
 .form_sec {
     padding: 20px;
     border-radius: 20px;
@@ -19,7 +22,16 @@ body {
     margin: 0 15px;
 }
 
+h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+  }
+  
 
+/* Circles */
 .circle1 {
     position: absolute;
     width: 13em;
@@ -32,7 +44,7 @@ body {
     animation: circle1Animate 15s infinite;
     z-index: -100;
   }
-
+  
   @keyframes circle1Animate {
     50% {
       left: 33%;
@@ -71,57 +83,64 @@ body {
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
 
-
-.form_sec h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
+.form-group{
+    color: white;
 }
 
-.form input[type="text"],
-.form input[type="password"],
-.form input[type="email"] {
+.form-group input {
     width: 100%;
-    padding: 10px 0;
+    padding: 10px;
     background: transparent;
-    border: none;
-    border-bottom: 2px solid #fff;
+    border: 2px solid #fff;
+    border-radius: 25px;
     outline: none;
     color: #fff;
     font-size: 16px;
+    margin-top: 5px;
+  }
+
+.form-group input:focus {
+  border-color: #ff6f61;
 }
 
-.form input[type="checkbox"] {
-    margin: 20px 0;
-}
+
 
 .signup-btn {
-    background-color: #ff6f61;
-    color: white;
-    border: none;
-    padding: 10px;
     width: 100%;
-    border-radius: 10px;
-    font-size: 16px;
+    padding: 10px;
+    background: linear-gradient(115deg, #ff6f61, #de6262);
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin-top: 40px;
+  }
+
+
+  .signup-btn:hover {
+    background: linear-gradient(115deg, #de6262, #ff6f61);
+    transform: translateY(-3px);
+  }
+  
+  .login-link {
+    text-align: center;
     margin-top: 20px;
-}
-
-.signup-btn:hover {
-    background-color: #262626;
-}
-
-.login-link {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #000000;
-}
-
-.login-link a {
+  }
+  
+  .login-link a {
     color: #ff6f61;
     text-decoration: none;
-}
+  }
 
-.login-link a:hover {
+  .login-link a:hover {
     text-decoration: underline;
-}
+  }
+  
+  .error {
+    color: red;
+    margin-top: 5px;
+  }
+  
