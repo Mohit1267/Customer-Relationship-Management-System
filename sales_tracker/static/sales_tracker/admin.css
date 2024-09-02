@@ -1,39 +1,63 @@
-/* Center everything on the page */
-body {
+/* Wrapping container to hold both navbar and content */
+.wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    height: 100vh; /* Full height of the viewport */
+    width: 100%;
+}
+
+/* Styling for the fixed navbar */
+.navbar {
+    margin-left: 0;
+    width: 200px; /* Fixed width for the navbar */
+    position: fixed; /* Fixes the navbar to the left of the screen */
+    height: 100%; /* Full height */
+    background-color: #333;
+    padding-top: 20px;
+    z-index: 1000; /* Ensures the navbar stays on top of other elements */
+    color: white;
+}
+
+/* Navbar container */
+.navbar-container {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: fixed;
+}
+
+/* Content styling */
+.content {
+    margin-left: 200px; /* Space for the navbar */
+    padding: 20px;
+    flex: 1;
+    background-color: #f9f9f9;
+    width: calc(100% - 200px);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
 }
 
-/* Style the heading */
-h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-}
-
-/* Style the image */
-img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 /* Container for the cards */
-.card-container {
+.card-container 
+{
+    margin-bottom: 700px;
     display: flex;
-    justify-content: space-around;
-    width: 100%;
+    justify-content: center;
+    padding-top: 160px;
+    width: 25%;
     max-width: 600px;
-    margin-top: 20px;
+    margin-top: 500px;
+    margin-left: -700px;
+    /* padding: 20px; */
+    box-sizing: border-box;
 }
 
 /* Style for individual cards */
@@ -44,9 +68,14 @@ img {
     padding: 20px;
     text-align: center;
     flex: 1;
-    margin: 0 10px;
+    margin: 10px;
     color: #333;
     font-size: 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
 /* Style the card content */
@@ -68,4 +97,49 @@ img {
         width: 80%;
     }
 }
-/* hi */
+
+/* Styling for the chart container */
+.chart-container {
+   display: flex;
+    margin-top: 0px;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    box-sizing: border-box;
+ 
+    margin-right: 50px;
+}
+
+
+/* Styling for the chart container */
+/* .chart-container {
+    display: flex;
+    margin-left: -200px;
+    justify-content: center;
+    align-items: center;
+    margin-top: -20px;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    box-sizing: border-box;
+} */
+
+/* Styling for the chart image */
+.chart-container img {
+    /* margin-right: 10px; */
+    max-width: 100%; /* Ensures the chart image is responsive */
+    height: 500px;
+    border-radius: 10px;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 600px) {
+    .chart-container {
+        padding: 10px;
+    }
+
+    .chart-container img {
+        max-width: 100%;
+        height: auto;
+    }
+}
