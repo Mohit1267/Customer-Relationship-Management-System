@@ -356,7 +356,7 @@ class Agent(TemplateView):
         u = u.id
         ToCall = MiningData.objects.filter(assigned_to=u)
         context["user"] = u
-        context["ToCall"] = ToCall
+        context["Tocall"] = ToCall
         return context
 # class ContactCreateView(CreateView):
 #     model = ContactData
