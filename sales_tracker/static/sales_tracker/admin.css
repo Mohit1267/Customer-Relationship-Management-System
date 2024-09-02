@@ -62,7 +62,7 @@ body {
 
 /* Style for individual cards */
 .card {
-    background-color: #fff;
+    background: linear-gradient(90deg, rgba(184, 228, 243, 0.979) 0%, rgb(48, 186, 163) 100%) !important;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
