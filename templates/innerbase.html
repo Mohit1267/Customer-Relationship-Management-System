@@ -95,8 +95,11 @@
         
         <div class="" id="navbarNavDropdown">   
           <ul class="nav-links flex-column"> 
-            <li class="nav-item ">
-               <a class="nav-link  spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <img src="\static\datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px;">
+
                 Mining
                </a>
                <ul class="dropdown-menu ">   
@@ -108,17 +111,9 @@
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Contacts
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">View Contacts</a></li>
-              </ul>
-            </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="\static\leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
+
                 Leads
               </a>
               <ul class="dropdown-menu">
@@ -128,10 +123,26 @@
               </ul>
             </li>
 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <img src="\static\contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
+
+                Contacts
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">View Contacts</a></li>
+              </ul>
+            </li>
 
             
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <img src="\static\quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
+
                 Quotes
               </a>
               <ul class="dropdown-menu">
@@ -143,6 +154,9 @@
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <img src="\static\calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
+
                 Calendar
               </a>
               <ul class="dropdown-menu">
@@ -153,7 +167,9 @@
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="{%url 'attendance'%}" role="button" aria-expanded="false">
+              <a class="nav-link dropdown-toggle spacing" href="{%url 'attendance'%}" role="button" aria-expanded="false" style="margin-left: 20px;">
+
+                <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 5px;">
 
                 Attendance
               </a>
@@ -161,6 +177,9 @@
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <img src="\static\opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
+
                 Opportunities
               </a>
               <ul class="dropdown-menu">
