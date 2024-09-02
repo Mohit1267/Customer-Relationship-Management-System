@@ -103,6 +103,7 @@ DATABASES = {
         'NAME': 'shanaya',
         'USER': 'root',
         'PASSWORD':'Mohit@sql1267',
+
         'HOST' : 'localhost',
         'PORT': '3306',
     }
