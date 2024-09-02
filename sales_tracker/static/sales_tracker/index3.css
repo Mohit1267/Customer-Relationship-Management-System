@@ -7,7 +7,7 @@
 .heading {
    
     /* background: linear-gradient(90deg, #3e3a3a 0%, rgb(63, 59, 59) 100%); */
-    background: linear-gradient(90deg, #32d2ef 0%, rgb(7, 242, 246) 100%);
+    background: linear-gradient(90deg, #70d8ea 0%, rgb(155, 226, 227) 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     width: 100%;
@@ -114,6 +114,8 @@
         padding: 10px; /* Space inside the cards */
         text-align: center; /* Center the text inside the cards */
         background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
+        /* background: linear-gradient(90deg, rgb(230, 173, 173) 0%, rgba(255, 255, 255, 1) 100%); */
+
         width: 100%;
         
         

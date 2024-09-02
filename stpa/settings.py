@@ -103,11 +103,11 @@ DATABASES = {
         'NAME': 'shanaya',
         'USER': 'root',
         'PASSWORD':'Mohit@sql1267',
-
         'HOST' : 'localhost',
         'PORT': '3306',
     }
 }
+
 
 # DATABASES = {
 #     'default': {
@@ -119,6 +119,19 @@ DATABASES = {
 #         'PORT': '3306',
 #     }
 # }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'mysql',
+#         'HOST' : 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+ 
 
 
 
