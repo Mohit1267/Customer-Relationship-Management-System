@@ -1,3 +1,82 @@
+/* <<<<<<< HEAD
+.heading {
+    font-size: 50px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title_animation {
+    font-size: 28px;
+    animation: pulse 10s infinite;
+}
+
+.content {
+    flex-grow: 1;
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #262626;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.welcome {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    flex: 1;
+    margin: 10px;
+    min-width: 150px;
+    max-width: 220px;
+}
+
+@media (max-width: 768px) {
+    .content {
+        margin-left: 200px;
+    }
+
+    .heading {
+        font-size: 40px;
+    }
+
+    .title_animation {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        margin-left: 150px;
+        padding: 15px;
+    }
+
+    .heading {
+        font-size: 30px;
+    }
+
+    .title_animation {
+        font-size: 20px;
+    }
+
+    .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        min-width: 120px;
+        max-width: 180px;
+    }
+======= */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -86,4 +165,5 @@ footer {
 .logout{
     padding: 15px;
     margin: 10px;
+
 }

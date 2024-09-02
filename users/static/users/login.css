@@ -210,3 +210,40 @@ button:hover {
     color: red;
 
 }
+
+/* Container for the password field and see password button */
+.password-container {
+    position: relative;
+}
+
+.login-input {
+    width: 100%;
+    padding-right: 40px; /* Ensure space for the see password button */
+}
+
+.see-password {
+    position: absolute;
+    margin-right: 0px;
+    left: 150px;
+    /* right: 0px; */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* font-size: 1.2rem; */
+    color: #333;
+}
+
+
+/* Remove hover effects or margin changes */
+.see-password:hover {
+    background: none; /* No background change on hover */
+    color: #333; /* Maintain the same color */
+    transform: translateY(-50%); /* Ensure it stays centered */
+}
+
+.see-password img {
+    width: 20px; /* Adjust the size of the eye icon */
+    height: auto;
+}

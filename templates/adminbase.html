@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% block css_link %}{% endblock %} 
 
-    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="{% static 'base2.css' %}">
     <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
     <link rel="stylesheet" href="{% static 'css/datatables/datatables.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/datatables/datatables.css' %}">
@@ -55,7 +55,6 @@
     
    
     <nav class="navbar  navbar-expand-lg">
-
       <div class="navbar-brand-container">
         <!-- <a class="navbar-brand" href="/">Logo</a> -->
         <a  href="{% url 'index' %}">
@@ -77,9 +76,9 @@
             <b>Profile</b>
           </a>
           <div class="hamburger" onclick="toggleNavbar()">
-            <div></div>
-            <div></div>
-            <div></div>
+            <div class="stick stick-1"></div>
+            <div class="stick stick-2"></div>
+            <div class="stick stick-3"></div>
           </div>
         </div>
 
@@ -111,7 +110,7 @@
 
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle spacing" href="{%url 'AdminAnalysis'%}" role="button" aria-expanded="false">
                 Analytics
               </a>
               <ul class="dropdown-menu">
