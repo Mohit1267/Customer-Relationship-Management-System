@@ -289,7 +289,7 @@ body{
 /*7*/
 .nav-item .dropdown-menu {
     position:absolute;
-   left: 100%; 
+    left: 100%; 
     top:20px;
     /* margin-left: 40px; */
     margin-right: 80px; 
@@ -312,7 +312,6 @@ body{
     white-space: nowrap ;
     left: 100% ;
     top: 20px ;
-
     /* background-color: rgb(161, 229, 211); */
     letter-spacing: 3px;
       /* background-color: rgb(161, 229, 211); */
@@ -350,6 +349,8 @@ body{
 
 .nav-item:hover .dropdown-menu,
 .nav-item .dropdown-menu:hover {
+    margin-top: 0px;
+    margin-left: 50px;
     position: absolute;
     display: block; /* Show dropdown */
     visibility: visible; /* Make it visible */
