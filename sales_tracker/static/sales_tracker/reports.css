@@ -13,12 +13,18 @@
 .section h2 {
     margin-top: 50px;
     margin-bottom: 20px;
-    color: #FFFFFF;
+
+    /* color: #FFFFFF;
     font-size: 26px;
     border-bottom: 3px solid #5e87b0;
     padding-bottom: 12px;
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 1px; */
+    color:black;
+    font-size: 24px;
+    border-bottom: 2px solid gray;
+    padding-bottom: 10px;
+
 }
 
 /* Card Container */
@@ -30,12 +36,14 @@
 
 /* Individual Card */
 .card {
+
     background: #1E2A38 !important; /* Changed background to a solid dark color */
     border: 1px solid #3C4A5E;
     border-radius: 12px;
     flex: 1 1 calc(25% - 25px); /* Adjusted width and gap */
     min-width: 260px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
     display: flex;
     align-items: center;
     padding: 25px;
@@ -58,17 +66,25 @@
 
 /* Card Content */
 .card-content h3 {
+/* <<<<<<< HEAD
     margin: 0 0 12px 0;
     font-size: 20px;
-    color: #ffffff; /* Changed to white for contrast */
+    color: #ffffff; /* Changed to white for contrast 
     font-weight: 500;
     align-items: center;
+======= */
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color:beige;
+    color: #333; 
+/* >>>>>>> 04fdcb6ec1db550a2b91d3b0e50a9c77719f5735 */
 }
 
 .card-content p {
     margin: 0;
     font-size: 15px;
     color: #a9b7c6; /* Softened text color for readability */
+
 }
 
 /* Responsive Design */

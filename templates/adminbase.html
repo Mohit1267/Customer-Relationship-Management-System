@@ -58,7 +58,7 @@
       <div class="navbar-brand-container">
         <!-- <a class="navbar-brand" href="/">Logo</a> -->
         <a  href="{% url 'index' %}">
-       <img class="navbar-brand" src="static/Logo.png" alt="Brand Image" style="height: 65px;">
+       <img class="navbar-brand" src="/static/Logo.png" alt="Brand Image" style="height: 65px;">
         </a>
       </div>       
 
@@ -92,22 +92,22 @@
                </a>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="#" role="button" aria-expanded="false"  style="display: flex; align-items: center;">
 
                 <img src="\static\devicelogo.png" alt="Device Logo" style=" height: 42px ;margin-right: 5px; margin-left: -5px;">
 
                 Device
               </a>
-              <ul class="dropdown-menu">
+              <!-- <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">View Quote</a></li>
-              </ul>
+              </ul> -->
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="{% url 'reports' %}" role="button" aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="{% url 'reports' %}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
 
                 <img src="\static\reportslogo.png" alt="Reports Logo" style="height: 42px ; margin-right: 5px;">
 
@@ -115,36 +115,37 @@
               </a>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="{%url 'AdminAnalysis'%}" role="button" aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="{%url 'AdminAnalysis'%}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
                 
                 <img src="\static\Analyticslogo.png" alt="Analytics Logo" style=" margin-right: 5px;">
 
                 Analytics
               </a>
-              <ul class="dropdown-menu">
+              <!-- <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
-              </ul>
+              </ul> -->
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\realtimelogo.png" alt="realtimelogo Logo" style=" margin-left: -6px  ;margin-right: 5px;">
+                <img src="\static\realtimelogo.png" alt="realtimelogo Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; ">
+                <span style="white-space: nowrap;">Real Time</span>
 
-               Real time
+               <!-- Real time -->
               </a>
-              <ul class="dropdown-menu">
+              <!-- <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
-              </ul>
+              </ul> -->
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="{% url 'attendance' %}" role="button"  aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="{% url 'attendance' %}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
                 <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 5px;">
 
@@ -152,19 +153,19 @@
               </a>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link  spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\manualtimelogo.png" alt="manualtimelogo" style=" margin-right: 5px;">
-
-                Manual Time
+                <img src="\static\manualtimelogo.png" alt="manualtimelogo"  style="margin-left: -6px ; margin-right: 5px;  max-width: 35px;">
+                <span style="white-space: nowrap;">Manual Time</span>
+                <!-- Manual Time -->
               </a>
-              <ul class="dropdown-menu">
+              <!-- <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
               </ul>
-            </li>
+            </li> -->
             
           </ul>
         </div>

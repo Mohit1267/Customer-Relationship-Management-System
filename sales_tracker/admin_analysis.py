@@ -107,9 +107,9 @@ def admin_attendance_graph(request):
         xaxis_title='Date',
         yaxis_title='Total Number of Employees',
         barmode='group',  # This ensures that the bars are grouped side by side
-        plot_bgcolor='#262626',
-        paper_bgcolor='#262626',
-        font=dict(color='white'),
+        plot_bgcolor='#e0eaf6',
+        paper_bgcolor='#e0eaf6',
+        font=dict(color='black'),
         xaxis=dict(
             tickmode='array',
             tickvals=dates,
@@ -171,20 +171,20 @@ def Mining_Count():
     # Data
     labels = ['Total Mining', 'Expected Mining']
     sizes = [Total_Mining, Exp_Mining]
-    colors = ['#ff9999','#66b3ff']
+    colors = ['#008080','#1E2A38' ]
 
     # Plot
     fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
-    plt.gcf().set_facecolor('#262626')
-    ax.set_facecolor('#262626')
+    plt.gcf().set_facecolor('#e0eaf6')
+    ax.set_facecolor('#e0eaf6')
 
     # Create a pie chart
     wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
 
     # Beautify the plot
-    plt.setp(autotexts, size=10, weight="bold",)
-    plt.setp(texts, size=12, color='white')
-    ax.set_title("Mining vs Expected Mining", color='white')
+    plt.setp(autotexts, size=10, weight="bold",color='black')
+    plt.setp(texts, size=12, color='black')
+    ax.set_title("Mining vs Expected Mining", color='black')
 
     # Show plot
     plt.savefig('static/Mining_Count.png')
