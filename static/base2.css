@@ -1,5 +1,5 @@
 body{
-    background-color : #262626!important;
+    background-color : #e0eaf6!important;
     width: 100vw;
     margin: 0;
     font-family: Arial, sans-serif;
@@ -39,7 +39,7 @@ body{
 
 .navbar {
     position: fixed;
-    background-color: #454343;
+    background-color: #1E2A38;
     position: absolute; /* Fixes the navbar to the left of the screen */
     height: 100vh; /* Full height of the viewport */
     min-width: 250px;
@@ -49,7 +49,6 @@ body{
     display: flex;
     flex-direction: column;
     margin: 0; /* Removes any extra margins */
-    border-radius: 10px; /* Keeps your rounded corners */
     box-shadow: 0 8px 8px rgba(147, 244, 231, 0.875); /* Adds shadow for a 3D effect */
     padding: 10px 20px; /* Adds padding inside the navbar */
     overflow-y: auto; /* Adds scrolling if the content overflows vertically */
@@ -133,7 +132,7 @@ body{
     height: 2px;
     border-radius: 4px;
     margin-bottom: 6px;
-    background-color:  #2DFDB9;
+    background-color: white;
     display: inline-block;
   }
   
@@ -229,6 +228,7 @@ body{
 /*4*/
 
 .nav-links {
+  color: #ffffff;
   padding: 20 3;
   margin-top: 80px;
   margin-bottom: -40px;
@@ -250,7 +250,7 @@ body{
 /* margin: 15px 15px; */
 /* margin-right: 15px; */
 margin-right: -10px;
-color: rgb(13, 193, 221);
+/* color: rgb(13, 193, 221); */
 line-height: 1.5;
 
 }
@@ -311,7 +311,7 @@ line-height: 1.5;
   left: 100% ;
   top: 20px ;
   letter-spacing: 3px;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.5);;
   border-radius: 20px;
   margin-left: 10px;
   transition: opacity 0.5s ease, visibility 0s ease 0s; 
@@ -333,7 +333,8 @@ line-height: 1.5;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   text-decoration: none; 
   padding: 5px 10px;
-  transition: background-color 0.3s, color 0.3s;
+  background-color: rgba(255, 255, 255, 0.2);
+  /* transition: background-color 0.3s, color 0.3s; */
   font-size: 18px;
   width: 220px;
   margin-left: 5px;
@@ -354,9 +355,9 @@ line-height: 1.5;
 
 .dropdown-menu:hover .dropdown-item {
     
-    color:  rgb(107, 228, 246);
+    /* color:  rgb(107, 228, 246); */
     /* background-color: rgb(145, 242, 203); */
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.5); /* 50% opacity */
 
 }
 /* .nav-item:hover .dropdown-items,
