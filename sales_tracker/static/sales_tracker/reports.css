@@ -66,17 +66,17 @@
 
 /* Card Content */
 .card-content h3 {
-/* <<<<<<< HEAD
+/* <<<<<<< HEAD*/
     margin: 0 0 12px 0;
     font-size: 20px;
-    color: #ffffff; /* Changed to white for contrast 
+    color: #ffffff; /* Changed to white for contrast*/
     font-weight: 500;
     align-items: center;
-======= */
-    margin: 0 0 10px 0;
+/*======= */
+    /* margin: 0 0 10px 0;
     font-size: 18px;
     color:beige;
-    color: #333; 
+    color: #333;  */
 /* >>>>>>> 04fdcb6ec1db550a2b91d3b0e50a9c77719f5735 */
 }
 
