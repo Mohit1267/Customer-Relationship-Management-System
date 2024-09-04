@@ -11,7 +11,7 @@
     width: 200px; /* Fixed width for the navbar */
     position: fixed; /* Fixes the navbar to the left of the screen */
     height: 100%; /* Full height */
-    background-color: #333;
+    /* background-color: #333; */
     padding-top: 20px;
     z-index: 1000; /* Ensures the navbar stays on top of other elements */
     color: white;
@@ -47,13 +47,15 @@ body {
 
 /* Container for the cards */
 .card-container 
-{
-    margin-bottom: 700px;
+{  
+    margin-left: -100px !important;
+    margin-bottom: 700px !important;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding-top: 160px;
-    width: 25%;
-    max-width: 600px;
+    width: 15%;
+    max-width: 500px;
     margin-top: 500px;
     margin-left: -700px;
     /* padding: 20px; */
@@ -62,7 +64,7 @@ body {
 
 /* Style for individual cards */
 .card {
-    background: linear-gradient(90deg, rgba(184, 228, 243, 0.979) 0%, rgb(48, 186, 163) 100%) !important;
+    background-color: #1E2A38 !important;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -80,6 +82,7 @@ body {
 
 /* Style the card content */
 .card p {
+    color: white;
     margin: 0;
     font-weight: bold;
     font-size: 1.2rem;
@@ -100,13 +103,14 @@ body {
 
 /* Styling for the chart container */
 .chart-container {
-   display: flex;
-    margin-top: 0px;
+    display: flex;
+    margin-left: -580px !important; /* changed */
+    margin-top: 400px !important;
     width: 100%;
-    max-width: 800px;
+    max-width: 600px; /* changed */
+    gap: 350px; /* added */
     padding: 20px;
     box-sizing: border-box;
- 
     margin-right: 50px;
 }
 
