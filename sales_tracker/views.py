@@ -124,17 +124,16 @@ def Dashboards(request):
         return render(request,'sales_tracker/index.html',context)
     elif(request.user.profile.branch == 'agent'):
         context = {}
+        now_date_time = datetime.datetime.now()
+        now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         users = request.user
         u = RegisterUser.objects.get(email=users)
         u = u.id
-        ToCall = MiningData.objects.filter(assigned_to=u)
+        ToCall = MiningData.objects.filter(assigned_to=u,date = now_date)
         context["user"] = u
         context["Tocall"] = ToCall
         print(ToCall, "This is the value of ToCall")
         return render(request,'sales_tracker/agent.html',context)
-
-
-    # pass
 
 
 

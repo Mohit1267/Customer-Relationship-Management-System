@@ -21,6 +21,10 @@ from django.contrib.auth import authenticate, login
 from django.utils import timezone
 import datetime
 from sales_tracker.analysis import generate_bar_chart, TotalDays
+from datetime import time
+from datetime import timedelta
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 # from sales_tracker.admin_analysis import admin_attendence_graph
 
 # MY CODE 
@@ -227,10 +231,34 @@ def manual_login(request):
                     current_datetime = timezone.now()
                     current_date = current_datetime.date()
                     current_time = current_datetime.time()
-                    now = datetime.datetime.now()
+                    # now = datetime.datetime.now()
                     # print("Current Time:", now.time())
                     current_datetime = timezone.localtime()
-                    current_time = current_datetime.strftime('%H:%M:%S')
+                    current_time_str = current_datetime.strftime('%H:%M:%S')
+                    current_time = datetime.datetime.strptime(current_time_str, '%H:%M:%S').time()
+
+    
+
+                    #Attendence Rules
+                    # allowerd_grace_time = timezone.datetime.combine(current_date, timezone.time(9,15)).time()
+                    on_time = time(9, 0)
+                    grace_time = time(9, 15)
+                    if current_time<=on_time:
+                        status = 'Present'
+                    elif on_time<current_time<=grace_time:
+                        start_of_week = current_date - timedelta(days=current_date.weekday())  # Monday of current week
+                        late_entries_count = AttendanceRecord.objects.filter(
+                            user=user, 
+                            date__gte=start_of_week,
+                            date__lte=current_date,
+                            status='Late'
+                        ).count()
+                        if late_entries_count < 2:
+                            status = 'Present'
+                        else:
+                            status = 'Late'
+                    else:
+                        status = 'Late'
                     print("Current Time:", current_time)
                     existing_record = AttendanceRecord.objects.filter(user=user, date=current_date).first()
                     if not existing_record:
@@ -238,7 +266,7 @@ def manual_login(request):
                             user=user,
                             date=current_date,
                             check_in_time=current_time,
-                            status='Present'
+                            status=status
                         )
                     print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
                     print(Nuser)
@@ -331,3 +359,9 @@ def some_view(request):
     finally:
         server.quit()
     return render(request, 'users/login.html')
+
+
+
+@login_required
+def heartbeat(request):
+    return JsonResponse({"status": "alive"})

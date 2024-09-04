@@ -225,11 +225,12 @@
         <div class="row p-2">
           <a href = "{% url 'logout'%}"  class="right_profile ">logout</a>
         </div>
+        <div id="timer"></div>
       </div>
 
     {%comment%}
     {% if timer %}
-    <div class="timer_count">
+    <div class="timer_count"> 
       <p>Timer: <span id="count_down">00:00:00</span></p>
 
       <p>No of Mining: {{mining_count}}</p>
@@ -423,6 +424,47 @@ function toggleNavbar() {
 <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 <script src="{% static 'js/datatables/datatables.js' %}"></script>
 <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+<script>
+  let breakTimeLeft = 3600; // 1 hour in seconds
+
+  function startBreakTimer() {
+      const timer = setInterval(() => {
+          if (breakTimeLeft <= 0) {
+              clearInterval(timer);
+              alert("Break time is over!");
+          } else {
+              breakTimeLeft--;
+              displayTime();
+              sendHeartbeat(); // Send heartbeat to keep session alive
+          }
+      }, 1000); // 1 second intervals
+  }
+
+  function displayTime() {
+      const minutes = Math.floor(breakTimeLeft / 60);
+      const seconds = breakTimeLeft % 60;
+      document.getElementById("timer").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+  function sendHeartbeat() {
+      fetch("{% url 'heartbeat' %}", {
+          method: "GET",
+          headers: {
+              "X-Requested-With": "XMLHttpRequest"
+          }
+      }).then(response => {
+          if (response.status !== 200) {
+              console.error("Session may have expired.");
+          }
+      }).catch(error => {
+          console.error("Failed to send heartbeat:", error);
+      });
+  }
+
+  startBreakTimer(); // Start the timer when the break starts
+</script>
+
+
 
   </body>
 </html>

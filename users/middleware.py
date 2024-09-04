@@ -27,3 +27,54 @@ class InactivityMiddleware(MiddlewareMixin):
                     logout(request)
                     response = redirect('login')  # Redirect to login or another page
         return response
+
+
+
+
+# from django.utils.deprecation import MiddlewareMixin
+# from django.utils.timezone import now
+# from datetime import timedelta
+# import datetime
+# from django.utils.deprecation import MiddlewareMixin
+# from django.utils.timezone import now
+# from datetime import timedelta, datetime
+# import time
+# from django.utils.deprecation import MiddlewareMixin
+# from django.utils.timezone import now, make_aware
+# from datetime import timedelta, datetime
+# import time
+# from django.conf import settings
+
+# class InactivityMiddleware(MiddlewareMixin):
+#     def process_request(self, request):
+#         session_expiry = request.session.get('_session_expiry')
+        
+#         # Convert session_expiry to datetime if it's an int
+#         if isinstance(session_expiry, int):
+#             session_expiry = datetime.fromtimestamp(session_expiry)
+#             # Make session_expiry timezone-aware if using timezones
+#             if settings.USE_TZ:
+#                 session_expiry = make_aware(session_expiry)
+        
+#         # Check if the session has expired
+#         if session_expiry and now() > session_expiry:
+#             request.session.flush()
+#         else:
+#             # Normal session expiry after 15 minutes
+#             expiry_time = now() + timedelta(minutes=15)
+#             request.session['_session_expiry'] = time.mktime(expiry_time.timetuple())
+        
+#         # Keep the session alive if the heartbeat request is made
+#         if request.headers.get('X-Requested-With') == 'XMLHttpRequest' and 'heartbeat' in request.path:
+#             request.session.modified = True
+#             # Extend the session expiry by 1 hour if the heartbeat is detected
+#             expiry_time = now() + timedelta(hours=1)
+#             request.session['_session_expiry'] = time.mktime(expiry_time.timetuple())
+        
+#         return None
+
+#     def process_response(self, request, response):
+#         if hasattr(request, 'session') and request.session.modified:
+#             # Set the session to expire after 15 minutes (normal session expiry)
+#             request.session.set_expiry(15 * 60)
+#         return response
