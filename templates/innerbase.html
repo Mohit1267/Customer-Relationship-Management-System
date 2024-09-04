@@ -225,7 +225,8 @@
         <div class="row p-2">
           <a href = "{% url 'logout'%}"  class="right_profile ">logout</a>
         </div>
-        <div id="timer"></div>
+        <button id="toggleBreakBtn" class="btn btn-primary">Start Break</button>
+<div id="timerDisplay"></div>
       </div>
 
     {%comment%}
@@ -392,7 +393,7 @@ function toggleNavbar() {
 
     // Function to update the countdown display.
     function updateCountDown() {
-        if (totalSeconds <= 0) {
+        if (totalSeconds <= 0) {  
             countDownEle.innerHTML = "00:00:00";
             clearInterval(timerInterval); // Stop the interval when the countdown reaches zero.
             return;
@@ -424,7 +425,139 @@ function toggleNavbar() {
 <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 <script src="{% static 'js/datatables/datatables.js' %}"></script>
 <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+
+
+
+
+
+
 <script>
+  let breakTimeLeft = 3600; // 1 hour in seconds
+let breakTimerInterval = null;
+let mainTimerInterval = null; // Reference to the main timer interval
+
+document.getElementById("toggleBreakBtn").addEventListener("click", function() {
+    if (breakTimerInterval) {
+        clearInterval(breakTimerInterval);
+        breakTimerInterval = null;
+        this.innerHTML = "Start Break";
+
+        // Resume the main timer
+        startMainTimer();
+    } else {
+        startBreakTimer();
+        this.innerHTML = "End Break";
+
+        // Pause the main timer
+        pauseMainTimer();
+    }
+});
+
+function startBreakTimer() {
+    breakTimerInterval = setInterval(() => {
+        if (breakTimeLeft <= 0) {
+            clearInterval(breakTimerInterval);
+            breakTimerInterval = null;
+            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+            alert("Break time is over!");
+
+            // Resume the main timer after the break ends
+            startMainTimer();
+        } else {
+            breakTimeLeft--;
+            displayTime();
+            sendHeartbeat(); // Send heartbeat to keep session alive
+        }
+    }, 1000); // 1-second intervals
+}
+
+function displayTime() {
+    const minutes = Math.floor(breakTimeLeft / 60);
+    const seconds = breakTimeLeft % 60;
+    document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+// Function to pause the main timer
+function pauseMainTimer() {
+    clearInterval(mainTimerInterval);
+}
+
+// Function to resume or start the main timer
+function startMainTimer() {
+    mainTimerInterval = setInterval(updateCountDown, 1000);
+}
+
+// Initial start of the main timer
+startMainTimer();
+
+</script>
+
+
+
+
+
+
+<!-- 
+<script>
+let breakTimeLeft = 3600; // 1 hour in seconds
+let breakTimerInterval = null;
+
+document.getElementById("toggleBreakBtn").addEventListener("click", function() {
+    if (breakTimerInterval) {
+        clearInterval(breakTimerInterval);
+        breakTimerInterval = null;
+        this.innerHTML = "Start Break";
+    } else {
+        startBreakTimer();
+        this.innerHTML = "End Break";
+    }
+});
+
+function startBreakTimer() {
+    breakTimerInterval = setInterval(() => {
+        if (breakTimeLeft <= 0) {
+            clearInterval(breakTimerInterval);
+            breakTimerInterval = null;
+            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+            alert("Break time is over!");
+        } else {
+            breakTimeLeft--;
+            displayTime();
+            sendHeartbeat(); // Send heartbeat to keep session alive
+        }
+    }, 1000); // 1-second intervals
+}
+
+function displayTime() {
+    const minutes = Math.floor(breakTimeLeft / 60);
+    const seconds = breakTimeLeft % 60;
+    document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+function sendHeartbeat() {
+    fetch("{% url 'heartbeat' %}", {
+        method: "GET",
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then(response => {
+        if (response.status !== 200) {
+            console.error("Session may have expired.");
+        }
+    }).catch(error => {
+        console.error("Failed to send heartbeat:", error);
+    });
+}
+</script> -->
+
+
+
+
+
+
+
+
+<!-- <script>
   let breakTimeLeft = 3600; // 1 hour in seconds
 
   function startBreakTimer() {
@@ -462,7 +595,7 @@ function toggleNavbar() {
   }
 
   startBreakTimer(); // Start the timer when the break starts
-</script>
+</script> -->
 
 
 

@@ -7,6 +7,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.core.mail import send_mail
 from .models import Profile
+from django.http import JsonResponse
+from django.utils import timezone
 
 class InactivityMiddleware(MiddlewareMixin):
     def process_request(self, request):
@@ -27,6 +29,13 @@ class InactivityMiddleware(MiddlewareMixin):
                     logout(request)
                     response = redirect('login')  # Redirect to login or another page
         return response
+    def heartbeat(request):
+        if request.user.is_authenticated:
+            # Update last activity time
+            request.session['last_activity'] = timezone.now().timestamp()
+            return JsonResponse({'status': 'ok'})
+        return JsonResponse({'status': 'error'}, status=401)
+
 
 
 
