@@ -32,7 +32,7 @@ body{
 } */
 
 .navbar {
-    background-color: #454343;
+    background: linear-gradient(to right ,#19191a7a, #5b87bc79, #19191a7a);
     position: absolute; /* Fixes the navbar to the left of the screen */
     height: 100vh; /* Full height of the viewport */
     min-width: 250px;

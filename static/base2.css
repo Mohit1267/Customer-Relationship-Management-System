@@ -1,5 +1,5 @@
 body{
-    background-color : #262626!important;
+    background-color : #ffffff !important;
     width: 100vw;
     margin: 0;
     font-family: Arial, sans-serif;
@@ -39,7 +39,7 @@ body{
 
 .navbar {
     position: fixed;
-    background-color: #454343;
+    background: #1E2A38;
     position: absolute; /* Fixes the navbar to the left of the screen */
     height: 100vh; /* Full height of the viewport */
     min-width: 250px;

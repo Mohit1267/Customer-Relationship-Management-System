@@ -49,7 +49,8 @@
     width: 100vw;
     /* height: 100vw; */
     
-    background-color: #262626;
+    background-color: #FAF9F6;
+    /* background: linear-gradient(to right ,#19191a7a, #5b87bc79, #19191a7a); Pale Blue to Soft Gray  */
     position: relative;
     z-index: -1;
     /* background-color: #88bcdd; */

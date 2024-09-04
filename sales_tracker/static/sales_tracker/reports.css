@@ -13,69 +13,74 @@
 .section h2 {
     margin-top: 50px;
     margin-bottom: 20px;
-    color: white;
-    font-size: 24px;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
+    color: #FFFFFF;
+    font-size: 26px;
+    border-bottom: 3px solid #5e87b0;
+    padding-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 /* Card Container */
 .card-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 25px;
 }
 
 /* Individual Card */
 .card {
-    background: linear-gradient(90deg, rgba(184, 228, 243, 0.979) 0%, rgb(48, 186, 163) 100%) !important;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    flex: 1 1 calc(25% - 20px); /* Adjust the width as needed */
-    min-width: 250px;
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+    background: #1E2A38 !important; /* Changed background to a solid dark color */
+    border: 1px solid #3C4A5E;
+    border-radius: 12px;
+    flex: 1 1 calc(25% - 25px); /* Adjusted width and gap */
+    min-width: 260px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: 25px;
     transition: transform 0.2s, box-shadow 0.2s;
+    text-align: left; /* Ensures text is left-aligned */
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Card Icon */
 .card-icon {
-    font-size: 40px;
-    color: #4CAF50; /* Adjust color as needed */
-    margin-right: 15px;
+    font-size: 45px;
+    color: #5e87b0; /* Adjusted icon color for consistency */
+    margin-right: 20px;
     flex-shrink: 0;
 }
 
 /* Card Content */
 .card-content h3 {
-    margin: 0 0 10px 0;
-    font-size: 18px;
-    color: #333;
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    color: #ffffff; /* Changed to white for contrast */
+    font-weight: 500;
+    align-items: center;
 }
 
 .card-content p {
     margin: 0;
-    font-size: 14px;
-    color: black;
+    font-size: 15px;
+    color: #a9b7c6; /* Softened text color for readability */
 }
 
 /* Responsive Design */
 @media (max-width: 992px) {
     .card {
-        flex: 1 1 calc(33.333% - 20px);
+        flex: 1 1 calc(33.333% - 25px);
     }
 }
 
 @media (max-width: 768px) {
     .card {
-        flex: 1 1 calc(50% - 20px);
+        flex: 1 1 calc(50% - 25px);
     }
 }
 
