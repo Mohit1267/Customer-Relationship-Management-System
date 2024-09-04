@@ -85,7 +85,7 @@
             <div></div>
             <div></div>
           </div> -->
-          <div class="hamburger">
+          <div class="hamburger" onclick="toggleNavbar()">
             <div class="stick stick-1"></div>
             <div class="stick stick-2"></div>
             <div class="stick stick-3"></div>
@@ -229,14 +229,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       function toggleNavbar() {
-        const navbarContainer = document.querySelector('.navbar-container');
-        navbarContainer.classList.toggle('show'); // Toggle visibility
-
-        if (navbarContainer.classList.contains('show')) {
-          // Scroll the navbar into view when it is shown
-          navbarContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('show');
+    }
     </script>
 
     <!-- jQuery for additional interactions -->
