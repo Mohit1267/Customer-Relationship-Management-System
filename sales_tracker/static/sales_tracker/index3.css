@@ -50,6 +50,13 @@
     background-color: #e0eaf6;
     /* background: white; */
     width: 100vw;
+<<<<<<< HEAD
+    /* height: 100vw; */
+    
+    background-color: #FAF9F6;
+    /* background: linear-gradient(to right ,#19191a7a, #5b87bc79, #19191a7a); Pale Blue to Soft Gray  */
+=======
+>>>>>>> 04fdcb6ec1db550a2b91d3b0e50a9c77719f5735
     position: relative;
     z-index: -1;
 }

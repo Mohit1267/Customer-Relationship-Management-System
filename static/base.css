@@ -32,19 +32,9 @@ body{
 } */
 
 .navbar {
+
+    /* background: linear-gradient(to right ,#19191a7a, #5b87bc79, #19191a7a); */
     background-color: #1E2A38;
-    /* background: linear-gradient(to right, #1b2a35, #3f5e80, #1b2a35); */
-    /* background: linear-gradient(to right, #19191a, #5b87bc, #19191a); */
-    /* background: linear-gradient(to right, #2C3E50, #5e87b0); */
-    /* background: linear-gradient(to right, #2C3E50, #34495E); */
-    /* background: linear-gradient(to right, #191970, #4682B4); */
-    /* background: linear-gradient(to right, #005377, #29ABE2); */
-    /* background: linear-gradient(to right, #005377, #29ABE2); */
-    /* background: linear-gradient(to right, #0B2545, #1E90FF); */
-    /* background: linear-gradient(to right, #2B5876, #4E4376); */
-    /* background: linear-gradient(to right, #FF7E5F, #FEB47B); */
-    /* background: linear-gradient(to right, #8E2DE2, #ae8dee); */
-    /* background-color: #454343; */
     position: absolute; /* Fixes the navbar to the left of the screen */
     height: 100vh; /* Full height of the viewport */
     min-width: 250px;
@@ -238,7 +228,7 @@ body{
     position: relative;
     margin-bottom: 25px;
     /* margin-right: 30px; */
-    margin-left: -80px;
+    margin-left: -40px;
     width: 100%;
     height: 100%;
     /* margin-top: 60px; */
@@ -312,22 +302,29 @@ body{
     display: none; /* Hide dropdown initially */
     white-space: nowrap; /* Prevent text from wrapping */
     z-index: 100;
+    overflow: visible;
     letter-spacing: 3px;
-    visibility: hidden; /* Initially hidden */
+    visibility: hidden;
     width: 235px;
+    transition: opacity 0.5s ease, visibility 0s ease 0.5s;
  }
 
 /*8*/
 /*menu pura box hai */
 .nav-item:hover .dropdown-menu {
-    position: absolute;
+    /* position: absolute; */
     display: block;
     left: 100%; 
     top:20px;
     opacity: 1;
     white-space: nowrap ;
+    /* left: 100% ;
+    top: 20px ; */
+    /* background-color: rgb(161, 229, 211); */
+
     left: 100% ;
     top: 20px ;
+
     letter-spacing: 3px;
     /* background: linear-gradient(to right, rgba(27, 42, 53, 0.5), rgba(63, 94, 128, 0.5), rgba(27, 42, 53, 0.5)); */
      /* background-color: rgb(161, 229, 211); */
@@ -369,9 +366,10 @@ body{
 .nav-item .dropdown-menu:hover {
     /* margin-top: 0px; */
     /* margin-left: 50px; */
-    white-space: nowrap ;
-    /* left: 100%;
-    top: 20px; */
+
+    white-space: nowrap;
+    left: 100%;
+    top: 20px;
     position: absolute;
     display: block; /* Show dropdown */
     visibility: visible; /* Make it visible */
