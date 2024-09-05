@@ -95,10 +95,20 @@
         
         <div class="" id="navbarNavDropdown">   
           <ul class="nav-links flex-column"> 
+
+            <li class="nav-item dropdown">
+              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false">
+
+               <img src="\static\Dashboardlogo.png" alt="Dashboard Logo" style=" margin-left: -6px !important; height: 40px ;">
+
+              Dashboard
+              </a>
+           </li>
+
             <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                <img src="\static\datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px;">
+                <img src="\static\datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
 
                 Mining
                </a>
@@ -169,7 +179,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="{%url 'attendance'%}" role="button" aria-expanded="false" style="margin-left: 20px;">
 
-                <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 5px;">
+                <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 2px;">
 
                 Attendance
               </a>
