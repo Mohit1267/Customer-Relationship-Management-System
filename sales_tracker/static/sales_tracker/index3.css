@@ -7,7 +7,7 @@
 .heading {
    
     /* background: linear-gradient(90deg, #3e3a3a 0%, rgb(63, 59, 59) 100%); */
-    background: linear-gradient(90deg, #70d8ea 0%, rgb(155, 226, 227) 100%);
+    background: linear-gradient(to right, #2C3E50, #5e87b0);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     width: 100%;
@@ -46,27 +46,19 @@
     
 
 .content{
+    /* background: rgba(245, 245, 245, 0.463); */
+    background-color: #e0eaf6;
+    /* background: white; */
     width: 100vw;
+<<<<<<< HEAD
     /* height: 100vw; */
     
-    background-color: #262626;
+    background-color: #FAF9F6;
+    /* background: linear-gradient(to right ,#19191a7a, #5b87bc79, #19191a7a); Pale Blue to Soft Gray  */
+=======
+>>>>>>> 04fdcb6ec1db550a2b91d3b0e50a9c77719f5735
     position: relative;
     z-index: -1;
-    /* background-color: #88bcdd; */
-    /* background-color: #5078f2;
-    background-image: linear-gradient(315deg, #5078f2 0% , #efe9f4 90%); */
-    /* background: linear-gradient(90deg, rgb(173, 12, 173) 0%, rgb(107, 9, 177) 50%, rgb(139, 55, 218) 100%); */
-   
-
-    /* background: linear-gradient(90deg, rgba(200, 220, 255, 1) 0%, rgba(240, 240, 240, 1) 100%); */
-    /* background: linear-gradient(90deg, rgba(192, 232, 255, 1) 0%, rgba(255, 255, 255, 1) 100%); */
-    /* background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(152, 251, 152, 1) 100%); */
-    /* background: linear-gradient(90deg, rgba(192, 255, 255, 1) 0%, rgba(173, 216, 230, 1) 100%); */
-    /* background: linear-gradient(90deg, rgba(240, 240, 240, 1) 0%, rgba(200, 220, 255, 1) 100%); */
-    /* background: linear-gradient(90deg, rgba(255, 253, 208, 1) 0%, rgba(173, 216, 230, 1) 100%); */
-    /* background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(230, 230, 250, 1) 100%); */
-    /* background: linear-gradient(90deg, rgba(152, 251, 152, 1) 0%, rgba(173, 216, 230, 1) 100%); */
-    /* background: linear-gradient(90deg, rgba(152, 251, 152, 1) 0%, rgba(173, 216, 230, 1) 100%); */
 }
 
 .welcome {
@@ -80,18 +72,19 @@
 .flex-container {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between; /* Distribute space evenly between the cards */
+    /* flex-direction: column; */
+    justify-content: space-between; 
     justify-content: center;
-    align-items: center; /* Align the cards vertically centered */
+    align-items: flex-start; /* Align the cards vertically centered */
     flex-wrap: wrap; /* Allow wrapping if the screen is too small */
     /* background-color: #262626; */
 }
 
 .cards-container {
-    /* border-color: #262626; */
-    /* background-color: #262626;  */
+    border-color: #262626;
+    /* background-color: white;  */
     width: 100%;
-    padding: 10px; /* Add some padding around the container */
+    padding: 10px;
      
      
 }
@@ -104,31 +97,28 @@
     padding: 0px; /* Add some padding around the container */
     border: none;
     outline: none;
-    box-shadow: none;
+    box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5); 
     background-color: #007d7e; 
     overflow: hidden;
-
+    flex: 1 1 calc(50% - 20px); /* Allows two cards per row with space between them */
  }
 
-    .card-body {
-        padding: 10px; /* Space inside the cards */
-        text-align: center; /* Center the text inside the cards */
-        background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
-        /* background: linear-gradient(90deg, rgb(230, 173, 173) 0%, rgba(255, 255, 255, 1) 100%); */
+.card-body {
+     padding: 10px; /* Space inside the cards */
+    text-align: center; /* Center the text inside the cards */
+    background: #1E2A38;
+    /* background: linear-gradient(to right ,#517191, #5e87b0); */
+    /* background: linear-gradient(90deg, rgb(230, 173, 173) 0%, rgba(255, 255, 255, 1) 100%); */
+    width: 100%;        
+}
 
-        width: 100%;
-        
-        
-        
-    }
-
-.card_bg {
+/* .card_bg {
     background: linear-gradient(90deg, rgba(67, 193, 65, 1) 41%, rgba(0, 212, 211, 1) 99%, rgba(238, 130, 238, 1) 100%);
 
-}    
+}     */
 
 .card-text, .card-title {
-    color:black; /* Replace with your desired color */
+    color:white; /* Replace with your desired color */
   }
 
 .container {

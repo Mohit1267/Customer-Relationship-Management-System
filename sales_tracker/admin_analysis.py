@@ -15,6 +15,8 @@ from sales_tracker.models import MiningData,LeadsData
 from django.db import connection
 from django.utils import timezone
 from datetime import timedelta
+import numpy as np
+from scipy.interpolate import make_interp_spline
 
 end_date = timezone.now().date()
 start_date = end_date - timedelta(days=6)
@@ -42,31 +44,31 @@ late_counts = [data[date]['Late'] for date in dates]  # New line for 'Late' stat
 
 x = np.arange(len(dates))
 width = 0.25  # Width of the bars
-# def admin_attendence_graph():
-#     print("this is in admin attendece function")
-#     fig, ax = plt.subplots(figsize=(12, 6))
-#     plt.gcf().set_facecolor('#262626')
-#     ax = plt.gca()
-#     ax.set_facecolor('#262626')
+def admin_attendence_graph():
+    print("this is in admin attendece function")
+    fig, ax = plt.subplots(figsize=(12, 6))
+    plt.gcf().set_facecolor('#262626')
+    ax = plt.gca()
+    ax.set_facecolor('#262626')
 
     
-#     ax.bar(x - width, present_counts, width, label='Present', color='#1f77b4')
-#     ax.bar(x, absent_counts, width, label='Absent', color='#ff7f0e')
-#     ax.bar(x + width, late_counts, width, label='Late', color='#2ca02c')
+    ax.bar(x - width, present_counts, width, label='Present', color='#1f77b4')
+    ax.bar(x, absent_counts, width, label='Absent', color='#ff7f0e')
+    ax.bar(x + width, late_counts, width, label='Late', color='#2ca02c')
 
-#     # ax.bar(dates, present_counts, label='Present')
-#     # ax.bar(dates, absent_counts, bottom=present_counts, label='Absent')
-#     # ax.bar(dates, late_counts, bottom=[p + a for p, a in zip(present_counts, absent_counts)], label='Late')  # Stacked bar for 'Late'
+    # ax.bar(dates, present_counts, label='Present')
+    # ax.bar(dates, absent_counts, bottom=present_counts, label='Absent')
+    # ax.bar(dates, late_counts, bottom=[p + a for p, a in zip(present_counts, absent_counts)], label='Late')  # Stacked bar for 'Late'
 
-#     ax.set_xlabel('Date')
-#     ax.set_ylabel('Total Number of Employees')
-#     ax.set_title('Employee Attendance for Initial 7 Days')
-#     ax.set_xticks(x)
-#     ax.set_xticklabels([date.strftime('%Y-%m-%d') for date in dates], rotation=45)
-#     ax.legend(title='Status')
-#     # ax.set_xticklabels(dates, rotation=45)
-#     plt.tight_layout()
-#     plt.savefig('static/admin_attendence.png', bbox_inches='tight', facecolor='#262626')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Total Number of Employees')
+    ax.set_title('Employee Attendance for Initial 7 Days')
+    ax.set_xticks(x)
+    ax.set_xticklabels([date.strftime('%Y-%m-%d') for date in dates], rotation=45)
+    ax.legend(title='Status')
+    # ax.set_xticklabels(dates, rotation=45)
+    plt.tight_layout()
+    plt.savefig('static/admin_attendence.png', bbox_inches='tight', facecolor='#262626')
     
 def admin_attendance_graph(request):
     print("This is in admin attendance function")
@@ -107,9 +109,9 @@ def admin_attendance_graph(request):
         xaxis_title='Date',
         yaxis_title='Total Number of Employees',
         barmode='group',  # This ensures that the bars are grouped side by side
-        plot_bgcolor='#262626',
-        paper_bgcolor='#262626',
-        font=dict(color='white'),
+        plot_bgcolor='#e0eaf6',
+        paper_bgcolor='#e0eaf6',
+        font=dict(color='black'),
         xaxis=dict(
             tickmode='array',
             tickvals=dates,
@@ -122,6 +124,115 @@ def admin_attendance_graph(request):
     # Render the Plotly figure to HTML and save it as an HTML file
     graph_html = plot(fig, output_type='div')
     return graph_html
+
+
+# def admin_attendance_graph(request):
+#     with connection.cursor() as cursor:
+#         cursor.execute("""
+#         SELECT 
+#         A.date,
+#         SUM(TIMESTAMPDIFF(
+#             SECOND, 
+#             CONCAT(A.date, ' ', A.check_in_time), 
+#             IFNULL(CONCAT(A.date, ' ', A.check_out_time), NOW())
+#         ))
+#         AS time_worked
+#         FROM 
+#         users_attendancerecord as A
+#         LEFT JOIN users_daysstatus as D
+#         ON A.date = D.date
+#         WHERE 
+#         D.status = 'Working Day' 
+#         AND A.date BETWEEN %s AND %s
+#         GROUP BY A.date;
+#         """, [start_date, end_date])
+        
+#         data = cursor.fetchall()
+#         dates = []
+#         hours_worked = []
+#         for row in data:
+#             date, total_sec = row
+#             hours = total_sec / 3600
+#             dates.append(date)
+#             hours_worked.append(hours)
+#     print("This is in admin attendance function")
+
+#     # Create a Plotly figure
+#     fig = go.Figure()
+
+#     # Add bars for 'Present'
+#     fig.add_trace(go.Bar(
+#         x=dates, 
+#         y=present_counts, 
+#         name='Present', 
+#         marker_color='#1f77b4',
+#         offsetgroup=0  # Position group
+#     ))
+
+#     # Add bars for 'Absent'
+#     fig.add_trace(go.Bar(
+#         x=dates, 
+#         y=absent_counts, 
+#         name='Absent', 
+#         marker_color='#ff7f0e',
+#         offsetgroup=1  # Position group
+#     ))
+
+#     # Add bars for 'Late'
+#     fig.add_trace(go.Bar(
+#         x=dates, 
+#         y=late_counts, 
+#         name='Late', 
+#         marker_color='#2ca02c',
+#         offsetgroup=2  # Position group
+#     ))
+
+#     # Add line for hours worked (secondary y-axis)
+#     fig.add_trace(go.Scatter(
+#         x=dates,
+#         y=hours_worked,
+#         mode='lines+markers',
+#         line=dict(color='#FFFF00'),
+#         marker=dict(size=8),
+#         name="Number of hours worked",
+#         yaxis="y2"  # Assign to secondary y-axis
+#     ))
+
+#     # Customize the layout
+#     fig.update_layout(
+#         title='Employee Attendance for Initial 7 Days',
+#         xaxis_title='Date',
+#         yaxis_title='Total Number of Employees',
+#         yaxis=dict(
+#             title='Total Number of Employees',
+#             gridcolor='#555555'
+#         ),
+#         yaxis2=dict(
+#             title='Number of Hours Worked',
+#             overlaying='y',
+#             side='right',
+#             gridcolor='#555555',
+#             showgrid=False
+#         ),
+#         barmode='group',  # Group the bars side by side
+#         plot_bgcolor='#262626',
+#         paper_bgcolor='#262626',
+#         font=dict(color='white'),
+#         xaxis=dict(
+#             tickmode='array',
+#             tickvals=dates,
+#             tickformat='%Y-%m-%d'
+#         ),
+#         legend=dict(title='Status')
+#     )
+
+#     # Render the Plotly figure to HTML and save it as an HTML file
+#     graph_html = plot(fig, output_type='div')
+#     return graph_html
+
+
+
+
 
 
 attendence_percentage = []
@@ -171,20 +282,20 @@ def Mining_Count():
     # Data
     labels = ['Total Mining', 'Expected Mining']
     sizes = [Total_Mining, Exp_Mining]
-    colors = ['#ff9999','#66b3ff']
+    colors = ['#008080','#1E2A38' ]
 
     # Plot
     fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
-    plt.gcf().set_facecolor('#262626')
-    ax.set_facecolor('#262626')
+    plt.gcf().set_facecolor('#e0eaf6')
+    ax.set_facecolor('#e0eaf6')
 
     # Create a pie chart
     wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
 
     # Beautify the plot
-    plt.setp(autotexts, size=10, weight="bold",)
-    plt.setp(texts, size=12, color='white')
-    ax.set_title("Mining vs Expected Mining", color='white')
+    plt.setp(autotexts, size=10, weight="bold",color='black')
+    plt.setp(texts, size=12, color='black')
+    ax.set_title("Mining vs Expected Mining", color='black')
 
     # Show plot
     plt.savefig('static/Mining_Count.png')
@@ -262,6 +373,72 @@ def EachMinerTarget(id):
     # print(attendence)
 
 
+
+
+
+def Time_worked(request):
+    end_date = timezone.now().date()
+    start_date = end_date - timedelta(days=6)
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+        SELECT 
+        A.date,
+        SUM(TIMESTAMPDIFF(
+            SECOND, 
+            CONCAT(A.date, ' ', A.check_in_time), 
+            IFNULL(CONCAT(A.date, ' ', A.check_out_time), NOW())
+        ))
+        AS time_worked
+        FROM
+        users_attendancerecord as A
+        LEFT JOIN users_daysstatus as D
+        ON A.date = D.date
+        WHERE
+        D.status = 'Working Day' 
+        AND A.date BETWEEN %s AND %s
+        GROUP BY A.date;
+        """, [start_date, end_date])
+        
+        data = cursor.fetchall()
+        dates = []
+        hours_worked = []
+        for row in data:
+            date, total_sec = row
+            hours = total_sec / 3600
+            dates.append(date)
+            hours_worked.append(hours)
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=dates,
+            y=hours_worked,
+            mode='lines+markers',
+            line=dict(color='#FFFF00'),
+            marker=dict(size=8),
+            name="Number of hours worked"
+        ))
+
+        fig.update_layout(
+            title="Date VS Number of hours worked",
+            xaxis_title='Date',
+            yaxis_title='Number of hours',
+            plot_bgcolor='#262626',
+            paper_bgcolor='#262626',
+            font=dict(color='White'),
+            xaxis=dict(
+                tickmode='array',
+                tickvals=dates,
+                tickformat='%Y-%m-%d'
+            ),
+            yaxis=dict(gridcolor="black")
+        )
+        graph_html = plot(fig, output_type='div')
+        return graph_html
+    
+
+
+
 # def Time_worked():
 #     with connection.cursor() as cursor:
 #         cursor.execute("""
@@ -309,60 +486,65 @@ def EachMinerTarget(id):
 #         plt.tight_layout()
 #         plt.savefig('static/Time_worked.png')
 
-def Time_worked(request):
-    with connection.cursor() as cursor:
-        cursor.execute("""
-        SELECT 
-        A.date,
-        SUM(TIMESTAMPDIFF(
-            SECOND, 
-            CONCAT(A.date, ' ', A.check_in_time), 
-            IFNULL(CONCAT(A.date, ' ', A.check_out_time), NOW())
-        ))
-        AS time_worked
-        FROM 
-        users_attendancerecord as A
-        left join users_daysstatus as D
-        on A.date = D.date
-        where D.status = 'Working Day'
-        group by A.date;
-        """)
-        data = cursor.fetchall()
-        dates = []
-        hours_worked = []
-        for row in data:
-            date,total_sec = row
-            hours = total_sec / 3600
-            dates.append(date)
-            hours_worked.append(hours)
-            print(date,hours)
-            print(' ')
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(
-            x = dates,
-            y = hours_worked,
-            mode = 'lines + markers',
-            line = dict(color = '#FFFF00'),
-            marker = dict(size = 8),
-            name = "Number of hours worked"
-        ))
+# def Time_worked(request):
+#     with connection.cursor() as cursor:
+#         cursor.execute("""
+#         SELECT 
+#         A.date,
+#         SUM(TIMESTAMPDIFF(
+#             SECOND, 
+#             CONCAT(A.date, ' ', A.check_in_time), 
+#             IFNULL(CONCAT(A.date, ' ', A.check_out_time), NOW())
+#         ))
+#         AS time_worked
+#         FROM 
+#         users_attendancerecord as A
+#         left join users_daysstatus as D
+#         on A.date = D.date
+#         where D.status = 'Working Day'
+#         group by A.date;
+#         """)
+#         data = cursor.fetchall()
+#         dates = []
+#         hours_worked = []
+#         for row in data:
+#             date,total_sec = row
+#             hours = total_sec / 3600
+#             dates.append(date)
+#             hours_worked.append(hours)
+#             print(date,hours)
+#             print(' ')
+#         fig = go.Figure()
+#         fig.add_trace(go.Scatter(
+#             x = dates,
+#             y = hours_worked,
+#             mode = 'lines + markers',
+#             line = dict(color = '#FFFF00'),
+#             marker = dict(size = 8),
+#             name = "Number of hours worked"
+#         ))
 
-        fig.update_layout(
-            title = "Date VS No of hours",
-            xaxis_title = 'Date',
-            yaxis_title = 'Number of hours',
-            plot_bgcolor = '#262626',
-            paper_bgcolor = '#262626',
-            font = dict(color = 'White'),
-            xaxis = dict(
-                tickmode = 'array',
-                tickvals = dates,
-                tickformat = '%Y-%m-%d'
-            ),
-            yaxis = dict(gridcolor = "black")
-        )
-        graph_html = plot(fig,output_type = 'div')
-        return graph_html
+#         fig.update_layout(
+#             title = "Date VS No of hours",
+#             xaxis_title = 'Date',
+#             yaxis_title = 'Number of hours',
+#             plot_bgcolor = '#262626',
+#             paper_bgcolor = '#262626',
+#             font = dict(color = 'White'),
+#             xaxis = dict(
+#                 tickmode = 'array',
+#                 tickvals = dates,
+#                 tickformat = '%Y-%m-%d'
+#             ),
+#             yaxis = dict(gridcolor = "black")
+#         )
+#         graph_html = plot(fig,output_type = 'div')
+#         return graph_html
+
+
+
+
+
 
 def  TotalEmployees():
     c = RegisterUser.objects.count()

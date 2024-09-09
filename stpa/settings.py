@@ -101,16 +101,9 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'shanaya',
-#     }
-# }    
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'admin',
-#         'PASSWORD':'Hello8349',
-#         'HOST' : 'shanaya.cdays8ewiw5f.ap-southeast-2.rds.amazonaws.com',
+#         'USER': 'root',
+#         'PASSWORD':'Mohit@sql1267',
+#         'HOST' : 'localhost',
 #         'PORT': '3306',
 #     }
 # }
@@ -125,6 +118,31 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'admin',
+#         'PASSWORD':'Hello8349',
+#         'HOST' : 'shanaya.cdays8ewiw5f.ap-southeast-2.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'mysql',
+#         'HOST' : 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
 
  
 
