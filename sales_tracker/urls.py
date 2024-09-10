@@ -8,6 +8,7 @@ urlpatterns = [
     path('attendance/', (views.Attendence), name='attendance'),
     # path("agent/", login_required(views.Agent.as_view()), name="agent"),
     path("agent/<pk>", login_required(views.DetailCalling), name="detail_agent"),
+    path("sales/<pk>", login_required(views.DetailSales), name="detail_sales"),
 
     path("Attendence/", login_required(views.Attendence), name="attendance"),
     path("reports/", login_required(views.Admin_reports.as_view()), name="reports"),

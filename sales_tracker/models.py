@@ -56,22 +56,29 @@ class ContactData(models.Model):
     date = models.DateField(default="2000-10-10")
     organization = models.ForeignKey(MiningData, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
+    created_by = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, related_name='calling_data',default=1)
     # calling_agent = foreign key to agent profile to which call is assigned
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
 
 class LeadsData(models.Model):
+    LEAD_STATUS_CHOICES = [
+        ('HOT', 'Hot'),
+        ('COLD', 'Cold'),
+        ('MILD', 'Mild'),
+    ]
     lead_name = models.CharField( max_length=50)
     first_name = models.CharField( max_length=50)
     last_name = models.CharField( max_length=50)
     email_id = models.EmailField()
-    contact_number = models.IntegerField()
+    contact_number = models.CharField(max_length=15)
     job_title = models.CharField( max_length=50)
     address = models.TextField( )
     date = models.DateField(default="2000-10-10")
     contact_link = models.ForeignKey(ContactData, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
+    status = models.CharField(max_length=4, choices=LEAD_STATUS_CHOICES, default='COLD')
 
     def __str__(self):
         return f"{self.lead_name}"
