@@ -471,8 +471,8 @@ document.getElementById("toggleBreakBtn").addEventListener("click", function() {
 });
 
 function startBreakTimer() {
-    breakTimerInterval = setInterval(() => {
-        if (breakTimeLeft <= 0) {
+    breakTimerInterval = setInterval(() = {
+        if (breakTimeLeft = 0) {
             clearInterval(breakTimerInterval);
             breakTimerInterval = null;
             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";

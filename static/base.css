@@ -216,7 +216,7 @@ body{
   }
 
 .navbar.collapsed {
-    transform: translateX(-100%);
+    transform: translateX(-60%);
   }
 
 .nav-item {
