@@ -134,6 +134,22 @@ def Dashboards(request):
         context["Tocall"] = ToCall
         print(ToCall, "This is the value of ToCall")
         return render(request,'sales_tracker/agent.html',context)
+    elif(request.user.profile.branch == 'sales'):
+        context = {}
+        now_date_time = datetime.datetime.now()
+        now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+        users = request.user
+        u = RegisterUser.objects.get(email=users)
+        u = u.id
+        HLeads = LeadsData.objects.filter(assigned_to=u,date = now_date, status = "HOT")
+        CLeads = LeadsData.objects.filter(assigned_to=u,date = now_date, status = "COLD")
+        MLeads = LeadsData.objects.filter(assigned_to=u,date = now_date, status = "MILD")
+        context["user"] = u
+        context["HLeads"] = HLeads
+        context["CLeads"] = CLeads
+        context["MLeads"] = MLeads
+        # print(ToCall, "This is the value of ToCall")
+        return render(request,'sales_tracker/sales.html',context)
 
 
 
@@ -564,6 +580,35 @@ def Create_contact_view(request):
     return render(request, "sales_tracker/create_contact.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count,"calling_agents": CallingAgent.objects.all()})
 
 
+
+
+def assign_leadCt():
+    # Get the user with the least assignments
+    least_occurring_assigned_to_id = (
+        LeadsData.objects
+        .filter(assigned_to__profile__branch='sales')
+        .values('assigned_to')
+        .annotate(count=Count('assigned_to'))
+        .order_by('count')
+        .first()
+    )
+
+    # If there are no records yet, assign randomly to one of the sales agents
+    if not least_occurring_assigned_to_id:
+        # Get all users with the 'sales' branch
+        sales_users = RegisterUser.objects.filter(profile__branch='sales')
+        if sales_users.exists():
+            # Randomly select one sales agent
+            return random.choice(sales_users)
+        else:
+            # Handle case where there are no sales agents
+            raise ObjectDoesNotExist("No sales agents found to assign.")
+
+    # Otherwise, assign to the least occurring sales agent
+    assigned_to_id = least_occurring_assigned_to_id['assigned_to']
+    return RegisterUser.objects.get(id=assigned_to_id)
+
+
 def Create_lead_view(request):
     user = request.user
     utc_login_time = user.last_login
@@ -578,6 +623,7 @@ def Create_lead_view(request):
         try:
             LeadsData.objects.get(contact_link = ContactData.objects.get(pk = form.data.get("contact_link")))
         except:
+            assign_lead = assign_leadCt()
             now_date_time = datetime.datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
@@ -591,7 +637,9 @@ def Create_lead_view(request):
                 address = form.data.get("address"),
                 contact_link = ContactData.objects.get(pk = form.data.get("contact_link")),
                 date = now_date,
-                assigned_to = get_user_model().objects.get(username=username)
+                # assigned_to = get_user_model().objects.get(username=username),
+                assigned_to = assign_lead,
+                # created_by = user
             )
             print("hello bhai")
             contact_details.save()
@@ -874,6 +922,15 @@ def DetailCalling(request, pk):
 
     pass
 
+def DetailSales(request, pk):
+    context = {}
+    context['pk'] = pk
+    leads_data = get_object_or_404(LeadsData, lead_name=pk)
+    context = {
+        'leads_data': leads_data
+    }
+
+    return render(request,"sales_tracker/detail_leads_sales.html",context)
 
 
 
