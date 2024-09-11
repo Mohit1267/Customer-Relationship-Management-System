@@ -419,7 +419,7 @@ line-height: 1.5;
     text-decoration:solid;
     display:inline-block;
     font-size: 25px;
-    font-weight: bold;
+    /* font-weight: bold; */
 } 
 
 
