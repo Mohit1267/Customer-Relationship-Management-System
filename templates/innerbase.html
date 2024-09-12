@@ -262,28 +262,37 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-      $(document).ready(function() {
-  $(".hamburger").click(function() {
-    $(".stick").each(function() {
-      if ($(this).hasClass('open')) {
-        $(this).removeClass('open').addClass('close');
-      } else {
-        $(this).removeClass('close').addClass('open');
+      function toggleNavbar() {
+        const navbarContainer = document.querySelector('.navbar-container');
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('.hamburger');
+      
+        // Toggle the 'collapsed' class on the navbar
+        navbar.classList.toggle('collapsed');
+      
+        // Change the hamburger icon's state
+        hamburger.classList.toggle('open');
+      
+        // Toggle the visibility of the navbar container
+        if (navbarContainer.style.display === 'block') {
+            navbarContainer.style.display = 'none';
+        } else {
+            navbarContainer.style.display = 'block';
+        }
       }
-    });
-  });
-});
-    </script>
-<script>
-function toggleNavbar() {
-  const navbarContainer = document.querySelector('.navbar-container');
-  navbarContainer.classList.toggle('show'); // Toggle visibility
-
-  if (navbarContainer.classList.contains('show')) {
-    // Scroll the navbar into view when it is shown
-    navbarContainer.scrollIntoView({ behavior: 'smooth' });
-  }
-}
+      
+      // Hamburger animation
+      $(document).ready(function() {
+        $(".hamburger").click(function() {
+            $(".stick").each(function() {
+                if ($(this).hasClass('open')) {
+                    $(this).removeClass('open').addClass('close');
+                } else {
+                    $(this).removeClass('close').addClass('open');
+                }
+            });
+        });
+      });
 </script>
 
     <script>  
@@ -462,8 +471,8 @@ document.getElementById("toggleBreakBtn").addEventListener("click", function() {
 });
 
 function startBreakTimer() {
-    breakTimerInterval = setInterval(() => {
-        if (breakTimeLeft <= 0) {
+    breakTimerInterval = setInterval(() = {
+        if (breakTimeLeft = 0) {
             clearInterval(breakTimerInterval);
             breakTimerInterval = null;
             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";

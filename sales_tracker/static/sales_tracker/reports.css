@@ -84,7 +84,12 @@
     margin: 0;
     font-size: 15px;
     color: #a9b7c6; /* Softened text color for readability */
+    align-items: center;
 
+}
+
+.card-icon{
+    align-items: center;
 }
 
 /* Responsive Design */

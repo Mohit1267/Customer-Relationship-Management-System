@@ -26,7 +26,7 @@
     <!-- navbar to the right side -->
     <style>
     
-/* 
+{% comment %} /* 
     @media (max-width: 768px) {
       .navbar {
         transform: translateX(-100%);
@@ -43,7 +43,7 @@
       .content {
         margin-left: 0;
       }
-    } */
+    } */ {% endcomment %}
      
   </style>
 
@@ -52,12 +52,12 @@
   </head>
   <body>
 
+   
     <script src="charts.js"></script>
     
     <!-- navbar to the right side -->
 
     
-   
     <nav class="navbar  navbar-expand-lg">
 
       <div class="navbar-brand-container">
@@ -85,11 +85,11 @@
             <div></div>
             <div></div>
           </div> -->
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+          <div class="hamburger" onclick="toggleNavbar()">
+            <div class="stick stick-1"></div>
+            <div class="stick stick-2"></div>
+            <div class="stick stick-3"></div>
+        </div>
 
         
         <div class="" id="navbarNavDropdown">   
@@ -226,20 +226,47 @@
   
 
     <script>
-      document.getElementById('hamburger-btn').addEventListener('click', function() {
-        const navbar = document.getElementById('navbar');
-        navbar.classList.toggle('navbar-collapsed');
-        this.classList.toggle('open');
+      // Function to toggle the navbar
+function toggleNavbar() {
+  const navbarContainer = document.querySelector('.navbar-container');
+  const navbar = document.querySelector('.navbar');
+  const hamburger = document.querySelector('.hamburger');
+
+  // Toggle the 'collapsed' class on the navbar
+  navbar.classList.toggle('collapsed');
+
+  // Change the hamburger icon's state
+  hamburger.classList.toggle('open');
+
+  // Toggle the visibility of the navbar container
+  if (navbarContainer.style.display === 'block') {
+      navbarContainer.style.display = 'none';
+  } else {
+      navbarContainer.style.display = 'block';
+  }
+}
+
+// Hamburger animation
+$(document).ready(function() {
+  $(".hamburger").click(function() {
+      $(".stick").each(function() {
+          if ($(this).hasClass('open')) {
+              $(this).removeClass('open').addClass('close');
+          } else {
+              $(this).removeClass('close').addClass('open');
+          }
       });
+  });
+});
     </script>
 
-    <script>
+    {% comment %} <script>
       $(document).ready(function() {
         $(".hamburger").click(function() {
           $(".stick").toggleClass('open');
         });
       });
-    </script>
+    </script> {% endcomment %}
 
     <!-- jQuery for additional interactions -->
     {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {% endcomment %}

@@ -21,6 +21,7 @@ class Profile(models.Model):
         ('admin', 'Admin'),
         ('miner', 'Data Miner'),
         ('agent', 'Calling Agent'),
+        ('sales', 'Sales Agent'),
     )
     user = models.OneToOneField(RegisterUser, on_delete=models.CASCADE, default= get_user_model(), primary_key=True)
     emp_id = models.CharField(max_length=50,default="qw")
