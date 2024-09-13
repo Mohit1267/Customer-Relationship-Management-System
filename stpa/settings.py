@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_zn&3l08*xa0#$*v7l8y#h^v1)7#w$&_c)s=+z$(f7v8f3hhu=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 
 
 # Application definition
@@ -102,22 +102,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shanaya',
         'USER': 'root',
-        'PASSWORD':'mysql',
-        'HOST' : 'localhost',
+        'PASSWORD':'shanaya2',
+        'HOST' : '34.100.214.94',
         'PORT': '3306',
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'Siddhi@2002',
-#         'HOST' : 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
 
 
 
