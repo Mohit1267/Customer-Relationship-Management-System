@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-_zn&3l08*xa0#$*v7l8y#h^v1)7#w$&_c)s=+z$(f7v8f3hhu=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'localhost:8000', '104.197.128.246']
 
 
 # Application definition
@@ -52,6 +53,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 SESSION_COOKIE_AGE = 15*60
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,7 +92,6 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 # AUTHENTICATION_BACKENDS = ['users.authentication.EmailBackend', 'django.contrib.auth.backends.ModelBackend']
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -102,6 +103,26 @@ DATABASES = {
     }
 }
 
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',}
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'Siddhi@2002',
+#         'PASSWORD':'Pj@123456',
+
+#         'HOST' : 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -113,16 +134,17 @@ DATABASES = {
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'Siddhi@2002',
-#         'HOST' : 'localhost',
-#         'PORT': '3306',
-#     }
-# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'shanaya',
+        'USER': 'root',
+        'PASSWORD':'shanaya2',
+        'HOST' : '34.100.214.94',
+        'PORT': '3306',
+    }
+}
 
 
 
@@ -166,6 +188,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
