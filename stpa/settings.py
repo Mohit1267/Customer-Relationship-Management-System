@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+
+# PORT = os.getenv('PORT', 8000)
+
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,17 +91,28 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shanaya',
         'USER': 'root',
-        'PASSWORD':'Siddhi@2002',
-        'HOST' : 'localhost',
+        'PASSWORD':'shanaya2',
+        'HOST' : '34.100.214.94',
         'PORT': '3306',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'Siddhi@2002',
+#         'HOST' : 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
