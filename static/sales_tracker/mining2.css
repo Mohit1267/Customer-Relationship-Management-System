@@ -12,7 +12,7 @@ body {
 .container-fluid {
     overflow-y: auto; /* Enables vertical scrolling */
     overflow-x: hidden; /* Hides horizontal scrolling */
-    max-height: 600px; /* Set a maximum height for the container */
+    max-height: 950px; /* Set a maximum height for the container */
 }
 
 
