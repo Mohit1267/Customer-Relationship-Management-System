@@ -1,0 +1,97 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto; /* Ensure body scrolls if needed */
+}
+
+/* Scrollable container */
+.container {
+    display: flex;
+    flex-direction: column; /* Stack graphs vertically */
+    justify-content: flex-start;
+    padding: 20px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px; /* Limit the container width */
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Enable vertical scroll */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #f9f9f9; /* Scrollbar color */
+}
+
+/* Ensure body content scrolls within viewport */
+html, body {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Scrollbar styling for Webkit browsers (Chrome, Safari, etc.) */
+.container::-webkit-scrollbar {
+    width: 8px; /* Width for vertical scrollbar */
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scroll thumb */
+    border-radius: 10px;
+}
+
+.container::-webkit-scrollbar-track {
+    background-color: #f9f9f9;
+}
+
+/* Graph container styling */
+.graph-container {
+    width: 100%;
+    margin: 20px 0; /* Add spacing between the graphs */
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.graph-container:hover {
+    transform: scale(1.02); /* Add a subtle hover effect */
+}
+
+.graph-container div {
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Styling for the Graphs */
+.graph, .time-graph {
+    width: 100%;
+    height: auto;
+}
+
+.graph-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+    margin-right: 40px;
+}
+
+/* Ensure the entire container is scrollable */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* Make the body content fit the view and scroll within the container */
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px; /* Reduce padding on smaller screens */
+        max-width: 100%; /* Allow full width on smaller screens */
+    }
+
+    .graph-container {
+        width: 95%; /* Make graphs almost full width on smaller screens */
+    }
+}
