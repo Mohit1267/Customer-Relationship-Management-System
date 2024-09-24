@@ -2,14 +2,22 @@
 {% load static %}
 {% block title %}Calling agent dashboard{% endblock %}
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/MinerActivity.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/admin_analysis.css' %}">
 {% endblock %}
 
 {% block content %}
-<div>{{ graph_html|safe }}</div>
-<div>{{ time_graph|safe }}</div>
 <div class="container">
-    <img src="{% static 'Time_worked.png' %}" alt="Attendance Chart">
-    <img src="{% static 'Productivity.png' %}" alt="Attendance Chart">
-</div>  
+    <div class="graph-container">
+        <h2>Number of Minings vs. Days</h2>
+        <div class="graph">
+            {{ graph_html|safe }}
+        </div>
+    </div>
+    <div class="graph-container">
+        <h2>Date vs Number of Hours Worked</h2>
+        <div class="time-graph">
+            {{ time_graph|safe }}
+        </div>
+    </div>
+</div>
 {% endblock %}
