@@ -507,3 +507,67 @@ body{
       max-height: none; /* No limit on larger screens */
     }
   }
+
+
+/*changes key frames 
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .navbar {
+    width: 20%; /* Wider on medium screens */
+  }
+  .navbar.collapsed {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    width: 25%; /* Adjust width for smaller screens */
+  }
+  .profile1 {
+    margin-left: -100px; /* Adjust position */
+  }
+  .hamburger {
+    top: 20px; /* Adjust position */
+    right: 10px; /* Adjust position */
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    position: relative; /* Change position for mobile */
+    height: auto; /* Auto height for mobile */
+    width: 100%; /* Full width */
+  }
+  .navbar-container {
+    justify-content: flex-start; /* Align to the start */
+  }
+  .nav-links {
+    margin-left: 0; /* Remove left margin */
+    margin-top: 70px; /* Adjust margin */
+  }
+  .hamburger {
+    display: flex; /* Ensure it's visible */
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    height: auto; /* Adjust height */
+    padding: 5px; /* Reduce padding */
+  }
+  .timer#count_down {
+    font-size: 18px; /* Adjust font size */
+    margin: 10px 20px; /* Adjust margins */
+  }
+  .profile1 {
+    width: 100px; /* Reduce profile width */
+  }
+  .nav-links {
+    font-size: 16px; /* Smaller font size for mobile */
+  }
+  .dropdown-menu {
+    width: 100%; /* Full width on mobile */
+  }
+}
+
