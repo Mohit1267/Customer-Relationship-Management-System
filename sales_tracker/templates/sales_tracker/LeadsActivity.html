@@ -1,17 +1,26 @@
-{% extends "adminbase.html" %}
-{% load static %}
-{% block title %}Calling agent dashboard{% endblock %}
-{% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/LeadsActivity.css' %}">
-{% endblock %}
-
-{% block content %}
-<div class="container">
-    <img class="attpiechart rotate" src="{% static 'Leads_Count.png' %}" alt="Attendance Chart">
-    {%for agent in Agents %}
-    <h1 class="leftpart">{{agent.user.username}}</h1>
-    {%endfor%}
-    <h1 class="rightpart1"></h1>Total Minigs : {{Total_Leads}}</h1>
-    <h1 class="rightpart2">Expected Minigs : {{Exp_Leads}}</h1>
-</div>  
+{% extends "adminbase.html" %} 
+{% load static %} 
+{% block title %}Calling agent dashboard{% endblock %} 
+{% block css_link %} 
+<link rel="stylesheet" href="{% static 'sales_tracker/LeadsActivity.css' %}"> 
+{% endblock %} 
+ 
+{% block content %} 
+<div class="container"> 
+    <img class="attpiechart rotate" src="{% static 'Leads_Count.png' %}" alt="Attendance Chart"> 
+     
+    <div class="card1"> 
+        <h1 class="rightpart1">Total Minings: {{Total_Leads}}</h1> 
+    </div> 
+ 
+    {% for agent in Agents %} 
+    <div class="card2"> 
+        <h1 class="leftpart">{{ agent.user.username }}</h1> 
+    </div> 
+    {% endfor %} 
+     
+    <div class="card3"> 
+        <h1 class="rightpart2">Expected Minings: {{Exp_Leads}}</h1> 
+    </div> 
+</div>   
 {% endblock %}
