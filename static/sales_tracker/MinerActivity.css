@@ -24,6 +24,7 @@ body {
 } 
 
 .cards-container { 
+    padding: 50px;
     display: flex; 
     flex-direction: row; /* Aligns cards in a row */
     margin-top: 20px; 
