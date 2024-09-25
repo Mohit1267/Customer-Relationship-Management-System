@@ -1,51 +1,67 @@
-body {
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
+body { 
+    background-color: #f0f0f0; 
+    font-family: Arial, sans-serif; 
+    box-sizing: border-box; 
+    margin: 0; /* Remove default margin */ 
+} 
 
-}
+.container { 
+    max-width: 1200px; /* Set a maximum width */ 
+    margin: 0 auto; /* Center the container */ 
+    padding: 20px; /* Padding for inner spacing */ 
+    display: flex; /* Use flexbox for layout */ 
+    flex-direction: column; /* Stack elements vertically */ 
+    align-items: center; /* Center items horizontally */ 
+} 
 
-.attpiechart {
-    /* margin-left: -150px; */
-    transition: transform 0.5s ease;
-}
+.attpiechart { 
+    margin: 20px; /* Margin around the pie chart */ 
+    max-width: 50%; /* Limit the width of the pie chart */ 
+    height: auto; /* Maintain aspect ratio */ 
+} 
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
+.cards-container { 
+    display: flex; /* Use flexbox for the cards */ 
+    flex-direction: column; /* Stack cards vertically */ 
+    margin-top: 20px; /* Space between chart and cards */ 
+    width: 100%; /* Full width of the container */ 
+    align-items: center; /* Center cards horizontally */ 
+} 
+
+.card { 
+    background-color: white; /* White background for cards */ 
+    border-radius: 10px; /* Rounded corners */ 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */ 
+    padding: 20px; /* Padding inside cards */ 
+    margin: 10px; /* Space between cards */ 
+    width: 500px; /* Fixed width for uniformity */ 
+    height: 200px; /* Fixed height for uniformity */ 
+    display: flex; /* Enable flexbox for card contents */ 
+    align-items: center; /* Center items vertically */ 
+    justify-content: center; /* Center items horizontally */ 
+} 
+
+.leftpart, .rightpart1, .rightpart2 { 
+    font-size: 1.5rem; /* Responsive font size */ 
+    color: #333; /* Dark text color for contrast */ 
+} 
+
+.rightpart1, .rightpart2 { 
+    text-align: center; /* Center text in card */ 
+} 
+
+/* Responsive adjustments for smaller screens */ 
+@media (max-width: 768px) { 
+    .leftpart, .rightpart1, .rightpart2 { 
+        font-size: 1.2rem; /* Smaller font size for mobile */ 
+    } 
+
+    .attpiechart { 
+        margin: 10px 0; /* Adjust margin for smaller screens */ 
+    } 
+
+    .card { 
+        width: 100%; /* Full width on smaller screens */ 
+        height: auto; /* Allow height to adjust based on content */ 
     }
-    50% {
-        transform: scale(1.1);
-    }
 }
-
-.attpiechart:hover {
-    animation: pulse 1s infinite;
-}
-
-.container h1
-{
-    color:rgb(224, 187, 187);   
-}
-
-
-.leftpart {
-    font-size: 25px;
-    margin-top: 50px;
-    margin-left: -30px;
-    text-decoration: none;
-     
-}
-
-.rightpart1 {
-    font-size: 25px;
-    margin-left: 900px;
-    margin-top:  -220px;
-}
-
-.rightpart2 {
-    font-size: 25px;
-    margin-left: 900px;
-    margin-top:  30px;
-}
-
