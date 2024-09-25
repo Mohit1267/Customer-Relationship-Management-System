@@ -7,24 +7,27 @@
 
 {% block content %}
 <div class="container">
-    <img class="attpiechart rotate" src="{% static 'Mining_Count.png' %}" alt="Attendance Chart">
+    <img class="attpiechart" src="{% static 'Mining_Count.png' %}" alt="Attendance Chart">
     
     <div class="cards-container">
-        {% for miners in Miner %}
-        <a href="{% url 'EmployeeDetail' miners.user.id %}">
-            <div class="card">
-                <h1 class="leftpart">{{ miners.user.username }}</h1>
-            </div>
-        </a>
-        {% endfor %}
-        
-        <div class="card">
-            <h1 class="rightpart1">Total Minings: {{ Total_Mining }}</h1>
+        <div class="miners-list">
+            {% for miners in Miner %}
+            <a href="{% url 'EmployeeDetail' miners.user.id %}">
+                <div class="card">
+                    <h1 class="leftpart">{{ miners.user.username }}</h1>
+                </div>
+            </a>
+            {% endfor %}
         </div>
         
-        <div class="card">
-            <h1 class="rightpart2">Expected Minings: {{ Exp_Mining }}</h1>
+        <div class="mining-info-container">
+            <div class="card">
+                <h1 class="rightpart1">Total Minings: {{ Total_Mining }}</h1>
+            </div>
+            <div class="card">
+                <h1 class="rightpart2">Expected Minings: {{ Exp_Mining }}</h1>
+            </div>
         </div>
     </div>
-</div>  
+</div>
 {% endblock %}

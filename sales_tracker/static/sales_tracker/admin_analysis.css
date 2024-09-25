@@ -14,12 +14,11 @@ body, html {
     justify-content: flex-start;
     padding: 20px;
     margin: 0 auto;
-    width: 100%;
-    max-width: 800px; /* Limit the container width */
+    max-width: 100% !important; /* Limit the container width */
     height: 100vh; /* Full viewport height */
     overflow-y: auto; /* Enable vertical scroll */
     overflow-x: hidden; /* Prevent horizontal scroll */
-    scrollbar-width: thin; /* For Firefox */
+    scrollbar-width: bold; /* For Firefox */
     scrollbar-color: #888 #f9f9f9; /* Scrollbar color */
 }
 

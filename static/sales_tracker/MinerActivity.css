@@ -2,66 +2,86 @@ body {
     background-color: #f0f0f0; 
     font-family: Arial, sans-serif; 
     box-sizing: border-box; 
-    margin: 0; /* Remove default margin */ 
+    margin: 0; 
 } 
 
 .container { 
-    max-width: 1200px; /* Set a maximum width */ 
-    margin: 0 auto; /* Center the container */ 
-    padding: 20px; /* Padding for inner spacing */ 
-    display: flex; /* Use flexbox for layout */ 
-    flex-direction: column; /* Stack elements vertically */ 
-    align-items: center; /* Center items horizontally */ 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    max-height: 950px; 
+    max-width: 100% !important; 
+    margin: 0 auto; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
 } 
 
 .attpiechart { 
-    margin: 20px; /* Margin around the pie chart */ 
-    max-width: 50%; /* Limit the width of the pie chart */ 
-    height: auto; /* Maintain aspect ratio */ 
+    margin: 20px; 
+    max-width: 50%; 
+    height: auto; 
 } 
 
 .cards-container { 
-    display: flex; /* Use flexbox for the cards */ 
-    flex-direction: column; /* Stack cards vertically */ 
-    margin-top: 20px; /* Space between chart and cards */ 
-    width: 100%; /* Full width of the container */ 
-    align-items: center; /* Center cards horizontally */ 
+    display: flex; 
+    flex-direction: row; /* Aligns cards in a row */
+    margin-top: 20px; 
+    width: 100%; 
+    justify-content: space-between; /* Space between miners and mining info */
+} 
+
+.miners-list {
+    display: flex; 
+    flex-direction: column; /* Stack username cards vertically */
+} 
+
+.mining-info-container {
+    
+    display: flex; 
+    flex-direction: column; /* Stack mining info cards vertically */
 } 
 
 .card { 
-    background-color: white; /* White background for cards */ 
-    border-radius: 10px; /* Rounded corners */ 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */ 
-    padding: 20px; /* Padding inside cards */ 
-    margin: 10px; /* Space between cards */ 
-    width: 500px; /* Fixed width for uniformity */ 
-    height: 200px; /* Fixed height for uniformity */ 
-    display: flex; /* Enable flexbox for card contents */ 
-    align-items: center; /* Center items vertically */ 
-    justify-content: center; /* Center items horizontally */ 
+    background-color: #1E2A38 !important; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    margin: 10px; 
+    width: 100%; /* Fixed width for uniformity */
+    height: auto; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
 } 
 
-.leftpart, .rightpart1, .rightpart2 { 
-    font-size: 1.5rem; /* Responsive font size */ 
-    color: #333; /* Dark text color for contrast */ 
+.leftpart { 
+    font-size: 1.5rem; 
+    color: white; 
 } 
 
 .rightpart1, .rightpart2 { 
-    text-align: center; /* Center text in card */ 
+    font-size: 1.2rem; 
+    color: white; 
+    text-align: center; /* Center text in the cards */
 } 
 
-/* Responsive adjustments for smaller screens */ 
 @media (max-width: 768px) { 
     .leftpart, .rightpart1, .rightpart2 { 
-        font-size: 1.2rem; /* Smaller font size for mobile */ 
+        font-size: 1.2rem; 
     } 
 
     .attpiechart { 
-        margin: 10px 0; /* Adjust margin for smaller screens */ 
+        margin: 10px 0; 
     } 
 
+    .cards-container { 
+        flex-direction: column; /* Stack cards vertically on small screens */
+        align-items: center; /* Center all cards */
+    }
+
     .card { 
-        width: 100%; /* Full width on smaller screens */ 
-        height: auto; /* Allow height to adjust based on content */ 
+        width: 100%; /* Full width on smaller screens */
+        height: auto; /* Allow height to adjust based on content */
     }
 }
