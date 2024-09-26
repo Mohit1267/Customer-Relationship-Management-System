@@ -207,6 +207,8 @@ def manual_login(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            latitude = request.POST.get('latitude')
+            longitude = request.POST.get('longitude')
 
             # Implement secure user authentication logic using username and password
             # ...
@@ -223,6 +225,8 @@ def manual_login(request):
                     return redirect("profile")
                 if user_profile.can_login:
                     login(request, user)
+                    request.latitude = latitude
+                    request.longitude = longitude
                     generate_bar_chart(request)
                     # admin_attendence_graph()
                     # print(timezone.now().time())
@@ -243,6 +247,7 @@ def manual_login(request):
                     # allowerd_grace_time = timezone.datetime.combine(current_date, timezone.time(9,15)).time()
                     on_time = time(9, 0)
                     grace_time = time(9, 15)
+                    cutoff_time = time(14, 10)
                     if current_time<=on_time:
                         status = 'Present'
                     elif on_time<current_time<=grace_time:
@@ -257,6 +262,8 @@ def manual_login(request):
                             status = 'Present'
                         else:
                             status = 'Late'
+                    elif current_time > cutoff_time:
+                        status = 'Absent'
                     else:
                         status = 'Late'
                     print("Current Time:", current_time)
@@ -365,3 +372,7 @@ def some_view(request):
 @login_required
 def heartbeat(request):
     return JsonResponse({"status": "alive"})
+
+
+
+
