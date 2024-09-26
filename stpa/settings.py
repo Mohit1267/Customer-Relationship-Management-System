@@ -380,6 +380,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+GOOGLE_API_KEY = 'AIzaSyDC5IR5-5KuTsr2zrfUU04v5MBT9muhptI'
 
 LANGUAGE_CODE = 'en-us'
 
