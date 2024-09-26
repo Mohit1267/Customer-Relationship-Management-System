@@ -263,23 +263,20 @@
 
     <script>
       function toggleNavbar() {
-        const navbarContainer = document.querySelector('.navbar-container');
-        const navbar = document.querySelector('.navbar');
-        const hamburger = document.querySelector('.hamburger');
-      
-        // Toggle the 'collapsed' class on the navbar
-        navbar.classList.toggle('collapsed');
-      
-        // Change the hamburger icon's state
-        hamburger.classList.toggle('open');
-      
-        // Toggle the visibility of the navbar container
-        if (navbarContainer.style.display === 'block') {
-            navbarContainer.style.display = 'none';
-        } else {
-            navbarContainer.style.display = 'block';
-        }
-      }
+    const navbarContainer = document.querySelector('.navbar-container');
+    const navbar = document.querySelector('.navbar');
+    const hamburger = document.querySelector('.hamburger');
+
+    // Toggle the 'collapsed' class on the navbar
+    navbar.classList.toggle('collapsed');
+
+    // Change the hamburger icon's state
+    hamburger.classList.toggle('open');
+
+    // Toggle the visibility by toggling a class
+    navbarContainer.classList.toggle('visible');
+}
+
       
       // Hamburger animation
       $(document).ready(function() {
