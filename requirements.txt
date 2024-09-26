@@ -1,8 +1,5 @@
 asgiref==3.8.1
-<<<<<<< HEAD
 contourpy==1.2.1
-=======
->>>>>>> 0693d14721bd7622d7a9ceadd0adfeb4fc50473d
 crispy-bootstrap5==2024.2
 cycler==0.12.1
 Django==5.0.7
@@ -28,10 +25,7 @@ sqlparse==0.5.1
 tenacity==9.0.0
 tzdata==2024.1
 uv==0.3.4
-<<<<<<< HEAD
-=======
 Django>=3.2,<4.0
 gunicorn
 whitenoise
 python-3.9.x
->>>>>>> 0693d14721bd7622d7a9ceadd0adfeb4fc50473d

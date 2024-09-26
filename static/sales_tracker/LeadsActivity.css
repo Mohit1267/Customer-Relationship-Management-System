@@ -1,52 +1,61 @@
-body {
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
-
-}
-
-.attpiechart {
-        margin-left: 330px;
-
-        /* width: 100px; Initial width */
-        /* height: auto; Maintain aspect ratio */
-        transition: transform 2s ease-in-out; /* Smooth transition */
-    }
-    
-    
-    
-    @keyframes rotateImage {
-        from {
-            transform: scale(1) rotate(0deg);
-        }
-        to {
-            transform: scale(1.2) rotate(360deg);
-        }
-    }
-    .attpiechart:hover {
-        animation: rotateImage 2s ease-in-out 1; /* Rotate and scale on hover, then stop */
-    }
-.container h1
-{
-    color:rgb(224, 187, 187);   
-}
+body { 
+    background-color: #f0f0f0; 
+    font-family: Arial, sans-serif; 
+    box-sizing: border-box; 
+    margin: 0; /* Remove default margin */ 
+} 
  
-.leftpart {
-    font-size: 25px;
-    margin-top: 50px;
-    margin-left: 50px;
-    text-decoration: none;
-     
-}
-
-.rightpart1 {
-    font-size: 25px;
-    margin-left: 900px;
-    margin-top:  -220px;
-}
-
-.rightpart2 {
-    font-size: 25px;
-    margin-left: 900px;
-    margin-top:  30px;
+.container { 
+    max-width: 1200px; /* Set a maximum width */ 
+    margin: 0 auto; /* Center the container */ 
+    padding: 20px; /* Padding for inner spacing */ 
+    display: flex; /* Use flexbox for layout */ 
+    flex-direction: column; /* Stack elements vertically */ 
+    align-items: center; /* Center items horizontally */ 
+} 
+ 
+.attpiechart { 
+    margin: 20px 0; /* Margin around the pie chart */ 
+    max-width: 100%; /* Responsive width */ 
+    height: auto; /* Maintain aspect ratio */ 
+} 
+ 
+h1 { 
+    color: #1E2A38; 
+    text-align: center; /* Center the heading */ 
+    margin: 20px 0; /* Space above and below */ 
+} 
+ 
+.card1, .card2, .card3 { 
+    background-color: #1E2A38; /* White background for cards */ 
+    border-radius: 10px; /* Rounded corners */ 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */ 
+    padding: 20px; /* Padding inside cards */ 
+    margin: 10px; /* Space between cards */ 
+    width: calc(100% - 40px); /* Full width minus margins */ 
+    max-width: 600px; /* Maximum width for cards */ 
+} 
+ 
+.leftpart, .rightpart1, .rightpart2 { 
+    font-size: 1.5rem; /* Responsive font size */ 
+    color: white; /* Dark text color for contrast */ 
+} 
+ 
+.rightpart1 { 
+    text-align: center; /* Center text in card */ 
+} 
+ 
+.rightpart2 { 
+    text-align: center; /* Center text in card */ 
+} 
+ 
+/* Responsive adjustments for smaller screens */ 
+@media (max-width: 768px) { 
+    .leftpart, .rightpart1, .rightpart2 { 
+        font-size: 1.2rem; /* Smaller font size for mobile */ 
+    } 
+ 
+    .attpiechart { 
+        margin: 10px 0; /* Adjust margin for smaller screens */ 
+    } 
 }

@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+
+# PORT = os.getenv('PORT', 8000)
+
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -295,6 +298,16 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 # AUTHENTICATION_BACKENDS = ['users.authentication.EmailBackend', 'django.contrib.auth.backends.ModelBackend']
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'shanaya',
+        'USER': 'root',
+        'PASSWORD':'shanaya2',
+        'HOST' : '34.100.214.94',
+        'PORT': '3306',
+    }
+}
 
 
 
@@ -304,13 +317,14 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',}
 
 
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'shanaya',
 #         'USER': 'root',
+#         'PASSWORD':'Siddhi@2002',
 #         'PASSWORD':'Pj@123456',
+
 #         'HOST' : 'localhost',
 #         'PORT': '3306',
 #     }
@@ -339,30 +353,6 @@ DATABASES = {
 }
 
 
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'admin',
-#         'PASSWORD':'Hello8349',
-#         'HOST' : 'shanaya.cdays8ewiw5f.ap-southeast-2.rds.amazonaws.com',
-#         'PORT': '3306',
-#     }
-# }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'mysql',
-#         'HOST' : 'localhost',
-#         'PORT': '3306',
-#     }
-# }
 
 
  

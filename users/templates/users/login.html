@@ -55,7 +55,7 @@
 
                 <!-- <button type="button" class="see-password" onclick="togglePassword()">👁️</button> -->
                 <button type="button" class="see-password" onclick="togglePassword()">
-                    <img id="button" src="\static\passwordshow.png" alt="See Password" />
+                    <img id="toggleButton" src="\static\passwordshow.png" alt="See Password" />
                 </button>
 
             </div>
@@ -75,14 +75,23 @@
 {% endblock %}
 {% block javascript %}
 
-<script>
-    function togglePassword() {
-    var passwordField = document.getElementById("password");
-    var passwordFieldType = passwordField.type;
-    passwordField.type = passwordFieldType === "password" ? "text" : "password";
-    }
-</script>
-
+<script> 
+ 
+    function togglePassword() { 
+        const passwordInput = document.getElementById('password'); 
+        const toggleButton = document.getElementById('toggleButton'); 
+     
+        if (passwordInput.type === 'password') { 
+            passwordInput.type = 'text'; // Show password 
+            toggleButton.src = '/static/passwordhide.png'; // Change to hide icon 
+        } else { 
+            passwordInput.type = 'password'; // Hide password 
+            toggleButton.src = '/static/passwordshow.png'; // Change to show icon 
+        } 
+    } 
+     
+     
+    </script>
 
 
 <!-- <script>

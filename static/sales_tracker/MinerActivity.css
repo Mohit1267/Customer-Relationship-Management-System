@@ -1,51 +1,88 @@
-body {
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
+body { 
+    background-color: #f0f0f0; 
+    font-family: Arial, sans-serif; 
+    box-sizing: border-box; 
+    margin: 0; 
+} 
 
-}
+.container { 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    max-height: 950px; 
+    max-width: 100% !important; 
+    margin: 0 auto; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+} 
 
-.attpiechart {
-    /* margin-left: -150px; */
-    transition: transform 0.5s ease;
-}
+.attpiechart { 
+    margin: 20px; 
+    max-width: 50%; 
+    height: auto; 
+} 
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
+.cards-container { 
+    padding: 50px;
+    display: flex; 
+    flex-direction: row; /* Aligns cards in a row */
+    margin-top: 20px; 
+    width: 100%; 
+    justify-content: space-between; /* Space between miners and mining info */
+} 
+
+.miners-list {
+    display: flex; 
+    flex-direction: column; /* Stack username cards vertically */
+} 
+
+.mining-info-container {
+    
+    display: flex; 
+    flex-direction: column; /* Stack mining info cards vertically */
+} 
+
+.card { 
+    background-color: #1E2A38 !important; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    margin: 10px; 
+    width: 100%; /* Fixed width for uniformity */
+    height: auto; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+} 
+
+.leftpart { 
+    font-size: 1.5rem; 
+    color: white; 
+} 
+
+.rightpart1, .rightpart2 { 
+    font-size: 1.2rem; 
+    color: white; 
+    text-align: center; /* Center text in the cards */
+} 
+
+@media (max-width: 768px) { 
+    .leftpart, .rightpart1, .rightpart2 { 
+        font-size: 1.2rem; 
+    } 
+
+    .attpiechart { 
+        margin: 10px 0; 
+    } 
+
+    .cards-container { 
+        flex-direction: column; /* Stack cards vertically on small screens */
+        align-items: center; /* Center all cards */
     }
-    50% {
-        transform: scale(1.1);
+
+    .card { 
+        width: 100%; /* Full width on smaller screens */
+        height: auto; /* Allow height to adjust based on content */
     }
 }
-
-.attpiechart:hover {
-    animation: pulse 1s infinite;
-}
-
-.container h1
-{
-    color:rgb(224, 187, 187);   
-}
-
-
-.leftpart {
-    font-size: 25px;
-    margin-top: 50px;
-    margin-left: -30px;
-    text-decoration: none;
-     
-}
-
-.rightpart1 {
-    font-size: 25px;
-    margin-left: 900px;
-    margin-top:  -220px;
-}
-
-.rightpart2 {
-    font-size: 25px;
-    margin-left: 900px;
-    margin-top:  30px;
-}
-
