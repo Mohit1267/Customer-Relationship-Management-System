@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 Django settings for stpa project.
 
@@ -205,7 +204,6 @@ EMAIL_HOST_USER = "pjisvgreat@gmail.com"
 EMAIL_HOST_PASSWORD = "axzf ekbv uawt rugt" 
 
 TIME_ZONE = 'Asia/Kolkata'
-=======
 """
 Django settings for stpa project.
 
@@ -438,5 +436,4 @@ EMAIL_HOST_USER = "pjisvgreat@gmail.com"
 EMAIL_HOST_PASSWORD = "axzf ekbv uawt rugt" 
 
 TIME_ZONE = 'Asia/Kolkata'
->>>>>>> 0693d14721bd7622d7a9ceadd0adfeb4fc50473d
 USE_TZ = True
