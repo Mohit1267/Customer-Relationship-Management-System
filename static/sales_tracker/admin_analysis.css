@@ -22,12 +22,6 @@ body, html {
     scrollbar-color: #888 #f9f9f9; /* Scrollbar color */
 }
 
-/* Ensure body content scrolls within viewport */
-html, body {
-    height: 100%;
-    overflow-y: auto;
-}
-
 /* Scrollbar styling for Webkit browsers (Chrome, Safari, etc.) */
 .container::-webkit-scrollbar {
     width: 8px; /* Width for vertical scrollbar */
@@ -49,6 +43,7 @@ html, body {
     padding: 20px;
     border-radius: 8px;
     display: flex;
+    flex-direction: column; /* Stack title and graph vertically */
     justify-content: center;
     align-items: center;
     transition: transform 0.3s ease;
@@ -74,7 +69,6 @@ html, body {
     margin-bottom: 10px;
     font-size: 18px;
     color: #333;
-    margin-right: 40px;
 }
 
 /* Ensure the entire container is scrollable */
