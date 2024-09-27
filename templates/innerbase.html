@@ -217,17 +217,17 @@
           <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
         </div>
         <div class="row p-2">
-          <a href="#" class=" right_profile" ">Edit Profile</a>
+          <a href="#" class=" right_profile" >Edit Profile</a>
         </div>
         <hr>
         <div class="row p-2">
-          <a href="#" class=" right_profile"">Employees</a>
+          <a href="#" class=" right_profile">Employees</a>
         </div>
         <div class="row p-2">
-          <a href="#" class=" right_profile"">Community Forum</a>
+          <a href="#" class=" right_profile">Community Forum</a>
         </div>
         <div class="row p-2">
-          <a href="#" class=" right_profile"">About</a>
+          <a href="#" class=" right_profile">About</a>
         </div>
         <hr>
         <div class="row p-2">
@@ -385,11 +385,11 @@
   
   <script>
     // Convert Django template variables to integers and calculate total seconds.
-    let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 + 
-                       parseInt("{{ timer.min }}", 10) * 60 + 
-                       parseInt("{{ timer.sec }}", 10);
+    // let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 + 
+    //                    parseInt("{{ timer.min }}", 10) * 60 + 
+    //                    parseInt("{{ timer.sec }}", 10);
 
-    const countDownEle = document.getElementById("count_down");
+    // const countDownEle = document.getElementById("count_down");
 
     // Function to convert seconds to HH:MM:SS format.
     function convertSecondsToHms(seconds) {
@@ -467,23 +467,23 @@ document.getElementById("toggleBreakBtn").addEventListener("click", function() {
     }
 });
 
-function startBreakTimer() {
-    breakTimerInterval = setInterval(() = {
-        if (breakTimeLeft = 0) {
-            clearInterval(breakTimerInterval);
-            breakTimerInterval = null;
-            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-            alert("Break time is over!");
+// function startBreakTimer() {
+//     breakTimerInterval = setInterval(() = {
+//         if (breakTimeLeft = 0) {
+//             clearInterval(breakTimerInterval);
+//             breakTimerInterval = null;
+//             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+//             alert("Break time is over!");
 
-            // Resume the main timer after the break ends
-            startMainTimer();
-        } else {
-            breakTimeLeft--;
-            displayTime();
-            sendHeartbeat(); // Send heartbeat to keep session alive
-        }
-    }, 1000); // 1-second intervals
-}
+           
+//             startMainTimer();
+//         } else {
+//             breakTimeLeft--;
+//             displayTime();
+//             sendHeartbeat();
+//         }
+//     }, 1000); 
+// }
 
 function displayTime() {
     const minutes = Math.floor(breakTimeLeft / 60);
@@ -513,8 +513,8 @@ startMainTimer();
 
 
 <script>
-let breakTimeLeft = 3600; // 1 hour in seconds
-let breakTimerInterval = null;
+// let breakTimeLeft = 3600;  
+// let breakTimerInterval = null;
 
 document.getElementById("toggleBreakBtn").addEventListener("click", function() {
     if (breakTimerInterval) {
@@ -1041,7 +1041,7 @@ function sendHeartbeat() {
     console.log(`Initial totalSeconds: ${totalSeconds}`);
 
     // Update the countdown every second.
-    const timerInterval = setInterval(updateCountDown, 1000);
+    // const timerInterval = setInterval(updateCountDown, 1000);
 
     // Debugging: Check if the setInterval is working
     console.log(`Timer started with interval: ${timerInterval}`);
@@ -1116,9 +1116,8 @@ function sendHeartbeat() {
 
 
 <script>
-  let breakTimeLeft = 3600; // 1 hour in seconds
-let breakTimerInterval = null;
-let mainTimerInterval = null; // Reference to the main timer interval
+//   let breakTimeLeft = 3600; 
+// let mainTimerInterval = null; 
 
 document.getElementById("toggleBreakBtn").addEventListener("click", function() {
     if (breakTimerInterval) {
@@ -1137,23 +1136,23 @@ document.getElementById("toggleBreakBtn").addEventListener("click", function() {
     }
 });
 
-function startBreakTimer() {
-    breakTimerInterval = setInterval(() = {
-        if (breakTimeLeft = 0) {
-            clearInterval(breakTimerInterval);
-            breakTimerInterval = null;
-            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-            alert("Break time is over!");
+// function startBreakTimer() {
+//     breakTimerInterval = setInterval(() = {
+//         if (breakTimeLeft = 0) {
+//             clearInterval(breakTimerInterval);
+//             breakTimerInterval = null;
+//             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+//             alert("Break time is over!");
 
-            // Resume the main timer after the break ends
-            startMainTimer();
-        } else {
-            breakTimeLeft--;
-            displayTime();
-            sendHeartbeat(); // Send heartbeat to keep session alive
-        }
-    }, 1000); // 1-second intervals
-}
+//             // Resume the main timer after the break ends
+//             startMainTimer();
+//         } else {
+//             breakTimeLeft--;
+//             displayTime();
+//             sendHeartbeat(); // Send heartbeat to keep session alive
+//         }
+//     }, 1000); // 1-second intervals
+// }
 
 function displayTime() {
     const minutes = Math.floor(breakTimeLeft / 60);

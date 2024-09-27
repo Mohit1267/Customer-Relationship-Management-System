@@ -6,19 +6,20 @@ body {
     background: linear-gradient(90deg, rgba(128, 0, 128, 1) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%);
 
     height: 100vh;
-    width: 100vw;
-    display: flex;
+    width: 100%;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
 }
 
 .pic {
-    /* height: 100vh; */
-    width: 100vw;
-    /* height: 100vh; */
-   margin-right: 100px;
-    object-fit: fit;
-}
+    height: 100%;
+    width: 2250px;
+    
+   margin-right: 300px;
+   margin-left: -400px;
+   background-size:contain;
+ }
 
 
 .login-wrapper {
@@ -26,7 +27,9 @@ body {
     max-width: 450px;
     padding: 20px;
     box-sizing: border-box;
-    margin-left:-1400px;
+    margin-right: 500px;
+    margin-left:-1500px;
+    margin-bottom: 40px;
     /* margin-right: 20px; */
 }
 
@@ -47,21 +50,26 @@ body {
     width: 13em;
     height: 13em;
     border-radius: 50%;
-    background: linear-gradient(-25deg, #d84869, #f46641);
+    background: linear-gradient(-25deg, #6caac7, #8adad3);
     top: 5%;
-    left: 130%;
-    box-shadow: 0 0 50px #d84869;
-    animation: circle1Animate 55s infinite;
+    left: 80%;
+    right: 40%;
+    box-shadow: 0 0 50px #48c7d8;
+    animation: circle1Animate 100s infinite;
   }
   
   @keyframes circle1Animate {
-    50% {
-      left: 33%;
-      top: 4%;
-      scale: 1.11;
+    0%, 100% {
+        left: 80%; /* Initial position */
+        top: 5%;  /* Initial position */
+        transform: scale(1);
     }
-  }
-
+    50% {
+        left: 20%;  /* Middle position */
+        top: 50%;   /* Move down */
+        transform: scale(1.11); /* Slightly larger in the middle of animation */
+    }
+}
   .circle1:hover {
     transform: scale(1.15);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
@@ -69,20 +77,25 @@ body {
   
   .circle2 {
     position: absolute;
-    bottom: 5%;
-    right: 30%;
     width: 19em;
     height: 19em;
     border-radius: 50%;
-    box-shadow: 0 0 50px #5648d8;
-    background: linear-gradient(-25deg, #5648d8, #8641f4);
-    animation: circle2Animate 15s infinite;
+    background: linear-gradient(-25deg, #80e1e2, #93d3d4);
+    bottom: 5%;
+    right: 30%;
+    box-shadow: 0 0 50px #6dcbe7;
+    animation: circle2Animate 25s infinite;
+    /* left:40%; */
+    /* box-shadow: 0 0 50px #5648d8; */
+   
   }
   
   @keyframes circle2Animate {
     50% {
+      right: 10%;
       bottom: 6%;
-      right: 31%;
+
+      
     }
   }
   
@@ -103,8 +116,8 @@ body {
 }
 
 .hand {
-    width: 100px; 
-    height: 110px;
+    width: 130px; 
+    height: 130px;
     margin-left: 105px;
     margin-bottom: 20px;
 }
