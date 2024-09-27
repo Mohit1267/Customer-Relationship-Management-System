@@ -2,6 +2,8 @@ import os
 import sys
 import numpy as np
 import datetime
+import pandas as pd
+import plotly.express as px
 import plotly.graph_objs as go
 from plotly.offline import plot
 import matplotlib.pyplot as plt
@@ -294,7 +296,7 @@ def Mining_Count():
 
     # Beautify the plot
     plt.setp(autotexts, size=10, weight="bold",color='black')
-    plt.setp(texts, size=12, color='black')
+    plt.setp(texts, size=10, color='black')
     ax.set_title("Mining vs Expected Mining", color='black')
 
     # Show plot
@@ -307,22 +309,22 @@ def Leads_Count():
     Exp_Leads = Exp_L*AgentC*4
 
     # Data
-    labels = ['Total Mining', 'Expected Mining']
+    labels = ['Total leads', 'Expected leads']
     sizes = [Total_Leads, Exp_Leads]
-    colors = ['#ff9999','#66b3ff']
+    colors = ['#008080','#1E2A38']
 
     # Plot
     fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
-    plt.gcf().set_facecolor('#262626')
-    ax.set_facecolor('#262626')
+    plt.gcf().set_facecolor('#e0eaf6')
+    ax.set_facecolor('#e0eaf6')
 
     # Create a pie chart
-    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
+    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='black'))
 
     # Beautify the plot
     plt.setp(autotexts, size=10, weight="bold",)
-    plt.setp(texts, size=12, color='white')
-    ax.set_title("Leads vs Expected Leads", color='white')
+    plt.setp(texts, size=10, color='black')
+    ax.set_title("Leads vs Expected Leads", color='black')
 
     # Show plot
     plt.savefig('static/Leads_Count.png')
@@ -344,25 +346,25 @@ def EachMinerTarget(id):
         print(data) 
         target = sum(row[1] for row in data)*40
         print(target)
-    acchieved = MiningData.objects.filter(created_by_id = id).count()
-    print(acchieved) 
-    each_miner = {"Target":target, "Acchieve":acchieved}
-    labels = [f'target:{target}', f'acchieved:{acchieved}']
-    sizes = [target, acchieved]
-    colors = ['#ff9999','#66b3ff']
+    achieved = MiningData.objects.filter(created_by_id = id).count()
+    print(achieved) 
+    each_miner = {"Target":target, "Achieve":achieved}
+    labels = [f'target:{target}', f'achieved:{achieved}']
+    sizes = [target, achieved]
+    colors = ['#008080','#1E2A38']
 
     # Plot
     fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
-    plt.gcf().set_facecolor('#262626')
-    ax.set_facecolor('#262626')
+    plt.gcf().set_facecolor('#e0eaf6')
+    ax.set_facecolor('#e0eaf6')
 
     # Create a pie chart
-    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
+    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='black'))
 
     # Beautify the plot
     plt.setp(autotexts, size=10, weight="bold",)
-    plt.setp(texts, size=12, color='white')
-    ax.set_title("Mining vs Expected Mining", color='white')
+    plt.setp(texts, size=12, color='black')
+    ax.set_title("Mining vs Expected Mining", color='black')
 
     # Show plot
     plt.savefig('static/EachMinerTarget.png')
@@ -423,15 +425,15 @@ def Time_worked(request):
             title="Date VS Number of hours worked",
             xaxis_title='Date',
             yaxis_title='Number of hours',
-            plot_bgcolor='#262626',
-            paper_bgcolor='#262626',
-            font=dict(color='White'),
+            plot_bgcolor=' #1E2A38',
+            paper_bgcolor=' #1E2A38',
+            font=dict(color=' white'),
             xaxis=dict(
                 tickmode='array',
                 tickvals=dates,
                 tickformat='%Y-%m-%d'
             ),
-            yaxis=dict(gridcolor="black")
+            yaxis=dict(gridcolor="white")
         )
         graph_html = plot(fig, output_type='div')
         return graph_html
@@ -718,15 +720,15 @@ def Productivity(request):
         title='Number of Minings vs. Days',
         xaxis_title='Date',
         yaxis_title='Number of Minings',
-        plot_bgcolor='#262626',
-        paper_bgcolor='#262626',
+        plot_bgcolor=' #1E2A38',
+        paper_bgcolor=' #1E2A38',
         font=dict(color='white'),
         xaxis=dict(
             tickmode='array',
             tickvals=dates,
             tickformat='%Y-%m-%d'
         ),
-        yaxis=dict(gridcolor='#555555'),
+        yaxis=dict(gridcolor=' white'),
     )
 
     # Render the Plotly figure to HTML and pass it to the template
@@ -734,3 +736,134 @@ def Productivity(request):
     return graph_html
 
 # Productivity()
+
+
+def dailymining(request):
+    uid = request.user.id
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+
+    with connection.cursor() as cursor:
+        cursor.execute(""" 
+            SELECT COUNT(*) FROM sales_tracker_miningdata 
+            WHERE created_by_id = %s AND date = %s; 
+        """, [uid, now_date])
+        data = cursor.fetchall()
+
+    completed_mining = data[0][0]
+    target_mining = 80
+    remaining_mining = max(0, target_mining - completed_mining)
+
+    # Create a pie chart with absolute numbers
+    fig = go.Figure(data=[go.Pie(
+        labels=['Completed Mining', 'Remaining Mining'],
+        values=[completed_mining, remaining_mining],
+        hole=.3,
+        textinfo='label+value',
+        hoverinfo='label+value+percent',
+        marker=dict(colors=['#1f77b4', '#ff7f0e'])  # Set colors for better visibility
+    )])
+
+    # Customize the layout for better interactivity
+    fig.update_layout(
+        # title='Mining Progress',
+        plot_bgcolor='#1e2a38',
+        paper_bgcolor='#1e2a38',
+        width=400,
+        height=300,
+        showlegend=False,
+        font=dict(color='white'),
+        margin=dict(l=20, r=20, t=40, b=20),  # Add margins for better spacing
+        annotations=[dict(text='Daily Mining', x=0.5, y=0.5, font_size=20, showarrow=False)]  # Center text
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML div
+    dailymining = plot(fig, output_type='div')
+    return dailymining
+
+def monthlymining(request):
+    uid = request.user.id
+    now_date_time = datetime.datetime.now()
+    now_year = now_date_time.year
+    now_month = now_date_time.month
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT COUNT(*) FROM sales_tracker_miningdata 
+            WHERE created_by_id = %s AND YEAR(date) = %s AND MONTH(date) = %s; 
+        """, [uid, now_year, now_month])
+        data = cursor.fetchall()
+
+    completed_mining = data[0][0]
+    target_mining = 80 * 30  # Assuming 30 days in a month as a target
+    remaining_mining = max(0, target_mining - completed_mining)
+
+    # Create a pie chart with absolute numbers
+    fig = go.Figure(data=[go.Pie(
+        labels=['Completed Mining', 'Remaining Mining'],
+        values=[completed_mining, remaining_mining],
+        hole=.3,
+        textinfo='label+value',
+        hoverinfo='label+value+percent',
+        marker=dict(colors=['#1f77b4', '#ff7f0e'])
+    )])
+
+    # Customize the layout for better interactivity
+    fig.update_layout(
+        plot_bgcolor='#1e2a38',
+        paper_bgcolor='#1e2a38',
+        width=400,
+        height=300,
+        showlegend=False,
+        font=dict(color='white'),
+        margin=dict(l=20, r=20, t=40, b=20),
+        annotations=[dict(text='Monthly Mining', x=0.5, y=0.5, font_size=20, showarrow=False)]
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML div
+    monthlymining = plot(fig, output_type='div')
+    return monthlymining
+
+
+def quarterlymining(request):
+    uid = request.user.id
+    now_date_time = datetime.datetime.now()
+    now_year = now_date_time.year
+    now_quarter = (now_date_time.month - 1) // 3 + 1  # Calculate current quarter
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT COUNT(*) FROM sales_tracker_miningdata 
+            WHERE created_by_id = %s AND YEAR(date) = %s AND QUARTER(date) = %s; 
+        """, [uid, now_year, now_quarter])
+        data = cursor.fetchall()
+
+    completed_mining = data[0][0]
+    target_mining = 80 * 90  # Assuming 90 days in a quarter as a target
+    remaining_mining = max(0, target_mining - completed_mining)
+
+    # Create a pie chart with absolute numbers
+    fig = go.Figure(data=[go.Pie(
+        labels=['Completed Mining', 'Remaining Mining'],
+        values=[completed_mining, remaining_mining],
+        hole=.3,
+        textinfo='label+value',
+        hoverinfo='label+value+percent',
+        marker=dict(colors=['#1f77b4', '#ff7f0e'])
+    )])
+
+    # Customize the layout for better interactivity
+    fig.update_layout(
+        plot_bgcolor='#1e2a38',
+        paper_bgcolor='#1e2a38',
+        width=400,
+        height=300,
+        showlegend=False,
+        font=dict(color='white'),
+        margin=dict(l=20, r=20, t=40, b=20),
+        annotations=[dict(text='Quarterly Mining', x=0.5, y=0.5, font_size=20, showarrow=False)]
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML div
+    quarterlymining = plot(fig, output_type='div')
+    return quarterlymining

@@ -20,7 +20,7 @@ from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
-from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph
+from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
@@ -97,6 +97,13 @@ def Dashboards(request):
         context['attendances'] = attendances
         context['attendence_graph'] = attendence_graph
         context['att'] = att
+        context['temp'] = "temp"
+        # context['request'] = request
+        latitude = request.session.get('latitude')
+        longitude = request.session.get('longitude')
+        context['lat'] = latitude
+        context['long'] = longitude
+        
         # context['late'] = Late_perct
         context['late'] = late
         return render(request,'sales_tracker/admin.html',context)
@@ -121,6 +128,15 @@ def Dashboards(request):
         today_Opportunity = OpportunityData.objects.filter(date = now_date)
         today_Opportunity_count = today_Opportunity.count()
         context["Opportunity_count"] = today_Opportunity_count
+        graph_html = dailymining(request)
+        context["graph_html"] = graph_html
+        monthg = monthlymining(request)
+        context["monthlymining"] = monthg
+        quater = quarterlymining(request)
+        context["quarterlymining"] = quater
+
+
+
         return render(request,'sales_tracker/index.html',context)
     elif(request.user.profile.branch == 'agent'):
         context = {}
@@ -813,32 +829,54 @@ class BaseListView(ListView):
     model = None
     context_object_name = "data_list"
     context_count_name = None
+
     def get_queryset(self):
-        base_query =  super().get_queryset()
+        base_query = super().get_queryset()
+        time_frame = self.request.GET.get('time_frame', 'today')  # Get the time frame from GET parameters
         now_date_time = datetime.datetime.now()
-        now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-        data = base_query.filter(date = f"{now_date}")
-        return data
-    
+
+        if time_frame == "weekly":
+            start_date = now_date_time - datetime.timedelta(days=now_date_time.weekday())  # Start of the week
+            end_date = start_date + datetime.timedelta(days=7)  # End of the week
+            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+        elif time_frame == "monthly":
+            start_date = now_date_time.replace(day=1)  # Start of the month
+            end_date = (start_date + datetime.timedelta(days=31)).replace(day=1)  # Start of next month
+            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+        elif time_frame == "quarterly":
+            quarter = (now_date_time.month - 1) // 3 + 1
+            start_date = datetime.datetime(now_date_time.year, (quarter - 1) * 3 + 1, 1)
+            end_date = (start_date + datetime.timedelta(days=92)).replace(day=1)  # Roughly add 3 months
+            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+        elif time_frame == "yearly":
+            start_date = datetime.datetime(now_date_time.year, 1, 1)  # Start of the year
+            end_date = datetime.datetime(now_date_time.year + 1, 1, 1)  # Start of next year
+            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+        else:  # Default to today
+            today = now_date_time.date()
+            return base_query.filter(date=today)
+
     def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         request = self.request
         user = request.user
         utc_login_time = user.last_login
         elapsed_time = timer(utc_login_time)
-        context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+        context["timer"] = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+        
+        # Count today's leads
         now_date_time = datetime.datetime.now()
-        now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-        todays_lead = LeadsData.objects.filter(date = now_date)
+        today = now_date_time.date()
+        todays_lead = LeadsData.objects.filter(date=today)
         today_lead_count = todays_lead.count()
         context[self.context_count_name] = today_lead_count
+        context['time_frame'] = self.request.GET.get('time_frame', 'today')
         return context
-    
-    
+
 class DataView(BaseListView):
     template_name = "sales_tracker/data.html"
     model = MiningData
-    count_context_name = 'mining_count'    
+    context_count_name = 'mining_count'   
 
 class LeadView(BaseListView):
     template_name = "sales_tracker/data.html"
@@ -1096,3 +1134,17 @@ class AdminAnalysis(TemplateView):
 #     DailyAttendance()
 #     template_name = "sales_tracker/DailyAttendence.html"
     
+
+
+class maps(View):
+    template_name = "sales_tracker/maps.html"
+    def get(self,request):
+        context = {}
+        latitude = request.session.get('latitude')
+        longitude = request.session.get('longitude')
+        context['lat'] = latitude
+        context['long'] = longitude
+        return render(request, self.template_name, context)
+    
+
+

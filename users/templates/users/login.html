@@ -3,28 +3,27 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-
 {% block css_link %}
     <link rel="stylesheet" href="{% static 'users/login.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block title %}Login{% endblock %}
 
-{% block content %} 
+{% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-4"></div>
-    {% if messages %}
-      {% for message in messages %}
-
-      <div class="col-md-4"><h3>{{ message }}</h3></div>
-      {% endfor %}
-    {% endif %}
-  </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="col-md-4"><h3>{{ message }}</h3></div>
+            {% endfor %}
+        {% endif %}
+    </div>
   
+
   <!-- Add this block to display error messages -->
   {% if error_message %}
   <div class="alert alert-danger" role="alert">
@@ -41,42 +40,36 @@
             <img class="hand" src="\static\hand.png" alt="Handshaking Image">
         </div>
         <div class="login-header">
-            <div class="welcome">Welcome Back</div>
+            <div class="welcome">Welcome</div>
             <div class="input-box">
                 <input type="email" name="email" placeholder="Email" class="login-input" required>
                 <span class="icon"></span>
                 <!-- <label>Email</label> -->
             </div>
-            <div class="input-box">
-                <input type="password" name="password"  id="password" placeholder="Password" class="login-input" required>
-                <!-- <label>Password</label> -->
-
-                <!-- see password button -->
-
-                <!-- <button type="button" class="see-password" onclick="togglePassword()">👁️</button> -->
-                <button type="button" class="see-password" onclick="togglePassword()">
-                    <img id="toggleButton" src="\static\passwordshow.png" alt="See Password" />
-                </button>
-
+            
+                <div class="input-box">
+                    <input type="password" name="password" id="password" placeholder="Password" class="login-input" required>
+                    <button type="button" class="see-password" onclick="togglePassword()">
+                        <img id="toggleButton" src="{% static 'passwordshow.png' %}" alt="See Password" />
+                    </button>
+                </div>
+                <input type="hidden" id="latitude" name="latitude">
+                <input type="hidden" id="longitude" name="longitude">
+                <button type="submit">Login</button>
+                <div class="forgot-password">
+                    <a href="{% url 'password_reset' %}">Forgot password?</a>
+                </div>
+                <div class="signup-text">
+                    Don't have an account? <a href="{% url 'register' %}">Sign up</a>
+                </div>
             </div>
-            <button type="submit">Login</button>
-            <div class="forgot-password">
-                <a href="{% url 'password_reset' %}">Forgot password?</a>
-            </div>
-            <div class="signup-text">
-                Don't have an account? <a href="{% url 'register' %}">Sign up</a>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-
-
-
 {% endblock %}
-{% block javascript %}
 
-<script> 
- 
+{% block javascript %}
+<script>
     function togglePassword() { 
         const passwordInput = document.getElementById('password'); 
         const toggleButton = document.getElementById('toggleButton'); 
@@ -89,27 +82,22 @@
             toggleButton.src = '/static/passwordshow.png'; // Change to show icon 
         } 
     } 
-     
-     
-    </script>
 
-
-<!-- <script>
-    function togglePassword() {
-        var passwordField = document.getElementById("password");
-        var toggleIcon = document.getElementById("toggle-icon");
-        
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            toggleIcon.src = "\static\passwordshow.png"; // Path to the open eye image
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                document.getElementById('loginForm').submit();
+            }, function() {
+                // Handle location error
+                document.getElementById('loginForm').submit();
+            });
         } else {
-            passwordField.type = "password";
-            toggleIcon.src = "\static\passwordhide.png"; // Path to the closed eye image
+            alert('Geolocation is not supported by this browser.');
+            document.getElementById('loginForm').submit();
         }
-    }
-</script> -->
-
-
+    });
+</script>
 {% endblock %}
-
-    

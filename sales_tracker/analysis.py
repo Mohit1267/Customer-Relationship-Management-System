@@ -149,3 +149,9 @@ def TotalDays(request):
            'Ldays':Ldays[0]}
     return days
 
+
+
+def temp(request):
+    print(request.user)
+
+# temp()
