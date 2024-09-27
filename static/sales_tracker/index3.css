@@ -4,6 +4,45 @@
     box-sizing: border-box;
 }
 
+/* Filter Bar Styles */
+.filter {
+    margin: 20px 0; /* Space above and below the filter */
+    margin-left: 20px;
+    width: 400px; /* Set a fixed width for the filter container */
+}
+
+.filter-form {
+    padding: 10px 15px; /* Padding for better touch targets */
+    font-size: 16px; /* Increase font size for readability */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f8f9fa; /* Light background for contrast */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+    width: 100%; /* Full width of the filter container */
+}
+
+/* Change border color on focus */
+.filter-form:focus {
+    outline: none; /* Remove default outline */
+}
+
+/* Option styles */
+.filter-form option {
+    padding: 10px; /* Padding for options */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter {
+        margin: 10px 0; /* Reduce margin on smaller screens */
+        width: 100%; /* Full width on mobile */
+    }
+
+    .filter-form {
+        width: 100%; /* Full width on mobile */
+    }
+}
+
+
 .heading {
    
     /* background: linear-gradient(90deg, #3e3a3a 0%, rgb(63, 59, 59) 100%); */
@@ -132,5 +171,41 @@
 {
     .card {
         min-width: 250px ;
+    }
+}
+
+/* Graph Container Styles */
+.graph-container {
+    margin-left: 120px;
+    margin-top: 20px;
+    display: flex;
+    padding: 5px;
+    align-items: flex-start; /* Align the cards vertically centered */
+    flex-wrap: wrap; /* Allow wrapping if the screen is too small */
+
+}
+
+.graph {
+    flex: 0 0 auto;                    /* Prevent growing or shrinking, take up space according to content */
+    min-width: 300px;                  /* Minimum width to avoid being too small */
+    margin-right: 20px;                /* Space between graphs */
+    padding: 20px;                     /* Space inside the graph container */
+    color: white;                      /* Text color */
+}
+
+/* Remove right margin from the last graph */
+.graph:last-child {
+    margin-right: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .graph-container {
+        flex-direction: column; /* Stack graphs vertically on small screens */
+        overflow-x: visible;    /* Disable horizontal scrolling on smaller screens */
+    }
+    .graph {
+        margin-right: 0;       /* Remove right margin */
+        margin-bottom: 20px;   /* Space below graphs */
     }
 }
