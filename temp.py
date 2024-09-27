@@ -262,26 +262,18 @@ def Productivity():
 # temp(request)
 # %s
 def dailymining(temp):
+    uid = temp
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+
     with connection.cursor() as cursor:
-        cursor.execute("""
-            select count(*) from sales_tracker_miningdata
-            where created_by_id = %s and date = '2024-09-27'; 
-        """, [temp])
+        cursor.execute(""" 
+            SELECT COUNT(*) FROM sales_tracker_miningdata 
+            WHERE created_by_id = %s AND date = %s; 
+        """, [uid, now_date])
         data = cursor.fetchall()
+
     completed_mining = data[0][0]
-    target_mining = 80
-    remaining_mining = max(0, target_mining - completed_mining)
-
-    # Create a pie chart
-    fig = go.Figure(data=[go.Pie(labels=['Completed Mining', 'Remaining Mining'],
-                                 values=[completed_mining, remaining_mining],
-                                 hole=.3,
-                                 textinfo='label+value'
-)])
-
-    # Convert the plotly figure to HTML
-    fig.show()
-
-
+    print(completed_mining)
 
 dailymining(13)

@@ -116,7 +116,10 @@ def Dashboards(request):
         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
         now_date_time = datetime.datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-        today_mining = MiningData.objects.filter(date = now_date)
+        users = request.user
+        u = RegisterUser.objects.get(email=users)
+        u = u.id
+        today_mining = MiningData.objects.filter(date = now_date,created_by=u)
         today_mining_count = today_mining.count()
         context["mining_count"] = today_mining_count
         today_lead = LeadsData.objects.filter(date = now_date)
@@ -134,8 +137,6 @@ def Dashboards(request):
         context["monthlymining"] = monthg
         quater = quarterlymining(request)
         context["quarterlymining"] = quater
-
-
 
         return render(request,'sales_tracker/index.html',context)
     elif(request.user.profile.branch == 'agent'):
