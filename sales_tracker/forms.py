@@ -13,11 +13,24 @@ class ContactForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["date", "assigned_to" ]
 
+# class LeadForm(forms.ModelForm):
+#     class Meta:
+#         model = LeadsData
+#         fields = "__all__"
+#         exclude = ["date", "assigned_to" ]
+
 class LeadForm(forms.ModelForm):
+    lead_name = forms.ModelChoiceField(
+        queryset=MiningData.objects.all(),
+        to_field_name="organisation_name",
+        empty_label="Select Organization",
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+
     class Meta:
         model = LeadsData
         fields = "__all__"
-        exclude = ["date", "assigned_to" ]
+        exclude = ["date", "assigned_to"]
 
 class OpportunityForm(forms.ModelForm):
     class Meta:

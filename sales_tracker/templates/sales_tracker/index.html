@@ -44,7 +44,7 @@
         <div class="card mining-card">
             <div class="card-body ">
                 <h5 class="card-title" style="color: white;"><b>Today's Mining</b></h5>
-                <p class="card-text">{{ mining_count }}/40</p>
+                <p class="card-text">{{ mining_count }}/80</p>
             </div>
         </div>
         <div class="card opportunity-card">
@@ -68,11 +68,20 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- new code with yearly data -->
-    <div class="flex-container chart-container">
-        <!-- Weekly Data Card -->
+    <div class="graph">
+        {{ graph_html|safe }}
+        {{ monthlymining|safe }}
+        {{ quarterlymining|safe }}
+    </div>
+    <!-- <div class="graph"></div>
+    </div>
+    <div class="graph"></div>
+    </div> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <div class="flex-container card-container">
+
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="color:  white;"><b>Weekly Data</b></h5>
@@ -81,33 +90,37 @@
             </div>
         </div>
 
-        <!-- Monthly Data Card -->
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title" style="color:  white;"><b>Monthly Data</b></h5>
-                <canvas id="monthlyChart" width="130" height="100"></canvas>
-                <p class="card-text">{{ mining_count }}</p>
-            </div>
-        </div>
-
-        <!-- Quarterly Data Card -->
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title" style="color: white;"><b>Quarterly Data</b></h5>
-                <canvas id="quarterlyChart" width="130" height="100"></canvas>
-                <p class="card-text">{{ mining_count }}</p>
-            </div>
-        </div>
-
-        <!-- Yearly Data Card (New) -->
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title" style="color: white;"><b>Yearly Data</b></h5>
-                <canvas id="yearlyChart" width="130" height="100"></canvas>
-                <p class="card-text">{{ mining_count }}</p>
-            </div>
+        <-- Monthly Data Card -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" style="color:  white;"><b>Monthly Data</b></h5>
+            <canvas id="monthlyChart" width="130" height="100"></canvas>
+            <p class="card-text">{{ mining_count }}</p>
         </div>
     </div>
+
+    <!-- Quarterly Data Card -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" style="color: white;"><b>Quarterly Data</b></h5>
+            <canvas id="quarterlyChart" width="130" height="100"></canvas>
+            <p class="card-text">{{ mining_count }}</p>
+        </div>
+    </div>
+
+
+    <!-- Yearly Data Card (New) -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" style="color: white;"><b>Yearly Data</b></h5>
+            <canvas id="yearlyChart" width="130" height="100"></canvas>
+            <p class="card-text">{{ mining_count }}</p>
+        </div>
+    </div>
+</div>
+
+
+</div>
 
 </div>
 
