@@ -11,7 +11,18 @@
 
 {% block content %}
 
-<h1>DATA SHOWCASE</h1>
+<!-- <h1>DATA SHOWCASE</h1> -->
+
+<form method="GET" action="{% url 'data' %}">
+    <label for="time_frame">Select Time Frame:</label>
+    <select name="time_frame" id="time_frame" onchange="this.form.submit()">
+        <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
+        <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
+        <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
+        <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
+        <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
+    </select>
+</form>
 
 {%comment%}
 {% include "include/dash.html" %}
