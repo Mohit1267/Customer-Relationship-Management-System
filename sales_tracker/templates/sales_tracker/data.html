@@ -11,6 +11,7 @@
 
 {% block content %}
 
+
 <!-- <h1>DATA SHOWCASE</h1> -->
 
 <form method="GET" action="{% url 'data' %}">
@@ -24,9 +25,11 @@
     </select>
 </form>
 
+
 {%comment%}
 {% include "include/dash.html" %}
 {%endcomment%}
+
 <section class = "main_container">
 
 {% for data in data_list %}

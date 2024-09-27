@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
@@ -6,46 +6,88 @@
 body {
     font-family: sans-serif;
     margin: 20px;
-    background-color:white;
-  }
-
-h1{
-    margin: 40px;
-    text-align: center;
-    color:black;
+    background-color: white;
 }
 
-.container{
-    box-shadow: 2px 2px 10px gray ;
+/* Container styling */
+.container {
+    box-shadow: 2px 2px 10px gray;
     width: 30vw;
     margin: 30px;
     padding: 30px;
     border-radius: 50px;
     background-color: gainsboro;
+    transition: padding 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
-.container:hover{
+/* Hover effect */
+.container:hover {
     padding: 31px;
     background-color: rgb(179, 179, 179);
 }
 
+/* Heading inside the container */
 .container h2 {
     margin: 15px;
 }
-.container span{
+
+/* Span inside the container */
+.container span {
     margin: 15px;
 }
 
+/* Main container for grid layout */
 .main_container {
     display: grid;
-    grid-template-columns : auto auto;
+    grid-template-columns: auto auto;
     margin-left: 20px;
     justify-content: center;
     align-items: center;
 }
 
-a{
+/* Links styling */
+a {
     text-decoration: none;
     color: black;
 }
-  
+
+/* Responsive design for smaller screens */
+@media (max-width: 1024px) {
+    .main_container {
+        grid-template-columns: 1fr; /* One column layout */
+        margin-left: 0; /* Center the content */
+    }
+
+    .container {
+        width: 50vw; /* Adjust width to take more space on medium-sized screens */
+        margin: 20px auto; /* Auto margins to center on the screen */
+        padding: 20px;
+        border-radius: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 70vw; /* Make the container wider on smaller screens */
+        margin: 15px auto;
+        padding: 20px;
+        border-radius: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 90vw; /* Almost full width on small mobile screens */
+        margin: 10px auto;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .container h2, .container span {
+        margin: 10px; /* Reduce margin for smaller screens */
+    }
+
+    .main_container {
+        margin-left: 0; /* Remove extra left margin */
+    }
+}
