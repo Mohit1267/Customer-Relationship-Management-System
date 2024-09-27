@@ -10,60 +10,112 @@ body{
     /* align-items: center; */
 }  
 
-
-/* 1 */
-/* .navbar {
-    background-color: #454343;
-    height: 100vh;
-    max-width: 200px;
-    max-width: 200px;
-    position: fixed; 
-    display: flex;
-    flex-direction: column;
-    margin-left: 0px;
-    margin-right: 30px;
-    margin-top: 0px;
-    border-radius: 10px; 
-    box-shadow: 0 8px 8px rgba(140, 234, 239, 0.875); 
-    padding: 10px 20px;     
-} */
-
-.navbar {
-    /* background: linear-gradient(to right ,#19191a7a, #5b87bc79, #19191a7a); */
-    background-color: #1E2A38;
-    position: absolute; /* Fixes the navbar to the left of the screen */
-    height: 100vh; /* Full height of the viewport */
-    min-width: 250px;
-    width: 15%; /* Fixed width */
-    top: 0; /* Aligns the navbar to the top of the screen */
-    left: 0; /* Aligns the navbar to the left of the screen */
-    display: flex;
-    flex-direction: column;
-    margin: 0; /* Removes any extra margins */
-    border-radius: 0px; /* Keeps your rounded corners */
-    box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5); 
-    /* box-shadow: 0 8px 8px rgba(147, 244, 231, 0.875); Adds shadow for a 3D effect */
-    padding: 10px 20px; /* Adds padding inside the navbar */
-    overflow-y: auto; /* Adds scrolling if the content overflows vertically */
-    overflow: visible;
-    transform: translateX(0);
-    transition: transform 0.3s ease-in-out;
+/* Horizontal Navbar */
+/* Reset default margin and padding */
+.navbar-horizontal {
+  background-color: #eff3f7 !important;
+  width: calc(100% - 250px); /* Full width minus the width of the vertical navbar */
+  margin: 0; /* Remove margins to avoid space from other elements */
+  background-color: #f8f9fa; /* Background color */
+  padding: 10px 20px; /* Padding for the navbar */
+  border-radius: 20px 20px 20px 20px; /* Curved bottom corners */
+  position: fixed; /* Keep navbar fixed at the top */
+  top: 0; /* Position it at the top */
+  left: 250px; /* Align it next to the vertical navbar */
+  z-index: 1000; /* Ensure it's above other content */
 }
 
+
+/* Filter dropdown styling */
+.filter-bar {
+  display: flex;
+  align-items: center;
+}
+
+.filter-select {
+  width: 150px;
+ margin-left: 1090px;
+}
+
+/* profile icon */
+.profile-icon {
+  height: 50px; /* Set the desired height */
+  margin-left: 20px; /* Space from the search bar */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+/* Optional: Add hover effect */
+.profile-icon:hover {
+  opacity: 0.8; /* Slightly transparent on hover */
+}
+
+/* Align items within the navbar */
+.container-fluid {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: space-between; /* Align items to the right */
+  align-items: center; /* Center items vertically */
+}
+
+/* Styling for the search input */
+.form-control {
+  width: 300px; /* Adjust width as necessary */
+  margin-right: 10px;
+  border-radius: 20px 0 0 20px; /* Curved left corners */
+  height: 35px; /* Set a specific height */
+}
+
+/* Adjust button styles */
+.btn-outline-success {
+  margin-left: 10px; /* Space between input and button */
+  height: 35px; /* Set a specific height */
+}
+
+/* Optional: Add hover effect to the button */
+.btn-outline-success:hover {
+  background-color: #28a745; /* Change background on hover */
+  color: white; /* Change text color on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-control {
+      width: 200px; /* Adjust width for smaller screens */
+  }
+}
+
+
+/* Vertical Navbar */
+.navbar {
+  background-color: #1E2A38;
+  position: fixed; /* Keeps the navbar fixed */
+  height: 100vh; /* Full height of the viewport */
+  width: 250px; /* Fixed width for the vertical navbar */
+  top: 0; /* Aligns the navbar to the top of the screen */
+  left: 0; /* Aligns the navbar to the left of the screen */
+  display: flex;
+  flex-direction: column;
+  margin: 0; /* Removes any extra margins */
+  border-radius: 0px; /* Keeps your rounded corners */
+  box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5);
+  padding: 10px 20px; /* Adds padding inside the navbar */
+  overflow-y: auto; /* Adds scrolling if the content overflows vertically */
+}
+
+/* Collapsed state for vertical navbar */
 .navbar.collapsed {
   transform: translateX(100%);
-  /* transition: transform 0.3s ease; */
 }
 
-/*2*/
+/* Navbar Container */
 .navbar-container {
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: fixed;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: fixed; /* This is not needed here since it's inside the vertical navbar */
 }
+
 
 .navbarNavDropdown {
     justify-content: flex-start;
@@ -71,8 +123,10 @@ body{
 
 /* 3 Navbar brand styles */
 .navbar-brand img {
+  
     height: 40px;
 }
+
 
 .nav-link img {
   height: 30px;
@@ -125,10 +179,10 @@ body{
     flex-direction: column;
     /* align-items: center; */
     /* justify-content: center; */
-    top: 30px;
-    bottom: 550px;
+
+    bottom: 710px;
     /* left: 0; */
-    right: 15px;
+    left: 130px;
     /* margin: auto; */
     cursor: pointer;
   }
@@ -235,7 +289,7 @@ body{
     margin-left: -45px;
     color: #ffffff;
     padding: 20 3;
-    margin-top: 100px;
+    margin-top: 50px;
     margin-bottom: -40px;
     /* font-weight: bold; */
     font-size: 18px;

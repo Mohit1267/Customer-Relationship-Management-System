@@ -10,47 +10,58 @@
 {% endblock %}
 
 
-{% block title %}DashBoard{% endblock  %}
+{% block title %}DashBoard{% endblock %}
 
 
 {% block content %}
 {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
     </div>
+    {% endfor %}
+</div>
 {% endif %}
 
-  <div class="content " >
-        <div class="heading title_animation">
-            Welcome to the Aapai Technologies
-        </div>
+<div class="content ">
+    <div class="heading title_animation">
+        Welcome to the Aapai Technologies
+    </div>
 
-    <div class="flex-container cards-container z-[-10]  " >
-        <div class="card ">
+    <!-- Filter Bar (added between search and profile) -->
+    <div class="filter">
+        <select class="filter-form" aria-label="Filter">
+            <option selected>Filter by</option>
+            <option value="0">Mining</option>
+            <option value="1">Opportunities</option>
+            <option value="2">Contacts</option>
+            <option value="3">Leads</option>
+        </select>
+    </div>
+
+    <div class="flex-container cards-container z-[-10]  ">
+        <div class="card mining-card">
             <div class="card-body ">
                 <h5 class="card-title" style="color: white;"><b>Today's Mining</b></h5>
                 <p class="card-text">{{ mining_count }}/40</p>
             </div>
         </div>
-        <div class="card">
+        <div class="card opportunity-card">
             <div class="card-body">
                 <h5 class="card-title" style="color: white;"><b>Today's Opportunity</b></h5>
                 <p class="card-text">{{ Opportunity_count }}</p>
             </div>
         </div>
-        <div class="card">
+        <div class="card contact-card">
             <div class="card-body">
                 <h5 class="card-title" style="color: white;"><b>Today's Contacts</b></h5>
                 <p class="card-text">{{ contact_count }}</p>
             </div>
         </div>
-        <div class="card">
+        <div class="card lead-card">
             <div class="card-body">
-                <h5 class="card-title" style="color:  white;"><b>Today's Leads</b></h5>
+                <h5 class="card-title" style="color: white;"><b>Today's Leads</b></h5>
                 <p class="card-text">{{ lead_count }}</p>
             </div>
         </div>
@@ -59,14 +70,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="flex-container card-container">
+    <!-- new code with yearly data -->
+    <div class="flex-container chart-container">
+        <!-- Weekly Data Card -->
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="color:  white;"><b>Weekly Data</b></h5>
-                <canvas id="weeklyChart" width="130" height="150" ></canvas>
+                <canvas id="weeklyChart" width="130" height="150"></canvas>
                 <p class="card-text">{{ mining_count }}/40</p>
             </div>
         </div>
+
+        <!-- Monthly Data Card -->
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="color:  white;"><b>Monthly Data</b></h5>
@@ -74,7 +89,8 @@
                 <p class="card-text">{{ mining_count }}</p>
             </div>
         </div>
-        
+
+        <!-- Quarterly Data Card -->
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="color: white;"><b>Quarterly Data</b></h5>
@@ -82,15 +98,25 @@
                 <p class="card-text">{{ mining_count }}</p>
             </div>
         </div>
+
+        <!-- Yearly Data Card (New) -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="color: white;"><b>Yearly Data</b></h5>
+                <canvas id="yearlyChart" width="130" height="100"></canvas>
+                <p class="card-text">{{ mining_count }}</p>
+            </div>
+        </div>
     </div>
+
 </div>
 
 
 
 
 
-  
-        
+
+
 
 
 
@@ -113,11 +139,11 @@
         <p>Some statistics data here...</p>
     </div>
 
-    <div class="profile"><a href = "{% url "detailprofile" %}">
-        <h2>Profile</h2>
-        <p>Name: {{user.username}}</p>
-        <p>Email: {{user.email}}</p>
-    </a></div>
+    <div class="profile"><a href="{% url " detailprofile" %}">
+            <h2>Profile</h2>
+            <p>Name: {{user.username}}</p>
+            <p>Email: {{user.email}}</p>
+        </a></div>
 </div>
 
 <footer>
@@ -126,6 +152,3 @@
 </footer>
 
 {%endcomment%}
-
-
-
