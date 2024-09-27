@@ -3,7 +3,7 @@ body {
    margin-top: 4%;
     font-family: 'Arial', sans-serif; 
     margin:auto; /* Remove default margins to manage layout manually */ 
-    background-color: #f9f9f9; 
+    background-color: #fdfdfd; 
     display: flex; 
     min-height: 100vh; /* Ensure the body takes the full height of the viewport */ 
 } 
@@ -136,7 +136,7 @@ body {
     background: transparent; 
     color: black; 
     box-shadow: none; 
-    transition: border-bottom-color 0.3s ease; 
+    transition: border-bottom-color 0.3s ease;
 } 
  
 .form-group input:focus, 
@@ -145,6 +145,18 @@ body {
     outline: none; 
 } 
  
+.filter-container {
+    margin: 10px;
+}
+
+select {
+    padding: 10px;
+    font-size: 10px;
+}
+
+.filtered-result {
+    margin-top: 10px;
+}
 .col-md-2 { 
     font-family: 'Georgia'; 
     font-weight: bolder; 
