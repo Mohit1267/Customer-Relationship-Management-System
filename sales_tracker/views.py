@@ -97,6 +97,13 @@ def Dashboards(request):
         context['attendances'] = attendances
         context['attendence_graph'] = attendence_graph
         context['att'] = att
+        context['temp'] = "temp"
+        # context['request'] = request
+        latitude = request.session.get('latitude')
+        longitude = request.session.get('longitude')
+        context['lat'] = latitude
+        context['long'] = longitude
+        
         # context['late'] = Late_perct
         context['late'] = late
         return render(request,'sales_tracker/admin.html',context)
@@ -1096,3 +1103,17 @@ class AdminAnalysis(TemplateView):
 #     DailyAttendance()
 #     template_name = "sales_tracker/DailyAttendence.html"
     
+
+
+class maps(View):
+    template_name = "sales_tracker/maps.html"
+    def get(self,request):
+        context = {}
+        latitude = request.session.get('latitude')
+        longitude = request.session.get('longitude')
+        context['lat'] = latitude
+        context['long'] = longitude
+        return render(request, self.template_name, context)
+    
+
+

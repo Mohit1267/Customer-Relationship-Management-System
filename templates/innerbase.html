@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -75,7 +76,7 @@
         <div class="navbar-container">
         <!-- profile offcanvas -->
         <div>
-          <a class="btn btn-light profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+          <a class="btn btn-dark profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
             <b>Profile</b>
           </a>
           <!-- <div class="hamburger" onclick="toggleNavbar()">
@@ -263,23 +264,20 @@
 
     <script>
       function toggleNavbar() {
-        const navbarContainer = document.querySelector('.navbar-container');
-        const navbar = document.querySelector('.navbar');
-        const hamburger = document.querySelector('.hamburger');
-      
-        // Toggle the 'collapsed' class on the navbar
-        navbar.classList.toggle('collapsed');
-      
-        // Change the hamburger icon's state
-        hamburger.classList.toggle('open');
-      
-        // Toggle the visibility of the navbar container
-        if (navbarContainer.style.display === 'block') {
-            navbarContainer.style.display = 'none';
-        } else {
-            navbarContainer.style.display = 'block';
-        }
-      }
+    const navbarContainer = document.querySelector('.navbar-container');
+    const navbar = document.querySelector('.navbar');
+    const hamburger = document.querySelector('.hamburger');
+
+    // Toggle the 'collapsed' class on the navbar
+    navbar.classList.toggle('collapsed');
+
+    // Change the hamburger icon's state
+    hamburger.classList.toggle('open');
+
+    // Toggle the visibility by toggling a class
+    navbarContainer.classList.toggle('visible');
+}
+
       
       // Hamburger animation
       $(document).ready(function() {
@@ -621,3 +619,4 @@ function sendHeartbeat() {
 
 
 
+>>>>>>> a32556264a3d8adbbddb0c6b8b77bc117177eb49
