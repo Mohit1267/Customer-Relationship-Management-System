@@ -14,10 +14,11 @@ body {
 
 .pic {
     height: 100%;
-    width: 2250px;
+    width: 2000px;
     
-   margin-right: 300px;
-   margin-left: -400px;
+    margin-top: 90px;
+   margin-right: -350px;
+   margin-left: -800px;
    background-size:contain;
  }
 
@@ -27,10 +28,12 @@ body {
     max-width: 450px;
     padding: 20px;
     box-sizing: border-box;
-    margin-right: 500px;
-    margin-left:-1500px;
+    margin-right: 830px;
+    margin-left:-2050px;
     margin-bottom: 40px;
     /* margin-right: 20px; */
+    justify-content: center;
+    align-items: center;
 }
 
 .welcome{
