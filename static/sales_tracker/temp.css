@@ -1,0 +1,114 @@
+/* General container styling */
+.main_container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 74px;
+    width: 150%;
+}
+
+/* Add a wrapper around the table to handle horizontal overflow */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Table header styling */
+thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+th, td {
+    padding: 15px 20px;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Table rows styling */
+tbody tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e1f5fe;
+}
+
+/* Table cells styling */
+td {
+    font-size: 14px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+/* Highlighted text or important fields */
+td span {
+    font-weight: bold;
+    color: #00796b;
+}
+
+/* Link styles */
+a {
+    color: #0288d1;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #01579b;
+}
+
+/* Button styles for actions */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #388e3c;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    th, td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .main_container {
+        padding: 15px;
+    }
+}
