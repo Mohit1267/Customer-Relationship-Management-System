@@ -69,10 +69,20 @@
 
 
 
-    <div class="graph">
-        {{ graph_html|safe }}
-        {{ monthlymining|safe }}
-        {{ quarterlymining|safe }}
+    <div class="graph-container">
+        <div class="graph">
+            {{ graph_html|safe }}
+        </div>
+
+        <div class="graph">
+            {{ monthlymining|safe }}
+
+        </div>
+
+        <div class="graph">
+            {{ quarterlymining|safe }}
+        </div>
+        
     </div>
     <!-- <div class="graph"></div>
     </div>
