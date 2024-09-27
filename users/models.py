@@ -73,3 +73,11 @@ class CallingDetail(models.Model):
     customer_email = models.EmailField(default="@gmail.com", unique=True)
     customer_contact_number = models.IntegerField(default=91)
     customer_address = models.TextField(default="")
+
+
+
+# request.user = emailid
+# request.user.usrname = username
+# request.user.email = emailid'
+# request.user.id = userid
+

@@ -20,7 +20,7 @@ from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
-from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph
+from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
@@ -128,6 +128,12 @@ def Dashboards(request):
         today_Opportunity = OpportunityData.objects.filter(date = now_date)
         today_Opportunity_count = today_Opportunity.count()
         context["Opportunity_count"] = today_Opportunity_count
+        graph_html = dailymining(request)
+        context["graph_html"] = graph_html
+        monthg = monthlymining(request)
+        context["monthlymining"] = monthg
+
+
         return render(request,'sales_tracker/index.html',context)
     elif(request.user.profile.branch == 'agent'):
         context = {}
