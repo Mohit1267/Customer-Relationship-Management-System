@@ -33,7 +33,7 @@
         <div class="card ">
             <div class="card-body ">
                 <h5 class="card-title" style="color: white;"><b>Today's Mining</b></h5>
-                <p class="card-text">{{ mining_count }}/40</p>
+                <p class="card-text">{{ mining_count }}/80</p>
             </div>
         </div>
         <div class="card">
@@ -59,10 +59,13 @@
 
     <div class="graph">
         {{ graph_html|safe }}
+        {{ monthlymining|safe }}
+        {{ quarterlymining|safe }}
+    </div>
+    <!-- <div class="graph"></div>
     </div>
     <div class="graph"></div>
-        {{ monthlymining|safe }}
-    </div>
+    </div> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <div class="flex-container card-container">
