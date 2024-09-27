@@ -4,6 +4,45 @@
     box-sizing: border-box;
 }
 
+/* Filter Bar Styles */
+.filter {
+    margin: 20px 0; /* Space above and below the filter */
+    margin-left: 20px;
+    width: 400px; /* Set a fixed width for the filter container */
+}
+
+.filter-form {
+    padding: 10px 15px; /* Padding for better touch targets */
+    font-size: 16px; /* Increase font size for readability */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f8f9fa; /* Light background for contrast */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+    width: 100%; /* Full width of the filter container */
+}
+
+/* Change border color on focus */
+.filter-form:focus {
+    outline: none; /* Remove default outline */
+}
+
+/* Option styles */
+.filter-form option {
+    padding: 10px; /* Padding for options */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter {
+        margin: 10px 0; /* Reduce margin on smaller screens */
+        width: 100%; /* Full width on mobile */
+    }
+
+    .filter-form {
+        width: 100%; /* Full width on mobile */
+    }
+}
+
+
 .heading {
    
     /* background: linear-gradient(90deg, #3e3a3a 0%, rgb(63, 59, 59) 100%); */

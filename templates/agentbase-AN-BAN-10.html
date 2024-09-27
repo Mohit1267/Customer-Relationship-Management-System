@@ -1,0 +1,310 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% block css_link %}{% endblock %}
+
+
+  <link rel="stylesheet" href="{% static 'base1.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.css' %}">
+
+  <title>{% block title %}title{% endblock %}</title>
+
+
+</head>
+
+<body>
+  <script src="charts.js"></script>
+  <!-- navbar to the right side -->
+  <!-- <div class="navbar-container"> -->
+    <nav class="navbar  navbar-expand-lg">
+      <div class="navbar-brand-container">
+
+        <!-- <a class="navbar-brand" href="/">Logo</a> -->
+        <a href="{% url 'index' %}">
+          <img src="static/Logo.png" alt="Brand Image" style="height: 40px;">
+        </a>
+      </div>
+
+  
+      <div class="" id="navbarNavDropdown">   
+        <ul class="nav-links flex-column"> 
+          <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Mining
+              </a>
+
+              
+              <ul class="dropdown-menu ">   
+                <li><a class="dropdown-item" href="{% url 'mining' %}">Create Mining</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
+              </ul>
+            </li> -->
+          <div>
+            {% if timer %}
+            <span id="count_down" class="nav-link px-2">00:00:00</span>
+            {% endif %}
+          </div>
+          <!-- profile offcanvas -->
+          <div>
+            <a class="btn btn-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+              aria-controls="offcanvasExample">
+              Profile
+            </a>
+          </div>
+            <!-- hamburger -->
+            <div class="hamburger" onclick="toggleNavbar()">
+              <div class="stick stick-1"></div>
+              <div class="stick stick-2"></div>
+              <div class="stick stick-3"></div>
+            </div>
+           </div>
+
+          
+           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+              <img src="\static\contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
+
+              Contacts
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">View Contacts</a></li>
+            </ul>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Leads
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Opportunities
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Quotes
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">View Quote</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Calender
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Schedule call</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+  </div>
+  </nav>
+  {% block content %}{% endblock %}
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Profile</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body ">
+      <div class="row p-2">
+        <a href="{% url 'detail_profile' %}" class="text-decoration-none">View Profile</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="text-decoration-none">Edit Profile</a>
+      </div>
+      <hr>
+      <div class="row p-2">
+        <a href="#" class="text-decoration-none">Employees</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="text-decoration-none">Community Forum</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="text-decoration-none">About</a>
+      </div>
+      <hr>
+      <div class="row p-2">
+        <a href="{% url 'logout'%}" class="text-decoration-none">logoutttt</a>
+      </div>
+    </div>
+
+    {%comment%}
+    {% if timer %}
+    <div class="timer_count">
+      <p>Timer: <span id="count_down">00:00:00</span></p>
+
+      <p>No of Mining: {{mining_count}}</p>
+    </div>
+    {% endif %}
+    {%endcomment%}
+
+    /*hamburger*/
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      function toggleNavbar() {
+        const navbarContainer = document.querySelector('.navbar-container');
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('.hamburger');
+      
+        // Toggle the 'collapsed' class on the navbar
+        navbar.classList.toggle('collapsed');
+      
+        // Change the hamburger icon's state
+        hamburger.classList.toggle('open');
+      
+        // Toggle the visibility of the navbar container
+        if (navbarContainer.style.display === 'block') {
+            navbarContainer.style.display = 'none';
+        } else {
+            navbarContainer.style.display = 'block';
+        }
+      }
+      
+      // Hamburger animation
+      $(document).ready(function() {
+        $(".hamburger").click(function() {
+            $(".stick").each(function() {
+                if ($(this).hasClass('open')) {
+                    $(this).removeClass('open').addClass('close');
+                } else {
+                    $(this).removeClass('close').addClass('open');
+                }
+            });
+        });
+      });
+</script>
+
+    <script>
+      // Weekly Data Chart
+      var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+      var weeklyChart = new Chart(ctxWeekly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
+            label: 'Weekly Data',
+            data: [parseInt('{{ mining_count }}'), 40 - parseInt('{{ mining_count }}')],
+            backgroundColor: ['#4CAF50', '#e0e0e0'],
+            borderColor: ['#4CAF50', '#e0e0e0'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          cutout: '70%',
+        }
+      });
+
+      // Monthly Data Chart
+      var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+      var monthlyChart = new Chart(ctxMonthly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
+            label: 'Monthly Data',
+            data: [{{ mining_count }}, 100 - {{ mining_count }}],
+        backgroundColor: ['#4CAF50', '#e0e0e0'],
+        borderColor: ['#4CAF50', '#e0e0e0'],
+        borderWidth: 1
+      }]
+        },
+      options: {
+        cutout: '70%',
+        }
+    });
+
+      // Quarterly Data Chart
+      var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
+      var quarterlyChart = new Chart(ctxQuarterly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
+            label: 'Quarterly Data',
+            data: [{{ mining_count }}, 300 - {{ mining_count }}],
+        backgroundColor: ['#4CAF50', '#e0e0e0'],
+        borderColor: ['#4CAF50', '#e0e0e0'],
+        borderWidth: 1
+      }]
+        },
+      options: {
+        cutout: '70%',
+        }
+    });
+
+
+      let totalSeconds = {{ timer.hrs }}* 60 * 60 + {{ timer.min }}* 60 + {{ timer.sec }}
+
+      const countDownEle = document.getElementById("count_down")
+
+      function convertSecondsToHms(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const sec = Math.floor(seconds % 60);
+
+        // Add leading zeros for hours and minutes if needed
+        const formattedHours = hours.toString().padStart(2, "0");
+        const formattedMinutes = minutes.toString().padStart(2, "0");
+        const formattedSeconds = sec.toString().padStart(2, "0");
+
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+      }
+
+      function updateCountDown() {
+
+        let formatedTimer = convertSecondsToHms(totalSeconds)
+
+        countDownEle.innerHTML = formatedTimer
+        totalSeconds++;
+      }
+
+      setInterval(updateCountDown, 1000);
+    </script>
+    {% block javascript %}{% endblock %}
+
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+</body>
+
+</html>
