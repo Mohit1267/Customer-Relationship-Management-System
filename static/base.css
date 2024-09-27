@@ -74,10 +74,21 @@ body{
     height: 40px;
 }
 
+.navbar.collapsed .nav-text {
+  opacity: 0; /* Hide text when navbar is collapsed */
+  width: 0; /* Prevents the space taken by text */
+  margin: 0; /* Remove margin to prevent spacing */
+}
+
 .nav-link img {
   height: 30px;
   filter: brightness(0) invert(1); /* This makes the logo white */
 }
+
+.navbar.collapsed .nav-item:not(.dashboard-icon) {
+  display: none; /* Hide all other icons when collapsed */
+}
+
 
 /*9*/
 .timer#count_down {
@@ -233,8 +244,8 @@ body{
 /*4*/
 .nav-links {
     margin-left: -45px;
-    color: #ffffff;
-    padding: 20 3;
+    color: #74e0f3;
+    /* padding: 20px 3px;  */
     margin-top: 100px;
     margin-bottom: -40px;
     /* font-weight: bold; */
@@ -242,6 +253,20 @@ body{
     line-height: 2.5;
     list-style-type: none; /* Remove bullets */
 }
+
+/* .nav-links .nav-link.active {
+  color: #74e0f3  
+}
+
+ .dropdown-item .nav-link.active {
+  color: #ff5733 !important; ;  
+}
+ */
+
+ .nav-link.active {
+  color:  #74e0f3 !important; /* Change this to the color you want */
+}
+
 
 .spacing {
     letter-spacing: 3px;
