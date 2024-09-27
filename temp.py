@@ -8,6 +8,7 @@ from django.db.models import Count
 # Set the settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stpa.settings')
 from django.db import connection
+import plotly.graph_objects as go
 # Setup Django
 django.setup()
 
@@ -191,7 +192,7 @@ def DailyAttendance():
     # return data
 
 # DailyAttendance()
-def temp():
+def temp2():
     now_date = datetime.datetime.now().strftime('%Y-%m-%d')
     print(DaysStatus.objects.filter(date = now_date).values('status')[0]['status'])
     # return 
@@ -252,4 +253,35 @@ def Productivity():
     plt.show()
 
 
-Productivity()
+# Productivity()
+
+
+
+# def temp(request):
+#     print(request.user)
+# temp(request)
+# %s
+def dailymining(temp):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            select count(*) from sales_tracker_miningdata
+            where created_by_id = %s and date = '2024-09-27'; 
+        """, [temp])
+        data = cursor.fetchall()
+    completed_mining = data[0][0]
+    target_mining = 80
+    remaining_mining = max(0, target_mining - completed_mining)
+
+    # Create a pie chart
+    fig = go.Figure(data=[go.Pie(labels=['Completed Mining', 'Remaining Mining'],
+                                 values=[completed_mining, remaining_mining],
+                                 hole=.3,
+                                 textinfo='label+value'
+)])
+
+    # Convert the plotly figure to HTML
+    fig.show()
+
+
+
+dailymining(13)
