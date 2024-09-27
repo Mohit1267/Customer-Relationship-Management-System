@@ -96,20 +96,5 @@
 {% endblock %} 
  
 {% block javascript %} 
-<script> 
-  document.addEventListener("DOMContentLoaded", function() { 
-      const navbar = document.querySelector('.nav-links');  // Ensure this selector matches your navbar 
-      const form = document.querySelector('form'); 
- 
-      if (navbar && form) { 
-          form.addEventListener('focusin', function() { 
-              navbar.style.display = 'none'; 
-          }); 
- 
-          form.addEventListener('focusout', function() { 
-              navbar.style.display = 'block'; 
-          }); 
-      } 
-  }); 
-</script> 
+
 {% endblock %}
