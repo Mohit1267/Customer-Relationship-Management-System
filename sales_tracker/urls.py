@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.contrib.auth.decorators import login_required
 
+
+
 urlpatterns = [
     path("", login_required(views.Dashboards), name="Dashboards"),
     # path("adminn", login_required(views.Admin.as_view()), name="adminn"),
@@ -36,6 +38,9 @@ urlpatterns = [
     path("tocall/<pk>", views.Tocall_detail, name = "tocalldata"),
     path("cc", views.get_calling_agents, name ="cc"),
     path('get_timer/', login_required(views.get_timer_value), name='get_timer'),
+
+
+
 ]
 
 

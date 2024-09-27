@@ -10,6 +10,7 @@ body{
     /* align-items: center; */
 }  
 
+
 /* Horizontal Navbar */
 /* Reset default margin and padding */
 .navbar-horizontal {
@@ -25,7 +26,6 @@ body{
   z-index: 1000; /* Ensure it's above other content */
 }
 
-
 /* Filter dropdown styling */
 .filter-bar {
   display: flex;
@@ -34,7 +34,7 @@ body{
 
 .filter-select {
   width: 150px;
- margin-left: 1090px;
+  margin-left: 20px; /* Adjust margin to avoid overflow */
 }
 
 /* profile icon */
@@ -76,12 +76,71 @@ body{
   color: white; /* Change text color on hover */
 }
 
+
+
+
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
+  .navbar-horizontal {
+      width: calc(100% - 200px); /* Reduce navbar width */
+      left: 200px; /* Align it closer to the vertical navbar */
+  }
+
+  .filter-select {
+      margin-left: 10px; /* Reduce margin on smaller screens */
+  }
+
+  .form-control {
+      width: 250px; /* Adjust width for smaller screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar-horizontal {
+      width: calc(100% - 150px); /* Further reduce navbar width */
+      left: 150px; /* Adjust left position */
+  }
+
   .form-control {
       width: 200px; /* Adjust width for smaller screens */
   }
+
+  .filter-select {
+      width: 100px; /* Adjust filter select for smaller screens */
+  }
 }
+
+@media (max-width: 768px) {
+  .navbar-horizontal {
+      width: 100%; /* Full width for mobile */
+      left: 0; /* Reset left position */
+  }
+
+  .form-control {
+      width: 150px; /* Adjust width for smaller screens */
+  }
+
+  .filter-select {
+      width: 80px; /* Further adjust filter select for smaller screens */
+  }
+
+  .profile-icon {
+      height: 40px; /* Smaller profile icon on mobile */
+  }
+}
+
+@media (max-width: 576px) {
+  .form-control {
+      width: 100%; /* Full width for input */
+      margin-right: 0; /* Reset margin */
+  }
+
+  .btn-outline-success {
+      width: 100%; /* Full width for button */
+      margin-left: 0; /* Reset margin */
+  }
+}
+
 
 
 /* Vertical Navbar */
