@@ -294,7 +294,7 @@ def Mining_Count():
 
     # Beautify the plot
     plt.setp(autotexts, size=10, weight="bold",color='black')
-    plt.setp(texts, size=12, color='black')
+    plt.setp(texts, size=10, color='black')
     ax.set_title("Mining vs Expected Mining", color='black')
 
     # Show plot
@@ -307,22 +307,22 @@ def Leads_Count():
     Exp_Leads = Exp_L*AgentC*4
 
     # Data
-    labels = ['Total Mining', 'Expected Mining']
+    labels = ['Total leads', 'Expected leads']
     sizes = [Total_Leads, Exp_Leads]
-    colors = ['#ff9999','#66b3ff']
+    colors = ['#008080','#1E2A38']
 
     # Plot
     fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
-    plt.gcf().set_facecolor('#262626')
-    ax.set_facecolor('#262626')
+    plt.gcf().set_facecolor('#e0eaf6')
+    ax.set_facecolor('#e0eaf6')
 
     # Create a pie chart
-    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
+    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='black'))
 
     # Beautify the plot
     plt.setp(autotexts, size=10, weight="bold",)
-    plt.setp(texts, size=12, color='white')
-    ax.set_title("Leads vs Expected Leads", color='white')
+    plt.setp(texts, size=10, color='black')
+    ax.set_title("Leads vs Expected Leads", color='black')
 
     # Show plot
     plt.savefig('static/Leads_Count.png')
@@ -344,25 +344,25 @@ def EachMinerTarget(id):
         print(data) 
         target = sum(row[1] for row in data)*40
         print(target)
-    acchieved = MiningData.objects.filter(created_by_id = id).count()
-    print(acchieved) 
-    each_miner = {"Target":target, "Acchieve":acchieved}
-    labels = [f'target:{target}', f'acchieved:{acchieved}']
-    sizes = [target, acchieved]
-    colors = ['#ff9999','#66b3ff']
+    achieved = MiningData.objects.filter(created_by_id = id).count()
+    print(achieved) 
+    each_miner = {"Target":target, "Achieve":achieved}
+    labels = [f'target:{target}', f'achieved:{achieved}']
+    sizes = [target, achieved]
+    colors = ['#008080','#1E2A38']
 
     # Plot
     fig, ax = plt.subplots(figsize=(4.5, 4), subplot_kw=dict(aspect="equal"))
-    plt.gcf().set_facecolor('#262626')
-    ax.set_facecolor('#262626')
+    plt.gcf().set_facecolor('#e0eaf6')
+    ax.set_facecolor('#e0eaf6')
 
     # Create a pie chart
-    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='white'))
+    wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.4),textprops=dict(color='black'))
 
     # Beautify the plot
     plt.setp(autotexts, size=10, weight="bold",)
-    plt.setp(texts, size=12, color='white')
-    ax.set_title("Mining vs Expected Mining", color='white')
+    plt.setp(texts, size=12, color='black')
+    ax.set_title("Mining vs Expected Mining", color='black')
 
     # Show plot
     plt.savefig('static/EachMinerTarget.png')
@@ -423,15 +423,15 @@ def Time_worked(request):
             title="Date VS Number of hours worked",
             xaxis_title='Date',
             yaxis_title='Number of hours',
-            plot_bgcolor='#262626',
-            paper_bgcolor='#262626',
-            font=dict(color='White'),
+            plot_bgcolor=' #1E2A38',
+            paper_bgcolor=' #1E2A38',
+            font=dict(color=' white'),
             xaxis=dict(
                 tickmode='array',
                 tickvals=dates,
                 tickformat='%Y-%m-%d'
             ),
-            yaxis=dict(gridcolor="black")
+            yaxis=dict(gridcolor="white")
         )
         graph_html = plot(fig, output_type='div')
         return graph_html
@@ -718,15 +718,15 @@ def Productivity(request):
         title='Number of Minings vs. Days',
         xaxis_title='Date',
         yaxis_title='Number of Minings',
-        plot_bgcolor='#262626',
-        paper_bgcolor='#262626',
+        plot_bgcolor=' #1E2A38',
+        paper_bgcolor=' #1E2A38',
         font=dict(color='white'),
         xaxis=dict(
             tickmode='array',
             tickvals=dates,
             tickformat='%Y-%m-%d'
         ),
-        yaxis=dict(gridcolor='#555555'),
+        yaxis=dict(gridcolor=' white'),
     )
 
     # Render the Plotly figure to HTML and pass it to the template
