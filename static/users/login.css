@@ -3,50 +3,64 @@ body {
     padding: 0;
     font-family: 'Poppins', sans-serif;
     /* background: linear-gradient(115deg, #5c5c97, #4360ad); */
-    background: linear-gradient(90deg, rgba(128, 0, 128, 1) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%);
+    /* background: linear-gradient(90deg, rgb(219, 144, 3) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%); */
 
-    height: 100vh;
+    height: 100%;
     width: 100%;
     /* display: flex; */
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+   
+}
+
+.container {
+    height: 100%;
+    width: 100vw;
+    /* margin-left: -60px; */
+    /* margin-right: 40px; */
+
 }
 
 .pic {
-    height: 100%;
-    width: 2000px;
+    position: absolute;
+    height: 100vh;
+    /* width: 2000px; */
+    width: 100vw;
+     top: 0;
+    left: 0;
+    object-fit: cover;
+    z-index: -1;
     
-    margin-top: 90px;
-   margin-right: -350px;
-   margin-left: -800px;
-   background-size:contain;
+    /* margin-top: 20px; */
+   /* margin-right: -350px; */
+   /* margin-left: -800px; */
+   /* margin-left: -8px; */
+   
+   
+   /* background-size:auto; */
  }
 
 
-.login-wrapper {
-    width: 100%;
-    max-width: 450px;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-right: 830px;
-    margin-left:-2050px;
-    margin-bottom: 40px;
-    /* margin-right: 20px; */
-    justify-content: center;
-    align-items: center;
-}
+ .login-wrapper {
+    width: 450px; /* adjust the width as needed */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
 .welcome{
     width: 100%;
     color:#d6c9c9;
-    font-size: 40px;
-    margin-left: 70px;
+    font-size: 30px;
+    text-align: center;
+    /* margin-left: 7px; */
+    /* margin-left: 5px; */
     margin-bottom: 35px;
-    font-weight:400;
+    font-weight:600;
     font-family: "Poppins", sans-serif;
 
  }
-
 /* Circles */
 .circle1 {
     position: absolute;
@@ -54,56 +68,53 @@ body {
     height: 13em;
     border-radius: 50%;
     background: linear-gradient(-25deg, #6caac7, #8adad3);
-    top: 5%;
+    top: -15%;
     left: 80%;
     right: 40%;
     box-shadow: 0 0 50px #48c7d8;
-    animation: circle1Animate 100s infinite;
-  }
-  
-  @keyframes circle1Animate {
+    animation: circle1Animate 20s infinite; /* Adjusted animation duration to 30s */
+}
+
+@keyframes circle1Animate {
     0%, 100% {
         left: 80%; /* Initial position */
-        top: 5%;  /* Initial position */
         transform: scale(1);
     }
     50% {
-        left: 20%;  /* Middle position */
-        top: 50%;   /* Move down */
-        transform: scale(1.11); /* Slightly larger in the middle of animation */
+        left: 40%; /* Middle position */
+        transform: scale(1.2); /* Slightly larger in the middle of animation */
     }
 }
-  .circle1:hover {
-    transform: scale(1.15);
+
+.circle1:hover {
+    transform: scale(1.25);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
-  
-  .circle2 {
+
+.circle2 {
     position: absolute;
     width: 19em;
     height: 19em;
     border-radius: 50%;
     background: linear-gradient(-25deg, #80e1e2, #93d3d4);
-    bottom: 5%;
+    bottom: -15%;
     right: 30%;
     box-shadow: 0 0 50px #6dcbe7;
-    animation: circle2Animate 25s infinite;
-    /* left:40%; */
-    /* box-shadow: 0 0 50px #5648d8; */
-   
-  }
-  
-  @keyframes circle2Animate {
-    50% {
-      right: 10%;
-      bottom: 6%;
+    animation: circle2Animate 30s infinite; /* Adjusted animation duration to 20s */
+}
 
-      
+@keyframes circle2Animate {
+    0%, 100% {
+        right: 80%; /* Initial position */
+        transform: scale(1);
     }
-  }
-  
-  .circle2:hover {
-    transform: scale(1.15);
+    50% {
+        right: 40%; /* Middle position */
+        transform: scale(1.2); /* Slightly larger in the middle of animation */
+    }
+}
+.circle2:hover {
+    transform: scale(1.25);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
 
@@ -119,9 +130,9 @@ body {
 }
 
 .hand {
-    width: 130px; 
-    height: 130px;
-    margin-left: 105px;
+    width: 150px; 
+    height: 150px;
+    margin-left: 120px;
     margin-bottom: 20px;
 }
 
