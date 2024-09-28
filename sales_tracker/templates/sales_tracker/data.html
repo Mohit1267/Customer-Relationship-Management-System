@@ -1,52 +1,90 @@
+
 {% extends "innerbase.html" %}
 
 {% load static %}
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/data.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/temp.css' %}">
 {% endblock %}
 
-
-{% block title %}Data{% endblock  %}
-
+{% block title %}Data{% endblock %}
 
 {% block content %}
 
-
 <!-- <h1>DATA SHOWCASE</h1> -->
+<!-- Horizontal Navbar -->
+<nav class="navbar-horizontal">
+    <div class="small-nav">
+      <!-- Search Bar Form -->
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+  
+      <!-- Filter Bar (added between search and profile) -->
+      <div class = "inside-filter">
+        <form method="GET" action="{% url 'data' %}">
+            <label for="time_frame">Select Time Frame:</label>
+            <select name="time_frame" id="time_frame" onchange="this.form.submit()">
+                <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
+                <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
+                <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
+                <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
+                <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
+            </select>
+        </form>
+        </div>
+  
+      <!-- Profile Offcanvas -->
+      <div>
+        <a class="small-nav" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+          <img src="\static\profileicon.png" alt="Profile" class="profile-icon" />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+<section class="main_container">
 
 
+<table>
+    <thead>
+        <tr>
+            <th>Organsation Name</th>
+            <th>Client Name</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Company Revenue</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for data in data_list %}
+        <tr>
+            <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
+            
+            {% if data.customer_first_name %}
+                <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
+                <td>{{ data.customer_email }}</td>
+                <td>-</td>
+                <td>-</td>
+            {% elif data.first_name %}
+                <td>{{ data.first_name }} {{ data.last_name }}</td>
+                <td>{{ data.email_id }}</td>
+                <td>-</td>
+                <td>-</td>
+            {% elif data.opportunity_name %}
+                <td>{{ data.opportunity_name }}</td>
+                <td>-</td>
+                <td>{{ data.probability }}</td>
+                <td>{{ data.assigned_to }}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
-{%comment%}
-{% include "include/dash.html" %}
-{%endcomment%}
-
-<section class = "main_container">
-
-{% for data in data_list %}
-
-<a href = "{% url "detaildata" data %}">
-<div class = "container">
-<h2>{{data}}</h2>   
-{% if data.customer_first_name %}
-<!-- <h1>Hello</h1> -->
-<span><strong>Client</strong> : {{data.customer_first_name}} {{data.customer_last_name}}</span>
-<span><strong>Email</strong> : {{data.customer_email}}</span>
-{% elif data.first_name %}
-<span><strong>Client</strong> : {{ data.first_name }} {{ data.last_name }}</span>
-<span><strong>Email</strong> : {{ data.email_id }}</span>
-{% elif data.opportunity_name %}
-<span><strong>Name</strong> : {{ data.opportunity_name }}</span>
-<span><strong>Probability</strong> : {{ data.probability }}</span>
-<span><strong>assigned_to</strong> : {{ data.assigned_to }}</span>
-{% endif %}
-
-</div>
-</a>
-
-{% endfor %}
 </section>
 
 {% endblock %}
-      
 
 {% block javascript %}{% endblock %}
+>>>>>>> f833426673780679958d5368ba8f4544f7672f39
