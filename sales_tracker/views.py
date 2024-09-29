@@ -1146,6 +1146,3 @@ class maps(View):
         context['lat'] = latitude
         context['long'] = longitude
         return render(request, self.template_name, context)
-    
-
-

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import os
 import django
 from django.utils import timezone
@@ -275,5 +276,4 @@ def dailymining(temp):
 
     completed_mining = data[0][0]
     print(completed_mining)
-
 dailymining(13)
