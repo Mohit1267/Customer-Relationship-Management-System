@@ -145,8 +145,8 @@ def Dashboards(request):
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         users = request.user
         u = RegisterUser.objects.get(email=users)
-        u = u.id
-        ToCall = MiningData.objects.filter(assigned_to=u,date = now_date)
+        uid = u.id
+        ToCall = MiningData.objects.filter(assigned_to=uid,date = now_date)
         context["user"] = u
         context["Tocall"] = ToCall
         print(ToCall, "This is the value of ToCall")
