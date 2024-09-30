@@ -61,6 +61,7 @@ body {
     font-family: "Poppins", sans-serif;
 
  }
+
 /* Circles */
 .circle1 {
     position: absolute;
@@ -68,53 +69,62 @@ body {
     height: 13em;
     border-radius: 50%;
     background: linear-gradient(-25deg, #6caac7, #8adad3);
-    top: -15%;
+    top: 5%;
     left: 80%;
     right: 40%;
     box-shadow: 0 0 50px #48c7d8;
-    animation: circle1Animate 20s infinite; /* Adjusted animation duration to 30s */
-}
-
-@keyframes circle1Animate {
+    animation: circle1Animate 50s infinite;
+  }
+  
+  @keyframes circle1Animate {
     0%, 100% {
         left: 80%; /* Initial position */
+          /* Initial position */
         transform: scale(1);
     }
     50% {
-        left: 40%; /* Middle position */
-        transform: scale(1.2); /* Slightly larger in the middle of animation */
+        left: 20%;  /* Middle position */
+          /* Move down */
+        transform: scale(1.11); /* Slightly larger in the middle of animation */
     }
 }
-
-.circle1:hover {
-    transform: scale(1.25);
+  .circle1:hover {
+    transform: scale(1.15);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
+  
+  .circle2 {
 
-.circle2 {
     position: absolute;
     width: 19em;
     height: 19em;
     border-radius: 50%;
     background: linear-gradient(-25deg, #80e1e2, #93d3d4);
-    bottom: -15%;
+    bottom: 5%;
     right: 30%;
     box-shadow: 0 0 50px #6dcbe7;
-    animation: circle2Animate 30s infinite; /* Adjusted animation duration to 20s */
-}
+    animation: circle2Animate 15s infinite;
+    /* left:40%; */
+    /* box-shadow: 0 0 50px #5648d8; */
+   
+  }
+  
+  @keyframes circle2Animate {
+    
+    20%{
+        left: 30%;
+    }
+    70% {
+      right: 50%;
+      bottom: 6%;
 
-@keyframes circle2Animate {
-    0%, 100% {
-        right: 80%; /* Initial position */
-        transform: scale(1);
+      
     }
-    50% {
-        right: 40%; /* Middle position */
-        transform: scale(1.2); /* Slightly larger in the middle of animation */
-    }
-}
-.circle2:hover {
-    transform: scale(1.25);
+  }
+  
+  .circle2:hover {
+    transform: scale(1.15);
+
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
 
