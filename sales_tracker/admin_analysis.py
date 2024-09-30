@@ -2,6 +2,8 @@ import os
 import sys
 import numpy as np
 import datetime
+import pandas as pd
+import plotly.express as px
 import plotly.graph_objs as go
 from plotly.offline import plot
 import matplotlib.pyplot as plt

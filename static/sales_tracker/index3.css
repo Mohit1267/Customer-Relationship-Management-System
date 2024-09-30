@@ -135,3 +135,39 @@
         min-width: 250px ;
     }
 }
+
+/* Graph Container Styles */
+.graph-container {
+    margin-left: 120px;
+    margin-top: 20px;
+    display: flex;
+    padding: 5px;
+    align-items: flex-start; /* Align the cards vertically centered */
+    flex-wrap: wrap; /* Allow wrapping if the screen is too small */
+
+}
+
+.graph {
+    flex: 0 0 auto;                    /* Prevent growing or shrinking, take up space according to content */
+    min-width: 300px;                  /* Minimum width to avoid being too small */
+    margin-right: 20px;                /* Space between graphs */
+    padding: 20px;                     /* Space inside the graph container */
+    color: white;                      /* Text color */
+}
+
+/* Remove right margin from the last graph */
+.graph:last-child {
+    margin-right: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .graph-container {
+        flex-direction: column; /* Stack graphs vertically on small screens */
+        overflow-x: visible;    /* Disable horizontal scrolling on smaller screens */
+    }
+    .graph {
+        margin-right: 0;       /* Remove right margin */
+        margin-bottom: 20px;   /* Space below graphs */
+    }
+}

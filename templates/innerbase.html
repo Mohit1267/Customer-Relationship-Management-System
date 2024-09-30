@@ -2,32 +2,32 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1 " />
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {% block css_link %}{% endblock %} 
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1 " />
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{% static 'base.css' %}">
-    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
-    <link rel="stylesheet" href="{% static 'css/datatables/datatables.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/datatables/datatables.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
-    <link href="dist/hamburgers.css" rel="stylesheet">
+  {% block css_link %}{% endblock %}
+
+  <link rel="stylesheet" href="{% static 'base.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+  <link href="dist/hamburgers.css" rel="stylesheet">
 
 
-    <title>{% block title %}title{% endblock %}</title>
+  <title>{% block title %}title{% endblock %}</title>
 
-    <!-- navbar to the right side -->
-    <style>
-    
-/* 
+  <!-- navbar to the right side -->
+  <style>
+    /* 
     @media (max-width: 768px) {
       .navbar {
         transform: translateX(-100%);
@@ -45,94 +45,106 @@
         margin-left: 0;
       }
     } */
-     
   </style>
 
 
 
-  </head>
-  <body>
+</head>
 
-    <script src="charts.js"></script>
-    <!-- navbar to the right side -->
+<body>
 
-    <nav class="navbar  navbar-expand-lg">
+  <script src="charts.js"></script>
+  <!-- navbar to the right side -->
 
-      <div class="navbar-brand-container">
-        <!-- <a class="navbar-brand" href="/">Logo</a> -->
-        <a  href="{% url 'index' %}">
-       <img class="navbar-brand" src="/static/Logo.png" alt="Brand Image" style="height: 65px;">
-        </a>
-      </div>       
+  <nav class="navbar  navbar-expand-lg">
 
-        <!-- timer  -->
-        <div>
-          {% if timer %}
-         <div class="timer" id="count_down"></div>
+    <div class="navbar-brand-container">
+      <!-- <a class="navbar-brand" href="/">Logo</a> -->
+      <a href="{% url 'index' %}">
+        <img class="navbar-brand" src="/static/Logo.png" alt="Brand Image" style="height: 65px; ">
+      </a>
+    </div>
+
+    <!-- timer  -->
+    <div>
+      {% if timer %}
+      <div class="timer" id="count_down"></div>
 
 
-          {% endif %}
-        <div class="navbar-container">
-        <!-- profile offcanvas -->
-        <div>
-          <a class="btn btn-dark profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-            <b>Profile</b>
-          </a>
-          <!-- <div class="hamburger" onclick="toggleNavbar()">
+      {% endif %}
+      <div class="navbar-container">
+
+        <!-- <div class="hamburger" onclick="toggleNavbar()">
             <div></div>
             <div></div>
             <div></div>
           </div> -->
+        <div>
           <div class="hamburger" onclick="toggleNavbar()">
             <div class="stick stick-1"></div>
             <div class="stick stick-2"></div>
             <div class="stick stick-3"></div>
           </div>
-         </div>
+        </div>
 
-        
-        <div class="" id="navbarNavDropdown">   
-          <ul class="nav-links flex-column"> 
 
-            <li class="nav-item dropdown dashboard-icon">
+        <div class="" id="navbarNavDropdown">
+          <ul class="nav-links flex-column">
+
+             <li class="nav-item dropdown dashboard-icon">
               <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false">
+             <!-- <li class="nav-item dropdown">
+              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false"> -->
+ 
+                <img src="\static\Dashboardlogo.png" alt="Dashboard Logo"
+                  style=" margin-left: -6px !important; height: 40px ;">
 
-               <img src="\static\Dashboardlogo.png" alt="Dashboard Logo" style=" margin-left: -6px !important; height: 40px ;">
-
-              Dashboard
+                Dashboard
               </a>
-           </li>
+            </li>
 
-            <li class="nav-item dropdown dashboard-icon">
+             <li class="nav-item dropdown dashboard-icon">
                <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
+             <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false"> -->
+ 
                 <img src="\static\datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
 
                 Mining
-               </a>
-               <ul class="dropdown-menu ">   
-                  <li><a class="dropdown-item" href="{% url 'mining' %}">Create Mining</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
-               </ul>
+              </a>
+              <ul class="dropdown-menu ">
+                <li><a class="dropdown-item" href="{% url 'mining' %}">Create Mining</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
+              </ul>
             </li>
 
-            <li class="nav-item dropdown dashboard-icon">
+             <li class="nav-item dropdown dashboard-icon">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
+             <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false"> -->
+ 
                 <img src="\static\leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
 
                 Leads
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
               </ul>
             </li>
 
+ 
             <li class="nav-item dropdown dashboard-icon">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
 
                 <img src="\static\contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
 
@@ -140,51 +152,65 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="#">View Contacts</a></li>
               </ul>
             </li>
 
-            
-            <li class="nav-item dropdown dashboard-icon">
+             
+            <li class="nav-item dropdown  ">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
+ 
+        
+ 
                 <img src="\static\quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
 
                 Quotes
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="#">View Quote</a></li>
               </ul>
             </li>
 
-            <li class="nav-item dropdown dashboard-icon">
+            <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
+            
                 <img src="\static\calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
 
                 Calendar
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
               </ul>
             </li>
 
-            <li class="nav-item dropdown dashboard-icon">
+ 
+            <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle spacing" href="{%url 'attendance'%}" role="button" aria-expanded="false" style="margin-left: 20px;">
-
+ 
+      
+ 
                 <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 2px;">
 
                 Attendance
               </a>
             </li>
 
-            <li class="nav-item dropdown dashboard-icon">
+
+            <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
 
                 <img src="\static\opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
 
@@ -192,25 +218,66 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
               </ul>
             </li>
 
 
-            
+
           </ul>
         </div>
+      </div>
+
+  </nav>
+
+
+ <!-- Horizontal Navbar -->
+<nav class="navbar-horizontal">
+  <div class="small-nav">
+    <!-- Search Bar Form -->
+    <form class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+
+    <!-- Filter Bar (added between search and profile) -->
+    <div class="filter-bar">
+      <select class="form-select filter-select me-2" aria-label="Filter">
+        <option selected>Filter by</option>
+        <option value="0">Day</option>
+        <option value="1">Week</option>
+        <option value="2">Month</option>
+        <option value="3">Year</option>
+      </select>
+    </div>
+
+    <!-- Profile Offcanvas -->
+    <div>
+      <a class="small-nav" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+        <img src="\static\profileicon.png" alt="Profile" class="profile-icon" />
+      </a>
+    </div>
   </div>
 </nav>
 
-    {% block content %}{% endblock %}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel"><b>Profile</b></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+  {% block content %}{% endblock %}
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel"><b>Profile</b></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+
+    <div class="offcanvas-body ">
+      <div class="row p-2">
+        <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
       </div>
 
+      
 
       <div class="offcanvas-body ">
         <div class="row p-2">
@@ -228,18 +295,21 @@
         </div>
         <div class="row p-2">
           <a href="#" class=" right_profile">About</a>
-        </div>
+
+
+
+            </div>
         <hr>
-        <div class="row p-2">
-          <a href = "{% url 'logout'%}"  class="right_profile ">Logout</a>
-        </div>
-        <button id="toggleBreakBtn" class="btn btn-primary">Start Break</button>
-<div id="timerDisplay"></div>
+        <div class=" row p-2">
+                <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
       </div>
+      <button id="toggleBreakBtn" class="btn btn-primary">Start Break</button>
+      <div id="timerDisplay"></div>
+    </div>
 
     {%comment%}
     {% if timer %}
-    <div class="timer_count"> 
+    <div class="timer_count">
       <p>Timer: <span id="count_down">00:00:00</span></p>
 
       <p>No of Mining: {{mining_count}}</p>
@@ -251,135 +321,135 @@
     <script>
       // Function to toggle the navbar
       function toggleNavbar() {
-    const navbar = document.querySelector('.nav-links');
-    navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
-  }
+        const navbar = document.querySelector('.nav-links');
+        navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
+      }
     </script>
 
 
-  
-/*hamburger*/
+
+    /*hamburger*/
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
       function toggleNavbar() {
-    const navbarContainer = document.querySelector('.navbar-container');
-    const navbar = document.querySelector('.navbar');
-    const hamburger = document.querySelector('.hamburger');
+        const navbarContainer = document.querySelector('.navbar-container');
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('.hamburger');
 
-    // Toggle the 'collapsed' class on the navbar
-    navbar.classList.toggle('collapsed');
+        // Toggle the 'collapsed' class on the navbar
+        navbar.classList.toggle('collapsed');
 
-    // Change the hamburger icon's state
-    hamburger.classList.toggle('open');
+        // Change the hamburger icon's state
+        hamburger.classList.toggle('open');
 
-    // Toggle the visibility by toggling a class
-    navbarContainer.classList.toggle('visible');
-}
+        // Toggle the visibility by toggling a class
+        navbarContainer.classList.toggle('visible');
+      }
 
-      
+
       // Hamburger animation
-      $(document).ready(function() {
-        $(".hamburger").click(function() {
-            $(".stick").each(function() {
-                if ($(this).hasClass('open')) {
-                    $(this).removeClass('open').addClass('close');
-                } else {
-                    $(this).removeClass('close').addClass('open');
-                }
-            });
+      $(document).ready(function () {
+        $(".hamburger").click(function () {
+          $(".stick").each(function () {
+            if ($(this).hasClass('open')) {
+              $(this).removeClass('open').addClass('close');
+            } else {
+              $(this).removeClass('close').addClass('open');
+            }
+          });
         });
       });
-</script>
+    </script>
 
-    <script>  
-    
-        // Weekly Data Chart
-        var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
-        var weeklyChart = new Chart(ctxWeekly, {
-    type: 'doughnut',
-    data: {
-        labels: ['Completed', 'Remaining'],
-        datasets: [{
+    <!-- new code with yearly chart -->
+    <script>
+      // Weekly Data Chart
+      var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+      var weeklyChart = new Chart(ctxWeekly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
             label: 'Weekly Data',
             data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
             backgroundColor: ['#4CAF50', '#e0e0e0'],
             borderColor: ['#33CC33', '#e0e0e0'],
             borderWidth: 1
-        }]
-    },
-    options: {
-        cutout: '70%',
-        plugins: {
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
             legend: {
-                labels: {
-                    color: '#FFFFFF', // Font color for the legend
-                    font: {
-                        size: 14, // Font size for the legend
-                    }
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
                 }
+              }
             }
+          }
         }
-    }
-});
+      });
 
-        // Monthly Data Chart
-        var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
-       var monthlyChart = new Chart(ctxMonthly, {
-    type: 'doughnut',
-    data: {
-        labels: ['Completed', 'Remaining'],
-        datasets: [{
+      // Monthly Data Chart
+      var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+      var monthlyChart = new Chart(ctxMonthly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
             label: 'Monthly Data',
             data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
-           backgroundColor: ['#4CAF50', '#e0e0e0'],
+            backgroundColor: ['#4CAF50', '#e0e0e0'],
             borderColor: ['#4CAF50', '#e0e0e0'],
             borderWidth: 1
-        }]
-    },
-    options: {
-        cutout: '70%',
-        plugins: {
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
             legend: {
-                labels: {
-                    color: '#FFFFFF', // Font color for the legend
-                    font: {
-                        size: 14, // Font size for the legend
-                    }
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
                 }
+              }
             }
+          }
         }
-    }
-});
+      });
 
-        // Quarterly Data Chart
-        var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
-        var quarterlyChart = new Chart(ctxQuarterly, {
-    type: 'doughnut',
-    data: {
-        labels: ['Completed', 'Remaining'],
-        datasets: [{
+      // Quarterly Data Chart
+      var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
+      var quarterlyChart = new Chart(ctxQuarterly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
             label: 'Quarterly Data',
             data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
             backgroundColor: ['#4CAF50', '#e0e0e0'],
             borderColor: ['#4CAF50', '#e0e0e0'],
             borderWidth: 1
-        }]
-    },
-    options: {
-        cutout: '70%',
-        plugins: {
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
             legend: {
-                labels: {
-                    color: '#FFFFFF', // Font color for the legend
-                    font: {
-                        size: 14, // Font size for the legend
-                    }
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
                 }
+              }
             }
+          }
         }
-    }
-});
+
  
    </script>
   
@@ -390,9 +460,49 @@
     //                    parseInt("{{ timer.sec }}", 10);
 
     // const countDownEle = document.getElementById("count_down");
+      });
 
-    // Function to convert seconds to HH:MM:SS format.
-    function convertSecondsToHms(seconds) {
+      // Yearly Data Chart
+      var ctxYearly = document.getElementById('yearlyChart').getContext('2d');
+      var yearlyChart = new Chart(ctxYearly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
+            label: 'Yearly Data',
+            data: [parseInt('{{ mining_count }}', 10), 1200 - parseInt('{{ mining_count }}', 10)], // Assuming yearly goal is 1200
+            backgroundColor: ['#4CAF50', '#e0e0e0'],
+            borderColor: ['#4CAF50', '#e0e0e0'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
+            legend: {
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
+                }
+              }
+            }
+          }
+        }
+      });
+    </script>
+
+
+    <script>
+      // Convert Django template variables to integers and calculate total seconds.
+      let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 +
+        parseInt("{{ timer.min }}", 10) * 60 +
+        parseInt("{{ timer.sec }}", 10);
+
+      const countDownEle = document.getElementById("count_down");
+
+      // Function to convert seconds to HH:MM:SS format.
+      function convertSecondsToHms(seconds) {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         const sec = Math.floor(seconds % 60);
@@ -403,71 +513,71 @@
         const formattedSeconds = sec.toString().padStart(2, "0");
 
         return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-    }
+      }
 
-    // Function to update the countdown display.
-    function updateCountDown() {
-        if (totalSeconds <= 0) {  
-            countDownEle.innerHTML = "00:00:00";
-            clearInterval(timerInterval); // Stop the interval when the countdown reaches zero.
-            return;
+      // Function to update the countdown display.
+      function updateCountDown() {
+        if (totalSeconds <= 0) {
+          countDownEle.innerHTML = "00:00:00";
+          clearInterval(timerInterval); // Stop the interval when the countdown reaches zero.
+          return;
         }
-        
+
         let formattedTimer = convertSecondsToHms(totalSeconds);
         countDownEle.innerHTML = formattedTimer;
         totalSeconds++; // Decrement the seconds.
-    }
+      }
 
-    // Debugging: Print initial value of totalSeconds to console
-    console.log(`Initial totalSeconds: ${totalSeconds}`);
+      // Debugging: Print initial value of totalSeconds to console
+      console.log(`Initial totalSeconds: ${totalSeconds}`);
 
-    // Update the countdown every second.
-    const timerInterval = setInterval(updateCountDown, 1000);
+      // Update the countdown every second.
+      const timerInterval = setInterval(updateCountDown, 1000);
 
-    // Debugging: Check if the setInterval is working
-    console.log(`Timer started with interval: ${timerInterval}`);
-</script>
+      // Debugging: Check if the setInterval is working
+      console.log(`Timer started with interval: ${timerInterval}`);
+    </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-<script src="% static  IBscript.js"></script>
+    <script src="% static  IBscript.js"></script>
     {% block javascript %}{% endblock %}
 
 
-<!-- Include necessary external scripts -->
-<script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-<script src="{% static 'js/datatables/datatables.js' %}"></script>
-<script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+    <!-- Include necessary external scripts -->
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
 
 
 
 
 
 
-<script>
-  let breakTimeLeft = 3600; // 1 hour in seconds
-let breakTimerInterval = null;
-let mainTimerInterval = null; // Reference to the main timer interval
+    <script>
+      let breakTimeLeft = 3600; // 1 hour in seconds
+      let breakTimerInterval = null;
+      let mainTimerInterval = null; // Reference to the main timer interval
 
-document.getElementById("toggleBreakBtn").addEventListener("click", function() {
-    if (breakTimerInterval) {
-        clearInterval(breakTimerInterval);
-        breakTimerInterval = null;
-        this.innerHTML = "Start Break";
+      document.getElementById("toggleBreakBtn").addEventListener("click", function () {
+        if (breakTimerInterval) {
+          clearInterval(breakTimerInterval);
+          breakTimerInterval = null;
+          this.innerHTML = "Start Break";
 
-        // Resume the main timer
-        startMainTimer();
-    } else {
-        startBreakTimer();
-        this.innerHTML = "End Break";
+          // Resume the main timer
+          startMainTimer();
+        } else {
+          startBreakTimer();
+          this.innerHTML = "End Break";
 
-        // Pause the main timer
-        pauseMainTimer();
-    }
-});
+          // Pause the main timer
+          pauseMainTimer();
+        }
+      });
 
-// function startBreakTimer() {
+ // function startBreakTimer() {
 //     breakTimerInterval = setInterval(() = {
 //         if (breakTimeLeft = 0) {
 //             clearInterval(breakTimerInterval);
@@ -484,35 +594,76 @@ document.getElementById("toggleBreakBtn").addEventListener("click", function() {
 //         }
 //     }, 1000); 
 // }
+ //       function startBreakTimer() {
+//         breakTimerInterval = setInterval(() = {
+//           if(breakTimeLeft = 0) {
+//             clearInterval(breakTimerInterval);
+//             breakTimerInterval = null;
+//             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+//             alert("Break time is over!");
 
-function displayTime() {
-    const minutes = Math.floor(breakTimeLeft / 60);
-    const seconds = breakTimeLeft % 60;
-    document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
+//             // Resume the main timer after the break ends
+//             startMainTimer();
+//           }
+//            else {
+//             breakTimeLeft--;
+//           displayTime();
+//             sendHeartbeat(); // Send heartbeat to keep session alive
+//         }
+//     }, 1000); // 1-second intervals
+// }
+ 
+      function displayTime() {
+        const minutes = Math.floor(breakTimeLeft / 60);
+        const seconds = breakTimeLeft % 60;
+        document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      }
 
-// Function to pause the main timer
-function pauseMainTimer() {
-    clearInterval(mainTimerInterval);
-}
+      // Function to pause the main timer
+      function pauseMainTimer() {
+        clearInterval(mainTimerInterval);
+      }
 
-// Function to resume or start the main timer
-function startMainTimer() {
-    mainTimerInterval = setInterval(updateCountDown, 1000);
-}
+      // Function to resume or start the main timer
+      function startMainTimer() {
+        mainTimerInterval = setInterval(updateCountDown, 1000);
+      }
 
-// Initial start of the main timer
-startMainTimer();
+      // Initial start of the main timer
+      startMainTimer();
 
+    </script>
+
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the current URL path
+    const currentPath = window.location.pathname;
+
+    // Loop through each nav-link and dropdown-item
+    document.querySelectorAll('.nav-item .nav-link, .dropdown-item').forEach(item => {
+      if (item.getAttribute('href') === currentPath) {
+        // Remove 'active' class from all nav-links
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.classList.remove('active');
+        });
+
+        // Find the closest nav-item (parent) and add 'active' class to the nav-link
+        const parentNavLink = item.closest('.nav-item').querySelector('.nav-link');
+        if (parentNavLink) {
+          parentNavLink.classList.add('active');
+        }
+      }
+    });
+  });
 </script>
 
 
 
 
 
-
-
-<script>
+ 
+     <!-- 
+ <script>
 // let breakTimeLeft = 3600;  
 // let breakTimerInterval = null;
 
@@ -571,7 +722,7 @@ function sendHeartbeat() {
 
 
 
-<!-- <script>
+    <!-- <script>
   let breakTimeLeft = 3600; // 1 hour in seconds
 
   function startBreakTimer() {
@@ -613,6 +764,7 @@ function sendHeartbeat() {
 
 
 
-  </body>
+</body>
+
 </html>
 
