@@ -88,17 +88,9 @@
         <div class="form-group"> 
           {{ form.company_emp_size|as_crispy_field }} 
         </div> 
-      </div> 
-    </div> 
-  </form> 
-</div> 
- 
-{% endblock %} 
- 
-{% block javascript %} 
 
-        
-        <div class="filter-container">
+
+        <div class="filter-container"></div>
           <label for="state-filter">State:</label>
           <select id="state-filter">
               <option value="all">Select State</option>
@@ -136,6 +128,7 @@
               <option value="all">All Cities</option>
           </select>
         </div>
+        
         <div class="filter-container">
           <label for="state-filter">Zone:</label>
           <select id="state-filter">
@@ -703,4 +696,15 @@ ML: [
           // Initial load
           updateCityDropdown();
         </script>
+      </div> 
+    </div> 
+  </form> 
+</div> 
+ 
+{% endblock %} 
+ 
+{% block javascript %} 
+
+        
+        
 {% endblock %}

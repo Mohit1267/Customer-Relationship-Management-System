@@ -10,6 +10,240 @@
     width: 150%;
 }
 
+
+/* Horizontal Navbar */
+/* Reset default margin and padding */
+.navbar-horizontal {
+    background-color: #eff3f7 !important;
+    width: calc(100% - 250px);
+    /* Full width minus the width of the vertical navbar */
+    /* Remove margins to avoid space from other elements */
+    background-color: #f8f9fa;
+    /* Background color */
+    padding: 10px 20px;
+    /* Padding for the navbar */
+    border-radius: 20px 20px 20px 20px;
+    /* Curved bottom corners */
+    position: fixed;
+    /* Keep navbar fixed at the top */
+    top: 0;
+    /* Position it at the top */
+    left: 250px;
+    /* Align it next to the vertical navbar */
+    z-index: 1000;
+    /* Ensure it's above other content */
+}
+
+/* Inside Filter Container */
+.inside-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.inside-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+.inside-filter-container select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* State Filter Container */
+.state-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.state-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+#state-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Zone Filter Container */
+.zone-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.zone-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+#zone-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+
+/* Filter dropdown styling */
+.filter-bar {
+    display: flex;
+    align-items: center;
+}
+
+.filter-select {
+    width: 150px;
+    margin-left: 1100px;
+    /* Adjust margin to avoid overflow */
+}
+
+
+/* profile icon */
+.profile-icon {
+    height: 50px;
+    /* Set the desired height */
+    margin-left: 20px;
+    /* Space from the search bar */
+    cursor: pointer;
+    /* Change cursor on hover */
+}
+
+/* Optional: Add hover effect */
+.profile-icon:hover {
+    opacity: 0.8;
+    /* Slightly transparent on hover */
+}
+
+/* Align items within the navbar */
+.small-nav {
+    display: flex;
+    /* Use flexbox for alignment */
+    justify-content: space-between;
+    /* Align items to the right */
+    align-items: center;
+    /* Center items vertically */
+}
+
+/* Styling for the search input */
+.form-control {
+    width: 300px;
+    /* Adjust width as necessary */
+    margin-right: 10px;
+    border-radius: 20px 0 0 20px;
+    /* Curved left corners */
+    height: 35px;
+    /* Set a specific height */
+}
+
+/* Adjust button styles */
+.btn-outline-success {
+    margin-left: 10px;
+    /* Space between input and button */
+    height: 35px;
+    /* Set a specific height */
+}
+
+/* Optional: Add hover effect to the button */
+.btn-outline-success:hover {
+    background-color: #28a745;
+    /* Change background on hover */
+    color: white;
+    /* Change text color on hover */
+}
+
+
+
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .navbar-horizontal {
+        width: calc(100% - 200px);
+        /* Reduce navbar width */
+        left: 200px;
+        /* Align it closer to the vertical navbar */
+    }
+
+    .filter-select {
+        margin-left: 10px;
+        /* Reduce margin on smaller screens */
+    }
+
+    .form-control {
+        width: 250px;
+        /* Adjust width for smaller screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .navbar-horizontal {
+        width: calc(100% - 150px);
+        /* Further reduce navbar width */
+        left: 150px;
+        /* Adjust left position */
+    }
+
+    .form-control {
+        width: 200px;
+        /* Adjust width for smaller screens */
+    }
+
+    .filter-select {
+        width: 100px;
+        /* Adjust filter select for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-horizontal {
+        width: 100%;
+        /* Full width for mobile */
+        left: 0;
+        /* Reset left position */
+    }
+
+    .form-control {
+        width: 150px;
+        /* Adjust width for smaller screens */
+    }
+
+    .filter-select {
+        width: 80px;
+        /* Further adjust filter select for smaller screens */
+    }
+
+    .profile-icon {
+        height: 40px;
+        /* Smaller profile icon on mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    .form-control {
+        width: 100%;
+        /* Full width for input */
+        margin-right: 0;
+        /* Reset margin */
+    }
+
+    .btn-outline-success {
+        width: 100%;
+        /* Full width for button */
+        margin-left: 0;
+        /* Reset margin */
+    }
+}
+
+
+
+
+
 /* Add a wrapper around the table to handle horizontal overflow */
 .table-responsive {
     width: 100%;
@@ -35,7 +269,8 @@ thead {
     color: white;
 }
 
-th, td {
+th,
+td {
     padding: 15px 20px;
     text-align: left;
 }
@@ -103,7 +338,9 @@ button:hover {
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
-    th, td {
+
+    th,
+    td {
         padding: 10px;
         font-size: 12px;
     }

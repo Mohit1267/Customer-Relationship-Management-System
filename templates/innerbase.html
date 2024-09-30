@@ -233,37 +233,6 @@
 
   </nav>
 
-
- <!-- Horizontal Navbar -->
-<nav class="navbar-horizontal">
-  <div class="small-nav">
-    <!-- Search Bar Form -->
-    <form class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-
-    <!-- Filter Bar (added between search and profile) -->
-    <div class="filter-bar">
-      <select class="form-select filter-select me-2" aria-label="Filter">
-        <option selected>Filter by</option>
-        <option value="0">Day</option>
-        <option value="1">Week</option>
-        <option value="2">Month</option>
-        <option value="3">Year</option>
-      </select>
-    </div>
-
-    <!-- Profile Offcanvas -->
-    <div>
-      <a class="small-nav" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-        <img src="\static\profileicon.png" alt="Profile" class="profile-icon" />
-      </a>
-    </div>
-  </div>
-</nav>
-
-
   {% block content %}{% endblock %}
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
