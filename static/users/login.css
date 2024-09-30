@@ -94,6 +94,7 @@ body {
 }
   
   .circle2 {
+
     position: absolute;
     width: 19em;
     height: 19em;
@@ -123,6 +124,7 @@ body {
   
   .circle2:hover {
     transform: scale(1.15);
+
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
 
