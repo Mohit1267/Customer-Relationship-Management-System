@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import os
 import django
 from django.utils import timezone
