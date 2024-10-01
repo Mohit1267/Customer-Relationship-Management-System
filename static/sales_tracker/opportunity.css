@@ -1,9 +1,9 @@
 body {
     font-family: 'Arial', sans-serif;
-    margin: 0; /* Remove default margins to manage layout manually */
+    margin: 0;
     background-color: #f9f9f9;
     display: flex;
-    min-height: 100vh; /* Ensure the body takes the full height of the viewport */
+    min-height: 100vh;
 }
 
 /* .heading_links {
@@ -37,30 +37,24 @@ body {
     margin-left: 270px; 
 }
 
-/* Define the keyframes for the animation */
-
-
-
-
-
 /* Styling for the fixed navbar */
 .navbar {
-    width: 200px; /* Fixed width for the navbar */
-    position: fixed; /* Fixes the navbar to the left of the screen */
+    width: 200px; 
+    position: fixed; 
     top: 0;
     left: 0;
-    height: 100%; /* Full height */
+    height: 100%;
     background-color: #333;
     padding-top: 20px;
-    z-index: 1000; /* Ensures the navbar stays on top of other elements */
+    z-index: 1000;
     color: white;
 }
 
 /* Adjusting content to not overlap with the navbar */
 .content {
-    margin-left: 200px; /* Pushes the content to the right by the width of the navbar */
-    padding: 20px; /* Add some padding around the content */
-    flex: 1; /* Content takes up the remaining space */
+    margin-left: 200px;
+    padding: 20px;
+    flex: 1; 
     background-color: #f9f9f9;
 }
 
@@ -149,7 +143,7 @@ body {
 
 .row {
     display: flex;
-    justify-content: center; /* Align items to the right */
+    justify-content: center;
 }
 
 /* Base Styles for Button1 */
@@ -165,7 +159,7 @@ body {
     transition: all 0.3s ease;
     display: inline-block;
     z-index: 10;
-    margin: 0 10px; /* Adjust margin as needed */
+    margin: 0 10px; 
     margin-right: -80px;
     letter-spacing: 2px;
 }
@@ -194,7 +188,7 @@ body {
     border-radius: 50px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    margin: 0 10px; /* Adjust margin as needed */
+    margin: 0 10px;
     margin-left: 11px;
     letter-spacing: 3px;
 }

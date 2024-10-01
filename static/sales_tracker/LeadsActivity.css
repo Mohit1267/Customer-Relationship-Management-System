@@ -2,60 +2,60 @@ body {
     background-color: #c40202; 
     font-family: Arial, sans-serif; 
     box-sizing: border-box; 
-    margin: 0; /* Remove default margin */ 
+    margin: 0;
 } 
  
 .container { 
-    max-width: 1200px; /* Set a maximum width */ 
-    margin: 0 auto; /* Center the container */ 
-    padding: 20px; /* Padding for inner spacing */ 
-    display: flex; /* Use flexbox for layout */ 
-    flex-direction: column; /* Stack elements vertically */ 
-    align-items: center; /* Center items horizontally */ 
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
 } 
  
 .attpiechart { 
-    margin: 20px 0; /* Margin around the pie chart */ 
-    max-width: 100%; /* Responsive width */ 
-    height: auto; /* Maintain aspect ratio */ 
+    margin: 20px 0; 
+    max-width: 100%; 
+    height: auto;
 } 
  
 h1 { 
     color: #1E2A38; 
-    text-align: center; /* Center the heading */ 
-    margin: 20px 0; /* Space above and below */ 
+    text-align: center; 
+    margin: 20px 0;
 } 
  
 .card1, .card2, .card3 { 
-    background-color: #1E2A38; /* White background for cards */ 
-    border-radius: 10px; /* Rounded corners */ 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */ 
-    padding: 20px; /* Padding inside cards */ 
-    margin: 10px; /* Space between cards */ 
-    width: calc(100% - 40px); /* Full width minus margins */ 
-    max-width: 600px; /* Maximum width for cards */ 
+    background-color: #1E2A38; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px; 
+    margin: 10px;
+    width: calc(100% - 40px); 
+    max-width: 600px;
 } 
  
 .leftpart, .rightpart1, .rightpart2 { 
-    font-size: 1.5rem; /* Responsive font size */ 
-    color: white; /* Dark text color for contrast */ 
+    font-size: 1.5rem; 
+    color: white; 
 } 
  
 .rightpart1 { 
-    text-align: center; /* Center text in card */ 
+    text-align: center;  
 } 
  
 .rightpart2 { 
-    text-align: center; /* Center text in card */ 
+    text-align: center; 
 } 
  
 /* Responsive adjustments for smaller screens */ 
 @media (max-width: 768px) { 
     .leftpart, .rightpart1, .rightpart2 { 
-        font-size: 1.2rem; /* Smaller font size for mobile */ 
+        font-size: 1.2rem;
     } 
  
     .attpiechart { 
-        margin: 10px 0; /* Adjust margin for smaller screens */ 
+        margin: 10px 0;
     } 
 }

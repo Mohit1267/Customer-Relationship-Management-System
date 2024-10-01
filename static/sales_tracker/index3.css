@@ -42,9 +42,9 @@
 .filter-dash {
     display: flex;
     align-items: center;
-    position: absolute; /* or use position: fixed for a sticky effect */
-    top: 10px; /* Adjust the vertical position */
-    right: 10px; /* Adjust the horizontal position */
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
 }
 
 .filter-dashb {
@@ -54,18 +54,18 @@
 
 .filter-dash h5 {
     margin-left: 10px;
-    font-weight: normal; /* Make the heading bold */
-    margin-right: 2px !important; /* Adjust the spacing between heading and dropdown */
+    font-weight: normal; 
+    margin-right: 2px !important;
 }
 
 /* Content Section */
 .content {
     width: 100%;
     position: relative;
-    overflow-y: auto !important; /* Allow vertical scrolling */
+    overflow-y: auto !important; 
     overflow-x: hidden;
-    max-height: 95vh; /* Limit max height for responsiveness */
-    padding-right: 10px; /* Add padding to avoid content touching the edge */
+    max-height: 95vh; 
+    padding-right: 10px; 
 }
 
 /* Welcome message */
@@ -100,7 +100,7 @@
     box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5);
     background-color: #007d7e;
     overflow: hidden;
-    flex: 1 1 calc(25% - 20px); /* Default for larger screens */
+    flex: 1 1 calc(25% - 20px); 
 }
 
 .card-body {
@@ -127,11 +127,11 @@
 
 /* Graph Styles */
 .graph {
-    flex: 1 1 calc(33% - 20px); /* Default for larger screens */
+    flex: 1 1 calc(33% - 20px);
     margin-right: 20px;
     padding: 20px;
     color: white;
-    box-sizing: border-box; /* Ensure padding is included in width calculations */
+    box-sizing: border-box; 
 }
 
 .graph:last-child {
@@ -147,27 +147,25 @@
 
 @media (max-width: 768px) {
     .graph-container {
-        flex-direction: column; /* Stack graphs vertically */
-        align-items: stretch; /* Stretch graphs to full width */
+        flex-direction: column; 
+        align-items: stretch; 
     }
 
     .graph {
-        flex: 1 1 100%; /* Full width graphs */
+        flex: 1 1 100%; 
         margin-bottom: 20px;
-        padding: 10px; /* Reduced padding for better visibility */
+        padding: 10px; 
     }
 }
 
 /* For very small screens (mobile phones in portrait mode) */
 @media (max-width: 576px) {
     .graph {
-        flex: 1 1 100%; /* Full width graphs */
-        margin-bottom: 10px; /* Reduced margin for very small screens */
-        padding: 10px; /* Maintain padding for content readability */
+        flex: 1 1 100%; 
+        margin-bottom: 10px; 
+        padding: 10px; 
     }
 }
-
-/* Responsive adjustments for various screen sizes */
 
 /* For large screens (desktops) */
 @media (min-width: 1024px) {
@@ -239,8 +237,8 @@
     }
 
     .card {
-        flex: 1 1 100%; /* Full width cards */
-        margin: 5px 0; /* Adjust margin */
+        flex: 1 1 100%; 
+        margin: 5px 0; 
     }
 
     .graph {

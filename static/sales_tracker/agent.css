@@ -18,128 +18,118 @@
 .call-list {
     list-style-type: none; /* Remove bullets */
     padding: 0;
-    margin: 0; /* Reset margin */
+    margin: 0; 
 }
 .call-list1 {
-    list-style-type: none; /* Remove bullets */
+    list-style-type: none; 
     padding: 0;
-    margin: 0; /* Reset margin */
+    margin: 0; 
 }
 .call-list2 {
-    list-style-type: none; /* Remove bullets */
+    list-style-type: none; 
     padding: 0;
-    margin: 0; /* Reset margin */
+    margin: 0; 
 }
 .call-list3 {
-    list-style-type: none; /* Remove bullets */
+    list-style-type: none; 
     padding: 0;
-    margin: 0; /* Reset margin */
+    margin: 0; 
 }
 
 /* Style each list item */
 .call-list li {
-    background-color: #f0f0f0; /* Light gray background */
-    margin: 10px 0; /* Space between list items */
+    background-color: #f0f0f0; 
+    margin: 10px 0; 
     padding: 10px;
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth hover effect */
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 /* Hover effect for list items */
 .call-list li:hover {
-    background-color: #ddd; /* Darker gray on hover */
+    background-color: #ddd;
 }
 
 /* Style the links */
 .call-list a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Dark text color */
-    display: block; /* Make the whole list item clickable */
+    text-decoration: none; 
+    color: #333; 
+    display: block; 
 }
 .call-list1 a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Dark text color */
-    display: block; /* Make the whole list item clickable */
+    text-decoration: none; 
+    color: #333; 
+    display: block; 
 }
 .call-list2 a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Dark text color */
-    display: block; /* Make the whole list item clickable */
+    text-decoration: none; 
+    color: #333; 
+    display: block; 
 }
 .call-list3 a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Dark text color */
-    display: block; /* Make the whole list item clickable */
+    text-decoration: none; 
+    color: #333; 
+    display: block; 
 }
 
-
-
-
-
-
 .call-list1 li {
-    background-color: red; /* Light gray background */
-    margin: 10px 0; /* Space between list items */
+    background-color: red; 
+    margin: 10px 0; 
     padding: 10px;
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth hover effect */
+    border-radius: 5px; 
+    transition: background-color 0.3s; 
 }
 
 /* Hover effect for list items */
 .call-list1 li:hover {
-    background-color: rgb(128, 3, 3); /* Darker gray on hover */
+    background-color: rgb(128, 3, 3);
 }
 
 /* Style the links */
 .call-list1 a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Dark text color */
-    display: block; /* Make the whole list item clickable */
+    text-decoration: none;
+    color: #333;
+    display: block; 
 }
 
-
-
-
-
 .call-list2 li {
-    background-color: yellow; /* Light gray background */
-    margin: 10px 0; /* Space between list items */
+    background-color: yellow;
+    margin: 10px 0; 
     padding: 10px;
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth hover effect */
+    border-radius: 5px; 
+    transition: background-color 0.3s;
 }
 
 /* Hover effect for list items */
 .call-list2 li:hover {
-    background-color: rgb(112, 112, 3); /* Darker gray on hover */
+    background-color: rgb(112, 112, 3); 
 }
 
 /* Style the links */
 .call-list2 a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Dark text color */
-    display: block; /* Make the whole list item clickable */
+    text-decoration: none; 
+    color: #333; 
+    display: block; 
 }
 
-
 .call-list3 li {
-    background-color:lightblue; /* Light gray background */
-    margin: 10px 0; /* Space between list items */
+    background-color:lightblue; 
+    margin: 10px 0; 
     padding: 10px;
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth hover effect */
+    border-radius: 5px; 
+    transition: background-color 0.3s; 
 }
 
 /* Hover effect for list items */
 .call-list3 li:hover {
-    background-color: rgb(3, 112, 148); /* Darker gray on hover */
+    background-color: rgb(3, 112, 148); 
 }
 
 /* Style the links */
 .call-list3 a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Dark text color */
-    display: block; /* Make the whole list item clickable */
+    text-decoration: none; 
+    color: #333; 
+    display: block; 
 }
 
 
