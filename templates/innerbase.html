@@ -1,5 +1,5 @@
- {% load static %}
-
+{% load static %}
+  
 <!DOCTYPE html>
 <html>
 
@@ -233,26 +233,14 @@
 
   </nav>
 
-
-
-
-
   {% block content %}{% endblock %}
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel"><b>Profile</b></h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  <div class="offcanvas offcanvas-end"  id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="profile1 offcanvas-header">
+      <h5  id="offcanvasExampleLabel"><b>Profile</b></h5>
+      <button type="button"   aria-label="Close"></button>
     </div>
 
-
-    <div class="offcanvas-body ">
-      <div class="row p-2">
-        <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
-      </div>
-
-      
-
-      <div class="offcanvas-body ">
+      <div class="offcanvas-body id="offcanvasExample ">
         <div class="row p-2">
           <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
         </div>
@@ -268,28 +256,14 @@
         </div>
         <div class="row p-2">
           <a href="#" class=" right_profile">About</a>
-
-
-       <!-- <div class="row p-2">
-        <a href="#" class=" right_profile" ">Edit Profile</a>
         </div>
-        <hr>
-        <div class=" row p-2">
-          <a href="#" class=" right_profile"">Employees</a>
-        </div>
-        <div class=" row p-2">
-            <a href="#" class=" right_profile"">Community Forum</a>
-        </div>
-        <div class=" row p-2">
-              <a href="#" class=" right_profile"">About</a> -->
-
-            </div>
         <hr>
         <div class=" row p-2">
                 <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
       </div>
       <button id="toggleBreakBtn" class="btn btn-primary">Start Break</button>
       <div id="timerDisplay"></div>
+    </div>
     </div>
 
     {%comment%}
@@ -313,7 +287,6 @@
 
 
 
-    /*hamburger*/
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
@@ -346,6 +319,33 @@
         });
       });
     </script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const profileButton = document.querySelector('.profile1');
+  const offcanvas = document.getElementById('offcanvasExample');
+
+  // Toggle offcanvas visibility on profile button click
+  profileButton.addEventListener('click', function (e) {
+    e.stopPropagation(); // Prevent event from bubbling
+    offcanvas.classList.toggle('show'); // Toggle the "show" class to open/close offcanvas
+  });
+
+  // Close the offcanvas when clicking outside of it
+  document.addEventListener('click', function (e) {
+    if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+      offcanvas.classList.remove('show'); // Close offcanvas if clicking outside
+    }
+  });
+
+  // Ensure the close button inside the offcanvas works
+  document.querySelector('.btn-close').addEventListener('click', function () {
+    offcanvas.classList.remove('show'); // Close offcanvas
+  });
+});
+
+    </script>
+
 
     <!-- new code with yearly chart -->
     <script>
@@ -752,3 +752,4 @@ function sendHeartbeat() {
 </body>
 
 </html>
+ 

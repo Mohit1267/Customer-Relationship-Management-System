@@ -11,9 +11,11 @@
 {% block content %}
 
 <!-- <h1>DATA SHOWCASE</h1> -->
+
 <!-- Horizontal Navbar -->
-<nav class="navbar-horizontal">
+<nav class="navbar-horizontal ">
     <div class="small-nav">
+      
       <!-- Search Bar Form -->
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -21,10 +23,11 @@
       </form>
   
       <!-- Filter Bar (added between search and profile) -->
-      <div class = "inside-filter">
+      <div class = "inside-filter-container">
         <form method="GET" action="{% url 'data' %}">
             <label for="time_frame">Select Time Frame:</label>
             <select name="time_frame" id="time_frame" onchange="this.form.submit()">
+                <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
                 <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                 <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
                 <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
@@ -33,14 +36,56 @@
             </select>
         </form>
         </div>
-  
-      <!-- Profile Offcanvas -->
-      <div>
-        <a class="small-nav" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-          <img src="\static\profileicon.png" alt="Profile" class="profile-icon" />
-        </a>
-      </div>
+
+
+        <div class="state-filter-container">
+          <label for="state-filter">State:</label>
+          <select id="state-filter">
+              <option value="all" disabled selected hidden>Select State</option>
+              <option value="AP">Andhra Pradesh</option>
+              <option value="AR">Arunachal Pradesh</option>
+              <option value="AS">Assam</option>
+              <option value="BR">Bihar</option>
+              <option value="CG">Chhattisgarh</option>
+              <option value="GA">Goa</option>
+              <option value="GJ">Gujarat</option>
+              <option value="HR">Haryana</option>
+              <option value="HP">Himachal Pradesh</option>
+              <option value="JH">Jharkhand</option>
+              <option value="KA">Karnataka</option>
+              <option value="KL">Kerala</option>
+              <option value="MP">Madhya Pradesh</option>
+              <option value="MH">Maharashtra</option>
+              <option value="MN">Manipur</option>
+              <option value="ML">Meghalaya</option>
+              <option value="MZ">Mizoram</option>
+              <option value="NL">Nagaland</option>
+              <option value="OD">Odisha</option>
+              <option value="PB">Punjab</option>
+              <option value="SK">Sikkim</option>
+              <option value="TN">Tamil Nadu</option>
+              <option value="TG">Telangana</option>
+              <option value="TR">Tripura</option>
+              <option value="UP">Uttar Pradesh</option>
+              <option value="UT">Uttarakhand</option>
+              <option value="WB">West Bengal</option>
+          </select>
+        </div>
+          
+        
+    <!-- Zone Filter -->
+    <div class="zone-filter-container">
+      <label for="zone-filter">Zone:</label>
+      <select id="zone-filter">
+        <option value="all" disabled selected hidden>Select Zone</option>
+        <option value="North">North</option>
+        <option value="South">South</option>
+        <option value="East">East</option>
+        <option value="West">West</option>
+      </select>
     </div>
+
+     
   </nav>
 
 <section class="main_container">
@@ -53,8 +98,6 @@
             <th>Client Name</th>
             <th>Email</th>
             <th>Contact Number</th>
-            <th>Address</th>
-            <th>Company Employee Size</th>
             <th>Company Revenue</th>
         </tr>
     </thead>
@@ -68,16 +111,11 @@
                 <td>{{ data.customer_email }}</td>
                 <td>-</td>
                 <td>-</td>
-                <td>-</td>
-                <td>-</td>
             {% elif data.first_name %}
                 <td>{{ data.first_name }} {{ data.last_name }}</td>
                 <td>{{ data.email_id }}</td>
                 <td>-</td>
                 <td>-</td>
-                <td>-</td>
-                <td>-</td>
-
             {% elif data.opportunity_name %}
                 <td>{{ data.opportunity_name }}</td>
                 <td>-</td>
@@ -90,6 +128,8 @@
 </table>
 
 </section>
+
+
 
 {% endblock %}
 
