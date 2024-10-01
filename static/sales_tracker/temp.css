@@ -2,12 +2,12 @@
 .main_container {
     margin: 20px auto;
     padding: 20px;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin-top: 74px;
-    width: 150%;
+    width: 100%;
 }
 
 /* Add a wrapper around the table to handle horizontal overflow */
@@ -31,7 +31,7 @@ table {
 
 /* Table header styling */
 thead {
-    background-color: #4CAF50;
+    background-color: #1E2A38;
     color: white;
 }
 
