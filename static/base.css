@@ -250,6 +250,7 @@ body {
   visibility: visible;
   opacity: 1;
   transition: opacity 0.5s ease, visibility 0s ease 0s;
+  z-index: 1000;
 }
 
 .dropdown-menu:hover .dropdown-item {
@@ -468,9 +469,7 @@ body {
     width: 250px;
   }
 
-  .hamburger {
-    margin-left: 25px;
-  }
+   
 
   .nav-links {
     flex-direction: column;

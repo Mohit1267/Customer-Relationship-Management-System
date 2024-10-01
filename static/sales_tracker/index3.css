@@ -101,6 +101,8 @@
     background-color: #007d7e;
     overflow: hidden;
     flex: 1 1 calc(25% - 20px); 
+    z-index: -1000;
+
 }
 
 .card-body {
@@ -123,6 +125,7 @@
     padding: 5px;
     align-items: flex-start;
     flex-wrap: wrap;
+    z-index: -1000;
 }
 
 /* Graph Styles */
@@ -132,6 +135,8 @@
     padding: 20px;
     color: white;
     box-sizing: border-box; 
+    z-index: -1000;
+
 }
 
 .graph:last-child {
