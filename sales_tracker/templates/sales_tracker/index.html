@@ -24,31 +24,46 @@
 </div>
 {% endif %}
 
-<div class="content ">
+<div class="content">
     <div class="heading title_animation">
         Welcome to the Aapai Technologies
     </div>
-    
+
+    <div class="filter-dash d-flex align-items-center">
+        <!-- Add a heading on the left -->
+        <h5 class="me-3">Filter by Category:</h5>
+
+        <!-- Filter Bar -->
+        <select class="form-select filter-dashb me-2" aria-label="Filter" id="filterSelect">
+            <option value="" disabled selected hidden>Filter by</option>
+            <option value="Mining">Mining</option>
+            <option value="Opportunities">Opportunities</option>
+            <option value="Contacts">Contacts</option>
+            <option value="Leads">Leads</option>
+        </select>
+    </div>
+
+
     <div class="flex-container cards-container z-[-10]  ">
-        <div class="card mining-card">
+        <div class="card mining-card" data-category="Mining">
             <div class="card-body ">
                 <h5 class="card-title" style="color: white;"><b>Today's Mining</b></h5>
                 <p class="card-text">{{ mining_count }}/80</p>
             </div>
         </div>
-        <div class="card opportunity-card">
+        <div class="card opportunity-card" data-category="Opportunities">
             <div class="card-body">
                 <h5 class="card-title" style="color: white;"><b>Today's Opportunity</b></h5>
                 <p class="card-text">{{ Opportunity_count }}</p>
             </div>
         </div>
-        <div class="card contact-card">
+        <div class="card contact-card" data-category="Contacts">
             <div class="card-body">
                 <h5 class="card-title" style="color: white;"><b>Today's Contacts</b></h5>
                 <p class="card-text">{{ contact_count }}</p>
             </div>
         </div>
-        <div class="card lead-card">
+        <div class="card lead-card" data-category="Leads">
             <div class="card-body">
                 <h5 class="card-title" style="color: white;"><b>Today's Leads</b></h5>
                 <p class="card-text">{{ lead_count }}</p>
@@ -59,23 +74,51 @@
 
 
     <div class="graph-container">
-        <div class="graph">
+        <div class="graph" data-category="Mining" style="display: block;">
             {{ graph_html|safe }}
         </div>
-
-        <div class="graph">
+        <div class="graph" data-category="Mining" style="display: block;">
             {{ monthlymining|safe }}
-
         </div>
-
-        <div class="graph">
+        <div class="graph" data-category="Mining" style="display: block;">
             {{ quarterlymining|safe }}
         </div>
-        
         <div class="graph">
             {{ yearlymining|safe }}
         </div>
     </div>
+
+    <script>
+        document.getElementById('filterSelect').addEventListener('change', function() {
+            const selectedValue = this.value;
+            const cards = document.querySelectorAll('.card');
+            const graphs = document.querySelectorAll('.graph');
+    
+            // Filter the cards
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+    
+                if (selectedValue === '' || selectedValue === category) {
+                    card.style.display = 'block'; // Show the card
+                } else {
+                    card.style.display = 'none'; // Hide the card
+                }
+            });
+    
+            // Filter the graphs, show only if "Mining" is selected
+            graphs.forEach(graph => {
+                const category = graph.getAttribute('data-category');
+    
+                if (selectedValue === 'Mining') {
+                    graph.style.display = 'block'; // Show the mining graphs
+                } else {
+                    graph.style.display = 'none'; // Hide the mining graphs
+                }
+            });
+        });
+    </script>
+
+
     <!-- <div class="graph"></div>
     </div>
     <div class="graph"></div>
