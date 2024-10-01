@@ -88,9 +88,16 @@
         <div class="form-group"> 
           {{ form.company_emp_size|as_crispy_field }} 
         </div> 
+      </div> 
+    </div> 
+  </form> 
+</div> 
+ 
+{% endblock %} 
+ 
+{% block javascript %} 
 
-          
-
+        
         <div class="filter-container">
           <label for="state-filter">State:</label>
           <select id="state-filter">
@@ -628,15 +635,14 @@ ML: [
           
         
           // Simulated data for filtering results
-
-           // {% comment %} const data = [
+          // {% comment %} const data = [
           //   { name: 'Item 1', state: 'AP', city: 'Vijayawada' },
           //   { name: 'Item 2', state: 'AP', city: 'Tirupati' },
           //   { name: 'Item 3', state: 'BR', city: 'Patna' },
           //   { name: 'Item 4', state: 'AR', city: 'Itanagar' },
           //   { name: 'Item 5', state: 'AS', city: 'Guwahati' }
           // ]; {% endcomment %}
-         
+        
           // Function to filter and display results
           function filterResults() {
             const selectedState = stateFilter.value;
@@ -697,12 +703,4 @@ ML: [
           // Initial load
           updateCityDropdown();
         </script>
-       </div> 
-    </div> 
-  </form> 
-</div> 
- 
-{% endblock %} 
- 
- 
- 
+{% endblock %}
