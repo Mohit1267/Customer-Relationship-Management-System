@@ -121,6 +121,11 @@
                 <td>-</td>
                 <td>{{ data.probability }}</td>
                 <td>{{ data.assigned_to }}</td>
+            {% elif data.title %}
+                <td>{{ data.title }}</td>
+                <td>-</td>
+                <td>{{ data.valid_until }}</td>
+                <td>{{ data.approval_status }}</td>
             {% endif %}
         </tr>
     {% endfor %}

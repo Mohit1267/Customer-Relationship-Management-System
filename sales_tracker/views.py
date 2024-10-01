@@ -900,6 +900,10 @@ class OpportunityView(BaseListView):
     template_name = "sales_tracker/data.html"
     model = OpportunityData
     count_context_name = 'opportunity_count'
+class QuotesView(BaseListView):
+    template_name = "sales_tracker/data.html"
+    model = QuotesData
+    count_context_name = 'opportunity_count'
 
 
 
@@ -1159,3 +1163,9 @@ class maps(View):
         context['lat'] = latitude
         context['long'] = longitude
         return render(request, self.template_name, context)
+    
+
+
+
+def ViewQuote(request):
+    pass

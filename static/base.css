@@ -103,6 +103,19 @@ body {
 }
 
 
+.offcanvas-header {
+  position: relative;
+  z-index: 1000;
+}
+
+.profile1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1001;
+}
+
+
 
 .navbar.collapsed {
   transform: translateX(-60%);
