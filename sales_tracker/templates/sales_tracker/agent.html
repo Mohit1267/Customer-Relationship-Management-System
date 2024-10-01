@@ -16,4 +16,18 @@
         </ul>
     </div>
 </div>
+
+
+<div class="graph">
+    {{ daily|safe }}
+</div>
+<div class="graph">
+    {{ monthly| safe }}
+</div>
+<div class="graph">
+    {{ quarterly|safe }}
+</div>
+<div class="graph">
+    {{ yearlyl|safe }}
+</div>
 {% endblock %}

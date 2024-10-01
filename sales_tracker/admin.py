@@ -7,6 +7,3 @@ admin.site.register(ContactData)
 admin.site.register(LeadsData)
 admin.site.register(OpportunityData)
 admin.site.register(QuotesData)
-
-
-

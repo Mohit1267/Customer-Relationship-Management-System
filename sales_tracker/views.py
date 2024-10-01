@@ -20,7 +20,7 @@ from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
-from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining
+from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
@@ -137,6 +137,8 @@ def Dashboards(request):
         context["monthlymining"] = monthg
         quater = quarterlymining(request)
         context["quarterlymining"] = quater
+        yearly = yearlymining(request)
+        context["yearlymining"] = yearly
 
         return render(request,'sales_tracker/index.html',context)
     elif(request.user.profile.branch == 'agent'):
@@ -149,6 +151,15 @@ def Dashboards(request):
         ToCall = MiningData.objects.filter(assigned_to=uid,date = now_date)
         context["user"] = u
         context["Tocall"] = ToCall
+        daily = dailyleads(request)
+        monthly = monthlyleads(request)
+        quarterly = quarterlyleads(request)
+        yearlyl = yearlyleads(request)
+        context["daily"] = daily
+        context["yearlyl"] = yearlyl
+        context["monthly"] = monthly
+        context["quarterly"] = quarterly
+
         print(ToCall, "This is the value of ToCall")
         return render(request,'sales_tracker/agent.html',context)
     elif(request.user.profile.branch == 'sales'):
@@ -656,7 +667,9 @@ def Create_lead_view(request):
                 date = now_date,
                 # assigned_to = get_user_model().objects.get(username=username),
                 assigned_to = assign_lead,
-                # created_by = user
+                created_by = user,
+                nextdate = form.data.get("nextdate"),
+                remarks = form.data.get("remarks")
             )
             print("hello bhai")
             contact_details.save()
