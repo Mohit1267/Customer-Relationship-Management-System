@@ -53,6 +53,8 @@
             <th>Client Name</th>
             <th>Email</th>
             <th>Contact Number</th>
+            <th>Address</th>
+            <th>Company Employee Size</th>
             <th>Company Revenue</th>
         </tr>
     </thead>
@@ -66,11 +68,16 @@
                 <td>{{ data.customer_email }}</td>
                 <td>-</td>
                 <td>-</td>
+                <td>-</td>
+                <td>-</td>
             {% elif data.first_name %}
                 <td>{{ data.first_name }} {{ data.last_name }}</td>
                 <td>{{ data.email_id }}</td>
                 <td>-</td>
                 <td>-</td>
+                <td>-</td>
+                <td>-</td>
+
             {% elif data.opportunity_name %}
                 <td>{{ data.opportunity_name }}</td>
                 <td>-</td>
