@@ -1,4 +1,5 @@
- {% load static %}
+
+{% load static %}
 
 <!DOCTYPE html>
 <html>
@@ -91,11 +92,9 @@
         <div class="" id="navbarNavDropdown">
           <ul class="nav-links flex-column">
 
-             <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false">
-             <!-- <li class="nav-item dropdown">
-              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false"> -->
- 
+            <li class="nav-item dropdown">
+              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
+
                 <img src="\static\Dashboardlogo.png" alt="Dashboard Logo"
                   style=" margin-left: -6px !important; height: 40px ;">
 
@@ -103,12 +102,10 @@
               </a>
             </li>
 
-             <li class="nav-item dropdown dashboard-icon">
-               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             <!-- <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"> -->
- 
+                aria-expanded="false">
+
                 <img src="\static\datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
 
                 Mining
@@ -122,12 +119,10 @@
               </ul>
             </li>
 
-             <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             <!-- <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"> -->
- 
+                aria-expanded="false">
+
                 <img src="\static\leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
 
                 Leads
@@ -141,10 +136,9 @@
               </ul>
             </li>
 
- 
-            <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
 
                 <img src="\static\contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
 
@@ -159,12 +153,11 @@
               </ul>
             </li>
 
-             
-            <li class="nav-item dropdown  ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- 
-        
- 
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+
                 <img src="\static\quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
 
                 Quotes
@@ -178,9 +171,10 @@
               </ul>
             </li>
 
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+
                 <img src="\static\calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
 
                 Calendar
@@ -194,23 +188,19 @@
               </ul>
             </li>
 
- 
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="{%url 'attendance'%}" role="button" aria-expanded="false" style="margin-left: 20px;">
- 
-      
- 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="{%url 'attendance'%}" role="button"
+                aria-expanded="false" style="margin-left: 20px;">
+
                 <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 2px;">
 
                 Attendance
               </a>
             </li>
 
-
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
-
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
 
                 <img src="\static\opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
 
@@ -276,29 +266,8 @@
       <div class="row p-2">
         <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
       </div>
-
-      
-
-      <div class="offcanvas-body ">
-        <div class="row p-2">
-          <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
-        </div>
-        <div class="row p-2">
-          <a href="#" class=" right_profile" >Edit Profile</a>
-        </div>
-        <hr>
-        <div class="row p-2">
-          <a href="#" class=" right_profile">Employees</a>
-        </div>
-        <div class="row p-2">
-          <a href="#" class=" right_profile">Community Forum</a>
-        </div>
-        <div class="row p-2">
-          <a href="#" class=" right_profile">About</a>
-
-
-       <!-- <div class="row p-2">
-        <a href="#" class=" right_profile" ">Edit Profile</a>
+      <div class="row p-2">
+        <a hrefs="#" class=" right_profile" ">Edit Profile</a>
         </div>
         <hr>
         <div class=" row p-2">
@@ -308,9 +277,8 @@
             <a href="#" class=" right_profile"">Community Forum</a>
         </div>
         <div class=" row p-2">
-              <a href="#" class=" right_profile"">About</a> -->
-
-            </div>
+              <a href="#" class=" right_profile"">About</a>
+        </div>
         <hr>
         <div class=" row p-2">
                 <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
@@ -340,7 +308,6 @@
 
 
 
-    /*hamburger*/
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
@@ -461,17 +428,6 @@
             }
           }
         }
-
- 
-   </script>
-  
-  <script>
-    // Convert Django template variables to integers and calculate total seconds.
-    // let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 + 
-    //                    parseInt("{{ timer.min }}", 10) * 60 + 
-    //                    parseInt("{{ timer.sec }}", 10);
-
-    // const countDownEle = document.getElementById("count_down");
       });
 
       // Yearly Data Chart
@@ -589,42 +545,25 @@
         }
       });
 
- // function startBreakTimer() {
-//     breakTimerInterval = setInterval(() = {
-//         if (breakTimeLeft = 0) {
-//             clearInterval(breakTimerInterval);
-//             breakTimerInterval = null;
-//             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-//             alert("Break time is over!");
+      function startBreakTimer() {
+        breakTimerInterval = setInterval(() = {
+          if(breakTimeLeft = 0) {
+            clearInterval(breakTimerInterval);
+            breakTimerInterval = null;
+            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+            alert("Break time is over!");
 
-           
-//             startMainTimer();
-//         } else {
-//             breakTimeLeft--;
-//             displayTime();
-//             sendHeartbeat();
-//         }
-//     }, 1000); 
-// }
- //       function startBreakTimer() {
-//         breakTimerInterval = setInterval(() = {
-//           if(breakTimeLeft = 0) {
-//             clearInterval(breakTimerInterval);
-//             breakTimerInterval = null;
-//             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-//             alert("Break time is over!");
+            // Resume the main timer after the break ends
+            startMainTimer();
+          }
+           else {
+            breakTimeLeft--;
+          displayTime();
+            sendHeartbeat(); // Send heartbeat to keep session alive
+        }
+    }, 1000); // 1-second intervals
+}
 
-//             // Resume the main timer after the break ends
-//             startMainTimer();
-//           }
-//            else {
-//             breakTimeLeft--;
-//           displayTime();
-//             sendHeartbeat(); // Send heartbeat to keep session alive
-//         }
-//     }, 1000); // 1-second intervals
-// }
- 
       function displayTime() {
         const minutes = Math.floor(breakTimeLeft / 60);
         const seconds = breakTimeLeft % 60;
@@ -646,38 +585,15 @@
 
     </script>
 
-    <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Get the current URL path
-    const currentPath = window.location.pathname;
-
-    // Loop through each nav-link and dropdown-item
-    document.querySelectorAll('.nav-item .nav-link, .dropdown-item').forEach(item => {
-      if (item.getAttribute('href') === currentPath) {
-        // Remove 'active' class from all nav-links
-        document.querySelectorAll('.nav-link').forEach(link => {
-          link.classList.remove('active');
-        });
-
-        // Find the closest nav-item (parent) and add 'active' class to the nav-link
-        const parentNavLink = item.closest('.nav-item').querySelector('.nav-link');
-        if (parentNavLink) {
-          parentNavLink.classList.add('active');
-        }
-      }
-    });
-  });
-</script>
 
 
 
 
 
- 
-     <!-- 
- <script>
-// let breakTimeLeft = 3600;  
-// let breakTimerInterval = null;
+    <!-- 
+<script>
+let breakTimeLeft = 3600; // 1 hour in seconds
+let breakTimerInterval = null;
 
 document.getElementById("toggleBreakBtn").addEventListener("click", function() {
     if (breakTimerInterval) {
@@ -725,7 +641,7 @@ function sendHeartbeat() {
         console.error("Failed to send heartbeat:", error);
     });
 }
-</script>
+</script> -->
 
 
 
@@ -779,3 +695,4 @@ function sendHeartbeat() {
 </body>
 
 </html>
+
