@@ -298,16 +298,16 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 # AUTHENTICATION_BACKENDS = ['users.authentication.EmailBackend', 'django.contrib.auth.backends.ModelBackend']
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shanaya',
-        'USER': 'root',
-        'PASSWORD':'shanaya2',
-        'HOST' : '34.100.214.94',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'shanaya2',
+#         'HOST' : '34.100.214.94',
+#         'PORT': '3306',
+#     }
+# }
 
 
 

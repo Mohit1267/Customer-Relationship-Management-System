@@ -14,9 +14,9 @@
 
 {% block content %}
 <div class="container">
-    <div class="pic"></div>
+    <!-- <div ></div> -->
         <!-- Example of an image element -->
-        <img src="{% static 'loginpic2.jpg' %}" alt="Picture" class="pic">
+        <img class="pic" src="{% static 'loginpic2.jpg' %}" alt="Picture" class="pic">
     </div>
     <div class="row">
         <div class="col-md-4"></div>
@@ -41,10 +41,10 @@
         {% csrf_token %} <!-- Include CSRF token here -->
       
         <div>
-            <img class="hand" src="\static\loginpic3.jpg" alt="Handshaking Image">
+            <img class="hand" src="\static\loginpic7.png" alt="Handshaking Image">
         </div>
         <div class="login-header">
-            <div class="welcome">Welcome</div>
+            <div class="welcome">Welcome to Shanaya</div>
             <div class="input-box">
                 <input type="email" name="email" placeholder="Email" class="login-input" required>
                 <span class="icon"></span>
