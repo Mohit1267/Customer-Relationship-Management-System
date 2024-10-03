@@ -848,27 +848,35 @@ class BaseListView(ListView):
         base_query = super().get_queryset()
         time_frame = self.request.GET.get('time_frame', 'today')  # Get the time frame from GET parameters
         now_date_time = datetime.datetime.now()
+        state = self.request.GET.get('state', None)
+        zone = self.request.GET.get('zone', None)
 
         if time_frame == "weekly":
             start_date = now_date_time - datetime.timedelta(days=now_date_time.weekday())  # Start of the week
             end_date = start_date + datetime.timedelta(days=7)  # End of the week
-            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+            base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "monthly":
             start_date = now_date_time.replace(day=1)  # Start of the month
             end_date = (start_date + datetime.timedelta(days=31)).replace(day=1)  # Start of next month
+            base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
             return base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "quarterly":
             quarter = (now_date_time.month - 1) // 3 + 1
             start_date = datetime.datetime(now_date_time.year, (quarter - 1) * 3 + 1, 1)
             end_date = (start_date + datetime.timedelta(days=92)).replace(day=1)  # Roughly add 3 months
-            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+            base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "yearly":
             start_date = datetime.datetime(now_date_time.year, 1, 1)  # Start of the year
             end_date = datetime.datetime(now_date_time.year + 1, 1, 1)  # Start of next year
-            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+            base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         else:  # Default to today
             today = now_date_time.date()
-            return base_query.filter(date=today)
+            base_query = base_query.filter(date=today)
+        if state and state != 'all':
+            base_query = base_query.filter(state=state)
+        if zone and zone != 'all':
+            base_query = base_query.filter(region=zone)
+        return base_query
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

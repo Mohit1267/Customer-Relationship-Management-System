@@ -42,6 +42,10 @@ class MiningData(models.Model):
     date = models.DateField()
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1, null = True, blank = True)
     created_by = models.ForeignKey(RegisterUser,on_delete=models.CASCADE, related_name='mining_data',null=True,blank = True)
+    state = models.CharField(max_length=50,default='MP')
+    city = models.CharField(max_length=50,default='Indore')
+    region = models.CharField(max_length=50, default='North')
+
 
     def __str__(self):
         return f"{self.organisation_name}"
