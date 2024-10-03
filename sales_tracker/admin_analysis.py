@@ -867,3 +867,228 @@ def quarterlymining(request):
     # Render the Plotly figure to HTML and save it as an HTML div
     quarterlymining = plot(fig, output_type='div')
     return quarterlymining
+
+def yearlymining(request):
+    uid = request.user.id
+    now_date_time = datetime.datetime.now()
+    now_year = now_date_time.year
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT COUNT(*) FROM sales_tracker_miningdata 
+            WHERE created_by_id = %s AND YEAR(date) = %s; 
+        """, [uid, now_year])
+        data = cursor.fetchall()
+
+    completed_mining = data[0][0]
+    target_mining = 80 * 365  # Assuming 365 days in a year as a target
+    remaining_mining = max(0, target_mining - completed_mining)
+
+    # Create a pie chart with absolute numbers
+    fig = go.Figure(data=[go.Pie(
+        labels=['Completed Mining', 'Remaining Mining'],
+        values=[completed_mining, remaining_mining],
+        hole=.3,
+        textinfo='label+value',
+        hoverinfo='label+value+percent',
+        marker=dict(colors=['#1f77b4', '#ff7f0e'])
+    )])
+
+    # Customize the layout for better interactivity
+    fig.update_layout(
+        plot_bgcolor='#1e2a38',
+        paper_bgcolor='#1e2a38',
+        width=400,
+        height=300,
+        showlegend=False,
+        font=dict(color='white'),
+        margin=dict(l=20, r=20, t=40, b=20),
+        annotations=[dict(text='Yearly Mining', x=0.5, y=0.5, font_size=20, showarrow=False)]
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML div
+    yearlymining = plot(fig, output_type='div')
+    return yearlymining
+
+
+
+
+#for leads data
+
+def dailyleads(request):
+    uid = request.user.id
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+
+    with connection.cursor() as cursor:
+        cursor.execute(""" 
+            SELECT COUNT(*) FROM sales_tracker_leadsdata 
+            WHERE created_by_id = %s AND date = %s; 
+        """, [uid, now_date])
+        data = cursor.fetchall()
+
+    completed_leads = data[0][0]
+    target_leads = 80
+    remaining_leads = max(0, target_leads - completed_leads)
+
+    # Create a pie chart with absolute numbers
+    fig = go.Figure(data=[go.Pie(
+        labels=['Completed Leads', 'Remaining Leads'],
+        values=[completed_leads, remaining_leads],
+        hole=.3,
+        textinfo='label+value',
+        hoverinfo='label+value+percent',
+        marker=dict(colors=['#1f77b4', '#ff7f0e'])
+    )])
+
+    # Customize the layout for better interactivity
+    fig.update_layout(
+        plot_bgcolor='#1e2a38',
+        paper_bgcolor='#1e2a38',
+        width=400,
+        height=300,
+        showlegend=False,
+        font=dict(color='white'),
+        margin=dict(l=20, r=20, t=40, b=20),
+        annotations=[dict(text='Daily Leads', x=0.5, y=0.5, font_size=20, showarrow=False)]
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML div
+    dailyleads = plot(fig, output_type='div')
+    return dailyleads
+
+
+
+
+def monthlyleads(request):
+    uid = request.user.id
+    now_date_time = datetime.datetime.now()
+    now_year = now_date_time.year
+    now_month = now_date_time.month
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT COUNT(*) FROM sales_tracker_leadsdata 
+            WHERE created_by_id = %s AND YEAR(date) = %s AND MONTH(date) = %s; 
+        """, [uid, now_year, now_month])
+        data = cursor.fetchall()
+
+    completed_leads = data[0][0]
+    target_leads = 80 * 30  # Assuming 30 days in a month as a target
+    remaining_leads = max(0, target_leads - completed_leads)
+
+    # Create a pie chart with absolute numbers
+    fig = go.Figure(data=[go.Pie(
+        labels=['Completed Leads', 'Remaining Leads'],
+        values=[completed_leads, remaining_leads],
+        hole=.3,
+        textinfo='label+value',
+        hoverinfo='label+value+percent',
+        marker=dict(colors=['#1f77b4', '#ff7f0e'])
+    )])
+
+    # Customize the layout for better interactivity
+    fig.update_layout(
+        plot_bgcolor='#1e2a38',
+        paper_bgcolor='#1e2a38',
+        width=400,
+        height=300,
+        showlegend=False,
+        font=dict(color='white'),
+        margin=dict(l=20, r=20, t=40, b=20),
+        annotations=[dict(text='Monthly Leads', x=0.5, y=0.5, font_size=20, showarrow=False)]
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML div
+    monthlyleads = plot(fig, output_type='div')
+    return monthlyleads
+
+
+
+def quarterlyleads(request):
+    uid = request.user.id
+    now_date_time = datetime.datetime.now()
+    now_year = now_date_time.year
+    now_quarter = (now_date_time.month - 1) // 3 + 1  # Calculate current quarter
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT COUNT(*) FROM sales_tracker_leadsdata 
+            WHERE created_by_id = %s AND YEAR(date) = %s AND QUARTER(date) = %s; 
+        """, [uid, now_year, now_quarter])
+        data = cursor.fetchall()
+
+    completed_leads = data[0][0]
+    target_leads = 80 * 90  # Assuming 90 days in a quarter as a target
+    remaining_leads = max(0, target_leads - completed_leads)
+
+    # Create a pie chart with absolute numbers
+    fig = go.Figure(data=[go.Pie(
+        labels=['Completed Leads', 'Remaining Leads'],
+        values=[completed_leads, remaining_leads],
+        hole=.3,
+        textinfo='label+value',
+        hoverinfo='label+value+percent',
+        marker=dict(colors=['#1f77b4', '#ff7f0e'])
+    )])
+
+    # Customize the layout for better interactivity
+    fig.update_layout(
+        plot_bgcolor='#1e2a38',
+        paper_bgcolor='#1e2a38',
+        width=400,
+        height=300,
+        showlegend=False,
+        font=dict(color='white'),
+        margin=dict(l=20, r=20, t=40, b=20),
+        annotations=[dict(text='Quarterly Leads', x=0.5, y=0.5, font_size=20, showarrow=False)]
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML div
+    quarterlyleads = plot(fig, output_type='div')
+    return quarterlyleads
+
+
+
+def yearlyleads(request):
+    uid = request.user.id
+    now_date_time = datetime.datetime.now()
+    now_year = now_date_time.year
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT COUNT(*) FROM sales_tracker_leadsdata 
+            WHERE created_by_id = %s AND YEAR(date) = %s; 
+        """, [uid, now_year])
+        data = cursor.fetchall()
+
+    completed_leads = data[0][0]
+    target_leads = 80 * 365  # Assuming 365 days in a year as a target
+    remaining_leads = max(0, target_leads - completed_leads)
+
+    # Create a pie chart with absolute numbers
+    fig = go.Figure(data=[go.Pie(
+        labels=['Completed Leads', 'Remaining Leads'],
+        values=[completed_leads, remaining_leads],
+        hole=.3,
+        textinfo='label+value',
+        hoverinfo='label+value+percent',
+        marker=dict(colors=['#1f77b4', '#ff7f0e'])
+    )])
+
+    # Customize the layout for better interactivity
+    fig.update_layout(
+        plot_bgcolor='#1e2a38',
+        paper_bgcolor='#1e2a38',
+        width=400,
+        height=300,
+        showlegend=False,
+        font=dict(color='white'),
+        margin=dict(l=20, r=20, t=40, b=20),
+        annotations=[dict(text='Yearly Leads', x=0.5, y=0.5, font_size=20, showarrow=False)]
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML div
+    yearlyleads = plot(fig, output_type='div')
+    return yearlyleads
+        

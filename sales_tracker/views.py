@@ -20,7 +20,7 @@ from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
-from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining
+from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
 from django.http import HttpResponseForbidden
 import datetime
@@ -116,7 +116,10 @@ def Dashboards(request):
         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
         now_date_time = datetime.datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-        today_mining = MiningData.objects.filter(date = now_date)
+        users = request.user
+        u = RegisterUser.objects.get(email=users)
+        u = u.id
+        today_mining = MiningData.objects.filter(date = now_date,created_by=u)
         today_mining_count = today_mining.count()
         context["mining_count"] = today_mining_count
         today_lead = LeadsData.objects.filter(date = now_date)
@@ -134,8 +137,8 @@ def Dashboards(request):
         context["monthlymining"] = monthg
         quater = quarterlymining(request)
         context["quarterlymining"] = quater
-
-
+        yearly = yearlymining(request)
+        context["yearlymining"] = yearly
 
         return render(request,'sales_tracker/index.html',context)
     elif(request.user.profile.branch == 'agent'):
@@ -144,10 +147,19 @@ def Dashboards(request):
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         users = request.user
         u = RegisterUser.objects.get(email=users)
-        u = u.id
-        ToCall = MiningData.objects.filter(assigned_to=u,date = now_date)
+        uid = u.id
+        ToCall = MiningData.objects.filter(assigned_to=uid,date = now_date)
         context["user"] = u
         context["Tocall"] = ToCall
+        daily = dailyleads(request)
+        monthly = monthlyleads(request)
+        quarterly = quarterlyleads(request)
+        yearlyl = yearlyleads(request)
+        context["daily"] = daily
+        context["yearlyl"] = yearlyl
+        context["monthly"] = monthly
+        context["quarterly"] = quarterly
+
         print(ToCall, "This is the value of ToCall")
         return render(request,'sales_tracker/agent.html',context)
     elif(request.user.profile.branch == 'sales'):
@@ -655,7 +667,9 @@ def Create_lead_view(request):
                 date = now_date,
                 # assigned_to = get_user_model().objects.get(username=username),
                 assigned_to = assign_lead,
-                # created_by = user
+                created_by = user,
+                nextdate = form.data.get("nextdate"),
+                remarks = form.data.get("remarks")
             )
             print("hello bhai")
             contact_details.save()
@@ -834,27 +848,35 @@ class BaseListView(ListView):
         base_query = super().get_queryset()
         time_frame = self.request.GET.get('time_frame', 'today')  # Get the time frame from GET parameters
         now_date_time = datetime.datetime.now()
+        state = self.request.GET.get('state', None)
+        zone = self.request.GET.get('zone', None)
 
         if time_frame == "weekly":
             start_date = now_date_time - datetime.timedelta(days=now_date_time.weekday())  # Start of the week
             end_date = start_date + datetime.timedelta(days=7)  # End of the week
-            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+            base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "monthly":
             start_date = now_date_time.replace(day=1)  # Start of the month
             end_date = (start_date + datetime.timedelta(days=31)).replace(day=1)  # Start of next month
+            base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
             return base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "quarterly":
             quarter = (now_date_time.month - 1) // 3 + 1
             start_date = datetime.datetime(now_date_time.year, (quarter - 1) * 3 + 1, 1)
             end_date = (start_date + datetime.timedelta(days=92)).replace(day=1)  # Roughly add 3 months
-            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+            base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "yearly":
             start_date = datetime.datetime(now_date_time.year, 1, 1)  # Start of the year
             end_date = datetime.datetime(now_date_time.year + 1, 1, 1)  # Start of next year
-            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+            base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         else:  # Default to today
             today = now_date_time.date()
-            return base_query.filter(date=today)
+            base_query = base_query.filter(date=today)
+        if state and state != 'all':
+            base_query = base_query.filter(state=state)
+        if zone and zone != 'all':
+            base_query = base_query.filter(region=zone)
+        return base_query
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -885,6 +907,10 @@ class LeadView(BaseListView):
 class OpportunityView(BaseListView):
     template_name = "sales_tracker/data.html"
     model = OpportunityData
+    count_context_name = 'opportunity_count'
+class QuotesView(BaseListView):
+    template_name = "sales_tracker/data.html"
+    model = QuotesData
     count_context_name = 'opportunity_count'
 
 
@@ -1148,3 +1174,6 @@ class maps(View):
     
 
 
+
+def ViewQuote(request):
+    pass

@@ -19,6 +19,7 @@ urlpatterns = [
     path("reports/MinerActivity/<pk>", login_required(views.EmployeeDetail.as_view()), name="EmployeeDetail"),
     path("reports/LeadsActivity/", login_required(views.LeadsActivity.as_view()), name="LeadsActivity"),
     path("reports/Analysis/", login_required(views.AdminAnalysis.as_view()), name="AdminAnalysis"),
+    # path("view_quote")
 
     path("mining", login_required(views.mining_view), name = "mining"),
     path("data", login_required(views.DataView.as_view()), name = "data"),
@@ -30,6 +31,7 @@ urlpatterns = [
     path("message", views.Message.as_view(), name = "message"), 
     path("createlead", views.Create_lead_view, name = "create_lead"), 
     path("lead_data", login_required(views.LeadView.as_view()), name = "lead_data"), 
+    path("quotes_data", login_required(views.QuotesView.as_view()), name = "view_quote"), 
     path("opportunity_data", login_required(views.OpportunityView.as_view()), name = "opportunity_data"), 
     path("createopportunity", views.Create_opportunity_view, name = "create_opportunity"), 
     path("createquote", views.Create_quote_view, name = "create_quote"), 
