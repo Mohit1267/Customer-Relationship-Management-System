@@ -13,7 +13,9 @@
 {% block title %}Logout{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="outerdiv">
+    <img class="pic" src="{% static 'loginpic2.jpg' %}" alt="Picture" class="pic">
+    <div class="container">
   <div class="row">
     <div class="col-md-4"></div>
     {% if messages %}
@@ -51,6 +53,7 @@
         </div>
     </form>
   </div>
+</div>
 </div>
 {% endblock %}
 {% block javascript %}

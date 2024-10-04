@@ -1,15 +1,15 @@
 body { 
     font-family: 'Arial', sans-serif; 
-    margin: 0; /* Remove default margins to manage layout manually */ 
+    margin: 0;
     background-color: #f9f9f9; 
     display: flex; 
-    min-height: 100vh; /* Ensure the body takes the full height of the viewport */ 
+    min-height: 100vh;
 } 
 
 .container-fluid {
-    overflow-y: auto; /* Enables vertical scrolling */
-    overflow-x: hidden; /* Hides horizontal scrolling */
-    max-height: 950px; /* Set a maximum height for the container */
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    max-height: 950px; 
 }
 
 
@@ -30,21 +30,21 @@ body {
 } 
 
 .navbar { 
-    width: 200px; /* Fixed width for the navbar */ 
-    position: fixed; /* Fixes the navbar to the left of the screen */ 
+    width: 200px; 
+    position: fixed; 
     top: 0; 
     left: 0; 
-    height: 100%; /* Full height */ 
+    height: 100%;
     background-color: #333; 
     padding-top: 20px; 
-    z-index: 1000; /* Ensures the navbar stays on top of other elements */ 
+    z-index: 1000;
     color: white; 
 } 
 
 .content { 
-    margin-left: 200px; /* Pushes the content to the right by the width of the navbar */ 
-    padding: 20px; /* Add some padding around the content */ 
-    flex: 1; /* Content takes up the remaining space */ 
+    margin-left: 200px;
+    padding: 20px; 
+    flex: 1; 
     background-color: #f9f9f9; 
 } 
 
@@ -129,7 +129,7 @@ body {
 
 .row { 
     display: flex; 
-    justify-content: center; /* Align items to the right */ 
+    justify-content: center; 
 } 
 
 .button1 { 
@@ -182,30 +182,99 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
 } 
 
-/* Media Queries for Responsiveness */ 
-@media (max-width: 768px) { 
-    .navbar { 
-        width: 100%; /* Full width on smaller screens */ 
-        height: auto; /* Allow height to adjust */ 
-        position: relative; /* Change to relative */ 
-    } 
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .moving_title {
+        font-size: 30px; 
+        margin: 20px 0; 
+    }
+}
 
-    .content { 
-        margin-left: 0; /* Remove left margin */ 
-        padding: 10px; /* Reduce padding */ 
-    } 
 
-    .moving_title { 
-        font-size: 2rem; /* Smaller font size */ 
-        margin: 10px 0; /* Reduced margin */ 
-    } 
+@media (max-width: 1098px) {
+    .navbar {
+        width: 50px; 
+        padding-top: 10px; 
+    }
 
-    .form { 
-        width: 90%; /* Increase width for smaller screens */ 
-    } 
+    .content {
+        margin-left: 50px; 
+    }
 
-    .buttons { 
-        flex-direction: column; /* Stack buttons vertically */ 
-        width: 100%; /* Full width */ 
-    } 
+    .form {
+        width: 80%; 
+    }
+
+    .buttons {
+        width: 100%; 
+    }
+
+    .moving_title {
+        font-size: 28px; 
+    }
+}
+
+
+
+@media (max-width: 992px) {
+    .navbar {
+        width: 60px; 
+        padding-top: 10px; 
+    }
+
+    .content {
+        margin-left: 60px; 
+    }
+
+    .form {
+        width: 80%; 
+    }
+
+    .buttons {
+        width: 100%; 
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        width: 100%; 
+        height: auto; 
+        position: relative; 
+    }
+
+    .content {
+        margin-left: 0; 
+        padding: 10px; 
+    }
+
+    .moving_title {
+        font-size: 24px; 
+        margin: 10px 0; 
+    }
+
+    .form {
+        width: 90%;
+    }
+
+    .buttons {
+        flex-direction: column; 
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .moving_title {
+        font-size: 20px; 
+    }
+
+    .form {
+        padding: 20px; 
+    }
+
+    .button1,
+    .button2 {
+        padding: 10px; 
+        font-size: 16px; 
+        width: 100%; 
+    }
 }

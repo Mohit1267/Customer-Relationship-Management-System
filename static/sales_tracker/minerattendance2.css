@@ -1,19 +1,20 @@
 .moving_title { 
     all:unset; 
-    font-size: 35px ; 
-    /* font-weight: bold; */ 
-    /* color: #333; */ 
+    font-size: 35px ;    
     position: relative; 
-    background: linear-gradient(to right, #2C3E50, #5e87b0) ; 
-    /* background: linear-gradient(90deg, rgba(0, 102, 204, 1) 0%, rgba(173, 216, 230, 1) 100%); */ 
+    background: linear-gradient(to right, #2C3E50, #5e87b0) ;   
     -webkit-background-clip: text; 
     background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-    /* padding: 10px; */ 
+    -webkit-text-fill-color: transparent;   
     text-align: center; 
     letter-spacing: 2px; 
+    margin-left: 700px; 
+    /* font-weight: bold; */ 
+    /* color: #333; */ 
+    /* background: linear-gradient(90deg, rgba(0, 102, 204, 1) 0%, rgba(173, 216, 230, 1) 100%); */ 
+    /* padding: 10px; */  
     /* margin-right:300px; */ 
-    margin-left: 700px;  
+   
 } 
  
 .col-md-2 { 
@@ -33,19 +34,19 @@
 /* Wrapping container to hold both navbar and content */ 
 .wrapper { 
     display: flex; 
-    height: 100vh; /* Full height of the viewport */ 
+    height: 100vh; 
     width: 100%; 
 } 
  
 /* Styling for the fixed navbar */ 
 .navbar { 
     margin-left: 0px; 
-    width: 200px; /* Fixed width for the navbar */ 
-    position: fixed; /* Fixes the navbar to the left of the screen */ 
-    height: 100%; /* Full height */ 
+    width: 200px;
+    position: fixed; 
+    height: 100%;
     background-color: #333; 
     padding-top: 20px; 
-    z-index: 1000; /* Ensures the navbar stays on top of other elements */ 
+    z-index: 1000;
     color: white; 
     /* top: 0; 
     left: 0; */ 
@@ -54,9 +55,9 @@
  
  
 .navbar-container { 
-    margin-left: -80px; 
     /* align-items: center; */ 
     /* justify-content: center; */ 
+    margin-left: -80px; 
     display: flex; 
     flex-direction: column; 
     justify-content: flex-start; 
@@ -74,7 +75,7 @@
  
 /* Content styling */ 
 .content { 
-    margin-left: 200px; /* No extra margin needed since the body padding handles it */ 
+    margin-left: 200px; 
     padding: 20px; 
     flex: 1; 
     background-color: #f9f9f9; 
@@ -190,7 +191,7 @@ h1 {
 .chart-container img { 
     /* margin-bottom: 100px; 
     margin-right: 600px; */ 
-    max-width: 100%; /* Ensures the chart image is responsive */ 
+    max-width: 100%; 
     height: 500px; 
     border-radius: 10px; 
 } 

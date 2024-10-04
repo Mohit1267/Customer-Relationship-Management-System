@@ -26,8 +26,8 @@ h1 {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    max-width: 300px; /* Maximum width of the card */
-    width: 100%; /* Card takes up full width of its container up to max-width */
+    max-width: 300px;
+    width: 100%; 
     padding: 20px;
     box-sizing: border-box;
     transition: transform 0.2s ease-in-out;
