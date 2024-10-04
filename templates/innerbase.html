@@ -1,4 +1,5 @@
- {% load static %}
+
+{% load static %}
   
 <!DOCTYPE html>
 <html>
@@ -25,30 +26,7 @@
 
   <title>{% block title %}title{% endblock %}</title>
 
-  <!-- navbar to the right side -->
-  <style>
-    /* 
-    @media (max-width: 768px) {
-      .navbar {
-        transform: translateX(-100%);
-      }
-
-      .navbar.active {
-        transform: translateX(0);
-      }
-
-      .hamburger {
-        display: block;
-      }
-
-      .content {
-        margin-left: 0;
-      }
-    } */
-  </style>
-
-
-
+  
 </head>
 
 <body>
@@ -74,20 +52,7 @@
       {% endif %}
       <div class="navbar-container">
 
-        <!-- <div class="hamburger" onclick="toggleNavbar()">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div> -->
-        <div>
-          <div class="hamburger" onclick="toggleNavbar()">
-            <div class="stick stick-1"></div>
-            <div class="stick stick-2"></div>
-            <div class="stick stick-3"></div>
-          </div>
-        </div>
-
-
+        
         <div class="" id="navbarNavDropdown">
           <ul class="nav-links flex-column">
 
@@ -191,6 +156,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
+                <li></li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Create Task</a></li>
               </ul>
             </li>
 
@@ -232,40 +201,39 @@
       </div>
 
   </nav>
-
   {% block content %}{% endblock %}
-  <div class="offcanvas offcanvas-end"  id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas offcanvas-end" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="profile1 offcanvas-header">
-      <h5  id="offcanvasExampleLabel"><b>Profile</b></h5>
-      <button type="button"   aria-label="Close"></button>
+      <h5 id="offcanvasExampleLabel"><b>Profile</b></h5>
+      <!-- <button type="button" aria-label="Close"></button> -->
     </div>
-
-      <div class="offcanvas-body id="offcanvasExample ">
-        <div class="row p-2">
-          <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
-        </div>
-        <div class="row p-2">
-          <a href="#" class=" right_profile" >Edit Profile</a>
-        </div>
-        <hr>
-        <div class="row p-2">
-          <a href="#" class=" right_profile">Employees</a>
-        </div>
-        <div class="row p-2">
-          <a href="#" class=" right_profile">Community Forum</a>
-        </div>
-        <div class="row p-2">
-          <a href="#" class=" right_profile">About</a>
-        </div>
-        <hr>
-        <div class=" row p-2">
-                <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
+  
+    <!-- Correcting the id attribute placement -->
+    <div class="offcanvas-body" id="offcanvasExample">
+      <div class="row p-2">
+        <a href="{% url 'detail_profile' %}" class="right_profile">View Profile</a>
       </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Edit Profile</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Employees</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Community</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">About</a>
+      </div>
+      <div class="row p-2">
+        <a href="{% url 'logout'%}" class="right_profile">Logout</a>
+      </div>
+  
       <button id="toggleBreakBtn" class="btn btn-primary">Start Break</button>
       <div id="timerDisplay"></div>
     </div>
-    </div>
-
+  </div>
+  
     {%comment%}
     {% if timer %}
     <div class="timer_count">
@@ -293,33 +261,17 @@
       function toggleNavbar() {
         const navbarContainer = document.querySelector('.navbar-container');
         const navbar = document.querySelector('.navbar');
-        const hamburger = document.querySelector('.hamburger');
-
+ 
         // Toggle the 'collapsed' class on the navbar
         navbar.classList.toggle('collapsed');
-
-        // Change the hamburger icon's state
-        hamburger.classList.toggle('open');
 
         // Toggle the visibility by toggling a class
         navbarContainer.classList.toggle('visible');
       }
 
-
-      // Hamburger animation
-      $(document).ready(function () {
-        $(".hamburger").click(function () {
-          $(".stick").each(function () {
-            if ($(this).hasClass('open')) {
-              $(this).removeClass('open').addClass('close');
-            } else {
-              $(this).removeClass('close').addClass('open');
-            }
-          });
-        });
-      });
     </script>
 
+  <!-- profile section-->
     <script>
 document.addEventListener('DOMContentLoaded', function () {
   const profileButton = document.querySelector('.profile1');
@@ -347,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function () {
     </script>
 
 
-    <!-- new code with yearly chart -->
+    <!-- data chart section 1-->
     <script>
       // Weekly Data Chart
       var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
@@ -438,13 +390,9 @@ document.addEventListener('DOMContentLoaded', function () {
  
    </script>
   
-  <script>
-    // Convert Django template variables to integers and calculate total seconds.
-    // let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 + 
-    //                    parseInt("{{ timer.min }}", 10) * 60 + 
-    //                    parseInt("{{ timer.sec }}", 10);
+    <!--data chart section 2--> 
+    <script>
 
-    // const countDownEle = document.getElementById("count_down");
       });
 
       // Yearly Data Chart
@@ -478,146 +426,115 @@ document.addEventListener('DOMContentLoaded', function () {
     </script>
 
 
+    <!---->
     <script>
-      // Convert Django template variables to integers and calculate total seconds.
-      let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 +
-        parseInt("{{ timer.min }}", 10) * 60 +
-        parseInt("{{ timer.sec }}", 10);
+  let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 +
+    parseInt("{{ timer.min }}", 10) * 60 +
+    parseInt("{{ timer.sec }}", 10);
 
-      const countDownEle = document.getElementById("count_down");
+  const countDownEle = document.getElementById("count_down");
 
-      // Function to convert seconds to HH:MM:SS format.
-      function convertSecondsToHms(seconds) {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const sec = Math.floor(seconds % 60);
+  function convertSecondsToHms(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const sec = Math.floor(seconds % 60);
 
-        // Add leading zeros for hours, minutes, and seconds.
-        const formattedHours = hours.toString().padStart(2, "0");
-        const formattedMinutes = minutes.toString().padStart(2, "0");
-        const formattedSeconds = sec.toString().padStart(2, "0");
+    const formattedHours = hours.toString().padStart(2, "0");
+    const formattedMinutes = minutes.toString().padStart(2, "0");
+    const formattedSeconds = sec.toString().padStart(2, "0");
 
-        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  }
+
+  function updateCountDown() {
+    if (totalSeconds <= 0) {
+      countDownEle.innerHTML = "00:00:00";
+      clearInterval(mainTimerInterval);
+      return;
+    }
+    let formattedTimer = convertSecondsToHms(totalSeconds);
+    countDownEle.innerHTML = formattedTimer;
+    totalSeconds++;
+  }
+
+  let mainTimerInterval = setInterval(updateCountDown, 1000);
+
+  function startMainTimer() {
+    clearInterval(mainTimerInterval);  // Ensure no multiple intervals running
+    mainTimerInterval = setInterval(updateCountDown, 1000);
+  }
+
+  function pauseMainTimer() {
+    clearInterval(mainTimerInterval);
+  }
+
+  function sendHeartbeat() {
+    fetch("{% url 'heartbeat' %}", {
+      method: "GET",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest"
       }
-
-      // Function to update the countdown display.
-      function updateCountDown() {
-        if (totalSeconds <= 0) {
-          countDownEle.innerHTML = "00:00:00";
-          clearInterval(timerInterval); // Stop the interval when the countdown reaches zero.
-          return;
-        }
-
-        let formattedTimer = convertSecondsToHms(totalSeconds);
-        countDownEle.innerHTML = formattedTimer;
-        totalSeconds++; // Decrement the seconds.
+    }).then(response => {
+      if (response.status !== 200) {
+        console.error("Session may have expired.");
       }
+    }).catch(error => {
+      console.error("Failed to send heartbeat:", error);
+    });
+  }
 
-      // Debugging: Print initial value of totalSeconds to console
-      console.log(`Initial totalSeconds: ${totalSeconds}`);
+  let breakTimeLeft = 3600; // 1 hour in seconds
+  let breakTimerInterval = null;
 
-      // Update the countdown every second.
-      const timerInterval = setInterval(updateCountDown, 1000);
+  document.getElementById("toggleBreakBtn").addEventListener("click", function () {
+    if (breakTimerInterval) {
+      clearInterval(breakTimerInterval);
+      breakTimerInterval = null;
+      this.innerHTML = "Start Break";
 
-      // Debugging: Check if the setInterval is working
-      console.log(`Timer started with interval: ${timerInterval}`);
-    </script>
+      // Resume the main timer
+      startMainTimer();
+    } else {
+      pauseMainTimer();  // Correct the function call to pause the main timer
+      breakTimeLeft = 3600;
+      startBreakTimer();
+      this.innerHTML = "End Break";
+    }
+  });
+
+  function startBreakTimer() {
+    breakTimerInterval = setInterval(() => {
+      if (breakTimeLeft === 0) {
+        clearInterval(breakTimerInterval);
+        breakTimerInterval = null;
+        document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+        alert("Break time is over!");
+
+        // Resume the main timer after the break ends
+        startMainTimer();
+      } else {
+        breakTimeLeft--;
+        displayTime();
+        sendHeartbeat();
+      }
+    }, 1000); // 1-second intervals
+  }
+
+  function displayTime() {
+    const minutes = Math.floor(breakTimeLeft / 60);
+    const seconds = breakTimeLeft % 60;
+    document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+  startMainTimer();
+</script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <script src="% static  IBscript.js"></script>
     {% block javascript %}{% endblock %}
-
-
-    <!-- Include necessary external scripts -->
-    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-    <script src="{% static 'js/datatables/datatables.js' %}"></script>
-    <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
-
-
-
-
-
-
-    <script>
-      let breakTimeLeft = 3600; // 1 hour in seconds
-      let breakTimerInterval = null;
-      let mainTimerInterval = null; // Reference to the main timer interval
-
-      document.getElementById("toggleBreakBtn").addEventListener("click", function () {
-        if (breakTimerInterval) {
-          clearInterval(breakTimerInterval);
-          breakTimerInterval = null;
-          this.innerHTML = "Start Break";
-
-          // Resume the main timer
-          startMainTimer();
-        } else {
-          startBreakTimer();
-          this.innerHTML = "End Break";
-
-          // Pause the main timer
-          pauseMainTimer();
-        }
-      });
-
- // function startBreakTimer() {
-//     breakTimerInterval = setInterval(() = {
-//         if (breakTimeLeft = 0) {
-//             clearInterval(breakTimerInterval);
-//             breakTimerInterval = null;
-//             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-//             alert("Break time is over!");
-
-           
-//             startMainTimer();
-//         } else {
-//             breakTimeLeft--;
-//             displayTime();
-//             sendHeartbeat();
-//         }
-//     }, 1000); 
-// }
- //       function startBreakTimer() {
-//         breakTimerInterval = setInterval(() = {
-//           if(breakTimeLeft = 0) {
-//             clearInterval(breakTimerInterval);
-//             breakTimerInterval = null;
-//             document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-//             alert("Break time is over!");
-
-//             // Resume the main timer after the break ends
-//             startMainTimer();
-//           }
-//            else {
-//             breakTimeLeft--;
-//           displayTime();
-//             sendHeartbeat(); // Send heartbeat to keep session alive
-//         }
-//     }, 1000); // 1-second intervals
-// }
- 
-      function displayTime() {
-        const minutes = Math.floor(breakTimeLeft / 60);
-        const seconds = breakTimeLeft % 60;
-        document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-      }
-
-      // Function to pause the main timer
-      function pauseMainTimer() {
-        clearInterval(mainTimerInterval);
-      }
-
-      // Function to resume or start the main timer
-      function startMainTimer() {
-        mainTimerInterval = setInterval(updateCountDown, 1000);
-      }
-
-      // Initial start of the main timer
-      startMainTimer();
-
-    </script>
 
     <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -641,112 +558,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 </script>
-
-
-
-
-
  
-     <!-- 
- <script>
-// let breakTimeLeft = 3600;  
-// let breakTimerInterval = null;
 
-document.getElementById("toggleBreakBtn").addEventListener("click", function() {
-    if (breakTimerInterval) {
-        clearInterval(breakTimerInterval);
-        breakTimerInterval = null;
-        this.innerHTML = "Start Break";
-    } else {
-        startBreakTimer();
-        this.innerHTML = "End Break";
-    }
-});
-
-function startBreakTimer() {
-    breakTimerInterval = setInterval(() => {
-        if (breakTimeLeft <= 0) {
-            clearInterval(breakTimerInterval);
-            breakTimerInterval = null;
-            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-            alert("Break time is over!");
-        } else {
-            breakTimeLeft--;
-            displayTime();
-            sendHeartbeat(); // Send heartbeat to keep session alive
-        }
-    }, 1000); // 1-second intervals
-}
-
-function displayTime() {
-    const minutes = Math.floor(breakTimeLeft / 60);
-    const seconds = breakTimeLeft % 60;
-    document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
-
-function sendHeartbeat() {
-    fetch("{% url 'heartbeat' %}", {
-        method: "GET",
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-    }).then(response => {
-        if (response.status !== 200) {
-            console.error("Session may have expired.");
-        }
-    }).catch(error => {
-        console.error("Failed to send heartbeat:", error);
-    });
-}
-</script>
-
-
-
-
-
-
-
-
-    <!-- <script>
-  let breakTimeLeft = 3600; // 1 hour in seconds
-
-  function startBreakTimer() {
-      const timer = setInterval(() => {
-          if (breakTimeLeft <= 0) {
-              clearInterval(timer);
-              alert("Break time is over!");
-          } else {
-              breakTimeLeft--;
-              displayTime();
-              sendHeartbeat(); // Send heartbeat to keep session alive
-          }
-      }, 1000); // 1 second intervals
-  }
-
-  function displayTime() {
-      const minutes = Math.floor(breakTimeLeft / 60);
-      const seconds = breakTimeLeft % 60;
-      document.getElementById("timer").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
-
-  function sendHeartbeat() {
-      fetch("{% url 'heartbeat' %}", {
-          method: "GET",
-          headers: {
-              "X-Requested-With": "XMLHttpRequest"
-          }
-      }).then(response => {
-          if (response.status !== 200) {
-              console.error("Session may have expired.");
-          }
-      }).catch(error => {
-          console.error("Failed to send heartbeat:", error);
-      });
-  }
-
-  startBreakTimer(); // Start the timer when the break starts
-</script> -->
-
+    <!-- Include necessary external scripts -->
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
 
 
 </body>

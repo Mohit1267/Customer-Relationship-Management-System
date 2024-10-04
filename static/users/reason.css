@@ -3,7 +3,9 @@ body {
     padding: 0;
     font-family: 'Poppins', sans-serif;
     /* background: linear-gradient(115deg, #5c5c97, #4360ad); */
-    background: linear-gradient(90deg, rgba(128, 0, 128, 1) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%);
+    /* background: linear-gradient(90deg, rgba(128, 0, 128, 1) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%); */
+    /* background-color: #d84869; */
+
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -11,27 +13,42 @@ body {
     align-items: center;
 }
 
+
+.pic {
+    position: absolute;
+    height: 100vh;
+    /* width: 2000px; */
+    width: 100vw;
+     top: 0;
+    left: 0;
+    object-fit: cover;
+    z-index: -1;
+}         
+
+
 .login-wrapper {
     width: 100%;
     max-width: 500px;
     padding: 20px;
     box-sizing: border-box;
-    margin-left: 400px;
+    /* margin-left:10px; */
+    
 }
 
-.leaving {
+.leaving{
     min-width: 400px;
-    color: #d6c9c9;
+    color:#d6c9c9;
     font-size: 40px;
     /* margin-left: 4px; */
     margin-bottom: 35px;
-    font-weight: 400;
+    font-weight:400;
     font-family: "Poppins", sans-serif;
-}
 
-.logoutreason {
+ }
+
+ .logoutreason {
     width: 100%;
-}
+ }
 
 /* Circles */
 .circle1 {
@@ -41,59 +58,61 @@ body {
     border-radius: 50%;
     /* background: linear-gradient(-25deg, #f12756, #f49178); */
     /* background: linear-gradient(-25deg, #f12756, #f49178); */
-    background: radial-gradient(circle, #f12756, #f49178);
+    background: linear-gradient(-25deg, #6caac7, #8adad3);
+
     top: 5%;
     left: 30%;
-    box-shadow: 0 0 50px #d84869;
+    box-shadow: 0 0 50px #82eef0;
     animation: circle1Animate 15s infinite;
-}
+  }
 
-.circle1,
-.circle2 {
-    transition: transform 1s ease, box-shadow 1s ease;
+  .circle1, .circle2 {
+    transition: transform 1s ease, box-shadow 1s ease; 
 }
-
-.circle1:hover {
+  
+  .circle1:hover {
     transform: scale(1.15);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes circle1Animate {
+  @keyframes circle1Animate {
     50% {
-        left: 33%;
-        top: 4%;
-        scale: 1.11;
+      left: 33%;
+      top: 4%;
+      scale: 1.11;
     }
-}
-
-.circle2 {
+  }
+  
+  .circle2 {
     position: absolute;
     bottom: 5%;
     right: 30%;
     width: 19em;
     height: 19em;
     border-radius: 50%;
-    box-shadow: 0 0 50px #5648d8;
+    box-shadow: 0 0 50px #6dcbe7;
     /* background: linear-gradient(-25deg, #a9a1f2, #8641f4); */
     /* background: linear-gradient(-25deg, #a9a1f2, #8641f4); */
-    background: radial-gradient(circle, #a9a1f2, #8641f4);
+    background: linear-gradient(-25deg, #80e1e2, #93d3d4);
 
 
     animation: circle2Animate 15s infinite;
-}
+  }
 
-.circle2:hover {
+  .circle2:hover {
     transform: scale(1.15);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
 
-
-@keyframes circle2Animate {
+  
+  @keyframes circle2Animate {
     50% {
-        bottom: 6%;
-        right: 31%;
+      bottom: 6%;
+      right: 31%;
     }
-}
+  }
+  
+
 
 .login-box {
     background: rgba(255, 255, 255, 0.1);
@@ -105,11 +124,13 @@ body {
 }
 
 .hand {
-    width: 100px;
+    width: 100px; 
     height: 110px;
     margin-left: 130px;
     margin-bottom: 20px;
 }
+
+
 
 .login-box h2 {
     text-align: center;
@@ -117,6 +138,8 @@ body {
     font-size: 24px;
     font-weight: 600;
 }
+
+
 
 .input-box {
     position: relative;
@@ -143,8 +166,8 @@ body {
     transition: 0.3s ease;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label {
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
     top: -20px;
     font-size: 12px;
     color: #fff;
@@ -195,15 +218,14 @@ button:hover {
 .signup-text a:hover {
     text-decoration: underline;
 }
-
-.create_link {
+.create_link{
     text-decoration: none;
     color: rgb(5, 157, 5);
     font-size: large;
 
 }
 
-.errorlist li {
+.errorlist li{
     color: red;
 
 }

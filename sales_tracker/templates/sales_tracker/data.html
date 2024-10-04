@@ -34,13 +34,13 @@
                 <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
                 <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
             </select>
-        </form>
         </div>
 
-
+        
+        
         <div class="state-filter-container">
           <label for="state-filter">State:</label>
-          <select id="state-filter">
+          <select name="state" id="state-filter" onchange=" this.form.submit()">
               <option value="all" disabled selected hidden>Select State</option>
               <option value="AP">Andhra Pradesh</option>
               <option value="AR">Arunachal Pradesh</option>
@@ -69,22 +69,24 @@
               <option value="UP">Uttar Pradesh</option>
               <option value="UT">Uttarakhand</option>
               <option value="WB">West Bengal</option>
-          </select>
-        </div>
-          
-        
-    <!-- Zone Filter -->
-    <div class="zone-filter-container">
-      <label for="zone-filter">Zone:</label>
-      <select id="zone-filter">
-        <option value="all" disabled selected hidden>Select Zone</option>
-        <option value="North">North</option>
-        <option value="South">South</option>
-        <option value="East">East</option>
-        <option value="West">West</option>
-      </select>
-    </div>
 
+            </select>
+        </div>
+        
+        
+        <!-- Zone Filter -->
+        <div class="zone-filter-container">
+            <label for="zone-filter">Zone:</label>
+            <select name="zone" id="zone-filter" onchange="this.form.submit()">
+                <option value="all" disabled selected hidden>Select Zone</option>
+                <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
+                <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
+                <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
+                <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
+            </select>
+        </div>
+    </form>
+        
      
   </nav>
 
@@ -109,8 +111,8 @@
             {% if data.customer_first_name %}
                 <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
                 <td>{{ data.customer_email }}</td>
-                <td>-</td>
-                <td>-</td>
+                <td>{{data.customer_mobile_number}}</td>
+                <td>{{data.company_revenue}}</td>
             {% elif data.first_name %}
                 <td>{{ data.first_name }} {{ data.last_name }}</td>
                 <td>{{ data.email_id }}</td>
@@ -121,6 +123,11 @@
                 <td>-</td>
                 <td>{{ data.probability }}</td>
                 <td>{{ data.assigned_to }}</td>
+            {% elif data.title %}
+                <td>{{ data.title }}</td>
+                <td>-</td>
+                <td>{{ data.valid_until }}</td>
+                <td>{{ data.approval_status }}</td>
             {% endif %}
         </tr>
     {% endfor %}

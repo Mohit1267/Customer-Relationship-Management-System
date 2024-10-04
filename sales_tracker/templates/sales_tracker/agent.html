@@ -8,12 +8,26 @@
 {% block content %}
 <div class="centered-content">
     <div class="content-wrapper">
-        <h1>Hello</h1>
+        <h1>Hello{{user.id}}</h1>
         <ul class="call-list">
             {% for tc in Tocall %}
             <li><a href="{% url "detail_agent" tc %}">{{ tc.customer_first_name }}</a></li>
             {% endfor %}
         </ul>
     </div>
+</div>
+
+
+<div class="graph">
+    {{ daily|safe }}
+</div>
+<div class="graph">
+    {{ monthly| safe }}
+</div>
+<div class="graph">
+    {{ quarterly|safe }}
+</div>
+<div class="graph">
+    {{ yearlyl|safe }}
 </div>
 {% endblock %}

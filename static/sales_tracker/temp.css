@@ -2,12 +2,14 @@
 .main_container {
     margin: 20px auto;
     padding: 20px;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin-top: 74px;
-    width: 150%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
 }
 
 
@@ -22,6 +24,7 @@
     top: 0;
     left: 250px;
     z-index: 1000;
+    
 }
 
 /* Inside Filter Container */
@@ -137,93 +140,150 @@
     color: white;   
 }
 
+@media (max-width: 1098px) {
+    .navbar-horizontal {
+        left: 180px; 
+        width: calc(100% - 180px);
+        padding: 8px 15px; 
+        flex-wrap: wrap; 
+    }
 
+    .form-control {
+        width: 250px; 
+    }
 
+    .profile-icon {
+        height: 40px;
+    }
+}
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
     .navbar-horizontal {
-        width: calc(100% - 200px);      
-        left: 200px       
-    }
-
-    .filter-select {
-        margin-left: 10px;
-      
-    }
-
-    .form-control {
-        width: 250px;
-       
+        left: 220px;
+        width: calc(100% - 220px); 
     }
 }
 
 @media (max-width: 992px) {
     .navbar-horizontal {
-        width: calc(100% - 150px);       
-        left: 150px;
-        
+        left: 200px; 
+        width: calc(100% - 200px); 
     }
 
     .form-control {
-        width: 200px;
-        
-    }
-
-    .filter-select {
-        width: 100px;
-        
+        width: 200px; 
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 885px) {
     .navbar-horizontal {
-        width: 100%;        
-        left: 0;
-       
+        left: 200px; 
+        width: calc(100% - 200px);
+        padding: 8px 15px; 
+        flex-wrap: wrap; 
+    }
+}
+
+@media (max-width: 780px) {
+    .navbar-horizontal {
+        left: 0; 
+        width: 100%; 
     }
 
     .form-control {
-        width: 150px;
-       
-    }
-
-    .filter-select {
-        width: 80px;
-        
+        width: 150px; 
     }
 
     .profile-icon {
-        height: 40px;
-        
+        height: 35px; 
     }
 }
 
 @media (max-width: 576px) {
+    .navbar-horizontal {
+        left: 0;
+        width: 100%; 
+        padding: 5px 10px; 
+    }
+
     .form-control {
-        width: 100%;        
-        margin-right: 0;
-        
+        width: 100%; 
     }
 
     .btn-outline-success {
-        width: 100%;
-        margin-left: 0;
+        width: 100%; 
+    }
+
+    .filter-select {
+        width: 100%; 
+    }
+}
+
+@media (max-width: 1098px) {
+    .inside-filter-container,
+    .state-filter-container,
+    .zone-filter-container {
+        flex-direction: column;
+        width: 100%; 
+        margin-top: 5px;
     }
 }
 
 
+@media (max-width: 885px) {
+    .inside-filter-container,
+    .state-filter-container,
+    .zone-filter-container {
+        flex-direction: column;
+        align-items: flex-start; 
+        width: 100%; 
+        margin-top: 5px; 
+    }
 
+    .inside-filter-container label,
+    .state-filter-container label,
+    .zone-filter-container label {
+        margin-bottom: 5px; 
+    }
 
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        width: 100%; 
+        padding: 8px; 
+    }
 
-/* Add a wrapper around the table to handle horizontal overflow */
+    .filter-bar {
+        flex-direction: column; 
+        width: 100%; 
+    }
+}
+
+@media (max-width: 768px) {
+    .inside-filter-container,
+    .state-filter-container,
+    .zone-filter-container {
+        flex-direction: column; 
+        width: 100%; 
+        margin-top: 5px; 
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        width: 100%; 
+        padding: 8px; 
+    }
+}
+
 .table-responsive {
     width: 100%;
-    overflow-x: auto;
+    overflow-x: auto; 
     overflow-y: auto;
 }
 
-/* Table styling */
+
 table {
     width: 100%;
     border-collapse: separate;
@@ -232,75 +292,70 @@ table {
     background-color: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    overflow: hidden;
+    overflow: hidden; 
 }
 
-/* Table header styling */
+
 thead {
-    background-color: #4CAF50;
+    background-color: #1E2A38; 
     color: white;
 }
 
 th,
 td {
     padding: 15px 20px;
-    text-align: left;
+    text-align: left; 
 }
 
 th {
-    font-weight: bold;
-    text-transform: uppercase;
+    font-weight: bold; 
+    text-transform: uppercase; 
     font-size: 14px;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid #ddd; 
 }
 
-/* Table rows styling */
 tbody tr {
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s;
+    border-bottom: 1px solid #ddd; 
+    transition: background-color 0.3s; 
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2; 
 }
 
 tbody tr:hover {
-    background-color: #e1f5fe;
+    background-color: #e1f5fe; 
 }
 
-/* Table cells styling */
 td {
-    font-size: 14px;
+    font-size: 14px; 
     color: #333;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease; 
 }
 
-/* Highlighted text or important fields */
 td span {
-    font-weight: bold;
-    color: #00796b;
+    font-weight: bold; 
+    color: #00796b; 
 }
 
-/* Link styles */
 a {
-    color: #0288d1;
-    text-decoration: none;
-    transition: color 0.3s;
+    color: #0288d1; 
+    text-decoration: none; 
+    transition: color 0.3s; 
 }
 
 a:hover {
-    text-decoration: underline;
-    color: #01579b;
+    text-decoration: underline; 
+    color: #01579b; 
 }
 
-/* Button styles for actions */
 button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 10px 20px; 
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
     transition: background-color 0.3s;
 }
 
@@ -308,16 +363,77 @@ button:hover {
     background-color: #388e3c;
 }
 
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-
+@media (max-width: 1098px) {
     th,
     td {
-        padding: 10px;
-        font-size: 12px;
+        padding: 12px; 
+        font-size: 13px; 
     }
 
     .main_container {
-        padding: 15px;
+        padding: 18px; 
+    }
+
+ 
+    .navbar-horizontal {
+        left: 0; 
+        width: 100%; 
+        padding: 8px; 
+        top: 0; 
+    }
+
+    
+    .table-responsive {
+        margin-top: 70px; 
+    }
+
+   
+    .table-responsive {
+        overflow-x: auto; 
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    th,
+    td {
+        padding: 10px; 
+        font-size: 12px; 
+    }
+
+    .main_container {
+        padding: 15px; 
+    }
+
+    .navbar-horizontal {
+        left: 0; 
+        width: 100%; 
+        padding: 5px; 
+        top: 0; 
+    }
+
+   
+    .table-responsive {
+        margin-top: 60px; 
+    }
+
+    
+    .table-responsive {
+        overflow-x: scroll; 
+    }
+}
+
+
+@media (max-width: 576px) {
+    
+    th,
+    td {
+        padding: 8px; 
+        font-size: 11px;
+    }
+
+    button {
+        padding: 8px 15px;
     }
 }

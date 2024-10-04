@@ -42,6 +42,10 @@ class MiningData(models.Model):
     date = models.DateField()
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1, null = True, blank = True)
     created_by = models.ForeignKey(RegisterUser,on_delete=models.CASCADE, related_name='mining_data',null=True,blank = True)
+    state = models.CharField(max_length=50,default='MP')
+    city = models.CharField(max_length=50,default='Indore')
+    region = models.CharField(max_length=50, default='North')
+
 
     def __str__(self):
         return f"{self.organisation_name}"
@@ -79,7 +83,10 @@ class LeadsData(models.Model):
     contact_link = models.ForeignKey(ContactData, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
     status = models.CharField(max_length=4, choices=LEAD_STATUS_CHOICES, default='COLD')
-
+    created_by = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, related_name='leads_by',default=11)
+    remarks = models.TextField( default="nothing" )
+    nextdate = models.DateField(default="2024-11-11")
+    
     def __str__(self):
         return f"{self.lead_name}"
     

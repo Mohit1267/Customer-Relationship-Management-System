@@ -21,7 +21,7 @@
 
 .title_animation {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: normal;
     color: #333;
     animation: pulse 15s infinite;
 }
@@ -76,19 +76,13 @@
     color: white;
 }
 
-/* Flexbox container for cards */
+/* Flexbox container for cards and graphs */
 .flex-container {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-
-.cards-container {
-    border-color: #262626;
-    width: 100%;
-    padding: 10px;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: center; /* Center the items */
+    
 }
 
 /* Card Styles */
@@ -100,7 +94,7 @@
     box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5);
     background-color: #007d7e;
     overflow: hidden;
-    flex: 1 1 calc(25% - 20px); 
+    flex: 1 1 calc(25% - 20px); /* Adjust card width as needed */
 }
 
 .card-body {
@@ -115,134 +109,148 @@
     color: white;
 }
 
-/* Graph Container Styles */
-.graph-container {
-    margin-left: 40px;
-    margin-top: 20px;
+
+.card-graph-container {
+    margin-left: 5px !important;
     display: flex;
-    padding: 5px;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    flex-direction: column; 
+    align-items: stretch; 
+    width: calc(25% - 20px); 
+    margin: 10px; 
+    z-index: -1000 ;
 }
 
 /* Graph Styles */
 .graph {
-    flex: 1 1 calc(33% - 20px);
-    margin-right: 20px;
     padding: 20px;
     color: white;
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    overflow: visible; 
 }
 
-.graph:last-child {
-    margin-right: 0;
-}
+@media (max-width: 1098px) {
+    .card {
+        flex: 1 1 calc(33% - 20px); 
+    }
 
-/* Responsive adjustments for graphs */
-@media (max-width: 1024px) {
-    .graph {
-        flex: 1 1 calc(50% - 20px); /* Two graphs per row on medium screens */
+    .card-graph-container {
+        width: calc(33% - 20px); 
+    }
+
+    .heading {
+        font-size: 40px; 
+    }
+
+    .welcome {
+        font-size: 22px; 
+        }
+
+    .title_animation {
+        font-size: 22px; 
     }
 }
 
-@media (max-width: 768px) {
-    .graph-container {
-        flex-direction: column; 
-        align-items: stretch; 
+@media (max-width: 802px) {
+    .card {
+        flex: 1 1 calc(100% - 20px); 
+    }
+
+    .card-graph-container {
+        width: 100%; 
+    }
+
+    .heading {
+        font-size: 30px; 
+        letter-spacing: 3px; 
+    }
+
+    .welcome {
+        font-size: 20px; 
+    }
+
+    .title_animation {
+        font-size: 20px; 
     }
 
     .graph {
-        flex: 1 1 100%; 
-        margin-bottom: 20px;
+        margin-bottom: 20px; 
         padding: 10px; 
     }
 }
 
-/* For very small screens (mobile phones in portrait mode) */
-@media (max-width: 576px) {
+
+
+@media (max-width: 1200px) {
+    .card {
+        flex: 1 1 calc(33% - 20px); 
+    }
+
+    .card-graph-container {
+        width: calc(33% - 20px); 
+    }
+}
+
+@media (max-width: 992px) {
+    .card {
+        flex: 1 1 calc(50% - 20px); 
+    }
+
+    .card-graph-container {
+        width: calc(50% - 20px); 
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex: 1 1 calc(100% - 20px); 
+    }
+
+    .card-graph-container {
+        width: 100%; 
+    }
+
     .graph {
-        flex: 1 1 100%; 
-        margin-bottom: 10px; 
+        margin-bottom: 20px; 
         padding: 10px; 
     }
 }
 
-/* For large screens (desktops) */
-@media (min-width: 1024px) {
-    .heading {
-        font-size: 70px;
-    }
-}
 
-/* For medium screens (tablets and small laptops) */
-@media (max-width: 1024px) {
-    .heading {
-        font-size: 60px;
-        letter-spacing: 4px;
-    }
-
-    .title_animation {
-        font-size: 30px;
-    }
-
-    .card {
-        flex: 1 1 calc(33% - 20px); /* Three cards per row */
-    }
-
-    .graph {
-        flex: 1 1 calc(33% - 20px); /* Three graphs per row */
-    }
-}
-
-/* For small screens (smartphones and smaller tablets) */
-@media (max-width: 768px) {
-    .heading {
-        font-size: 50px;
-        letter-spacing: 2px;
-    }
-
-    .title_animation {
-        font-size: 24px;
-    }
-
-    .card {
-        flex: 1 1 calc(50% - 20px); /* Two cards per row */
-        margin: 10px 0; /* More margin for smaller screens */
-    }
-
-    .graph-container {
-        flex-direction: column; /* Stack graphs vertically */
-        align-items: stretch; /* Stretch graphs to full width */
-    }
-
-    .graph {
-        flex: 1 1 100%; /* Full width graphs */
-        margin-bottom: 20px;
-    }
-}
-
-/* For very small screens (mobile phones in portrait mode) */
 @media (max-width: 576px) {
     .heading {
-        font-size: 40px;
+        font-size: 35px; 
         letter-spacing: 1px;
     }
 
     .title_animation {
-        font-size: 20px;
+        font-size: 18px; 
     }
 
     .welcome {
-        font-size: 20px;
-    }
-
-    .card {
-        flex: 1 1 100%; 
-        margin: 5px 0; 
+        font-size: 18px; 
     }
 
     .graph {
-        flex: 1 1 100%; /* Full width graphs */
-        margin-bottom: 20px;
+        margin-bottom: 20px; 
+        padding: 5px; 
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .heading {
+        font-size: 70px; 
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .heading {
+        font-size: 60px; 
+        letter-spacing: 4px; 
+    }
+
+    .title_animation {
+        font-size: 30px; 
     }
 }
