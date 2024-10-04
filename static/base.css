@@ -380,6 +380,7 @@ body {
 }
 
 
+
 /* Responsive Adjustments */
 
 /* For screens below 1200px */
@@ -417,8 +418,10 @@ body {
     min-width: 100px; /* Adjusting the width to fit smaller screens */
   }
 
+
   .nav-item {
     margin-bottom: 15px;
+
   }
 
   .nav-links {
@@ -467,10 +470,12 @@ body {
   }
 }
 
+
 @media (max-height: 802px) {
   /* Adjustments for height */
   .navbar {
     height: 100vh; /* Ensure navbar takes full height */
+
   }
 
   .navbar-container {
@@ -565,3 +570,4 @@ body {
     margin-top: 10px;
   }
 }
+
