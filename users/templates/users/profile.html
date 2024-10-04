@@ -5,6 +5,8 @@
 
 
 {% block css_link %}
+<link rel="stylesheet" href="{% static 'users/profile.css' %}">
+
 {% endblock %}
 
 
@@ -13,10 +15,8 @@
 
 {% block content %}
 
+<div class="wrapper">
 <div class="container">
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4 mt-3">
       <div class="card">
         <div class="card-header">
           <h2>Profile</h2>
@@ -28,9 +28,9 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
-      </div>
     </div>
   </div>
+</div>
 
 
 

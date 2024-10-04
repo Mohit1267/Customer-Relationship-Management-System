@@ -147,7 +147,11 @@ body {
  
 .filter-container {
     margin: 10px;
+    /* position: absolute; */
 }
+.filter-container-zone{
+    margin: 10px;
+  }
 
 select {
     padding: 10px;

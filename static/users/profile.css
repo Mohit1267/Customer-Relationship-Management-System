@@ -1,31 +1,36 @@
-.display_none {
-    display: none;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 }
 
-body {
-    margin: 0; /* Remove default browser margins */
-    font-family: Arial, sans-serif; /* Set a clean, modern font */
-  }
-  
-  h1 {
-    text-align: center; /* Center the profile title */
-    margin-bottom: 20px; /* Add some space below the title */
-    font-size: 2em; /* Increase title size */
-  }
-  
-  p {
-    margin-bottom: 10px; /* Add spacing between paragraphs */
-  }
-  
-  .info {
-    display: flex; /* Use flexbox for responsive layout */
-    flex-wrap: wrap; /* Allow items to wrap if needed */
-    justify-content: space-between; /* Distribute items evenly */
-    margin-bottom: 20px; /* Add spacing below info sections */
-  }
-  
-  .info label {
-    font-weight: bold; /* Make labels stand out */
-    width: 120px; /* Set a minimum width for labels */
-    text-align: right; /* Align labels to the right */
-  }
+.wrapper {
+  width: 100vw;
+}
+.container{
+  display: flex;
+
+  min-width:2300px ;
+  height: 1000px;
+  background: linear-gradient(to bottom, rgb(95, 231, 231), rgb(32, 178, 170))
+
+  ;
+}
+
+.card-header h2 {
+  margin-left: 320px;
+  font-weight: 600;
+  width: 100px;
+  letter-spacing: 1px;
+
+}
+
+.card {
+  width: 800px;
+  height:400px !important;
+  margin-left: 600px;
+  border: 2px solid rgb(5, 249, 143) !important;
+}
+

@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(90deg, rgba(128, 0, 128, 1) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%);
+    /* background: linear-gradient(90deg, rgba(128, 0, 128, 1) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%); */
     font-family: Arial, sans-serif;
     height: 100vh;
     margin: 0;
@@ -8,20 +8,34 @@ body {
     align-items: center;
 }
 
-
+.pic {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  /* width: 2000px; */
+  width: 100vw;
+   top: 0;
+  left: 0;
+  object-fit: cover;
+  z-index: -1;
+}
 
 
 .form_sec {
+  position: relative;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 100%;
-    max-width: 450px;
+    min-width: 450px;
     box-sizing: border-box;
     margin: 0 15px;
-    /* backdrop-filter: blur(10px) ; */
-    /* position: relative; */
+    opacity: 0.9;
+    background-color: #5f9695;
+    color: #fff;
+    z-index: 1;
+    
 }
 
 h2 {
@@ -34,7 +48,7 @@ h2 {
   
 
 /* Circles */
-.circle1 {
+/* .circle1 {
     position: absolute;
     width: 13em;
     height: 13em;
@@ -44,7 +58,7 @@ h2 {
     left: 30%;
     box-shadow: 0 0 50px #d84869;
     animation: circle1Animate 15s infinite;
-    z-index: -100;
+    z-index: -1000;
   }
   
   @keyframes circle1Animate {
@@ -70,8 +84,7 @@ h2 {
     box-shadow: 0 0 50px #5648d8;
     background: linear-gradient(-25deg, #5648d8, #8641f4);
     animation: circle2Animate 15s infinite;
-    z-index: -100;
-  }
+   }
   
   @keyframes circle2Animate {
     50% {
@@ -83,7 +96,7 @@ h2 {
   .circle2:hover {
     transform: scale(1.15);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
-}
+} */
 
 .form-group{
     color: white;
@@ -103,9 +116,13 @@ h2 {
     font-size: 16px;
     margin-top: 40px;
   }
+  input::placeholder {
+    color: #fafafa;
+    opacity: 1;
+  }
 
 .form-group input:focus {
-  border-color: #ff6f61;
+  border-color: #fafafa;
 }
 
 
