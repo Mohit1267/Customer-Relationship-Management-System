@@ -125,7 +125,7 @@ class QuotesData(models.Model):
     opportunity = models.ForeignKey(OpportunityData, on_delete=models.CASCADE)
     quote_stage = models.CharField(max_length=50, choices=(
         ('draft', 'Draft'),
-        ('negotiation', 'Negotiation'),
+        ('negotiation', 'Negotiation'), 
         ('delivered', 'delivered'),
         ('on hold', 'On Hold'),
         ('confirmed', 'Confirmed'),
