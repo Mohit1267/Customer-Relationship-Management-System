@@ -26,21 +26,21 @@ body {
 .cards-container { 
     padding: 50px;
     display: flex; 
-    flex-direction: row; /* Aligns cards in a row */
+    flex-direction: row;
     margin-top: 20px; 
     width: 100%; 
-    justify-content: space-between; /* Space between miners and mining info */
+    justify-content: space-between;
 } 
 
 .miners-list {
     display: flex; 
-    flex-direction: column; /* Stack username cards vertically */
+    flex-direction: column; 
 } 
 
 .mining-info-container {
     
     display: flex; 
-    flex-direction: column; /* Stack mining info cards vertically */
+    flex-direction: column;
 } 
 
 .card { 
@@ -49,7 +49,7 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
     padding: 20px; 
     margin: 10px; 
-    width: 100%; /* Fixed width for uniformity */
+    width: 100%;
     height: auto; 
     display: flex; 
     align-items: center; 
@@ -64,7 +64,7 @@ body {
 .rightpart1, .rightpart2 { 
     font-size: 1.2rem; 
     color: white; 
-    text-align: center; /* Center text in the cards */
+    text-align: center;
 } 
 
 @media (max-width: 768px) { 
@@ -77,12 +77,12 @@ body {
     } 
 
     .cards-container { 
-        flex-direction: column; /* Stack cards vertically on small screens */
-        align-items: center; /* Center all cards */
+        flex-direction: column;
+        align-items: center;
     }
 
     .card { 
-        width: 100%; /* Full width on smaller screens */
-        height: auto; /* Allow height to adjust based on content */
+        width: 100%;
+        height: auto;
     }
 }

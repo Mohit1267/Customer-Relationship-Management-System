@@ -88,7 +88,7 @@
         <div class="form-group"> 
           {{ form.company_emp_size|as_crispy_field }} 
         </div> 
-
+        
         <div class="filter-container">
           <label for="state-filter">State:</label>
           <select id="state-filter">
@@ -126,9 +126,11 @@
           <select id="city-filter" >
               <option value="all">All Cities</option>
           </select>
+
         
       </div>   
         <div class="filter-container-zone">
+
           <label for="state-filter">Zone:</label>
           <select id="state-filter">
               <option value="all">Select Zone</option>
@@ -142,6 +144,7 @@
         <div class="filtered-result" id="filtered-result"></div>
 
       </div> 
+
     </div> 
   </form> 
 </div> 
@@ -711,4 +714,3 @@ WB: [
 </div> 
  
 {% endblock %} 
- 

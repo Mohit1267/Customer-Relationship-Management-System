@@ -10,7 +10,7 @@
     margin-left: 0;
     width: 200px; /* Fixed width for the navbar */
     position: fixed; /* Fixes the navbar to the left of the screen */
-    height: 100%; /* Full height */
+    height: 100%; 
     /* background-color: #333; */
     padding-top: 20px;
     z-index: 1000; /* Ensures the navbar stays on top of other elements */
@@ -28,7 +28,7 @@
 
 /* Content styling */
 .content {
-    margin-left: 200px; /* Space for the navbar */
+    margin-left: 200px;
     padding: 20px;
     flex: 1;
     background-color: #f9f9f9;

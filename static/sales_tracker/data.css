@@ -60,7 +60,7 @@ a {
 
     .container {
         width: 50vw; /* Adjust width to take more space on medium-sized screens */
-        margin: 20px auto; /* Auto margins to center on the screen */
+        margin: 20px auto; 
         padding: 20px;
         border-radius: 40px;
     }
@@ -68,7 +68,7 @@ a {
 
 @media (max-width: 768px) {
     .container {
-        width: 70vw; /* Make the container wider on smaller screens */
+        width: 70vw; 
         margin: 15px auto;
         padding: 20px;
         border-radius: 30px;
@@ -84,10 +84,10 @@ a {
     }
 
     .container h2, .container span {
-        margin: 10px; /* Reduce margin for smaller screens */
+        margin: 10px;
     }
 
     .main_container {
-        margin-left: 0; /* Remove extra left margin */
+        margin-left: 0; 
     }
 }

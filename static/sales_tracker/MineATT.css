@@ -1,7 +1,7 @@
 /* Center everything on the page */
 body {
     display: flex;
-    flex-direction: row; /* Ensure content stacks vertically */
+    flex-direction: row; 
     justify-content: center;
     align-items: center;
     min-height: 100vh;

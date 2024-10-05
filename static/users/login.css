@@ -2,15 +2,13 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    /* background: linear-gradient(115deg, #5c5c97, #4360ad); */
-    /* background: linear-gradient(90deg, rgb(219, 144, 3) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%); */
-
+    align-items: center;
     height: 100%;
     width: 100%;
     /* display: flex; */
     /* justify-content: center; */
-    align-items: center;
-   
+    /* background: linear-gradient(115deg, #5c5c97, #4360ad); */
+    /* background: linear-gradient(90deg, rgb(219, 144, 3) 0%, rgba(75, 0, 130, 1) 50%, rgba(138, 43, 226, 1) 100%); */
 }
 
 .container {
@@ -18,31 +16,27 @@ body {
     width: 100vw;
     /* margin-left: -60px; */
     /* margin-right: 40px; */
-
 }
 
 .pic {
     position: absolute;
     height: 100vh;
-    /* width: 2000px; */
     width: 100vw;
-     top: 0;
+    top: 0;
     left: 0;
     object-fit: cover;
     z-index: -1;
-    
+    /* width: 2000px; */
     /* margin-top: 20px; */
-   /* margin-right: -350px; */
-   /* margin-left: -800px; */
-   /* margin-left: -8px; */
-   
-   
-   /* background-size:auto; */
+    /* margin-right: -350px; */
+    /* margin-left: -800px; */
+    /* margin-left: -8px; */
+    /* background-size:auto; */
  }
 
 
  .login-wrapper {
-    width: 450px; /* adjust the width as needed */
+    width: 450px; 
     position: absolute;
     top: 50%;
     left: 50%;
@@ -54,12 +48,11 @@ body {
     color:#d6c9c9;
     font-size: 30px;
     text-align: center;
-    /* margin-left: 7px; */
-    /* margin-left: 5px; */
     margin-bottom: 35px;
     font-weight:600;
     font-family: "Poppins", sans-serif;
-
+    /* margin-left: 7px; */
+    /* margin-left: 5px; */
  }
 /* Circles */
 .circle1 {
@@ -78,12 +71,14 @@ body {
 
 @keyframes circle1Animate {
     0%, 100% {
+
         left: 80%; /* Initial position */
         transform: scale(1);
     }
     50% {
         left: 40%; /* Middle position */
         transform: scale(1.2); /* Slightly larger in the middle of animation */
+
     }
 }
 
@@ -102,8 +97,10 @@ body {
     bottom: -15%;
     right: 30%;
     box-shadow: 0 0 50px #6dcbe7;
+
     animation: circle2Animate 30s infinite; /* Adjusted animation duration to 20s */
 }
+
 
 @keyframes circle2Animate {
     0%, 100% {
@@ -119,8 +116,6 @@ body {
     transform: scale(1.25);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
-
-
 
 .login-box {
     background: rgba(255, 255, 255, 0.1);
@@ -138,16 +133,12 @@ body {
     margin-bottom: 20px;
 }
 
-
-
 .login-box h2 {
     text-align: center;
     margin-bottom: 40px;
     font-size: 24px;
     font-weight: 600;
 }
-
-
 
 .input-box {
     position: relative;
@@ -200,10 +191,10 @@ button:hover {
     transform: translateY(-3px);
 }
 
-.login-input:hover {                       /******************************************************/
+.login-input:hover { 
     /* border-color: #ffffff;  */
-    outline:#ffffff;
     /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);  */
+    outline:#ffffff;
     border:2px solid white ;
     border-radius: 10%;
     
@@ -255,36 +246,35 @@ button:hover {
 
 .login-input {
     width: 100%;
-    padding-right: 40px; /* Ensure space for the see password button */
+    padding-right: 40px;
 }
 
 .see-password {
     position: absolute;
     margin-right: 0px;
-    /* left: 150px; */
     right: 5px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
-    /* font-size: 1.2rem; */
     color: #333;
     margin: 100;
     padding: 0;
     width: auto;
     display: flex;
+    /* left: 150px; */
+    /* font-size: 1.2rem; */
 }
-
 
 /* Remove hover effects or margin changes */
 .see-password:hover {
-    background: none; /* No background change on hover */
-    color: #333; /* Maintain the same color */
-    transform: translateY(-50%); /* Ensure it stays centered */
+    background: none; 
+    color: #333; 
+    transform: translateY(-50%); 
 }
 
 .see-password img {
-    width: 20px; /* Adjust the size of the eye icon */
+    width: 20px; 
     height: auto;
 }

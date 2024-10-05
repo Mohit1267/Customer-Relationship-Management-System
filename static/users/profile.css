@@ -34,3 +34,31 @@ body {
   border: 2px solid rgb(5, 249, 143) !important;
 }
 
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; 
+  }
+  
+  h1 {
+    text-align: center; 
+    margin-bottom: 20px;
+    font-size: 2em;
+  }
+  
+  p {
+    margin-bottom: 10px;
+  }
+  
+  .info {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .info label {
+    font-weight: bold; 
+    width: 120px; 
+    text-align: right; 
+  }

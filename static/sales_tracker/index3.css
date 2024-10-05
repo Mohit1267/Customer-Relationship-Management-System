@@ -4,7 +4,6 @@
     box-sizing: border-box;
 }
 
-
 /* Heading */
 .heading {
     margin-top: 50px;
@@ -22,7 +21,7 @@
 
 .title_animation {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: normal;
     color: #333;
     animation: pulse 15s infinite;
 }
@@ -77,41 +76,47 @@
     color: white;
 }
 
-/* Flexbox container for cards */
 .flex-container {
     margin-top: 20px;
     display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between; 
     justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    align-items: flex-start; /* Align the cards vertically centered */
+    flex-wrap: wrap; /* Allow wrapping if the screen is too small */
+    /* background-color: #262626; */
 }
 
 .cards-container {
     border-color: #262626;
-
     width: 100%;
     padding: 10px;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+     
+     
 }
 
-/* Card Styles */
 .card {
+    
     margin: 10px;
+    min-width: 200px; 
+    max-width: 250px;
     padding: 0px;
     border: none;
     outline: none;
-    box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5);
-    background-color: #007d7e;
+    box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5); 
+    background-color: #007d7e; 
     overflow: hidden;
-    flex: 1 1 calc(25% - 20px); 
-    z-index: -1000;
-
-}
+    flex: 1 1 calc(50% - 20px); 
+ }
 
 .card-body {
-    padding: 10px;
+     padding: 10px; 
     text-align: center;
     background: #1E2A38;
-    width: 100%;
+    width: 100%;        
 }
 
 .card-text,
@@ -119,138 +124,191 @@
     color: white;
 }
 
-/* Graph Container Styles */
 .graph-container {
-    margin-left: 40px;
-    margin-top: 20px;
-    display: flex;
-    padding: 5px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    z-index: -1000;
+    margin-left: 250px !important ;
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+  
 }
 
-/* Graph Styles */
 .graph {
-    flex: 1 1 calc(33% - 20px);
-    margin-right: 20px;
-    padding: 20px;
+    flex: 1 1 calc(50% - 20px);
+    margin: 10px; 
+    padding: 20px; 
     color: white;
     box-sizing: border-box; 
-    z-index: -1000;
-
 }
 
-.graph:last-child {
-    margin-right: 0;
-}
-
-
-/* Responsive adjustments for graphs */
-@media (max-width: 1024px) {
-    .graph {
-        flex: 1 1 calc(50% - 20px); /* Two graphs per row on medium screens */
-    }
-}
-
-@media (max-width: 768px) {
-    .graph-container {
-        flex-direction: column; 
-        align-items: stretch; 
-    }
-
-    .graph {
-        flex: 1 1 100%; 
-        margin-bottom: 20px;
-        padding: 10px; 
-    }
-}
-
-/* For very small screens (mobile phones in portrait mode) */
-@media (max-width: 576px) {
-    .graph {
-        flex: 1 1 100%; 
-        margin-bottom: 10px; 
-        padding: 10px; 
-    }
-}
-
-/* For large screens (desktops) */
-@media (min-width: 1024px) {
+@media (min-width: 1200px) and (max-width: 1920px) {
     .heading {
-        font-size: 70px;
-    }
-}
-
-/* For medium screens (tablets and small laptops) */
-@media (max-width: 1024px) {
-    .heading {
-        font-size: 60px;
-        letter-spacing: 4px;
-    }
-
-    .title_animation {
         font-size: 30px;
-    }
-
-    .card {
-        flex: 1 1 calc(33% - 20px); /* Three cards per row */
-    }
-
-    .graph {
-        flex: 1 1 calc(33% - 20px); /* Three graphs per row */
-    }
-}
-
-/* For small screens (smartphones and smaller tablets) */
-@media (max-width: 768px) {
-    .heading {
-        font-size: 50px;
-        letter-spacing: 2px;
-    }
-
-    .title_animation {
-        font-size: 24px;
-    }
-
-    .card {
-        flex: 1 1 calc(50% - 20px); /* Two cards per row */
-        margin: 10px 0; /* More margin for smaller screens */
-    }
-
-    .graph-container {
-        flex-direction: column; /* Stack graphs vertically */
-        align-items: stretch; /* Stretch graphs to full width */
-    }
-
-    .graph {
-        flex: 1 1 100%; /* Full width graphs */
-        margin-bottom: 20px;
-    }
-}
-
-/* For very small screens (mobile phones in portrait mode) */
-@media (max-width: 576px) {
-    .heading {
-        font-size: 40px;
-        letter-spacing: 1px;
-    }
-
-    .title_animation {
-        font-size: 20px;
+        letter-spacing: 6px; 
     }
 
     .welcome {
-        font-size: 20px;
+        font-size: 25px; 
+    }
+
+    .filter-dashb {
+        width: 180px; 
+    }
+
+    .cards-container {
+        
+        padding: 10px 20px; 
+    }
+
+    .graph-container {
+        margin-left: 0px ; 
+        padding: 10px; 
+    }
+
+    .card {
+        flex: 1 1 calc(50% - 20px); 
+    }
+
+    .graph {
+        flex: 1 1 calc(50% - 20px); 
+       
+    }
+    
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .heading {
+        font-size: 28px; 
+    }
+
+    .welcome {
+        font-size: 22px; 
+    }
+
+    .filter-dashb {
+        width: 160px;
+    }
+
+    .cards-container {
+        justify-content: center;
+        padding: 10px; 
+    }
+
+    .graph-container {
+        margin-right: 20px; 
+        padding: 10px; 
+    }
+
+    .card {
+        flex: 1 1 calc(50% - 20px); 
+    }
+
+    .graph {
+        margin-left: 5px;
+        flex: 1 1 calc(50% - 20px); 
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .heading {
+        font-size: 26px; 
+    }
+
+    .welcome {
+        font-size: 20px; 
+    }
+
+    .filter-dashb {
+        width: 140px; 
+    }
+
+    .cards-container {
+        justify-content: center;
+        padding: 5px; 
+    }
+
+    .graph-container {
+        margin-left: 0; 
+        padding: 5px; 
+    }
+
+    .card {
+        flex: 1 1 calc(50% - 20px); 
+    }
+
+    .graph {
+        flex: 1 1 calc(50% - 20px); 
+    }
+}
+
+@media (max-width: 767px) {
+    .heading {
+        font-size: 24px; 
+    }
+
+    .welcome {
+        font-size: 18px; 
+    }
+
+    .filter-dashb {
+        width: 100%; 
+        margin-left: 0; 
+    }
+
+    .flex-container {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .cards-container {
+        flex-direction: column; 
+        padding: 5px; 
+    }
+
+    .graph-container {
+        flex-direction: column; 
+        padding: 5px; 
     }
 
     .card {
         flex: 1 1 100%; 
-        margin: 5px 0; 
     }
 
     .graph {
-        flex: 1 1 100%; /* Full width graphs */
-        margin-bottom: 20px;
+        flex: 1 1 calc(50% - 20px); 
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 20px; 
+    }
+
+    .welcome {
+        font-size: 16px;
+    }
+
+    .filter-dashb {
+        width: 100%; 
+        margin-left: 0; 
+    }
+
+    .filter-dash {
+        flex-direction: column; 
+    }
+
+     .cards-container {
+        padding: 5px;
+    }
+
+    .graph-container {
+        padding: 5px; 
+    }
+
+    .card {
+        flex: 1 1 100%; 
+    }
+
+    .graph {
+        flex: 1 1 100%; 
     }
 }
