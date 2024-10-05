@@ -258,6 +258,25 @@ def Att_perct():
     print(perct_change)
     return perct_change
 
+# def Att_perct():
+#     TWattendance = AttendanceRecord.objects.filter(date__range=[TWstart_date, TWend_date], status__in=['Present', 'Late']).count()
+#     OWattendance = AttendanceRecord.objects.filter(date__range=[OWstart_date, OWend_date], status__in=['Present', 'Late']).count()
+    
+#     if Total_att == 0:
+#         raise ValueError("Total_att cannot be zero.")
+    
+#     attendence_percentage = []
+#     attendence_percentage.append((OWattendance / Total_att) * 100)
+#     attendence_percentage.append((TWattendance / Total_att) * 100)
+    
+#     if attendence_percentage[0] == 0:
+#         perct_change = 0  # or any other default value you consider appropriate
+#     else:
+#         perct_change = ((attendence_percentage[1] - attendence_percentage[0]) / attendence_percentage[0]) * 100
+
+#     print(attendence_percentage)
+#     print(perct_change)
+#     return perct_change
 def Late_perct():
     TWlate= AttendanceRecord.objects.filter(date__range=[TWstart_date, TWend_date],status__in=['Late']).count()
     OWLate = AttendanceRecord.objects.filter(date__range=[OWstart_date, OWend_date],status__in=['Late']).count()
@@ -265,8 +284,11 @@ def Late_perct():
     late.append((TWlate/Total_att)*100)
     perct_changeLate = ((late[1]- attendence_percentage[0])/late[0])*100
     return perct_changeLate 
-    print(late)
-    print(perct_changeLate)
+    # print(late)
+    # print(perct_changeLate)
+
+
+
 
 
 
