@@ -901,7 +901,7 @@ class DataView(BaseListView):
     context_count_name = 'mining_count'   
 
 class LeadView(BaseListView):
-    template_name = "sales_tracker/data.html"
+    template_name = "sales_tracker/leadsdata.html"
     model = LeadsData
     count_context_name = 'lead_count'
 class OpportunityView(BaseListView):
