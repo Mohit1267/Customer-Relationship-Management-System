@@ -61,6 +61,7 @@ body {
     height: 13em;
     border-radius: 50%;
     background: linear-gradient(-25deg, #6caac7, #8adad3);
+
     top: -15%;
     left: 80%;
     right: 40%;
@@ -92,6 +93,7 @@ body {
     height: 19em;
     border-radius: 50%;
     background: linear-gradient(-25deg, #80e1e2, #93d3d4);
+
     bottom: -15%;
     right: 30%;
     box-shadow: 0 0 50px #6dcbe7;
