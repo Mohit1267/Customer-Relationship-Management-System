@@ -47,3 +47,31 @@ local_settings.py
 
 # MacOS-specific files
 .DS
+
+
+# Ignore the virtual environment
+my_env/
+
+# Ignore common system files and directories
+.anydesk/
+.bash_history
+.bash_logout
+.bashrc
+.cache/
+.config/
+.dbtools/
+.dotnet/
+.gitconfig
+.gnome/
+.gnupg/
+.lesshst
+.local/
+.mysql_history
+.npm/
+.pki/
+.profile
+.python_history
+.sqlcl/
+.ssh/
+.sudo_as_admin_successful
+.thunderbird/

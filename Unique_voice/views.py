@@ -1,4 +1,4 @@
-from django.shortcuts import render
+'''from django.shortcuts import render
 
 import datetime
 import speech_recognition as sr
@@ -80,7 +80,7 @@ def mining_ct_voice_automated():
         return None
 
 # Example call to the voice-automated function
-mining_ct_voice_automated()
+mining_ct_voice_automated()'''
 
 
 
