@@ -16,7 +16,7 @@
 <div class="container">
     <!-- <div ></div> -->
         <!-- Example of an image element -->
-        <img class="pic" src="{% static 'loginpic2.jpg' %}" alt="Picture" class="pic">
+        <img class="pic" src="https://i.ibb.co/QKvrngm/loginpic2.jpg" alt="Picture" class="pic">
     </div>
     <div class="row">
         <div class="col-md-4"></div>
@@ -56,7 +56,7 @@
                 <div class="input-box">
                     <input type="password" name="password" id="password" placeholder="Password" class="login-input" required>
                     <button type="button" class="see-password" onclick="togglePassword()">
-                        <img id="toggleButton" src="{% static 'passwordshow.png' %}" alt="See Password" />
+                        <img id="toggleButton" src="https://i.ibb.co/hFM7LBM/passwordhide.png" alt="See Password" />
                     </button>
                 </div>
                 <input type="hidden" id="latitude" name="latitude">
@@ -82,10 +82,10 @@
      
         if (passwordInput.type === 'password') { 
             passwordInput.type = 'text'; // Show password 
-            toggleButton.src = '/static/passwordhide.png'; // Change to hide icon 
+            toggleButton.src = 'https://i.ibb.co/2dp1gTp/passwordshow.png'; // Change to hide icon 
         } else { 
             passwordInput.type = 'password'; // Hide password 
-            toggleButton.src = '/static/passwordshow.png'; // Change to show icon 
+            toggleButton.src = 'https://i.ibb.co/hFM7LBM/passwordhide.png'; // Change to show icon 
         } 
     } 
 
