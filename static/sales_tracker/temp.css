@@ -128,17 +128,38 @@
 
 }
 
-/* Adjust button styles */
-.btn-outline-success {
+/* .buttons 
+{
+    
     margin-left: 10px;   
-    height: 35px;  
+    height: 35px; 
+    background-color: #e7e7e7; color: black;
+} */
+
+button {
+    padding: 10px 20px; 
+    color: black; 
+    border: 1px solid black; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
 }
 
-/* Optional: Add hover effect to the button */
-.btn-outline-success:hover {
+button:hover {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
+
+
+/* .btn-outline-success {
+    margin-left: 10px;   
+    height: 35px;  
+} */
+
+/* .btn-outline-success:hover {
     background-color: #28a745;  
     color: white;   
-}
+} */
 
 @media (max-width: 1098px) {
     .navbar-horizontal {
@@ -349,19 +370,6 @@ a:hover {
     color: #01579b; 
 }
 
-button {
-    padding: 10px 20px; 
-    background-color: #4CAF50; 
-    color: white; 
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #388e3c;
-}
 
 @media (max-width: 1098px) {
     th,
