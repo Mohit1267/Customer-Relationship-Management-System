@@ -32,8 +32,8 @@
 </head>
 
 <body>
-  <!-- <h1>Voice Command Redirection</h1> -->
-    <!-- <button onclick="startRecognition()">Start Voice Command</button> -->
+  <h1>Voice Command Redirection</h1>
+    <button onclick="startRecognition()">Start Voice Command</button>
 
   <script src="charts.js"></script>
   <!-- navbar to the right side -->
@@ -282,7 +282,8 @@
       }
 
       function handleVoiceCommand(command) {
-          if (command.includes("show me mining view")) {
+        const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
+          if (miningViewPattern.test(command)) {
               window.location.href = "{% url 'data' %}";
           } else {
               alert("Command not recognized.");
