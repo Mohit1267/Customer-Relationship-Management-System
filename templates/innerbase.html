@@ -342,9 +342,10 @@
                     document.getElementById('time_frame').value = timeFrame;
                     // Manually trigger the change event to submit the form
                 document.getElementById('time_frame').dispatchEvent(new Event('change'));
-                }
+                } 
                 if (state) {
                     document.getElementById('state-filter').value = state;
+                    document.getElementById('state-filter').dispatchEvent(new Event('change'));
                     // Check if state filter needs to submit
                 // This will depend on your form structure and behavior
                 document.querySelector('form').submit();
