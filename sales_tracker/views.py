@@ -905,7 +905,7 @@ class LeadView(BaseListView):
     model = LeadsData
     count_context_name = 'lead_count'
 class OpportunityView(BaseListView):
-    template_name = "sales_tracker/data.html"
+    template_name = "sales_tracker/quotesdata.html"
     model = OpportunityData
     count_context_name = 'opportunity_count'
 class QuotesView(BaseListView):
