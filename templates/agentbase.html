@@ -44,8 +44,9 @@
       <b>Profile</b>
       </a> -->
     </div>
- 
+  
       <div class="navbar-container" >
+ 
         <div class="" id="navbarNavDropdown">
           <ul class="nav-links flex-column">
 
@@ -131,11 +132,10 @@
 
 
   {% block content %}{% endblock %}
-  <div class="offcanvas offcanvas-end"  " id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <!-- <div class="offcanvas offcanvas-end"  " id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="profile1 offcanvas-header">
       <h5 class="" id="offcanvasExampleLabel"><b>Profile</b></h5>
-      <!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
-    </div>
+     </div>
 
 
     <div class="offcanvas-body"  id="offcanvasExample">
@@ -160,7 +160,7 @@
                 <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
       </div>
       </div>
-  </div>
+  </div> -->
 
 <!-- profile section-->
     <script>
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     </script>
 
-    <script>
+     <script>
       function toggleNavbar() {
         const navbarContainer = document.querySelector('.navbar-container');
         const navbar = document.querySelector('.navbar');
@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     </script>
+ 
 
     <script>
 
@@ -324,5 +325,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </body>
-
 </html>
