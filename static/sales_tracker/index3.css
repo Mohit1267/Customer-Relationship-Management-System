@@ -76,32 +76,47 @@
     color: white;
 }
 
-/* Flexbox container for cards and graphs */
 .flex-container {
     margin-top: 20px;
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap */
-    justify-content: center; /* Center the items */
-    
+    /* flex-direction: column; */
+    justify-content: space-between; 
+    justify-content: center;
+    align-items: flex-start; /* Align the cards vertically centered */
+    flex-wrap: wrap; /* Allow wrapping if the screen is too small */
+    /* background-color: #262626; */
 }
 
-/* Card Styles */
+.cards-container {
+    border-color: #262626;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+     
+     
+}
+
 .card {
+    
     margin: 10px;
+    min-width: 200px; 
+    max-width: 250px;
     padding: 0px;
     border: none;
     outline: none;
-    box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5);
-    background-color: #007d7e;
+    box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5); 
+    background-color: #007d7e; 
     overflow: hidden;
-    flex: 1 1 calc(25% - 20px); /* Adjust card width as needed */
-}
+    flex: 1 1 calc(50% - 20px); 
+ }
 
 .card-body {
-    padding: 10px;
+     padding: 10px; 
     text-align: center;
     background: #1E2A38;
-    width: 100%;
+    width: 100%;        
 }
 
 .card-text,
@@ -109,148 +124,191 @@
     color: white;
 }
 
-
-.card-graph-container {
-    margin-left: 5px !important;
-    display: flex;
-    flex-direction: column; 
-    align-items: stretch; 
-    width: calc(25% - 20px); 
-    margin: 10px; 
-    z-index: -1000 ;
+.graph-container {
+    margin-left: 250px !important ;
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+  
 }
 
-/* Graph Styles */
 .graph {
-    padding: 20px;
+    flex: 1 1 calc(50% - 20px);
+    margin: 10px; 
+    padding: 20px; 
     color: white;
-    box-sizing: border-box;
-    overflow: visible; 
+    box-sizing: border-box; 
 }
 
-@media (max-width: 1098px) {
-    .card {
-        flex: 1 1 calc(33% - 20px); 
-    }
-
-    .card-graph-container {
-        width: calc(33% - 20px); 
-    }
-
+@media (min-width: 1200px) and (max-width: 1920px) {
     .heading {
-        font-size: 40px; 
+        font-size: 30px;
+        letter-spacing: 6px; 
     }
 
     .welcome {
-        font-size: 22px; 
-        }
-
-    .title_animation {
-        font-size: 22px; 
-    }
-}
-
-@media (max-width: 802px) {
-    .card {
-        flex: 1 1 calc(100% - 20px); 
+        font-size: 25px; 
     }
 
-    .card-graph-container {
-        width: 100%; 
+    .filter-dashb {
+        width: 180px; 
     }
 
-    .heading {
-        font-size: 30px; 
-        letter-spacing: 3px; 
+    .cards-container {
+        
+        padding: 10px 20px; 
     }
 
-    .welcome {
-        font-size: 20px; 
-    }
-
-    .title_animation {
-        font-size: 20px; 
-    }
-
-    .graph {
-        margin-bottom: 20px; 
+    .graph-container {
+        margin-left: 0px ; 
         padding: 10px; 
     }
-}
 
-
-
-@media (max-width: 1200px) {
-    .card {
-        flex: 1 1 calc(33% - 20px); 
-    }
-
-    .card-graph-container {
-        width: calc(33% - 20px); 
-    }
-}
-
-@media (max-width: 992px) {
     .card {
         flex: 1 1 calc(50% - 20px); 
     }
 
-    .card-graph-container {
-        width: calc(50% - 20px); 
+    .graph {
+        flex: 1 1 calc(50% - 20px); 
+       
     }
+    
 }
 
-@media (max-width: 768px) {
-    .card {
-        flex: 1 1 calc(100% - 20px); 
+@media (min-width: 992px) and (max-width: 1199px) {
+    .heading {
+        font-size: 28px; 
     }
 
-    .card-graph-container {
-        width: 100%; 
+    .welcome {
+        font-size: 22px; 
+    }
+
+    .filter-dashb {
+        width: 160px;
+    }
+
+    .cards-container {
+        justify-content: center;
+        padding: 10px; 
+    }
+
+    .graph-container {
+        margin-right: 20px; 
+        padding: 10px; 
+    }
+
+    .card {
+        flex: 1 1 calc(50% - 20px); 
     }
 
     .graph {
-        margin-bottom: 20px; 
-        padding: 10px; 
+        margin-left: 5px;
+        flex: 1 1 calc(50% - 20px); 
     }
 }
 
-
-@media (max-width: 576px) {
+@media (min-width: 768px) and (max-width: 991px) {
     .heading {
-        font-size: 35px; 
-        letter-spacing: 1px;
+        font-size: 26px; 
     }
 
-    .title_animation {
-        font-size: 18px; 
+    .welcome {
+        font-size: 20px; 
+    }
+
+    .filter-dashb {
+        width: 140px; 
+    }
+
+    .cards-container {
+        justify-content: center;
+        padding: 5px; 
+    }
+
+    .graph-container {
+        margin-left: 0; 
+        padding: 5px; 
+    }
+
+    .card {
+        flex: 1 1 calc(50% - 20px); 
+    }
+
+    .graph {
+        flex: 1 1 calc(50% - 20px); 
+    }
+}
+
+@media (max-width: 767px) {
+    .heading {
+        font-size: 24px; 
     }
 
     .welcome {
         font-size: 18px; 
     }
 
-    .graph {
-        margin-bottom: 20px; 
+    .filter-dashb {
+        width: 100%; 
+        margin-left: 0; 
+    }
+
+    .flex-container {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .cards-container {
+        flex-direction: column; 
         padding: 5px; 
     }
-}
 
+    .graph-container {
+        flex-direction: column; 
+        padding: 5px; 
+    }
 
-@media (min-width: 1024px) {
-    .heading {
-        font-size: 70px; 
+    .card {
+        flex: 1 1 100%; 
+    }
+
+    .graph {
+        flex: 1 1 calc(50% - 20px); 
     }
 }
 
-
-@media (max-width: 1024px) {
+@media (max-width: 480px) {
     .heading {
-        font-size: 60px; 
-        letter-spacing: 4px; 
+        font-size: 20px; 
     }
 
-    .title_animation {
-        font-size: 30px; 
+    .welcome {
+        font-size: 16px;
+    }
+
+    .filter-dashb {
+        width: 100%; 
+        margin-left: 0; 
+    }
+
+    .filter-dash {
+        flex-direction: column; 
+    }
+
+     .cards-container {
+        padding: 5px;
+    }
+
+    .graph-container {
+        padding: 5px; 
+    }
+
+    .card {
+        flex: 1 1 100%; 
+    }
+
+    .graph {
+        flex: 1 1 100%; 
     }
 }
