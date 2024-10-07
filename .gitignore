@@ -12,6 +12,7 @@ venv/
 env/
 ENV/
 .venv/
+.my_env/
 
 # Pipenv
 Pipfile.lock
