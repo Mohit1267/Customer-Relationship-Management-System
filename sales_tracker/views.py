@@ -901,7 +901,7 @@ class DataView(BaseListView):
     context_count_name = 'mining_count'   
 
 class LeadView(BaseListView):
-    template_name = "sales_tracker/data.html"
+    template_name = "sales_tracker/leadsdata.html"
     model = LeadsData
     count_context_name = 'lead_count'
 class OpportunityView(BaseListView):
@@ -1179,6 +1179,7 @@ def ViewQuote(request):
     pass
 
 
+
 def Agentcontact(request):
     user = request.user
     utc_login_time = user.last_login
@@ -1362,3 +1363,4 @@ def Agentlead(request):
     else:
         form = LeadForm()
     return render(request, "sales_tracker/agentlead.html", {"form":form, "timer": formated_timer})
+

@@ -126,9 +126,11 @@
           <select id="city-filter" >
               <option value="all">All Cities</option>
           </select>
-        </div>
+
         
-        <div class="filter-container">
+      </div>   
+        <div class="filter-container-zone">
+
           <label for="state-filter">Zone:</label>
           <select id="state-filter">
               <option value="all">Select Zone</option>
@@ -136,7 +138,9 @@
               <option value="AR">South</option>
               <option value="AS">East</option>
               <option value="AS">West</option>
-          </div>        
+          </div> 
+        </div>
+            
         <div class="filtered-result" id="filtered-result"></div>
 
       </div> 
@@ -702,5 +706,11 @@ WB: [
   // Initial load
   updateCityDropdown();
 </script>
+
+
+      </div> 
+    </div> 
+  </form> 
+</div> 
  
 {% endblock %} 

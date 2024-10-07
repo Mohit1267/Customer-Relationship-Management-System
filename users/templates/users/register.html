@@ -8,6 +8,10 @@
 {% block title %}Register{% endblock  %}
 
 {% block content %}
+<div class="outerdiv">
+    <img class="pic" src="{% static 'loginpic2.jpg' %}" alt="Picture" class="pic">
+
+
 <div class="form_sec">
     <div class="circle1"></div>
     <div class="circle2"></div>
@@ -55,4 +59,6 @@
     </form>
     <p class="login-link">Already have an account? <a href="{% url 'login' %}">Login</a></p>
 </div>
+</div>
+
 {% endblock %}

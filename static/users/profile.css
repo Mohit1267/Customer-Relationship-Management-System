@@ -1,6 +1,39 @@
-.display_none {
-    display: none;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 }
+
+.wrapper {
+  width: 100vw;
+}
+.container{
+  display: flex;
+
+  min-width:2300px ;
+  height: 1000px;
+  background: linear-gradient(to bottom, rgb(95, 231, 231), rgb(32, 178, 170))
+
+  ;
+}
+
+.card-header h2 {
+  margin-left: 320px;
+  font-weight: 600;
+  width: 100px;
+  letter-spacing: 1px;
+
+}
+
+.card {
+  width: 800px;
+  height:400px !important;
+  margin-left: 600px;
+  border: 2px solid rgb(5, 249, 143) !important;
+}
+
 
 body {
     margin: 0;

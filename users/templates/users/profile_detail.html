@@ -13,16 +13,22 @@
 
 {% block content %}
 
-<h1>{{user_info|upper}}</h1>
+<div class="outerdiv">
+<div class="heading">{{user_info|upper}}</div>
 
 <div class = "profile-info">
 <p><span>Emp ID : </span>{{user_info.emp_id}}</p>
+<hr>
 <p><span>DOB : </span>{{user_info.dob}}</p>
+<hr>
+
 <p><span>Branch : </span>{{user_info.branch}}</p>
+<hr>
+
 <p><span>Email : </span>{{user.email}}</p>
 </div>
 
-
+</div>
 {% endblock %}
         
 {% block javascript %}
