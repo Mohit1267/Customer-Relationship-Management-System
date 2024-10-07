@@ -22,7 +22,7 @@
           </form>
       
           <!-- Filter Bar (added between search and profile) -->
-          <div class = "inside-filter-container">
+              <div class = "inside-filter-container">
             <form method="GET" action="{% url 'data' %}">
                 <label for="time_frame">Select Time Frame:</label>
                 <select name="time_frame" id="time_frame" onchange="this.form.submit()">
@@ -33,9 +33,9 @@
                     <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
                     <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
                 </select>
-            </div>
+              </div>
 
-            <div class="state-filter-container">
+              <div class="state-filter-container">
                 <label for="state-filter">State:</label>
                 <select name="state" id="state-filter" onchange=" this.form.submit()">
                     <option value="all" disabled selected hidden>Select State</option>
@@ -83,12 +83,13 @@
                   </select>
               </div>
 
-        <div class="buttons">
+            <div class="buttons">
             <button type="button" class="button">Apply Filter</button>
             <button type="button" class="button">Clear</button>
-            <button type="button" class="profile2">P</button>
-        </div>
+           </div>
           </form>
+        </div>
+          <button style="display: inline;" type="button" class="button profile-button">P</button>
         </nav>
     
     <div class="graphBox">
@@ -110,8 +111,8 @@
 
 
 
-   <div class="offcanvas offcanvas-end"  " id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="profile1 offcanvas-header">
+   <div class="offcanvas offcanvas-end"  id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
       <h5 class="" id="offcanvasExampleLabel"><b>Profile</b></h5>
      </div>
 
@@ -144,7 +145,7 @@
   <!-- profile section-->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const profileButton = document.querySelector('.profile2');
+      const profileButton = document.querySelector('.profile-button');
       const offcanvas = document.getElementById('offcanvasExample');
     
       // Toggle offcanvas visibility on profile button click

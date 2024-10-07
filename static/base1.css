@@ -179,6 +179,7 @@ body{
     border-radius: 20px;
      transition: opacity 0.5s ease, visibility 0s ease 0s; 
       overflow: visible;
+      z-index: 1000;
  
   }
  

@@ -23,7 +23,16 @@ body {
     top: 0;
     left: 250px;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
     
+}
+
+.small-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 .inside-filter-container {
@@ -94,12 +103,7 @@ body {
     margin-left: 1100p
 }
 
-.small-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-}
 
 .buttons {background-color: #e7e7e7; color: black;}
 
@@ -111,6 +115,7 @@ body {
     width: 100%;
     /* max-width: 900px; */
     margin-top: 20px;
+    z-index: -1;
 }
 
 .graph {
@@ -120,4 +125,6 @@ body {
     margin: 1rem;
    
 }
+
+
 
