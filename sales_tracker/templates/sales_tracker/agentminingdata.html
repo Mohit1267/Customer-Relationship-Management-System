@@ -1,4 +1,5 @@
 
+
 {% extends "agentbase.html" %}
 
 {% load static %}
@@ -24,7 +25,7 @@
   
       <!-- Filter Bar (added between search and profile) -->
       <div class = "inside-filter-container">
-        <form method="GET" action="{% url 'lead_data' %}">
+        <form method="GET" action="{% url 'agentminingdata' %}">
             <label for="time_frame">Select Time Frame:</label>
             <select name="time_frame" id="time_frame" onchange="this.form.submit()">
                 <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
@@ -107,7 +108,13 @@
     {% for data in data_list %}
         <tr>
             <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
-            {% if data.first_name %}
+            
+            {% if data.customer_first_name %}
+                <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
+                <td>{{ data.customer_email }}</td>
+                <td>{{data.customer_mobile_number}}</td>
+                <td>{{data.company_revenue}}</td>
+            {% elif data.first_name %}
                 <td>{{ data.first_name }} {{ data.last_name }}</td>
                 <td>{{ data.email_id }}</td>
                 <td>-</td>

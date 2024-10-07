@@ -913,6 +913,11 @@ class QuotesView(BaseListView):
     model = QuotesData
     count_context_name = 'opportunity_count'
 
+class Agentdata(BaseListView):
+    template_name = "sales_tracker/agentminingdata.html"
+    model = MiningData
+    context_count_name = 'mining_count' 
+
 
 
 

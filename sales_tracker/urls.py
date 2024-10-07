@@ -46,6 +46,8 @@ urlpatterns = [
     path("agentquote", login_required(views.Agentquote), name="agentquote"),
     path("agentopportunity", login_required(views.Agentopportunity), name="agentopportunity"),
 
+    path("agentminingdata", login_required(views.Agentdata.as_view()), name = "agentminingdata"),
+
 
 
 
