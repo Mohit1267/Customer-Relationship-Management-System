@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as authentication_views
 from sales_tracker.requirements import min_mining_required
 from users import views as user_views
-
+#from . Unique_voice   import views
 
 
 urlpatterns = [
@@ -25,5 +25,11 @@ urlpatterns = [
     path("reason/",user_views.Reason , name="reason"),
     path('', user_views.index, name='index'),
     path('heartbeat/', user_views.heartbeat, name='heartbeat'),
+     #path('mining_voice_search/', views.mining_ct_voice_automated, name='mining_voice_search'),
+
 
 ]
+
+
+
+

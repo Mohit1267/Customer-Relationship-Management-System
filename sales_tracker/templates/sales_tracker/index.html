@@ -91,7 +91,7 @@
                 {{ yearlymining|safe }}
             </div>
         </div>
-        
+       
     </div>
     
    
@@ -125,6 +125,31 @@
             });
         });
     </script>
-
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          $('#voiceButton').on('click', function(e) {
+              e.preventDefault();
+  
+              // Perform AJAX request to trigger voice mining
+              $.ajax({
+                  url: "{% url 'mining_voice_search' %}",  // Use the correct URL name
+                  method: 'POST',
+                  headers: { 'X-CSRFToken': '{{ csrf_token }}' },  // Send the CSRF token
+                  success: function(response) {
+                      alert('Voice search triggered: ' + response.message);
+                      console.log(response);
+                      // You can also update any relevant parts of the page based on the response
+                  },
+                  error: function(xhr, status, error) {
+                      console.error("Error: " + error);
+                      alert("Error occurred: " + error);
+                  }
+              });
+          });
+      });
+  </script>
+  
 
 {% endblock %}
