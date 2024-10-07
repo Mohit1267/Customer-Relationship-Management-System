@@ -58,7 +58,7 @@
       <div class="navbar-brand-container">
         <!-- <a class="navbar-brand" href="/">Logo</a> -->
         <a  href="{% url 'Dashboards'%}">
-       <img class="navbar-brand" src="/static/Logo.png" alt="Brand Image" style="height: 65px;">
+       <img class="navbar-brand" src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image" style="height: 65px;">
         </a>
       </div>       
 
@@ -75,11 +75,6 @@
           <a class="btn btn-light profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
             <b>Profile</b>
           </a>
-          <div class="hamburger" onclick="toggleNavbar()">
-            <div class="stick stick-1"></div>
-            <div class="stick stick-2"></div>
-            <div class="stick stick-3"></div>
-          </div>
         </div>
 
         
@@ -87,7 +82,7 @@
           <ul class="nav-links flex-column"> 
             <li class="nav-item ">
                <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
-                <img src="\static\Dashboardlogo.png" alt="Dashboard Logo" style="height: 43px ; margin-right: 12px; margin-left: -10px;">
+                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo" style="height: 43px ; margin-right: 12px; margin-left: -10px;">
                 Dashboard
                </a>
             </li>
@@ -95,21 +90,17 @@
             <li class="nav-item ">
               <a class="nav-link spacing" href="#" role="button" aria-expanded="false"  style="display: flex; align-items: center;">
 
-                <img src="\static\devicelogo.png" alt="Device Logo" style=" height: 42px ;margin-right: 5px; margin-left: -5px;">
+                <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo" style=" height: 42px ;margin-right: 5px; margin-left: -5px;">
 
                 Device
               </a>
-              <!-- <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">View Quote</a></li>
-              </ul> -->
+             
             </li>
 
             <li class="nav-item ">
               <a class="nav-link spacing" href="{% url 'reports' %}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\reportslogo.png" alt="Reports Logo" style="height: 42px ; margin-right: 5px;">
+                <img src="https://i.ibb.co/2yVYr9s/reportslogo.png" alt="Reports Logo" style="height: 42px ; margin-right: 5px;">
 
                 Reports
               </a>
@@ -118,36 +109,28 @@
             <li class="nav-item ">
               <a class="nav-link spacing" href="{%url 'AdminAnalysis'%}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
                 
-                <img src="\static\Analyticslogo.png" alt="Analytics Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/87ymdrx/Analyticslogo.png" alt="Analytics Logo" style=" margin-right: 5px;">
 
                 Analytics
               </a>
-              <!-- <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
-              </ul> -->
+            
             </li>
 
             <li class="nav-item ">
               <a class="nav-link spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\realtimelogo.png" alt="realtimelogo Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; ">
+                <img src="https://i.ibb.co/j33vnyT/realtimelogo.png" alt="realtimelogo Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; ">
                 <span style="white-space: nowrap;">Real Time</span>
 
                <!-- Real time -->
               </a>
-              <!-- <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
-              </ul> -->
+          
             </li>
 
             <li class="nav-item ">
               <a class="nav-link spacing" href="{% url 'attendance' %}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance Logo" style=" margin-right: 5px;">
 
                 Attendance
               </a>
@@ -156,16 +139,11 @@
             <li class="nav-item ">
               <a class="nav-link  spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\manualtimelogo.png" alt="manualtimelogo"  style="margin-left: -6px ; margin-right: 5px;  max-width: 35px;">
+                <img src="https://i.ibb.co/8cMsRZk/manualtimelogo.png" alt="manualtimelogo"  style="margin-left: -6px ; margin-right: 5px;  max-width: 35px;">
                 <span style="white-space: nowrap;">Manual Time</span>
                 <!-- Manual Time -->
               </a>
-              <!-- <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Schedule call</a></li>
-              </ul>
-            </li> -->
+             
             
           </ul>
         </div>
@@ -213,16 +191,6 @@
     {% endif %}
     {%endcomment%}
 
-
-    <script>
-      // Function to toggle the navbar
-      function toggleNavbar() {
-  const navbar = document.querySelector('.nav-links');
-  navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
-}
-
-    </script>
-  
     <script>
       // Weekly Data Chart
       var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');

@@ -1,135 +1,130 @@
-/* Center the entire content block horizontally and vertically */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
 .centered-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
-    width: 100vw; /* Full viewport width */
-    text-align: center;
-}
-
-/* Wrapper to contain the content */
-.content-wrapper {
     width: 100%;
-    max-width: 600px; /* Limit the max width of the content */
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-/* Style the list */
-.call-list {
-    list-style-type: none; /* Remove bullets */
-    padding: 0;
-    margin: 0; 
-}
-.call-list1 {
-    list-style-type: none; 
-    padding: 0;
-    margin: 0; 
-}
-.call-list2 {
-    list-style-type: none; 
-    padding: 0;
-    margin: 0; 
-}
-.call-list3 {
-    list-style-type: none; 
-    padding: 0;
-    margin: 0; 
+.navbar-horizontal {
+    background-color: #eff3f7 !important;
+    width: calc(100% - 250px);
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    /* border-radius: 20px 20px 20px 20px; */
+    position: fixed;
+    top: 0;
+    left: 250px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    
 }
 
-/* Style each list item */
-.call-list li {
-    background-color: #f0f0f0; 
-    margin: 10px 0; 
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+.small-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
-/* Hover effect for list items */
-.call-list li:hover {
-    background-color: #ddd;
+.inside-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-/* Style the links */
-.call-list a {
-    text-decoration: none; 
-    color: #333; 
-    display: block; 
-}
-.call-list1 a {
-    text-decoration: none; 
-    color: #333; 
-    display: block; 
-}
-.call-list2 a {
-    text-decoration: none; 
-    color: #333; 
-    display: block; 
-}
-.call-list3 a {
-    text-decoration: none; 
-    color: #333; 
-    display: block; 
+.inside-filter-container label {
+    margin: 5px;
+    font-weight: normal;
 }
 
-.call-list1 li {
-    background-color: red; 
-    margin: 10px 0; 
-    padding: 10px;
-    border-radius: 5px; 
-    transition: background-color 0.3s; 
+.inside-filter-container select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
-/* Hover effect for list items */
-.call-list1 li:hover {
-    background-color: rgb(128, 3, 3);
+/* State Filter Container */
+.state-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-/* Style the links */
-.call-list1 a {
-    text-decoration: none;
-    color: #333;
-    display: block; 
+.state-filter-container label {
+    margin: 5px;
+    font-weight: normal;
 }
 
-.call-list2 li {
-    background-color: yellow;
-    margin: 10px 0; 
-    padding: 10px;
-    border-radius: 5px; 
-    transition: background-color 0.3s;
+#state-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
-/* Hover effect for list items */
-.call-list2 li:hover {
-    background-color: rgb(112, 112, 3); 
+/* Zone Filter Container */
+.zone-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-/* Style the links */
-.call-list2 a {
-    text-decoration: none; 
-    color: #333; 
-    display: block; 
+.zone-filter-container label {
+    margin: 5px;
+    font-weight: normal;
 }
 
-.call-list3 li {
-    background-color:lightblue; 
-    margin: 10px 0; 
-    padding: 10px;
-    border-radius: 5px; 
-    transition: background-color 0.3s; 
+#zone-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
-/* Hover effect for list items */
-.call-list3 li:hover {
-    background-color: rgb(3, 112, 148); 
+
+/* Filter dropdown styling */
+.filter-bar {
+    display: flex;
+    align-items: center;
 }
 
-/* Style the links */
-.call-list3 a {
-    text-decoration: none; 
-    color: #333; 
-    display: block; 
+.filter-select {
+    width: 150px;
+    margin-left: 1100p
 }
+
+
+
+.buttons {background-color: #e7e7e7; color: black;}
+
+.graphBox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* max-width: 900px; */
+    margin-top: 20px;
+    z-index: -1;
+}
+
+.graph {
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: visible;
+    margin: 1rem;
+   
+}
+
 
 

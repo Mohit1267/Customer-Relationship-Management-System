@@ -32,6 +32,8 @@
 </head>
 
 <body>
+  <!-- <h1>Voice Command Redirection</h1> -->
+    <!-- <button onclick="startRecognition()">Start Voice Command</button> -->
 
   <script src="charts.js"></script>
   <!-- navbar to the right side -->
@@ -41,20 +43,19 @@
     <div class="navbar-brand-container">
       <!-- <a class="navbar-brand" href="/">Logo</a> -->
       <a href="{% url 'index' %}">
-        <img class="navbar-brand" src="/static/Logo.png" alt="Brand Image" style="height: 65px; ">
+        <img class="navbar-brand" src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image" style="height: 65px; ">
       </a>
     </div>
 
     <!-- timer  -->
     <div>
       {% if timer %}
-      <div class="timer" id="count_down"></div>
-
-
+      <div class="timer" id="count_down">
+    </div>
       {% endif %}
-      <div class="navbar-container">
-
-        
+    
+    
+      <div class="navbar-container">    
         <div class="" id="navbarNavDropdown">
           <ul class="nav-links flex-column">
 
@@ -63,9 +64,7 @@
              <!-- <li class="nav-item dropdown">
               <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false"> -->
  
-                <img src="\static\Dashboardlogo.png" alt="Dashboard Logo"
-                 >
-
+                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo">
                 Dashboard
               </a>
             </li>
@@ -76,7 +75,7 @@
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false"> -->
  
-                <img src="\static\datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
+                <img src="https://i.ibb.co/jTpW1Hk/datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
 
                 Mining
               </a>
@@ -95,7 +94,7 @@
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false"> -->
  
-                <img src="\static\leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
 
                 Leads
               </a>
@@ -113,7 +112,7 @@
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
 
-                <img src="\static\contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/8cQkyWh/contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
 
                 Contacts
               </a>
@@ -132,7 +131,7 @@
  
         
  
-                <img src="\static\quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/c3sNstd/quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
 
                 Quotes
               </a>
@@ -141,14 +140,14 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">View Quote</a></li>
+                <li><a class="dropdown-item" href="{% url 'quotes_data' %}">View Quote</a></li>
               </ul>
             </li>
 
             <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             
-                <img src="\static\calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
+                <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
 
                 Calendar
               </a>
@@ -171,7 +170,7 @@
  
       
  
-                <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 2px;">
+                <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance Logo" style=" margin-right: 2px;">
 
                 Attendance
               </a>
@@ -183,7 +182,7 @@
                 
 
 
-                <img src="\static\opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
+                <img src="https://i.ibb.co/xF1RTTQ/opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
 
                 Opportunities
               </a>
@@ -246,6 +245,47 @@
     {% endif %}
     {%endcomment%}
 
+    <script>
+      function startRecognition() {
+          if (!('webkitSpeechRecognition' in window)) {
+              alert("Sorry, your browser doesn't support speech recognition.");
+              return;
+          }
+
+          var recognition = new webkitSpeechRecognition();
+          recognition.continuous = false;
+          recognition.interimResults = false;
+          recognition.lang = 'en-US';
+
+          recognition.onstart = function() {
+              console.log('Voice recognition started.');
+          };
+
+          recognition.onresult = function(event) {
+              var transcript = event.results[0][0].transcript.trim().toLowerCase();
+              console.log('You said: ' + transcript);
+              handleVoiceCommand(transcript);
+          };
+
+          recognition.onerror = function(event) {
+              console.error('Recognition error: ', event.error);
+          };
+
+          recognition.onend = function() {
+              console.log('Voice recognition ended.');
+          };
+
+          recognition.start();
+      }
+
+      function handleVoiceCommand(command) {
+          if (command.includes("show me mining view")) {
+              window.location.href = "{% url 'data' %}";
+          } else {
+              alert("Command not recognized.");
+          }
+      }
+  </script>
 
     <script>
       // Function to toggle the navbar

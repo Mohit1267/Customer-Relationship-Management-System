@@ -25,30 +25,6 @@
 
   <title>{% block title %}title{% endblock %}</title>
 
-  <!-- navbar to the right side -->
-  <style>
-    /* 
-    @media (max-width: 768px) {
-      .navbar {
-        transform: translateX(-100%);
-      }
-
-      .navbar.active {
-        transform: translateX(0);
-      }
-
-      .hamburger {
-        display: block;
-      }
-
-      .content {
-        margin-left: 0;
-      }
-    } */
-  </style>
-
-
-
 </head>
 
 <body>
@@ -56,67 +32,36 @@
   <script src="charts.js"></script>
   <!-- navbar to the right side -->
 
-  <nav class="navbar  navbar-expand-lg">
+   <nav class="navbar  navbar-expand-lg">
 
     <div class="navbar-brand-container">
-      <!-- <a class="navbar-brand" href="/">Logo</a> -->
-      <a href="{% url 'index' %}">
-        <img class="navbar-brand" src="/static/Logo.png" alt="Brand Image" style="height: 65px;">
+      <a href="{% url 'Dashboards'%}">
+        <img class="navbar-brand " src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image" style="height: 65px; ; ">
       </a>
+
+      <!-- <a class="btn btn-light profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+      aria-controls="offcanvasExample">
+      <b>Profile</b>
+      </a> -->
     </div>
-
-    <!-- timer  -->
-    <div>
-      {% if timer %}
-      <div class="timer" id="count_down"></div>
-
-
-      {% endif %}
-      <div class="navbar-container">
-        <!-- profile offcanvas -->
-        <div>
-          <a class="btn btn-light profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-            aria-controls="offcanvasExample">
-            <b>Profile</b>
-          </a>
-          <!-- <div class="hamburger" onclick="toggleNavbar()">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div> -->
-          <div class="hamburger" onclick="toggleNavbar()">
-            <div class="stick stick-1"></div>
-            <div class="stick stick-2"></div>
-            <div class="stick stick-3"></div>
-          </div>
-        </div>
-
-
+  
+      <div class="navbar-container" >
+ 
         <div class="" id="navbarNavDropdown">
           <ul class="nav-links flex-column">
-            
+
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-
-                <img src="\static\Dashboardlogo.png" alt="Lead Logo" style=" margin-right: 5px;">
-
+              <a class="nav-link dropdown-toggle  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false">
+                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard logo"  style=" margin-right: 5px;">
                Dashboard
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
-              </ul>
             </li>
          
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
 
-                <img src="\static\leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
 
                 Leads
               </a>
@@ -133,7 +78,7 @@
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
 
-                <img src="\static\contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/8cQkyWh/contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
 
                 Contacts
               </a>
@@ -151,7 +96,7 @@
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
 
-                <img src="\static\quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/c3sNstd/quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
 
                 Quotes
               </a>
@@ -168,7 +113,7 @@
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
 
-                <img src="\static\calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
+                <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
 
                 Calendar
               </a>
@@ -182,18 +127,18 @@
             </li>
 
         </div>
-      </div>
+
   </nav>
 
+
   {% block content %}{% endblock %}
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel"><b>Profile</b></h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+  <!-- <div class="offcanvas offcanvas-end"  " id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="profile1 offcanvas-header">
+      <h5 class="" id="offcanvasExampleLabel"><b>Profile</b></h5>
+     </div>
 
 
-    <div class="offcanvas-body ">
+    <div class="offcanvas-body"  id="offcanvasExample">
       <div class="row p-2">
         <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
       </div>
@@ -214,20 +159,35 @@
         <div class=" row p-2">
                 <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
       </div>
-      <button id="toggleBreakBtn" class="btn btn-primary">Start Break</button>
-      <div id="timerDisplay"></div>
-    </div>
+      </div>
+  </div> -->
 
-    {%comment%}
-    {% if timer %}
-    <div class="timer_count">
-      <p>Timer: <span id="count_down">00:00:00</span></p>
+<!-- profile section-->
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const profileButton = document.querySelector('.profile1');
+  const offcanvas = document.getElementById('offcanvasExample');
 
-      <p>No of Mining: {{mining_count}}</p>
-    </div>
-    {% endif %}
-    {%endcomment%}
+  // Toggle offcanvas visibility on profile button click
+  profileButton.addEventListener('click', function (e) {
+    e.stopPropagation(); // Prevent event from bubbling
+    offcanvas.classList.toggle('show'); // Toggle the "show" class to open/close offcanvas
+  });
 
+  // Close the offcanvas when clicking outside of it
+  document.addEventListener('click', function (e) {
+    if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+      offcanvas.classList.remove('show'); // Close offcanvas if clicking outside
+    }
+  });
+
+  // Ensure the close button inside the offcanvas works
+  document.querySelector('.btn-close').addEventListener('click', function () {
+    offcanvas.classList.remove('show'); // Close offcanvas
+  });
+});
+
+    </script>
 
     <script>
       // Function to toggle the navbar
@@ -237,12 +197,7 @@
       }
     </script>
 
-
-
-    /*hamburger*/
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script>
+     <script>
       function toggleNavbar() {
         const navbarContainer = document.querySelector('.navbar-container');
         const navbar = document.querySelector('.navbar');
@@ -251,8 +206,7 @@
         // Toggle the 'collapsed' class on the navbar
         navbar.classList.toggle('collapsed');
 
-        // Change the hamburger icon's state
-        hamburger.classList.toggle('open');
+       
 
         // Toggle the visibility of the navbar container
         if (navbarContainer.style.display === 'block') {
@@ -261,20 +215,8 @@
           navbarContainer.style.display = 'block';
         }
       }
-
-      // Hamburger animation
-      $(document).ready(function () {
-        $(".hamburger").click(function () {
-          $(".stick").each(function () {
-            if ($(this).hasClass('open')) {
-              $(this).removeClass('open').addClass('close');
-            } else {
-              $(this).removeClass('close').addClass('open');
-            }
-          });
-        });
-      });
     </script>
+ 
 
     <script>
 
@@ -367,49 +309,6 @@
 
     </script>
 
-    <script>
-      // Convert Django template variables to integers and calculate total seconds.
-      let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 +
-        parseInt("{{ timer.min }}", 10) * 60 +
-        parseInt("{{ timer.sec }}", 10);
-
-      const countDownEle = document.getElementById("count_down");
-
-      // Function to convert seconds to HH:MM:SS format.
-      function convertSecondsToHms(seconds) {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const sec = Math.floor(seconds % 60);
-
-        // Add leading zeros for hours, minutes, and seconds.
-        const formattedHours = hours.toString().padStart(2, "0");
-        const formattedMinutes = minutes.toString().padStart(2, "0");
-        const formattedSeconds = sec.toString().padStart(2, "0");
-
-        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-      }
-
-      // Function to update the countdown display.
-      function updateCountDown() {
-        if (totalSeconds <= 0) {
-          countDownEle.innerHTML = "00:00:00";
-          clearInterval(timerInterval); // Stop the interval when the countdown reaches zero.
-          return;
-        }
-
-        let formattedTimer = convertSecondsToHms(totalSeconds);
-        countDownEle.innerHTML = formattedTimer;
-        totalSeconds++; // Decrement the seconds.
-      }
-
-      // Debugging: Print initial value of totalSeconds to console
-      console.log(`Initial totalSeconds: ${totalSeconds}`);
-
-      // Update the countdown every second.
-      const timerInterval = setInterval(updateCountDown, 1000);
-
-      // Debugging: Check if the setInterval is working
-      console.log(`Timer started with interval: ${timerInterval}`);
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -425,178 +324,5 @@
     <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
 
 
-
-
-
-
-    <script>
-      let breakTimeLeft = 3600; // 1 hour in seconds
-      let breakTimerInterval = null;
-      let mainTimerInterval = null; // Reference to the main timer interval
-
-      document.getElementById("toggleBreakBtn").addEventListener("click", function () {
-        if (breakTimerInterval) {
-          clearInterval(breakTimerInterval);
-          breakTimerInterval = null;
-          this.innerHTML = "Start Break";
-
-          // Resume the main timer
-          startMainTimer();
-        } else {
-          startBreakTimer();
-          this.innerHTML = "End Break";
-
-          // Pause the main timer
-          pauseMainTimer();
-        }
-      });
-
-      function startBreakTimer() {
-        breakTimerInterval = setInterval(() = {
-          if(breakTimeLeft = 0) {
-            clearInterval(breakTimerInterval);
-            breakTimerInterval = null;
-            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-            alert("Break time is over!");
-
-            // Resume the main timer after the break ends
-            startMainTimer();
-          } else {
-            breakTimeLeft--;
-          displayTime();
-            sendHeartbeat(); // Send heartbeat to keep session alive
-        }
-    }, 1000); // 1-second intervals
-}
-
-      function displayTime() {
-        const minutes = Math.floor(breakTimeLeft / 60);
-        const seconds = breakTimeLeft % 60;
-        document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-      }
-
-      // Function to pause the main timer
-      function pauseMainTimer() {
-        clearInterval(mainTimerInterval);
-      }
-
-      // Function to resume or start the main timer
-      function startMainTimer() {
-        mainTimerInterval = setInterval(updateCountDown, 1000);
-      }
-
-      // Initial start of the main timer
-      startMainTimer();
-
-    </script>
-
-
-
-
-
-
-    <!-- 
-<script>
-let breakTimeLeft = 3600; // 1 hour in seconds
-let breakTimerInterval = null;
-
-document.getElementById("toggleBreakBtn").addEventListener("click", function() {
-    if (breakTimerInterval) {
-        clearInterval(breakTimerInterval);
-        breakTimerInterval = null;
-        this.innerHTML = "Start Break";
-    } else {
-        startBreakTimer();
-        this.innerHTML = "End Break";
-    }
-});
-
-function startBreakTimer() {
-    breakTimerInterval = setInterval(() => {
-        if (breakTimeLeft <= 0) {
-            clearInterval(breakTimerInterval);
-            breakTimerInterval = null;
-            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-            alert("Break time is over!");
-        } else {
-            breakTimeLeft--;
-            displayTime();
-            sendHeartbeat(); // Send heartbeat to keep session alive
-        }
-    }, 1000); // 1-second intervals
-}
-
-function displayTime() {
-    const minutes = Math.floor(breakTimeLeft / 60);
-    const seconds = breakTimeLeft % 60;
-    document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
-
-function sendHeartbeat() {
-    fetch("{% url 'heartbeat' %}", {
-        method: "GET",
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-    }).then(response => {
-        if (response.status !== 200) {
-            console.error("Session may have expired.");
-        }
-    }).catch(error => {
-        console.error("Failed to send heartbeat:", error);
-    });
-}
-</script> -->
-
-
-
-
-
-
-
-
-    <!-- <script>
-  let breakTimeLeft = 3600; // 1 hour in seconds
-
-  function startBreakTimer() {
-      const timer = setInterval(() => {
-          if (breakTimeLeft <= 0) {
-              clearInterval(timer);
-              alert("Break time is over!");
-          } else {
-              breakTimeLeft--;
-              displayTime();
-              sendHeartbeat(); // Send heartbeat to keep session alive
-          }
-      }, 1000); // 1 second intervals
-  }
-
-  function displayTime() {
-      const minutes = Math.floor(breakTimeLeft / 60);
-      const seconds = breakTimeLeft % 60;
-      document.getElementById("timer").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
-
-  function sendHeartbeat() {
-      fetch("{% url 'heartbeat' %}", {
-          method: "GET",
-          headers: {
-              "X-Requested-With": "XMLHttpRequest"
-          }
-      }).then(response => {
-          if (response.status !== 200) {
-              console.error("Session may have expired.");
-          }
-      }).catch(error => {
-          console.error("Failed to send heartbeat:", error);
-      });
-  }
-
-  startBreakTimer(); // Start the timer when the break starts
-</script> -->
-
-
-
 </body>
-
 </html>

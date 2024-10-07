@@ -44,6 +44,7 @@
     </div>
 
 
+
     <div class="flex-container cards-container z-[-10]  " >
         <div class="card ">
             <div class="card-body ">
@@ -69,6 +70,7 @@
                 <p class="card-text">{{ lead_count }}</p>
             </div>
         </div>
+
     </div>
 
 
@@ -102,25 +104,25 @@
             const cards = document.querySelectorAll('.card');
             const graphs = document.querySelectorAll('.graph');
     
-            // Filter the cards
+            
             cards.forEach(card => {
                 const category = card.getAttribute('data-category');
     
                 if (selectedValue === '' || selectedValue === category) {
-                    card.style.display = 'block'; // Show the card
+                    card.style.display = 'block';
                 } else {
-                    card.style.display = 'none'; // Hide the card
+                    card.style.display = 'none';
                 }
             });
     
-            // Filter the graphs, show only if "Mining" is selected
+            
             graphs.forEach(graph => {
                 const category = graph.getAttribute('data-category');
     
                 if (selectedValue === 'Mining') {
-                    graph.style.display = 'block'; // Show the mining graphs
+                    graph.style.display = 'block';
                 } else {
-                    graph.style.display = 'none'; // Hide the mining graphs
+                    graph.style.display = 'none';
                 }
             });
         });
