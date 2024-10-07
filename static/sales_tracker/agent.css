@@ -101,6 +101,8 @@ body {
 
 }
 
+.buttons {background-color: #e7e7e7; color: black;}
+
 .graphBox {
     display: flex;
     flex-wrap: wrap;
