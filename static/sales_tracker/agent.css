@@ -111,6 +111,7 @@ body {
     width: 100%;
     /* max-width: 900px; */
     margin-top: 20px;
+    z-index: -1;
 }
 
 .graph {
