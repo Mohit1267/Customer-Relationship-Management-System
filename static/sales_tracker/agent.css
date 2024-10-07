@@ -101,7 +101,23 @@ body {
 
 }
 
-.buttons {background-color: #e7e7e7; color: black;}
+button {
+    padding: 10px 20px; 
+    color: black; 
+    border: 1px solid black; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
+
+
+/* .buttons {background-color: #e7e7e7; color: black;} */
 
 .graphBox {
     display: flex;
@@ -111,6 +127,7 @@ body {
     width: 100%;
     /* max-width: 900px; */
     margin-top: 20px;
+    z-index: -1000;
 }
 
 .graph {

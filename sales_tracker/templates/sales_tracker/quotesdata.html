@@ -1,5 +1,5 @@
 
-{% extends "innerbase.html" %}
+{% extends "agentbase.html" %}
 
 {% load static %}
 {% block css_link %}
@@ -84,6 +84,9 @@
                 <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
                 <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
             </select>
+        </div>
+        <div class="buttons"><button type="button" class="button">Apply Filter</button>
+            <button type="button" class="button">Clear</button>
         </div>
     </form>
         

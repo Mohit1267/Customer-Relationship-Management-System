@@ -541,6 +541,13 @@ class Message(TemplateView):
         context =  super().get_context_data(**kwargs)
         context["message"] = "data stored successfully"
         return context
+    
+class Agentmessage(TemplateView):
+    template_name = "sales_tracker/agentmessage.html"
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context["message"] = "data stored successfully"
+        return context
 
 # class LeadCreateView(CreateView):
 #     model = LeadsData
@@ -913,10 +920,7 @@ class QuotesView(BaseListView):
     model = QuotesData
     count_context_name = 'opportunity_count'
 
-class Agentdata(BaseListView):
-    template_name = "sales_tracker/agentminingdata.html"
-    model = MiningData
-    context_count_name = 'mining_count' 
+
 
 
 
@@ -1270,7 +1274,7 @@ def Agentquote(request):
         )
         quote_details.save()
 
-        return redirect("message")
+        return redirect("agentmessage")
         
         # return render(request, "sales_tracker/create_lead.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
 
@@ -1312,7 +1316,7 @@ def Agentopportunity(request):
         )
         contact_details.save()
 
-        return redirect("message")
+        return redirect("agentmessage")
         
         # return render(request, "sales_tracker/create_lead.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
 
