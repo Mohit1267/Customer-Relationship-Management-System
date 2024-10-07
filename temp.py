@@ -25,33 +25,42 @@ Total_att = a*7
 TWend_date = timezone.now().date()
 TWstart_date = TWend_date - timedelta(days=6)
 a = RegisterUser.objects.count()
-# print(a)
+
 OWend_date = timezone.now().date() - timedelta(days=6) 
 OWstart_date = TWend_date - timedelta(days=12)
+print(OWend_date)
+print(OWstart_date)
+print(TWstart_date)
+print(TWend_date)
 
 TWattendance = AttendanceRecord.objects.filter(date__range=[TWstart_date, TWend_date],status__in=['Present', 'Late']).count()
-# print(TWattendance)
+
+print(TWattendance)
 OWattendance = AttendanceRecord.objects.filter(date__range=[OWstart_date, OWend_date],status__in=['Present', 'Late']).count()
+print(OWattendance)
 attendence_percentage.append((OWattendance/Total_att)*100)
-attendence_percentage.append((TWattendance/Total_att)*100)
-perct_change = ((attendence_percentage[1]- attendence_percentage[0])/attendence_percentage[0])*100
-# print((OWattendance/Total_att)*100)
 print(attendence_percentage)
-print(perct_change)
-# print("Hello")
+print(Total_att)
+attendence_percentage.append((TWattendance/Total_att)*100)
+print(attendence_percentage)
+perct_change = ((attendence_percentage[1]- attendence_percentage[0])/attendence_percentage[0])*100
+
+print(attendence_percentage)
+print(perct_change) 
+
 
 
 
 # late
 
 
-TWlate= AttendanceRecord.objects.filter(date__range=[TWstart_date, TWend_date],status__in=['Late']).count()
-OWLate = AttendanceRecord.objects.filter(date__range=[OWstart_date, OWend_date],status__in=['Late']).count()
-late.append((OWLate/Total_att)*100)
-late.append((TWlate/Total_att)*100)
-perct_changeLate = ((late[1]- attendence_percentage[0])/late[0])*100
-print(late)
-print(perct_changeLate)
+# TWlate= AttendanceRecord.objects.filter(date__range=[TWstart_date, TWend_date],status__in=['Late']).count()
+# OWLate = AttendanceRecord.objects.filter(date__range=[OWstart_date, OWend_date],status__in=['Late']).count()
+# late.append((OWLate/Total_att)*100)
+# late.append((TWlate/Total_att)*100)
+# perct_changeLate = ((late[1]- attendence_percentage[0])/late[0])*100
+# print(late)
+# print(perct_changeLate)
 
 
 
@@ -276,4 +285,19 @@ def dailymining(temp):
 
     completed_mining = data[0][0]
     print(completed_mining)
-dailymining(13)
+# dailymining(13)
+
+
+
+
+
+
+attendence_percentage = []
+late = []
+a = RegisterUser.objects.count()
+Total_att = a*7
+
+TWend_date = timezone.now().date()
+TWstart_date = TWend_date - timedelta(days=6)
+OWend_date = timezone.now().date() - timedelta(days=6) 
+OWstart_date = TWend_date - timedelta(days=12)
