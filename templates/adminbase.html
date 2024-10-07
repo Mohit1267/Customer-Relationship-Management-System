@@ -75,11 +75,6 @@
           <a class="btn btn-light profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
             <b>Profile</b>
           </a>
-          <div class="hamburger" onclick="toggleNavbar()">
-            <div class="stick stick-1"></div>
-            <div class="stick stick-2"></div>
-            <div class="stick stick-3"></div>
-          </div>
         </div>
 
         
@@ -213,16 +208,6 @@
     {% endif %}
     {%endcomment%}
 
-
-    <script>
-      // Function to toggle the navbar
-      function toggleNavbar() {
-  const navbar = document.querySelector('.nav-links');
-  navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
-}
-
-    </script>
-  
     <script>
       // Weekly Data Chart
       var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
