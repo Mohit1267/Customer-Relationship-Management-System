@@ -77,24 +77,24 @@
         
         <!-- Container for Mining Graph -->
         <div class="flex-container graph-container">
-            <div class="graph" data-category="Mining" style="display: block;">
+            <div class="graph" data-category="Mining" >
                 {{ graph_html|safe }}
             </div>
 
-            <div class="graph" data-category="Opportunity" style="display: block;">
+            <div class="graph" data-category="Opportunity" >
                 {{ monthlymining|safe }}
             </div>
 
-            <div class="graph" data-category="Contacts" style="display: block;">
+            <div class="graph" data-category="Contacts" >
                 {{ quarterlymining|safe }}
             </div>
 
-            <div class="graph" data-category="Leads" style="display: block;">
+            <div class="graph" data-category="Leads" >
                 {{ yearlymining|safe }}
             </div>
         </div>
         
-   
+    </div>
     
    
 
@@ -127,51 +127,6 @@
             });
         });
     </script>
-</div>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-
 
 
 {% endblock %}
-
-{%comment%}
-<header>
-    <h1>Dashboard</h1>
-</header>
-
-<nav>
-    <a href="{% url 'mining' %}">Data Mining</a>
-    <a href="{% url 'data' %}">Data Show</a>
-    <a href="{% url 'call' %}">Calling Options</a>
-</nav>
-
-<div class="container">
-    <div class="statistics">
-        <h2>Statistics</h2>
-        <p>Some statistics data here...</p>
-    </div>
-
-    <div class="profile"><a href="{% url " detailprofile" %}">
-            <h2>Profile</h2>
-            <p>Name: {{user.username}}</p>
-            <p>Email: {{user.email}}</p>
-        </a></div>
-</div>
-
-<footer>
-    <h2>Statistics Options</h2>
-    <p>Additional statistics options...</p>
-</footer>
-
-{%endcomment%}
