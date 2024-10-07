@@ -23,7 +23,16 @@ body {
     top: 0;
     left: 250px;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
     
+}
+
+.small-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 .inside-filter-container {
@@ -94,12 +103,7 @@ body {
     margin-left: 1100p
 }
 
-.small-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-}
 
 .buttons {background-color: #e7e7e7; color: black;}
 
@@ -111,6 +115,7 @@ body {
     width: 100%;
     /* max-width: 900px; */
     margin-top: 20px;
+    z-index: -1;
 }
 
 .graph {
@@ -118,12 +123,8 @@ body {
     box-sizing: border-box;
     overflow: visible;
     margin: 1rem;
-    /* width: 400px; */
-    /* height: 320px; */
-    /* margin: 10px; */
-    /* display: flex;
-    align-items: center; */
-    /* justify-content: center; */
-    /* margin-top: 2rem; */
+   
 }
+
+
 
