@@ -31,6 +31,7 @@ urlpatterns = [
     path("message", views.Message.as_view(), name = "message"), 
     path("createlead", views.Create_lead_view, name = "create_lead"), 
     path("lead_data", login_required(views.LeadView.as_view()), name = "lead_data"), 
+    path("quotes_data", login_required(views.QuotesView.as_view()), name = "quotes_data"), 
     path("quotes_data", login_required(views.QuotesView.as_view()), name = "view_quote"), 
     path("opportunity_data", login_required(views.OpportunityView.as_view()), name = "opportunity_data"), 
     path("createopportunity", views.Create_opportunity_view, name = "create_opportunity"), 
