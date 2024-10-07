@@ -41,6 +41,12 @@ urlpatterns = [
     path("cc", views.get_calling_agents, name ="cc"),
     path('get_timer/', login_required(views.get_timer_value), name='get_timer'),
 
+    path("agentcontact", login_required(views.Agentcontact), name="agentcontact"),
+    path("agentlead", login_required(views.Agentlead), name="agentlead"),
+    path("agentquote", login_required(views.Agentquote), name="agentquote"),
+    path("agentopportunity", login_required(views.Agentopportunity), name="agentopportunity"),
+
+
 
 
 ]

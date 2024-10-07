@@ -96,21 +96,26 @@
           <ul class="nav-links flex-column">
             
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
+              <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
 
-                <img src="\static\Dashboardlogo.png" alt="Lead Logo" style=" margin-right: 5px;">
+                <img src="\static\Dashboardlogo.png" alt="Dashboard Logo" style=" margin-right: 5px;">
 
                Dashboard
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
-              </ul>
             </li>
+
+            
+            <li class="nav-item dropdown dashboard-icon">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         
+               <img src="\static\datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
+
+               Mining
+             </a>
+             <ul class="dropdown-menu ">
+               <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
+             </ul>
+           </li>
          
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
@@ -121,7 +126,7 @@
                 Leads
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentlead' %}">Create Leads</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -138,7 +143,7 @@
                 Contacts
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentcontact' %}">Create Contacts</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -156,7 +161,7 @@
                 Quotes
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentquote' %}">Create Quote</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -178,6 +183,24 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
+
+                <img src="\static\opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
+
+                Opportunities
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'agentopportunity' %}">Create Opportunity</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
               </ul>
             </li>
 
