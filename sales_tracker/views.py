@@ -866,7 +866,7 @@ class BaseListView(ListView):
             start_date = now_date_time.replace(day=1)  # Start of the month
             end_date = (start_date + datetime.timedelta(days=31)).replace(day=1)  # Start of next month
             base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
-            return base_query.filter(date__range=[start_date.date(), end_date.date()])
+            base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "quarterly":
             quarter = (now_date_time.month - 1) // 3 + 1
             start_date = datetime.datetime(now_date_time.year, (quarter - 1) * 3 + 1, 1)

@@ -248,7 +248,7 @@
     {% endif %}
     {%endcomment%}
 
-    <script>
+    <!-- <script>
       function startRecognition() {
           if (!('webkitSpeechRecognition' in window)) {
               alert("Sorry, your browser doesn't support speech recognition.");
@@ -282,13 +282,254 @@
       }
 
       function handleVoiceCommand(command) {
-          if (command.includes("show me mining view")) {
+        const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
+          if (miningViewPattern.test(command)) {
               window.location.href = "{% url 'data' %}";
           } else {
               alert("Command not recognized.");
           }
       }
-  </script>
+  </script> -->
+
+
+
+  <!-- <script>
+    function startRecognition() {
+        if (!('webkitSpeechRecognition' in window)) {
+            alert("Sorry, your browser doesn't support speech recognition.");
+            return;
+        }
+
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        recognition.onstart = function() {
+            console.log('Voice recognition started.');
+        };
+
+        recognition.onresult = function(event) {
+            var transcript = event.results[0][0].transcript.trim().toLowerCase();
+            console.log('You said: ' + transcript);
+            handleVoiceCommand(transcript);
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Recognition error: ', event.error);
+        };
+
+        recognition.onend = function() {
+            console.log('Voice recognition ended.');
+            // Restart recognition if needed
+            startRecognition();
+        };
+
+        recognition.start();
+    }
+
+    function handleVoiceCommand(command) {
+      const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
+        if (miningViewPattern.test(command)) {
+            window.location.href = "{% url 'data' %}";
+        } else {
+            // Extract time frame and state using regex
+            const timeFrame = extractTimeFrame(command);
+            const state = extractState(command);
+
+            if (timeFrame || state) {
+                if (timeFrame) {
+                    document.getElementById('time_frame').value = timeFrame;
+                    // Manually trigger the change event to submit the form
+                document.getElementById('time_frame').dispatchEvent(new Event('change'));
+                } 
+                if (state) {
+                    document.getElementById('state-filter').value = state;
+                    document.getElementById('state-filter').dispatchEvent(new Event('change'));
+                    // Check if state filter needs to submit
+                // This will depend on your form structure and behavior
+                document.querySelector('form').submit();
+                }
+                // Submit the form to refresh the data
+                // document.querySelector('form').submit();
+            } else {
+                alert("Command not recognized.");
+            }
+        }
+    }
+
+    function extractTimeFrame(command) {
+        const timeFramePattern = /(yearly|quarterly|monthly|weekly|today)/i;
+        const match = command.match(timeFramePattern);
+        return match ? match[0].toLowerCase() : null;
+    }
+
+    function extractState(command) {
+        const states = {
+            "Andhra Pradesh": "AP",
+            "Arunachal Pradesh": "AR",
+            "Assam": "AS",
+            "Bihar": "BR",
+            "Chhattisgarh": "CG",
+            "Goa": "GA",
+            "Gujarat": "GJ",
+            "Haryana": "HR",
+            "Himachal Pradesh": "HP",
+            "Jharkhand": "JH",
+            "Karnataka": "KA",
+            "Kerala": "KL",
+            "Madhya Pradesh": "MP",
+            "Maharashtra": "MH",
+            "Manipur": "MN",
+            "Meghalaya": "ML",
+            "Mizoram": "MZ",
+            "Nagaland": "NL",
+            "Odisha": "OD",
+            "Punjab": "PB",
+            "Sikkim": "SK",
+            "Tamil Nadu": "TN",
+            "Telangana": "TG",
+            "Tripura": "TR",
+            "Uttar Pradesh": "UP",
+            "Uttarakhand": "UT",
+            "West Bengal": "WB"
+        };
+
+        for (let state in states) {
+            const statePattern = new RegExp(state.toLowerCase(), "i");
+            if (statePattern.test(command)) {
+                return states[state];
+            }
+        }
+        return null;
+    }
+
+    // Start voice recognition when the page loads
+    window.onload = function() {
+        startRecognition();
+    };
+</script> -->
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/@picovoice/porcupine-web@1.8.0"></script> -->
+
+
+<script>
+
+  function startRecognition() {
+      if (!('webkitSpeechRecognition' in window)) {
+          alert("Sorry, your browser doesn't support speech recognition.");
+          return;
+      }
+
+      var recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = function() {
+          console.log('Voice recognition started.');
+      };
+
+      recognition.onresult = function(event) {
+          var transcript = event.results[0][0].transcript.trim().toLowerCase();
+          console.log('You said: ' + transcript);
+          handleVoiceCommand(transcript);
+      };
+
+      recognition.onerror = function(event) {
+          console.error('Recognition error: ', event.error);
+      };
+
+      recognition.onend = function() {
+          console.log('Voice recognition ended.');
+          // Restart recognition if needed
+          startRecognition();
+      };
+
+      recognition.start();
+  }
+
+  function handleVoiceCommand(command) {
+      const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
+      if (miningViewPattern.test(command)) {
+          window.location.href = "{% url 'data' %}";
+      } else {
+          // Extract time frame and state using regex
+          const timeFrame = extractTimeFrame(command);
+          const state = extractState(command);
+
+          if (timeFrame || state) {
+              if (timeFrame) {
+                  document.getElementById('time_frame').value = timeFrame;
+                  // Manually trigger the change event to submit the form
+                  document.getElementById('time_frame').dispatchEvent(new Event('change'));
+              } 
+              if (state) {
+                  document.getElementById('state-filter').value = state;
+                  // Manually trigger the change event to submit the form
+                  document.getElementById('state-filter').dispatchEvent(new Event('change'));
+              }
+          } else {
+              alert("Command not recognized.");
+          }
+      }
+  }
+
+  function extractTimeFrame(command) {
+      const timeFramePattern = /(yearly|quarterly|monthly|weekly|today)/i;
+      const match = command.match(timeFramePattern);
+      return match ? match[0].toLowerCase() : null;
+  }
+
+  function extractState(command) {
+      const states = {
+          "andhra pradesh": "AP",
+          "arunachal pradesh": "AR",
+          "assam": "AS",
+          "bihar": "BR",
+          "chhattisgarh": "CG",
+          "goa": "GA",
+          "gujarat": "GJ",
+          "haryana": "HR",
+          "himachal pradesh": "HP",
+          "jharkhand": "JH",
+          "karnataka": "KA",
+          "kerala": "KL",
+          "madhya pradesh": "MP",
+          "maharashtra": "MH",
+          "manipur": "MN",
+          "meghalaya": "ML",
+          "mizoram": "MZ",
+          "nagaland": "NL",
+          "odisha": "OD",
+          "punjab": "PB",
+          "sikkim": "SK",
+          "tamil nadu": "TN",
+          "telangana": "TG",
+          "tripura": "TR",
+          "uttar pradesh": "UP",
+          "uttarakhand": "UT",
+          "west bengal": "WB"
+      };
+
+      for (let state in states) {
+          const statePattern = new RegExp(state.toLowerCase(), "i");
+          if (statePattern.test(command)) {
+              return states[state];
+          }
+      }
+      return null;
+  }
+
+  // Start voice recognition when the page loads
+  window.onload = function() {
+      startRecognition();
+  };
+</script>
+
+
+
+
 
     <script>
       // Function to toggle the navbar
