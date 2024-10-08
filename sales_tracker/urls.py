@@ -50,6 +50,7 @@ urlpatterns = [
     path("agentmining", login_required(views.Agentmining), name="agentmining"),
 
     # path("agentmessage", views.Agentmessage.as_view(), name = "agentmessage"), 
+    path("deviceAdmin", login_required(views.Admindevice), name="deviceAdmin"),
 
 
 

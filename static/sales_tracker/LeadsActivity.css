@@ -1,23 +1,147 @@
 body { 
-    background-color: #c40202; 
-    font-family: Arial, sans-serif; 
-    box-sizing: border-box; 
+    background-color: #f0f0f0; 
+    font-family: Arial, sans-serif;
     margin: 0;
+    padding: 0;
+
 } 
- 
-.container { 
-    max-width: 1200px; 
-    margin: 0 auto;
-    padding: 20px; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-} 
- 
+
+
+.navbar-horizontal {
+    background-color: #eff3f7 !important;
+    width: calc(100% - 250px);
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    /* border-radius: 20px 20px 20px 20px; */
+    position: fixed;
+    top: 0;
+    left: 250px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.small-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.inside-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.inside-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+.inside-filter-container select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* State Filter Container */
+.state-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.state-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+#state-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Zone Filter Container */
+.zone-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.zone-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+#zone-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+
+/* Filter dropdown styling */
+.filter-bar {
+    display: flex;
+    align-items: center;
+}
+
+.filter-select {
+    width: 150px;
+    margin-left: 1100p
+}
+
+
+
+button {
+    padding: 10px 20px;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
+
+.profile-button:hover {
+    background-color: #ccc;
+}
+
+.profile-button:hover img {
+    border-color: white;
+    color: white;
+    /* background-color: black; */
+    border-radius: 17%;
+    ;
+}
+
+/* old code */
+.lead-content { 
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+    
+}
+
 .attpiechart { 
-    margin: 20px 0; 
-    max-width: 100%; 
-    height: auto;
+    margin-right: 1200px;
+    max-width: 30%; 
+    height: auto; 
+    margin-top: 20px;
 } 
  
 h1 { 
@@ -25,33 +149,38 @@ h1 {
     text-align: center; 
     margin: 20px 0;
 } 
- 
-.card1, .card2, .card3 { 
+
+.leadcard {
+    margin-left:1300px;
+    margin-top: -330px;
+}
+
+.card1, .card2{ 
     background-color: #1E2A38; 
     border-radius: 10px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px; 
     margin: 10px;
-    width: calc(100% - 40px); 
+    /* width: calc(100% - 40px);  */
     max-width: 600px;
 } 
  
-.leftpart, .rightpart1, .rightpart2 { 
+ .totallead, .expectedlead { 
     font-size: 1.5rem; 
     color: white; 
 } 
  
-.rightpart1 { 
+.totallead { 
     text-align: center;  
 } 
  
-.rightpart2 { 
+.expectedlead{ 
     text-align: center; 
 } 
  
 /* Responsive adjustments for smaller screens */ 
 @media (max-width: 768px) { 
-    .leftpart, .rightpart1, .rightpart2 { 
+    .totallead, .expectedlead { 
         font-size: 1.2rem;
     } 
  

@@ -1426,3 +1426,7 @@ def Agentmining(request):
     else:
         form = MiningForm()
     return render(request, "sales_tracker/agentmining.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+
+
+def Admindevice(request):
+      return render(request, "sales_tracker/deviceAdmin.html")

@@ -25,7 +25,7 @@ body {
     z-index: 1000;
     display: flex;
     justify-content: space-between;
-    
+
 }
 
 .small-nav {
@@ -106,11 +106,11 @@ body {
 
 
 button {
-    padding: 10px 20px; 
-    color: black; 
-    border: 1px solid black; 
-    border-radius: 5px; 
-    cursor: pointer; 
+    padding: 10px 20px;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
     transition: background-color 0.3s;
 }
 
@@ -118,6 +118,18 @@ button:hover {
     border-color: white;
     color: white;
     background-color: black;
+}
+
+.profile-button:hover {
+    background-color: #ccc;
+}
+
+.profile-button:hover img {
+    border-color: white;
+    color: white;
+    /* background-color: black; */
+    border-radius: 17%;
+    ;
 }
 
 
@@ -141,6 +153,3 @@ button:hover {
     margin: 1rem;
    
 } */
-
-
-

@@ -1,0 +1,48 @@
+{% extends "adminbase.html" %}
+{% load static %}
+{% block title %}Calling agent dashboard{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/deviceAdmin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="device-content">
+
+    <nav class="navbar-horizontal ">
+        <div class="small-nav">
+            <!-- buttons -->
+            <div class="nav-button">
+                <button class="device-button" type="button">Active</button>
+                <button class="device-button" type="button">Passive</button>
+                <button class="device-button" type="button">In Time</button>
+                <button class="device-button" type="button">Out Time</button>
+                <button class="device-button" type="button">Machine IP</button>
+            </div>
+
+            <!-- Search Bar Form -->
+            <div class="search-button">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- <div class="device-container">
+
+        <div class="card1">
+           
+            <div class="card-content">
+                
+                <h3>Active</h3>
+                
+            </div>
+        </div>
+
+    </div> -->
+</div>
+
+{% endblock %}
