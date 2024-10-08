@@ -138,6 +138,18 @@ body {
      border-bottom-color: #007bff; 
      outline: none; 
  } 
+
+ .form_control textarea {
+    height: 100px;
+    resize: none;
+    overflow: hidden;
+}
+
+.form-group textarea {
+    height: 100px;
+}
+
+
   
  .filter-container {
      margin: 10px;

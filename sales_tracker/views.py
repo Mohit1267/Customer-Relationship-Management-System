@@ -541,6 +541,13 @@ class Message(TemplateView):
         context =  super().get_context_data(**kwargs)
         context["message"] = "data stored successfully"
         return context
+    
+class Agentmessage(TemplateView):
+    template_name = "sales_tracker/agentmessage.html"
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context["message"] = "data stored successfully"
+        return context
 
 # class LeadCreateView(CreateView):
 #     model = LeadsData
@@ -919,6 +926,8 @@ class QuotesView(BaseListView):
 
 
 
+
+
 # def Tocall(request):
 #     context = {}
 #     user = request.user
@@ -1179,4 +1188,188 @@ def ViewQuote(request):
     pass
 
 
+
+def Agentcontact(request):
+    user = request.user
+    utc_login_time = user.last_login
+    elapsed_time = timer(utc_login_time)
+    formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+  
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        try:
+            ContactData.objects.get(email_id = form.data.get("email_id"))
+        except:
+            # assigned_agent = assign_contact_to_agent()
+            now_date_time = datetime.datetime.now()
+            now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+            username = request.user.username
+            # claid = request.POST.get("calling_agent")
+            contact_details = ContactData(
+                first_name = form.data.get("first_name"),
+                last_name = form.data.get("last_name"),
+                email_id = form.data.get("email_id"),
+                contact_number = form.data.get("contact_number"),
+                job_title = form.data.get("job_title"),
+                address = form.data.get("address"),
+                organization = MiningData.objects.get(organisation_name = form.data.get("organization")),
+                date = now_date,
+                # assigned_to=assigned_agent.user,
+                
+                # assigned_to = get_user_model().objects.get(username=username),
+                # calling_agent = CallingAgent.objects.get(calling_agent_id=claid),
+            )
+                # calling_agent=CallingAgent.objects.get(id=form.calling_agent.get("calling_agent"))
+            contact_details.save()
+
+            return redirect("agentcontact")
+        
+        return render(request, "sales_tracker/agentcontact.html", {"form":form, "timer": formated_timer, "calling_agents": CallingAgent.objects.all()})
+
+
+    else:
+        form = ContactForm()
+    return render(request, "sales_tracker/agentcontact.html", {"form":form, "timer": formated_timer, "calling_agents": CallingAgent.objects.all()})
+
+
+
+def Agentquote(request):
+    user = request.user
+    utc_login_time = user.last_login
+    elapsed_time = timer(utc_login_time)
+    formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+    if request.method == "POST":
+        form = QuoteForm(request.POST)
+        
+        now_date_time = datetime.datetime.now()
+        now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+        username = request.user.username
+        quote_details = QuotesData(
+            title = form.data.get("title"),
+            valid_until = form.data.get("valid_until"),
+            approval_status = form.data.get("approval_status"),
+            opportunity = OpportunityData.objects.get(pk = form.data.get("opportunity")),
+            quote_stage = form.data.get("quote_stage"),
+            invoice_status = form.data.get("invoice_status"),
+            approval_issues_description = None if form.data.get("approval_issues_description") == "" else form.data.get("approval_issues_description"),
+            lead_source = form.data.get("lead_source"),
+            account = form.data.get("account"),
+            contact = form.data.get("contact"),
+            billing_address = form.data.get("billing_address"),
+            shipping_address = form.data.get("shipping_address"),
+            total = form.data.get("total"),
+            discount = form.data.get("discount"),
+            sub_total = form.data.get("sub_total"),
+            shipping = form.data.get("shipping"),
+            shipping_tax = form.data.get("shipping_tax"),
+            tax = form.data.get("tax"),
+            grandtotal = form.data.get("grandtotal"),
+            date = now_date,
+            assigned_to = get_user_model().objects.get(username=username)
+
+        )
+        quote_details.save()
+
+        return redirect("agentmessage")
+        
+        # return render(request, "sales_tracker/create_lead.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+
+
+    else:
+        form = QuoteForm()
+    return render(request, "sales_tracker/agentquote.html", {"form":form, "timer": formated_timer})
+
+
+
+def Agentopportunity(request):
+    user = request.user
+    utc_login_time = user.last_login
+    elapsed_time = timer(utc_login_time)
+    formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+    # today_mining = MiningData.objects.filter(date = now_date)
+    # today_mining_count = today_mining.count()
+    if request.method == "POST":
+        form = OpportunityForm(request.POST)
+        
+        now_date_time = datetime.datetime.now()
+        now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+        username = request.user.username
+        contact_details = OpportunityData(
+            opportunity_name = form.data.get("opportunity_name"),
+            amount = form.data.get("amount"),
+            sales_stage = form.data.get("sales_stage"),
+            probability = form.data.get("probability"),
+            next_step = form.data.get("next_step"),
+            description = form.data.get("description"),
+            expected_close_date = form.data.get("expected_close_date"),
+            lead_source = form.data.get("lead_source"),
+            lead = LeadsData.objects.get(pk = form.data.get("lead")),
+            date = now_date,
+            assigned_to = get_user_model().objects.get(username=username)
+
+        )
+        contact_details.save()
+
+        return redirect("agentmessage")
+        
+        # return render(request, "sales_tracker/create_lead.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+
+
+    else:
+        form = OpportunityForm()
+    return render(request, "sales_tracker/agentopportunity.html", {"form":form, "timer": formated_timer})
+
+
+
+def Agentlead(request):
+    user = request.user
+    utc_login_time = user.last_login
+    elapsed_time = timer(utc_login_time)
+    formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+    # today_mining = MiningData.objects.filter(date = now_date)
+    # today_mining_count = today_mining.count()
+    if request.method == "POST":
+        form = LeadForm(request.POST)
+        try:
+            LeadsData.objects.get(contact_link = ContactData.objects.get(pk = form.data.get("contact_link")))
+        except:
+            assign_lead = assign_leadCt()
+            now_date_time = datetime.datetime.now()
+            now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+            username = request.user.username
+            contact_details = LeadsData(
+                lead_name = form.data.get("lead_name"),
+                first_name = form.data.get("first_name"),
+                last_name = form.data.get("last_name"),
+                email_id = form.data.get("email_id"),
+                contact_number = form.data.get("contact_number"),
+                job_title = form.data.get("job_title"),
+                address = form.data.get("address"),
+                contact_link = ContactData.objects.get(pk = form.data.get("contact_link")),
+                date = now_date,
+                # assigned_to = get_user_model().objects.get(username=username),
+                assigned_to = assign_lead,
+                created_by = user,
+                nextdate = form.data.get("nextdate"),
+                remarks = form.data.get("remarks")
+            )
+            print("hello bhai")
+            contact_details.save()
+
+            return redirect("agentlead")
+        
+        return render(request, "sales_tracker/agentlead.html", {"form":form, "timer": formated_timer})
+
+
+    else:
+        form = LeadForm()
+    return render(request, "sales_tracker/agentlead.html", {"form":form, "timer": formated_timer})
 

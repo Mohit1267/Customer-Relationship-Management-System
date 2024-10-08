@@ -16,6 +16,7 @@ body {
 .navbar-horizontal {
     background-color: #eff3f7 !important;
     width: calc(100% - 250px);
+    /* width: 100%; */
     background-color: #f8f9fa;
     padding: 10px 20px;
     /* border-radius: 20px 20px 20px 20px; */
@@ -23,7 +24,19 @@ body {
     top: 0;
     left: 250px;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10%;
+    border: 1px solid gray;
+    overflow: hidden;
     
+}
+
+.small-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 .inside-filter-container {
@@ -68,6 +81,7 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
+    cursor: pointer;
 }
 
 .zone-filter-container label {
@@ -91,17 +105,42 @@ body {
 
 .filter-select {
     width: 150px;
-    margin-left: 1100p
+    margin-left: 20px;
 }
 
-.small-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
+
+.button1, .profile-button {
+    padding: 10px 20px; 
+    color: black; 
+    border: 1px solid black; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+    border-radius: 15%;
 }
 
-.buttons {background-color: #e7e7e7; color: black;}
+button:hover {
+    border-color: white;
+    color: white;
+    background-color: black;
+    border-radius: 17%;;
+}
+
+
+
+.profile-button:hover{
+   background-color: #ccc;
+}
+
+.profile-button:hover img {
+    border-color: white;
+    color: white;
+    /* background-color: black; */
+    border-radius: 17%;;  }
+
+
+/* .buttons {background-color: #e7e7e7; color: black;} */
 
 .graphBox {
     display: flex;
@@ -110,7 +149,8 @@ body {
     align-items: center;
     width: 100%;
     /* max-width: 900px; */
-    margin-top: 20px;
+    margin-top: 6%;
+    z-index: -1;
 }
 
 .graph {
@@ -118,12 +158,48 @@ body {
     box-sizing: border-box;
     overflow: visible;
     margin: 1rem;
-    /* width: 400px; */
-    /* height: 320px; */
-    /* margin: 10px; */
-    /* display: flex;
-    align-items: center; */
-    /* justify-content: center; */
-    /* margin-top: 2rem; */
+   
 }
 
+/* @media only screen and (max-width: 1195px) {
+    .navbar-horizontal {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
+
+ @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .navbar-horizontal {
+        flex-direction: row;
+        padding: 10px;
+    }
+    .filter-select {
+        width: 120px;
+        margin-left: 10px;
+    }
+}
+
+ @media only screen and (max-width: 767px) {
+    .navbar-horizontal {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+    .filter-select {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+ @media only screen and (max-width: 479px) {
+    .navbar-horizontal {
+        padding: 5px 10px;
+    }
+    .filter-select {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .button1, .profile-button {
+        padding: 8px 16px;
+    }
+} */
