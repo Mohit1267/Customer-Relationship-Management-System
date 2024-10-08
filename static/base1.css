@@ -33,10 +33,11 @@ body{
       border-radius: 0px;  
       box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5); 
        padding: 10px 20px;  
-      overflow-y: auto;  
-      overflow: visible;
+      /* overflow-y: auto;  
+      overflow: visible; */
       transform: translateX(0);
       transition: transform 0.3s ease-in-out;
+      background-attachment: fixed;
   }
   
   .navbar.collapsed {
