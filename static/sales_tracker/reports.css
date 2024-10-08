@@ -1,9 +1,12 @@
-/* Dashboard Container */
 .dashboard-container {
     padding: 20px;
-    max-width: 1200px;
+    /* max-width: 1200px; */
+    width: 100vw;
     margin: 0 auto;
- 
+    height: 100vh;
+    overflow-y: auto;
+    /* overflow-y: scroll; */
+
 }
 
 /* Section Styles */
@@ -32,19 +35,35 @@
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
+
 }
 
 /* Individual Card */
 .card {
-
+    /* height: 200px !important; */
     background: #1E2A38 !important;
     border: 1px solid #3C4A5E;
     border-radius: 12px;
     flex: 1 1 calc(25% - 25px);
     min-width: 260px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: left;
+}
+.card1 {
+    height: 200px !important;
+    background: #1E2A38 !important;
+    border: 1px solid #3C4A5E;
+    border-radius: 7px;
+    flex: 1 1 calc(25% - 25px);
+    min-width: 260px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 25px;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -66,7 +85,6 @@
 
 /* Card Content */
 .card-content h3 {
-/* <<<<<<< HEAD*/
     margin: 0 0 12px 0;
     font-size: 20px;
     color: #ffffff;
@@ -87,6 +105,13 @@
 }
 
 /* Responsive Design */
+/* @media (max-width: 1200px) {
+    .card {
+        height: 200px;
+        flex: 1 1 calc(33.333% - 25px);
+    }
+} */
+
 @media (max-width: 992px) {
     .card {
         flex: 1 1 calc(33.333% - 25px);
@@ -101,6 +126,24 @@
 
 @media (max-width: 576px) {
     .card {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .card1 {
+        flex: 1 1 calc(33.333% - 25px);
+    }
+}
+
+@media (max-width: 768px) {
+    .card1 {
+        flex: 1 1 calc(50% - 25px);
+    }
+}
+
+@media (max-width: 576px) {
+    .card1 {
         flex: 1 1 100%;
     }
 }
