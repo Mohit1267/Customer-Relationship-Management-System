@@ -10,24 +10,162 @@
 
 
 {% block content %}
-<h1>{{temp}}</h1>
-<h1>{{lat}}</h1>
-<!-- <p>jwr</p> -->
-<h1>{{long}}</h1>
-<div>{{ attendence_graph|safe }}</div>
-<!-- <div class="chart-container">
-    <img class="chart1" src="{% static 'admin_attendence.png' %}" alt="Attendance Chart">
-    <img src="{% static 'Time_worked.png' %}" alt="Attendance Chart">
-</div> -->
 
-  <!-- <div class="card-container">
-    <div class="card">
-        <p>Attendence : {{ att }}</p>
+
+<div class="center-content">
+
+   
+  <nav class="navbar-horizontal ">
+      <div class="small-nav">
+        
+        <!-- Search Bar Form -->
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    
+        <!-- Filter Bar (added between search and profile) -->
+            <div class = "inside-filter-container">
+          <form method="GET" action="{% url 'data' %}">
+              <label for="time_frame">Select Time Frame:</label>
+              <select name="time_frame" id="time_frame" >
+                  <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
+                  <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
+                  <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
+                  <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
+                  <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
+                  <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
+              </select>
+            </div>
+
+            <div class="state-filter-container">
+              <label for="state-filter">State:</label>
+              <select name="state" id="state-filter" >
+                  <option value="all" disabled selected hidden>Select State</option>
+                  <option value="AP">Andhra Pradesh</option>
+                  <option value="AR">Arunachal Pradesh</option>
+                  <option value="AS">Assam</option>
+                  <option value="BR">Bihar</option>
+                  <option value="CG">Chhattisgarh</option>
+                  <option value="GA">Goa</option>
+                  <option value="GJ">Gujarat</option>
+                  <option value="HR">Haryana</option>
+                  <option value="HP">Himachal Pradesh</option>
+                  <option value="JH">Jharkhand</option>
+                  <option value="KA">Karnataka</option>
+                  <option value="KL">Kerala</option>
+                  <option value="MP">Madhya Pradesh</option>
+                  <option value="MH">Maharashtra</option>
+                  <option value="MN">Manipur</option>
+                  <option value="ML">Meghalaya</option>
+                  <option value="MZ">Mizoram</option>
+                  <option value="NL">Nagaland</option>
+                  <option value="OD">Odisha</option>
+                  <option value="PB">Punjab</option>
+                  <option value="SK">Sikkim</option>
+                  <option value="TN">Tamil Nadu</option>
+                  <option value="TG">Telangana</option>
+                  <option value="TR">Tripura</option>
+                  <option value="UP">Uttar Pradesh</option>
+                  <option value="UT">Uttarakhand</option>
+                  <option value="WB">West Bengal</option>
+    
+                </select>
+            </div>
+            
+            
+            <!-- Zone Filter -->
+            <div class="zone-filter-container">
+                <label for="zone-filter">Zone:</label>
+                <select name="zone" id="zone-filter" >
+                    <option value="all" disabled selected hidden>Select Zone</option>
+                    <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
+                    <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
+                    <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
+                    <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
+                </select>
+            </div>
+
+
+      <div class="buttons"><button type="submit" class="button">Apply Filter</button>
+          <button type="reset" class="button">Clear</button></div>
+            
+
+        </form>
+      </div>
+        <button style="display: inline;" type="button" class="button profile-button">P</button>
+      </nav>
+
+      <div class="graphBox">
+      <div>{{ attendence_graph|safe }}</div>
+      </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end"  id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="" id="offcanvasExampleLabel"><b>Profile</b></h5>
+   </div>
+
+
+  <div class="offcanvas-body"  id="offcanvasExample">
+    <div class="row p-2">
+      <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
     </div>
-    <div class="card">
-        <p>Late : {{ late }}</p>
+    <div class="row p-2">
+      <a href="#" class=" right_profile" ">Edit Profile</a>
+      </div>
+      <hr>
+      <div class=" row p-2">
+        <a href="#" class=" right_profile"">Employees</a>
+      </div>
+      <div class=" row p-2">
+          <a href="#" class=" right_profile"">Community Forum</a>
+      </div>
+      <div class=" row p-2">
+            <a href="#" class=" right_profile"">About</a>
+      </div>
+      <hr>
+      <div class=" row p-2">
+              <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
     </div>
-  </div>
-</div> -->
+    </div>
+</div>
+
+
+<!-- profile section-->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const profileButton = document.querySelector('.profile-button');
+    const offcanvas = document.getElementById('offcanvasExample');
+  
+    // Toggle offcanvas visibility on profile button click
+    profileButton.addEventListener('click', function (e) {
+      e.stopPropagation(); // Prevent event from bubbling
+      offcanvas.classList.toggle('show'); // Toggle the "show" class to open/close offcanvas
+    });
+  
+    // Close the offcanvas when clicking outside of it
+    document.addEventListener('click', function (e) {
+      if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+        offcanvas.classList.remove('show'); // Close offcanvas if clicking outside
+      }
+    });
+  
+    // Ensure the close button inside the offcanvas works
+    document.querySelector('.btn-close').addEventListener('click', function () {
+      offcanvas.classList.remove('show'); // Close offcanvas
+    });
+  });
+  
+      </script>
+
+
+<!-- <h1>{{temp}}</h1>
+<h1>{{lat}}</h1>
+
+<h1>{{long}}</h1>
+<div>{{ attendence_graph|safe }}</div> -->
+
 {% endblock %}
 
