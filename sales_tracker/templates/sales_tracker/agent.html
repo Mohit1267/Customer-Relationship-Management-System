@@ -23,9 +23,10 @@
       
           <!-- Filter Bar (added between search and profile) -->
               <div class = "inside-filter-container">
-            <form method="GET" action="{% url 'data' %}">
-                <label for="time_frame">Select Time Frame:</label>
-                <select name="time_frame" id="time_frame" >
+                <form method="GET" action="{% url 'data' %}">
+                <label for="time_frame" style="margin-left: 30px;">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame" onchange="this.form.submit()">
+
                     <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
                     <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                     <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
@@ -36,8 +37,9 @@
               </div>
 
               <div class="state-filter-container">
-                <label for="state-filter">State:</label>
-                <select name="state" id="state-filter" >
+                <label for="state-filter" style="margin-left: 30px;">State:</label>
+                <select name="state" id="state-filter" onchange=" this.form.submit()">
+
                     <option value="all" disabled selected hidden>Select State</option>
                     <option value="AP">Andhra Pradesh</option>
                     <option value="AR">Arunachal Pradesh</option>
@@ -73,8 +75,9 @@
               
               <!-- Zone Filter -->
               <div class="zone-filter-container">
-                  <label for="zone-filter">Zone:</label>
-                  <select name="zone" id="zone-filter" >
+                  <label for="zone-filter" style="margin-left: 30px;">Zone:</label>
+                  <select name="zone" id="zone-filter" onchange="this.form.submit()">
+
                       <option value="all" disabled selected hidden>Select Zone</option>
                       <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
                       <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
@@ -84,13 +87,15 @@
               </div>
 
 
-        <div class="buttons"><button type="submit" class="button">Apply Filter</button>
-            <button type="reset" class="button">Clear</button></div>
+        <div class="buttons">
+            <button type="submit" class="button1" style="margin-left: 20px;">Apply Filter</button>
+            <button type="reset" class="button1"  style="margin-left: 20px;">Clear</button></div>
               
-
           </form>
         </div>
-          <button style="display: inline;" type="button" class="button profile-button">P</button>
+          <button style="display: inline;" type="button" class="button profile-button">
+            <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:25px; height: 25px;"   alt="">
+          </button>
         </nav>
     
     <div class="graphBox">
@@ -171,3 +176,13 @@
         </script>
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+/**/
