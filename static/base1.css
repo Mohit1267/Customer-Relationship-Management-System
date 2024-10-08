@@ -33,10 +33,11 @@ body{
       border-radius: 0px;  
       box-shadow: 0 4px 8px rgba(81, 113, 145, 0.5); 
        padding: 10px 20px;  
-      overflow-y: auto;  
-      overflow: visible;
+      /* overflow-y: auto;  
+      overflow: visible; */
       transform: translateX(0);
       transition: transform 0.3s ease-in-out;
+      background-attachment: fixed;
   }
   
   .navbar.collapsed {
@@ -52,6 +53,7 @@ body{
       flex-direction: column;
       justify-content: flex-start;
       position: fixed;
+      /* z-index: 1000; */
   }
   
   .navbarNavDropdown {
@@ -105,6 +107,7 @@ body{
       height: 100%;
        justify-content: flex-start;
    }  
+
   
   /*4*/
   .nav-links {
@@ -118,6 +121,7 @@ body{
       font-size: 18px;
       line-height: 2.5;
       list-style-type: none; /* Remove bullets */
+      z-index: 1000;
   }
   
   .spacing {
@@ -130,6 +134,7 @@ body{
   .nav-links li {
     margin-right: -10px;
     line-height: 1.5;
+    z-index: 1000;
     
   }
   
@@ -148,6 +153,7 @@ body{
      .nav-link:hover {
       color: #74e0f3;
      }
+
   
     /*6*/
    
