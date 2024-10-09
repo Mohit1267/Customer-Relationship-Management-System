@@ -54,11 +54,49 @@
                 <div class="error">{{ form.password2.errors }}</div>
             {% endif %}
         </div>
-        
+<!-- 
+        <div class="form-group">
+            <button type="button" onclick="startRecording()">Start Recording</button>
+            <button type="button" onclick="stopRecording()">Stop Recording</button>
+            <input type="hidden" name="voice_sample" id="voice_sample">
+        </div>
+         -->
         <button type="submit" class="signup-btn">Sign up</button>
     </form>
     <p class="login-link">Already have an account? <a href="{% url 'login' %}">Login</a></p>
 </div>
 </div>
+
+
+<!-- <script>
+    let mediaRecorder;
+    let audioChunks = [];
+  
+    function startRecording() {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+  
+                mediaRecorder.addEventListener("dataavailable", event => {
+                    audioChunks.push(event.data);
+                });
+            });
+    }
+  
+    function stopRecording() {
+        mediaRecorder.stop();
+        mediaRecorder.addEventListener("stop", () => {
+            const audioBlob = new Blob(audioChunks);
+            const reader = new FileReader();
+            reader.readAsDataURL(audioBlob);
+            reader.onloadend = function() {
+                const base64data = reader.result;
+                document.getElementById('voice_sample').value = base64data;
+            }
+        });
+    }
+  </script> -->
+
 
 {% endblock %}

@@ -7,12 +7,15 @@ User = get_user_model()
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
+    # voice_sample = forms.FileField(required=False)
+
     # dob = forms.DateField()
     # branch = forms.CharField()
 
     class Meta:
         model = User
-        fields = [ "username", "email", "password1", "password2",]
+        # fields = [ "username", "email", "password1", "password2",'voice_sample']
+        fields = [ "username", "email", "password1", "password2"]
         
 
 

@@ -1,0 +1,25 @@
+<!-- templates/myapp/uptime.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uptime Report</title>
+</head>
+<body>
+    <h1>Uptime Report</h1>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>IP Address</th>
+            <th>Last Activity</th>
+        </tr>
+        {% for activity in activities %}
+        <tr>
+            <td>{{ activity.user.username }}</td>
+            <td>{{ activity.ip_address }}</td>
+            <td>{{ activity.last_activity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

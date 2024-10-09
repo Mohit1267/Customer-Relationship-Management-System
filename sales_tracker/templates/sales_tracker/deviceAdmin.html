@@ -18,29 +18,16 @@
                 <tr>
                     <th>Active Device</th>
                     <th>Passive Device</th>
-                   
                 </tr>
             </thead>
             <tbody>
-            {% for data in data_list %}
                 <tr>
-                    <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
+                        <td>{{id}}</td>
+                        <td>{{ uptime }}</td>
+                        <td>{{downtime}}</td>
+                        <td>{{ip}}</td>
                     
-                    {% if devideAdmin.active_device %}
-                        <td>{{  devideAdmin.active_device_id}} {{ devideAdmin.active_device_id} }</td>
-                        <td>{{ devideAdmin.active_device_uptime }}</td>
-                        <td>{{devideAdmin.active_device_downtime}}</td>
-                        <td>{{devideAdmin.active_device_ip}}</td>
-                    {% elif devideAdmin.passive_device  %}
-                    <td>{{devideAdmin.passive_device_id}} {{ devideAdmin.passive_device_id} }</td>
-                    <td>{{devideAdmin.passive_device_uptime }}</td>
-                    <td>{{devideAdmin.passive_device_downtime}}</td>
-                    <td>{{devideAdmin.passive_device_ip}}</td>
-                     
-                    
-                    {% endif %}
                 </tr>
-            {% endfor %}
             </tbody>
         </table>
         

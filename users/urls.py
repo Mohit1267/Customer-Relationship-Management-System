@@ -23,4 +23,6 @@ urlpatterns = [
     path("reason/",user_views.Reason , name="reason"),
     path('', user_views.index, name='index'),
     path('heartbeat/', user_views.heartbeat, name='heartbeat'),
+    path('uptime/', user_views.uptime_view, name='uptime'),
+    path('uptime_report/', user_views.uptime_report, name='uptime_report'),
 ]
