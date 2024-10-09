@@ -188,7 +188,7 @@ select {
     background: linear-gradient(135deg, #28a745, #218838);
     border: none;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 30px; /* Increased padding */
     font-size: 18px;
     font-weight: bold;
     border-radius: 50px;

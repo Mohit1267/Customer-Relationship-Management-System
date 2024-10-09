@@ -8,28 +8,45 @@
 {% block content %}
 
 <div class="device-content">
+ 
 
-    <nav class="navbar-horizontal ">
-        <div class="small-nav">
-            <!-- buttons -->
-            <div class="nav-button">
-                <button class="device-button" type="button">Active</button>
-                <button class="device-button" type="button">Passive</button>
-                <button class="device-button" type="button">In Time</button>
-                <button class="device-button" type="button">Out Time</button>
-                <button class="device-button" type="button">Machine IP</button>
-            </div>
+    <section class="main_container">
 
-            <!-- Search Bar Form -->
-            <div class="search-button">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
 
-        </div>
-    </nav>
+        <table>
+            <thead>
+                <tr>
+                    <th>Active Device</th>
+                    <th>Passive Device</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+            {% for data in data_list %}
+                <tr>
+                    <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
+                    
+                    {% if devideAdmin.active_device %}
+                        <td>{{  devideAdmin.active_device_id}} {{ devideAdmin.active_device_id} }</td>
+                        <td>{{ devideAdmin.active_device_uptime }}</td>
+                        <td>{{devideAdmin.active_device_downtime}}</td>
+                        <td>{{devideAdmin.active_device_ip}}</td>
+                    {% elif devideAdmin.passive_device  %}
+                    <td>{{devideAdmin.passive_device_id}} {{ devideAdmin.passive_device_id} }</td>
+                    <td>{{devideAdmin.passive_device_uptime }}</td>
+                    <td>{{devideAdmin.passive_device_downtime}}</td>
+                    <td>{{devideAdmin.passive_device_ip}}</td>
+                     
+                    
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+        </section>
+        
+        
 
     <!-- <div class="device-container">
 
