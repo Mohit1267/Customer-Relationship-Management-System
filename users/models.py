@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 # from django.contrib.auth.models import User
 
 from django.contrib.auth import get_user_model
-
+from datetime import timedelta
 from django.utils import timezone
 
 
@@ -76,6 +76,20 @@ class CallingDetail(models.Model):
     customer_address = models.TextField(default="")
 
 
+
+
+class UserActivity(models.Model):
+    user = models.ForeignKey(RegisterUser, on_delete=models.CASCADE)
+    ip_address = models.GenericIPAddressField()
+    last_activity = models.DateTimeField()
+    total_uptime = models.DurationField(null=True, blank=True)  # Stores total uptime duration
+    total_downtime = models.DurationField(null=True, blank=True) 
+    
+    class Meta:
+        unique_together = ('user', 'ip_address')  # Ensure unique combination of user and IP address
+
+    def __str__(self):
+        return f"{self.user.email} - {self.ip_address} - {self.last_activity}"
 
 # request.user = emailid
 # request.user.usrname = username

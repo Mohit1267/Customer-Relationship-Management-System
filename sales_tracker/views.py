@@ -1449,3 +1449,11 @@ def AdminDSR(request):
 
 
 
+def deviceAdmin(request):
+    context = {
+        "id": "1",
+        "uptime": "7:00:00",
+        "downtime": "1:00:00",
+        "ip": "192.168.123.1"
+    }
+    return render(request, 'sales_tracker/deviceAdmin.html', context)

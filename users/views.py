@@ -293,8 +293,18 @@ def manual_login(request):
                             check_in_time=current_time,
                             status=status
                         )
+
+
+                         # Log the user activity
+                        ip_address = request.META.get('REMOTE_ADDR')
+                        UserActivity.objects.update_or_create(
+                            user=user,
+                            ip_address=ip_address,
+                            defaults={'last_activity': timezone.now()}
+                    )   
                     print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
                     print(Nuser)
+                    
                     return redirect("Dashboards")
                     # if user_profile.branch == "admin":
                         
@@ -395,3 +405,29 @@ def heartbeat(request):
 # def get_stored_voice_path(user):
 #     user_profile = Profile.objects.get(user=user)
 #     return user_profile.voice_file_path.path if user_profile.voice_file_path else None
+# myapp/views.py
+
+from django.shortcuts import render
+from .models import UserActivity
+
+def uptime_view(request):
+    activities = UserActivity.objects.all().order_by('-last_activity')
+    return render(request, 'users/uptime.html', {'activities': activities})
+
+def uptime_report(request):
+    user_activities = UserActivity.objects.all()
+    report_data = []
+    print(f"this is user activity {user_activities}")
+    for activity in user_activities:
+        report_data.append({
+            'user': activity.user.email,
+            'ip_address': activity.ip_address,
+            'last_activity': activity.last_activity,
+            'total_uptime': activity.total_uptime,
+            'total_downtime': activity.total_downtime,
+        })
+
+    context = {'report_data': report_data}
+    return render(request, 'users/uptime_report.html', context)
+
+

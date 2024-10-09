@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uptime Report</title>
+</head>
+<body>
+    <h1>Uptime Report</h1>
+    <table border="1">
+        <tr>
+            <th>User</th>
+            <th>IP Address</th>
+            <th>Last Activity</th>
+            <th>Total Uptime</th>
+            <th>Total Downtime</th>
+        </tr>
+        {% for data in report_data %}
+        <tr>
+            <td>{{ data.user }}</td>
+            <td>{{ data.ip_address }}</td>
+            <td>{{ data.last_activity }}</td>
+            <td>{{ data.total_uptime }}</td>
+            <td>{{ data.total_downtime }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

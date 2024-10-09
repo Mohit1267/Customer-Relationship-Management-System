@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.InactivityMiddleware',
+    'users.middleware.InactivityMiddleware',
 ]
 
 ROOT_URLCONF = 'stpa.urls'
@@ -268,6 +269,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.InactivityMiddleware',
+    # 'users.middleware.ActivityMiddleware',
+    'users.middleware.UpdateLastActivityMiddleware',
 ]
 
 ROOT_URLCONF = 'stpa.urls'
@@ -431,3 +434,11 @@ EMAIL_HOST_PASSWORD = "axzf ekbv uawt rugt"
 
 TIME_ZONE = 'Asia/Kolkata'
 USE_TZ = True
+
+
+CELERY_BEAT_SCHEDULE = {
+    'check-user-activity-every-15-minutes': {
+        'task': 'myapp.tasks.check_user_activity',
+        'schedule': 900.0,  # 15 minutes
+    },
+}
