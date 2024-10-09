@@ -64,6 +64,24 @@ def profile(request):
         form = ProfileForm()
     return render(request, "users/profile.html", {"form":form})
 
+# def profile(request):
+#     if request.method == "POST":
+#         form = ProfileForm(request.POST, request.FILES)  # Include request.FILES to handle file uploads
+#         if form.is_valid():
+#             user = request.user
+#             profile, created = Profile.objects.get_or_create(user=user)
+
+#             # Update the profile fields
+#             profile.emp_id = form.cleaned_data['emp_id']
+#             profile.dob = form.cleaned_data['dob']
+#             profile.branch = form.cleaned_data['branch']
+#             profile.voice_sample = form.cleaned_data['voice_recording']  # Save the audio file
+#             profile.save()  # Save the profile
+
+#             return redirect("index")
+#     else:
+#         form = ProfileForm()
+#     return render(request, "users/profile.html", {"form": form})
 
 @login_required
 def detail_profile(request):
@@ -374,5 +392,6 @@ def heartbeat(request):
     return JsonResponse({"status": "alive"})
 
 
-
-
+# def get_stored_voice_path(user):
+#     user_profile = Profile.objects.get(user=user)
+#     return user_profile.voice_file_path.path if user_profile.voice_file_path else None

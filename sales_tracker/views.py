@@ -397,6 +397,10 @@ def mining_view(request):
     today_mining_count = today_mining.count()
     if request.method == "POST":
         form = MiningForm(request.POST)
+        state = request.POST.get("state")
+        city = request.POST.get("city")
+        zone = request.POST.get("zone")
+
         try:
             MiningData.objects.get(organisation_name = form.data.get("organisation_name"))
             print("hello world")
@@ -425,6 +429,9 @@ def mining_view(request):
                 date = now_date,
                 assigned_to = assignTo,
                 created_by = user,
+                state = state,
+                city = city,
+                region = zone,
             )
             mining_details.save()
             print("Hello world 4")
@@ -1372,4 +1379,5 @@ def Agentlead(request):
     else:
         form = LeadForm()
     return render(request, "sales_tracker/agentlead.html", {"form":form, "timer": formated_timer})
+
 

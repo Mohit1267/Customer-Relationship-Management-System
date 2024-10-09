@@ -29,6 +29,7 @@ class Profile(models.Model):
     branch = models.CharField(max_length=10, choices=USER_ROLES)
     can_login = models.BooleanField(default=True)
     can_logout = models.BooleanField(default=False)
+    voice_sample = models.FileField(upload_to='voice_samples/', blank=True, null=True)
 
 
     def __str__(self):
