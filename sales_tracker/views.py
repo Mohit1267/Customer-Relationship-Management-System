@@ -1274,7 +1274,8 @@ def Agentquote(request):
         )
         quote_details.save()
 
-        return redirect("agentmessage")
+        return redirect("agentquote")
+    # return redirect("message")
         
         # return render(request, "sales_tracker/create_lead.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
 
@@ -1316,7 +1317,8 @@ def Agentopportunity(request):
         )
         contact_details.save()
 
-        return redirect("agentmessage")
+        return redirect("agentopportunity")
+    #  return redirect("message")
         
         # return render(request, "sales_tracker/create_lead.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
 
@@ -1373,3 +1375,58 @@ def Agentlead(request):
         form = LeadForm()
     return render(request, "sales_tracker/agentlead.html", {"form":form, "timer": formated_timer})
 
+def Agentmining(request):
+    user = request.user
+    utc_login_time = user.last_login
+    elapsed_time = timer(utc_login_time)
+    formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+    now_date_time = datetime.datetime.now()
+    now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+    today_mining = MiningData.objects.filter(date = now_date)
+    today_mining_count = today_mining.count()
+    if request.method == "POST":
+        form = MiningForm(request.POST)
+        try:
+            MiningData.objects.get(organisation_name = form.data.get("organisation_name"))
+            print("hello world")
+        except:
+            assignTo = assign_miningCt()
+            now_date_time = datetime.datetime.now()
+            now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+            username = request.user.username
+            mining_details = MiningData(
+                organisation_name = form.data.get("organisation_name"),
+                customer_first_name = form.data.get("customer_first_name"),
+                customer_last_name = form.data.get("customer_last_name"),
+                customer_address = form.data.get("customer_address"),
+                customer_contact_number = form.data.get("customer_contact_number"),
+                customer_mobile_number = form.data.get("customer_mobile_number"),
+                customer_email = form.data.get("customer_email"),
+                company_revenue = form.data.get("company_revenue"),
+                company_emp_size = form.data.get("company_emp_size"),
+                customer_offering = form.data.get("customer_offering"),
+                competition_of_AT = form.data.get("competition_of_AT"),
+                stock_market_registered = form.data.get("stock_market_registered"),
+                influncer = form.data.get("influncer") == "on",
+                desition_maker = form.data.get("desition_maker") == "on",
+                IT_spending_budget = form.data.get("IT_spending_budget"),
+                source_of_data_mining = form.data.get("source_of_data_mining"),
+                date = now_date,
+                assigned_to = assignTo,
+                created_by = user,
+            )
+            mining_details.save()
+            print("Hello world 4")
+            return redirect("agentmining")    
+        
+        print("Hello world 2")
+        return render(request, "sales_tracker/agentmining.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+
+
+    else:
+        form = MiningForm()
+    return render(request, "sales_tracker/agentmining.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+
+
+def Admindevice(request):
+      return render(request, "sales_tracker/deviceAdmin.html")
