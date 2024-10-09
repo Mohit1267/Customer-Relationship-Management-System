@@ -89,10 +89,15 @@
 
             <li class="nav-item ">
               <a class="nav-link spacing" href="{% url 'deviceAdmin' %}" role="button" aria-expanded="false"  style="display: flex; align-items: center;">
-
                 <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo" style=" height: 42px ;margin-right: 5px; margin-left: -5px;">
-
                 Device
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'agentopportunity' %}">Active Device</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">Passive Device</a></li>
+                </ul>
               </a>
              
             </li>

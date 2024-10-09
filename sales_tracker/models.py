@@ -154,3 +154,4 @@ class QuotesData(models.Model):
     grandtotal = models.CharField(max_length=50)
     date = models.DateField(default="2000-10-10")
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
+

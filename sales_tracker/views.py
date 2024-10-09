@@ -920,6 +920,11 @@ class QuotesView(BaseListView):
     model = QuotesData
     count_context_name = 'opportunity_count'
 
+# class DSRview(BaseListView):
+#     template_name = "sales_tracker/agentDsrdata.html"
+#     model = DsrData
+#     count_context_name = 'agentDsr_count'
+
 
 
 
@@ -1430,3 +1435,13 @@ def Agentmining(request):
 
 def Admindevice(request):
       return render(request, "sales_tracker/deviceAdmin.html")
+
+def AdminDSR(request):
+
+    return render(request, "sales_tracker/agentDsr.html")
+
+def DSR(request):
+
+    return render(request, "sales_tracker/dsr.html")
+
+

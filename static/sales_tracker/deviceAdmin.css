@@ -81,6 +81,11 @@ body {
     width: 250px;
 }
 
+
+
+ 
+ 
+
 .search-button {
     padding: 8px 16px;
     /* background-color: #28a745; */
@@ -121,6 +126,82 @@ body {
     font-size: 1.5rem;
     color: white;
 }
+
+table-responsive {
+    width: 100%;
+    overflow-x: auto; 
+    overflow-y: auto;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; 
+}
+
+
+thead {
+    width: 1000px;
+
+    background-color: #1E2A38; 
+    color: white;
+}
+
+th,
+td {
+    padding: 15px 20px;
+    text-align: left; 
+}
+
+th {
+    font-weight: bold; 
+    text-transform: uppercase; 
+    font-size: 14px;
+    border-bottom: 2px solid #ddd; 
+}
+
+tbody tr {
+    border-bottom: 1px solid #ddd; 
+    transition: background-color 0.3s; 
+    justify-content: end;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; 
+}
+
+tbody tr:hover {
+    background-color: #e1f5fe; 
+}
+
+td {
+    font-size: 14px; 
+    color: #333;
+    transition: color 0.3s ease; 
+}
+
+td span {
+    font-weight: bold; 
+    color: #00796b; 
+}
+
+a {
+    color: #0288d1; 
+    text-decoration: none; 
+    transition: color 0.3s; 
+}
+
+a:hover {
+    text-decoration: underline; 
+    color: #01579b; 
+}
+
 
 /* Responsive design for different devices */
 @media (max-width: 768px) {
