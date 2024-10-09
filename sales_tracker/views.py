@@ -1440,4 +1440,8 @@ def AdminDSR(request):
 
     return render(request, "sales_tracker/agentDsr.html")
 
+def DSR(request):
+
+    return render(request, "sales_tracker/dsr.html")
+
 
