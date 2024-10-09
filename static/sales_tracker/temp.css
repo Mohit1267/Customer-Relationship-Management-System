@@ -1,4 +1,4 @@
-/* General container styling */
+
 .main_container {
     margin: 20px auto;
     padding: 20px;
@@ -12,9 +12,6 @@
     overflow-x: auto;
 }
 
-
-
-/* Horizontal Navbar */
 .navbar-horizontal {
     background-color: #eff3f7 !important;
     width: calc(100% - 250px);
@@ -28,7 +25,6 @@
     
 }
 
-/* Inside Filter Container */
 .inside-filter-container {
     display: flex;
     align-items: center;
@@ -47,7 +43,6 @@
     border: 1px solid #ccc;
 }
 
-/* State Filter Container */
 .state-filter-container {
     display: flex;
     align-items: center;
@@ -66,7 +61,6 @@
     border: 1px solid #ccc;
 }
 
-/* Zone Filter Container */
 .zone-filter-container {
     display: flex;
     align-items: center;
@@ -85,8 +79,6 @@
     border: 1px solid #ccc;
 }
 
-
-/* Filter dropdown styling */
 .filter-bar {
     display: flex;
     align-items: center;
@@ -97,8 +89,6 @@
     margin-left: 1100p
 }
 
-
-/* profile icon */
 .profile-icon {
     height: 50px;
     margin-left: 20px;
@@ -106,13 +96,11 @@
 
 }
 
-/* Optional: Add hover effect */
 .profile-icon:hover {
     opacity: 0.8;
 
 }
 
-/* Align items within the navbar */
 .small-nav {
     display: flex;
     justify-content: space-between;
@@ -120,7 +108,6 @@
 
 }
 
-/* Styling for the search input */
 .form-control {
     width: 300px;
     margin-right: 10px;
@@ -179,7 +166,6 @@ button:hover {
     }
 }
 
-/* Responsive adjustments */
 @media (max-width: 1200px) {
     .navbar-horizontal {
         left: 220px;

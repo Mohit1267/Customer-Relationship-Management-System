@@ -11,24 +11,21 @@
 
 {% block content %}
 
-<!-- <h1>DATA SHOWCASE</h1> -->
-
-<!-- Horizontal Navbar -->
 <nav class="navbar-horizontal ">
     <div class="small-nav">
       
-      <!-- Search Bar Form -->
+      
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
   
-      <!-- Filter Bar (added between search and profile) -->
+   
       <div class = "inside-filter-container">
         <form method="GET" action="{% url 'data' %}">
             <label for="time_frame">Select Time Frame:</label>
             <select name="time_frame" id="time_frame">
-                <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
+                <option value="all" disabled selected hidden>Select Time Frame</option> 
                 <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                 <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
                 <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
@@ -74,8 +71,6 @@
             </select>
         </div>
         
-        
-        <!-- Zone Filter -->
         <div class="zone-filter-container">
             <label for="zone-filter">Zone:</label>
             <select name="zone" id="zone-filter">
