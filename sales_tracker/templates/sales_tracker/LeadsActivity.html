@@ -93,7 +93,7 @@
 </nav>
 
         <img class="attpiechart rotate" src="{% static 'Leads_Count.png' %}" alt="Attendance Chart"> 
-    <div class="leadcard">
+    <div class="leadcard" style=" margin-right: 1200px;">
         <div class="card1"> 
             <h1  class="totallead">Total Leads: {{Total_Leads}}</h1> 
         </div> 
@@ -102,6 +102,38 @@
             <h1 class="expectedlead">Expected leads: {{Exp_Leads}}</h1> 
         </div> 
     </div>
-
+    <table class="leadsTable">
+      <thead>
+          <tr>
+              <th>Agent Name</th>
+          </tr>
+      </thead>
+    {% for agent in Agents %}
+      <tbody><tr>
+          <td>{{ agent.user.username }}</td>
+      </tr> 
+    {% endfor %}
+    </tbody>
+    </table> 
+   
 </div>   
+
+
+
+<!-- <div class="container1">
+  <div class="attpiechart">
+      <img class="attpiechart" src="{% static 'Leads_Count.png' %}" alt="Attendance Chart">
+  </div>
+
+<div class="card1"> 
+  <h1 class="rightpart1">Total Leads: {{Total_Leads}}</h1> 
+</div> 
+<div class="card3"> 
+  <h1 class="rightpart2">Expected Leads: {{Exp_Leads}}</h1> 
+</div> -->
+
+
+  
+   
+</div>
 {% endblock %}

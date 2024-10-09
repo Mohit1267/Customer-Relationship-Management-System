@@ -105,5 +105,19 @@
                 </div>
             </div>
       
+            <table class="minerTable">
+              <thead>
+                  <tr>
+                      <th>Miner Name</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for miners in Miner %}
+                  <tr>
+                      <td>{{ miners.user.username }}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
 </div>  
 {% endblock %}
