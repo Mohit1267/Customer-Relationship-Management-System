@@ -1,4 +1,4 @@
-/* General page layout */
+
 body {
     background-color: #f0f0f0; 
     font-family: Arial, sans-serif;
@@ -13,7 +13,6 @@ body {
     padding: 20px;
 }
 
-/* Navbar styling */
 .navbar-horizontal {
     background-color: #eff3f7 !important;
     width: calc(100% - 250px);
@@ -81,11 +80,6 @@ body {
     width: 250px;
 }
 
-
-
- 
- 
-
 .search-button {
     padding: 8px 16px;
     /* background-color: #28a745; */
@@ -96,8 +90,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-
-/* Card container */
 .device-container {
     display: flex;
     flex-wrap: wrap;
@@ -202,8 +194,6 @@ a:hover {
     color: #01579b; 
 }
 
-
-/* Responsive design for different devices */
 @media (max-width: 768px) {
     .navbar-horizontal input[type="search"] {
         width: 180px;

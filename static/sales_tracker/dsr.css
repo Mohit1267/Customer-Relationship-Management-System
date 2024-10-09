@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar-horizontal {
+    background-color: #eff3f7 !important;
+    width: calc(100% - 250px);
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    /* border-radius: 20px 20px 20px 20px; */
+    position: fixed;
+    top: 0;
+    left: 250px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.small-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    padding: 10px 20px;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
+
+/* .minerTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 120px;
+} */
+
+/* Table Headers and Cells */
+/* .minerTable th,
+.minerTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.minerTable thead {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.minerTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+} */
+
+/* Hover Effect for Table Rows */
+/* .minerTable tbody tr:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+} */
+
+/* General Text Styles */
+/* h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #495057;
+}
+
+td {
+    font-size: 16px;
+    color: #495057;
+} */
