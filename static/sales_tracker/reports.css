@@ -9,7 +9,6 @@
 
 }
 
-/* Section Styles */
 .section {
     margin-bottom: 40px;
 }
@@ -30,7 +29,6 @@
 
 }
 
-/* Card Container */
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -38,7 +36,6 @@
 
 }
 
-/* Individual Card */
 .card {
     /* height: 200px !important; */
     background: #1E2A38 !important;
@@ -76,7 +73,6 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Card Icon */
 .card-icon {
     font-size: 45px;
     color: #5e87b0;
@@ -84,7 +80,6 @@
     flex-shrink: 0;
 }
 
-/* Card Content */
 .card-content h3 {
     margin: 0 0 12px 0;
     font-size: 20px;

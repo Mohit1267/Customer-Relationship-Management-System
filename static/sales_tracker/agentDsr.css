@@ -48,14 +48,14 @@ body {
     background-color: #f9f9f9;
 }
 
-/* Styling for the form elements */
+
 .form {
     display: flex;
     flex-direction: column;
-    width: 70%; /* Increased the width */
+    width: 70%; 
     margin: 0 auto;
     border: 1px solid #ddd;
-    padding: 35px; /* Increased padding */
+    padding: 35px; 
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -63,24 +63,30 @@ body {
     max-height: 100%;
 }
 
-/* Increased margin between form controls */
+
 .form_control {
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px; /* Increased margin */
+    margin-bottom: 30px; 
 }
 
 .form_control label {
-   
     margin-bottom: 10px;
     font-weight: bold;
     color: #333;
 }
 
+label.required:after {
+    content: " *";
+    color: black;
+    font-weight: bold;
+}
+
+
 .form_control input,
 .form_control textarea {
     width: 100%;
-    padding: 15px; /* Increased padding */
+    padding: 15px;
     border: 2px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
@@ -88,6 +94,7 @@ body {
     background-color: #f5f5f5;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s ease, background-color 0.3s ease;
+    
 }
 
 .form_control input:focus,
@@ -103,7 +110,7 @@ body {
     border: none;
     border-bottom: 2px solid #0a0a0a;
     border-radius: 0;
-    padding: 10px 0; /* Increased padding */
+    padding: 10px 0; 
     background: transparent;
     color: black;
     box-shadow: none;
@@ -117,7 +124,7 @@ body {
 }
 
 .form_control textarea {
-    height: 150px; /* Increased height */
+    height: 150px; 
     resize: none;
     overflow: hidden;
 }
@@ -126,13 +133,13 @@ body {
     height: 120px;
 }
 
-/* Filter container */
+
 .filter-container {
     margin: 10px;
 }
 
 select {
-    padding: 12px; /* Increased padding */
+    padding: 12px; 
     font-size: 12px;
 }
 
@@ -152,12 +159,11 @@ select {
     color: rgb(54, 53, 53);
 }
 
-/* Adjust button spacing */
 .buttons {
-    width: 100%; /* Updated to fill the form width */
+    width: 100%; 
     display: flex;
     justify-content: center;
-    margin-top: 30px; /* Increased margin */
+    margin-top: 30px; 
 }
 
 .row {
@@ -165,12 +171,12 @@ select {
     justify-content: center;
 }
 
-/* Base Styles for Button1 */
+
 .button1 {
     background: linear-gradient(135deg, #28a745, #218838);
     border: none;
     color: white;
-    padding: 15px 30px; /* Increased padding */
+    padding: 15px 30px;
     font-size: 18px;
     font-weight: bold;
     border-radius: 50px;
@@ -194,12 +200,12 @@ select {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Base Styles for Button2 */
+
 .button2 {
     background: linear-gradient(135deg, #e52323, #e23a3a);
     border: none;
     color: white;
-    padding: 15px 30px; /* Increased padding */
+    padding: 15px 30px; 
     font-size: 18px;
     font-weight: bold;
     border-radius: 50px;
@@ -221,7 +227,6 @@ select {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Media Queries for Responsiveness */
 @media (max-width: 1200px) {
     .moving_title {
         font-size: 30px;
@@ -267,7 +272,7 @@ select {
     }
 
     .form {
-        width: 85%; /* Adjusted for smaller screens */
+        width: 85%; 
     }
 
     .buttons {
@@ -294,11 +299,11 @@ select {
 
     .form {
         width: 90%;
-        padding: 25px; /* Slightly reduced padding */
+        padding: 25px; 
     }
 
     .form_control {
-        margin-bottom: 20px; /* Increased margin */
+        margin-bottom: 20px; 
     }
 
     .buttons {
@@ -318,7 +323,7 @@ select {
 
     .button1,
     .button2 {
-        padding: 12px; /* Adjusted padding */
+        padding: 12px; 
         font-size: 16px;
         width: 100%;
     }

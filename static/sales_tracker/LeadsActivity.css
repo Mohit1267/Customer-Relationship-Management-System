@@ -48,7 +48,6 @@ body {
     border: 1px solid #ccc;
 }
 
-/* State Filter Container */
 .state-filter-container {
     display: flex;
     align-items: center;
@@ -67,7 +66,6 @@ body {
     border: 1px solid #ccc;
 }
 
-/* Zone Filter Container */
 .zone-filter-container {
     display: flex;
     align-items: center;
@@ -86,8 +84,6 @@ body {
     border: 1px solid #ccc;
 }
 
-
-/* Filter dropdown styling */
 .filter-bar {
     display: flex;
     align-items: center;
@@ -97,8 +93,6 @@ body {
     width: 150px;
     margin-left: 1100p
 }
-
-
 
 button {
     padding: 10px 20px;
@@ -127,7 +121,6 @@ button:hover {
     ;
 }
 
-/* old code */
 .lead-content { 
     width: 100%;
     text-align: center;
@@ -299,8 +292,7 @@ h1 {
 td {
     font-size: 16px;
 }
- 
-/* Responsive adjustments for smaller screens */ 
+
 @media (max-width: 768px) { 
     .totallead, .expectedlead { 
         font-size: 1.2rem;
