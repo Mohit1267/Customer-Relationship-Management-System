@@ -1,5 +1,5 @@
 
-{% extends "agentbase.html" %}
+{% extends "innerbase.html" %}
 
 {% load static %}
 {% block css_link %}
@@ -21,10 +21,10 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-  
+
       <!-- Filter Bar (added between search and profile) -->
       <div class = "inside-filter-container">
-        <form method="GET" action="{% url 'quotes_data' %}">
+        <form method="GET" action="{% url 'opp_data' %}">
             <label for="time_frame">Select Time Frame:</label>
             <select name="time_frame" id="time_frame" onchange="this.form.submit()">
                 <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
@@ -85,9 +85,6 @@
                 <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
             </select>
         </div>
-        <div class="buttons"><button type="button" class="button">Apply Filter</button>
-            <button type="button" class="button">Clear</button>
-        </div>
     </form>
         
      
@@ -111,16 +108,8 @@
         <tr>
             <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
             {% if data.opportunity_name %}
-                <td>{{data.title}}</td>
                 <td>{{ data.opportunity_name }}</td>
-                <td>{{data.valid_until}}</td>
-                <td>{{ data.quote_stage }}</td>
-                <td>{{ data.invoice_status }}</td>
-                <td>{{ data.lead_source }}</td>
-                <td>{{ data.account }}</td>
-                <td>{{ data.contact }}</td>
-                <td>{{ data.billing_address }}</td>
-                <td>{{ data.shipping_address }}</td>
+                <td>-</td>
                 <td>{{ data.probability }}</td>
                 <td>{{ data.assigned_to }}</td>
             {% elif data.title %}

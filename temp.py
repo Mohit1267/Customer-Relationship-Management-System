@@ -301,3 +301,20 @@ TWend_date = timezone.now().date()
 TWstart_date = TWend_date - timedelta(days=6)
 OWend_date = timezone.now().date() - timedelta(days=6) 
 OWstart_date = TWend_date - timedelta(days=12)
+
+from users.models import UserActivity
+def uptime_report(request):
+    user_activities = UserActivity.objects.all()
+    report_data = []
+    
+    for activity in user_activities:
+        report_data.append({
+            'user': activity.user.email,
+            'ip_address': activity.ip_address,
+            'last_activity': activity.last_activity,
+            'total_uptime': activity.total_uptime,
+            'total_downtime': activity.total_downtime,
+        })
+
+
+uptime_report(request)

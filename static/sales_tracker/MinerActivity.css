@@ -1,28 +1,142 @@
 body { 
     background-color: #f0f0f0; 
-    font-family: Arial, sans-serif; 
-    box-sizing: border-box; 
-    margin: 0; 
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
 } 
 
-.container { 
-    overflow-y: auto; 
-    overflow-x: hidden; 
-    max-height: 950px; 
-    max-width: 100% !important; 
-    margin: 0 auto; 
-    padding: 20px; 
-    display: flex; 
+
+.navbar-horizontal {
+    background-color: #eff3f7 !important;
+    width: calc(100% - 250px);
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    /* border-radius: 20px 20px 20px 20px; */
+    position: fixed;
+    top: 0;
+    left: 250px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.small-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.inside-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.inside-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+.inside-filter-container select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.state-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.state-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+#state-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.zone-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.zone-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+#zone-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.filter-bar {
+    display: flex;
+    align-items: center;
+}
+
+.filter-select {
+    width: 150px;
+    margin-left: 1100p
+}
+
+
+
+button {
+    padding: 10px 20px;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
+
+.profile-button:hover {
+    background-color: #ccc;
+}
+
+.profile-button:hover img {
+    border-color: white;
+    color: white;
+    /* background-color: black; */
+    border-radius: 17%;
+    ;
+}
+
+.miner-content { 
+    width: 100%;
+    text-align: center;
+    display: flex;
     flex-direction: column; 
-    align-items: center; 
-} 
+    align-items: center;
+    justify-content: flex-start; 
+}
 
-.attpiechart { 
-    margin: 20px; 
-    max-width: 50%; 
+.attpiechart {
+    margin-right: 1200px;
+    max-width: 30%; 
     height: auto; 
-} 
-
+    margin-top: 20px;
+}
 .cards-container { 
     padding: 50px;
     display: flex; 
@@ -32,15 +146,9 @@ body {
     justify-content: space-between;
 } 
 
-.miners-list {
-    display: flex; 
-    flex-direction: column; 
-} 
-
 .mining-info-container {
-    
-    display: flex; 
-    flex-direction: column;
+    margin-left:1300px;  
+     margin-top: -330px;
 } 
 
 .card { 
@@ -61,13 +169,154 @@ body {
     color: white; 
 } 
 
-.rightpart1, .rightpart2 { 
+.total, .expected { 
     font-size: 1.2rem; 
     color: white; 
     text-align: center;
 } 
 
-@media (max-width: 768px) { 
+.minerTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+ margin-top: 120px;
+}
+
+.minerTable th,
+.minerTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.minerTable thead {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.minerTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.minerTable tbody tr:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #495057;
+}
+
+td {
+    font-size: 16px;
+    color: #495057;
+}
+
+@media (max-width: 1440px) {
+    .navbar-horizontal {
+        width: calc(100% - 200px);
+        left: 200px;
+    }
+
+    .attpiechart {
+        margin-right: 900px;
+    }
+
+    .mining-info-container {
+        margin-left: 1000px;
+    }
+
+    .cards-container {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .card {
+        width: 45%;
+    }
+}
+
+@media (max-width: 1366px) {
+    .navbar-horizontal {
+        width: calc(100% - 180px);
+        left: 180px;
+    }
+
+    .attpiechart {
+        margin-right: 850px;
+    }
+
+    .mining-info-container {
+        margin-left: 950px;
+    }
+
+    .cards-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .card {
+        width: 40%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar-horizontal {
+        width: 100%;
+        left: 0;
+    }
+
+    .attpiechart {
+        margin-right: 500px;
+        max-width: 50%;
+    }
+
+    .mining-info-container {
+        margin-left: 600px;
+    }
+
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-horizontal {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .attpiechart {
+        margin-right: 0;
+        max-width: 80%;
+    }
+
+    .mining-info-container {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .cards-container {
+        padding: 20px;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+/* @media (max-width: 768px) { 
     .leftpart, .rightpart1, .rightpart2 { 
         font-size: 1.2rem; 
     } 
@@ -85,4 +334,10 @@ body {
         width: 100%;
         height: auto;
     }
-}
+} */
+
+
+/* .miners-list {
+    display: flex; 
+    flex-direction: column; 
+}  */

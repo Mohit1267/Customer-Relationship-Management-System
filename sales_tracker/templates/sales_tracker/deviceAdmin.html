@@ -1,0 +1,52 @@
+{% extends "adminbase.html" %}
+{% load static %}
+{% block title %}Calling agent dashboard{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/deviceAdmin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="device-content">
+ 
+
+    <section class="main_container">
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Active Device</th>
+                    <th>Passive Device</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                        <td>{{id}}</td>
+                        <td>{{ uptime }}</td>
+                        <td>{{downtime}}</td>
+                        <td>{{ip}}</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+        
+        </section>
+        
+        
+
+    <!-- <div class="device-container">
+
+        <div class="card1">
+           
+            <div class="card-content">
+                
+                <h3>Active</h3>
+                
+            </div>
+        </div>
+
+    </div> -->
+</div>
+
+{% endblock %}

@@ -63,19 +63,19 @@
       </div>       
 
         <!-- timer  -->
-        <div>
+        <!-- <div>
           {% if timer %}
-         <div class="timer" id="count_down"></div>
+         <div class="timer" id="count_down"></div> -->
 
 
           {% endif %}
         <div class="navbar-container">
-        <!-- profile offcanvas -->
-        <div>
+  
+        <!-- <div>
           <a class="btn btn-light profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
             <b>Profile</b>
           </a>
-        </div>
+        </div> -->
 
         
         <div class="" id="navbarNavDropdown">   
@@ -88,11 +88,16 @@
             </li>
 
             <li class="nav-item ">
-              <a class="nav-link spacing" href="#" role="button" aria-expanded="false"  style="display: flex; align-items: center;">
-
+              <a class="nav-link spacing" href="{% url 'deviceAdmin' %}" role="button" aria-expanded="false"  style="display: flex; align-items: center;">
                 <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo" style=" height: 42px ;margin-right: 5px; margin-left: -5px;">
-
                 Device
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'agentopportunity' %}">Active Device</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">Passive Device</a></li>
+                </ul>
               </a>
              
             </li>
@@ -151,7 +156,7 @@
 </nav>
 
     {% block content %}{% endblock %}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel"><b>Profile</b></h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -179,106 +184,19 @@
         <div class="row p-2">
           <a href = "{% url 'logout'%}"  class="right_profile ">Logout</a>
         </div>
-      </div>
+      </div> -->
 
     {%comment%}
-    {% if timer %}
+    <!-- {% if timer %}
     <div class="timer_count">
       <p>Timer: <span id="count_down">00:00:00</span></p>
 
       <p>No of Mining: {{mining_count}}</p>
     </div>
-    {% endif %}
+    {% endif %} -->
     {%endcomment%}
 
-    <script>
-      // Weekly Data Chart
-      var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
-      var weeklyChart = new Chart(ctxWeekly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Weekly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
-                  backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#33CC33', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  
-      // Monthly Data Chart
-      var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
-      var monthlyChart = new Chart(ctxMonthly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Monthly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
-                 backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#4CAF50', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  
-      // Quarterly Data Chart
-      var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
-      var quarterlyChart = new Chart(ctxQuarterly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Quarterly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
-                  backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#4CAF50', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  </script>
+    
   
   <script>
     // Convert Django template variables to integers and calculate total seconds.

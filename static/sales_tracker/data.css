@@ -9,7 +9,6 @@ body {
     background-color: white;
 }
 
-/* Container styling */
 .container {
     box-shadow: 2px 2px 10px gray;
     width: 30vw;
@@ -20,23 +19,19 @@ body {
     transition: padding 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
-/* Hover effect */
 .container:hover {
     padding: 31px;
     background-color: rgb(179, 179, 179);
 }
 
-/* Heading inside the container */
 .container h2 {
     margin: 15px;
 }
 
-/* Span inside the container */
 .container span {
     margin: 15px;
 }
 
-/* Main container for grid layout */
 .main_container {
     display: grid;
     grid-template-columns: auto auto;
@@ -45,21 +40,19 @@ body {
     align-items: center;
 }
 
-/* Links styling */
 a {
     text-decoration: none;
     color: black;
 }
 
-/* Responsive design for smaller screens */
 @media (max-width: 1024px) {
     .main_container {
-        grid-template-columns: 1fr; /* One column layout */
-        margin-left: 0; /* Center the content */
+        grid-template-columns: 1fr; 
+        margin-left: 0; 
     }
 
     .container {
-        width: 50vw; /* Adjust width to take more space on medium-sized screens */
+        width: 50vw; 
         margin: 20px auto; 
         padding: 20px;
         border-radius: 40px;
@@ -77,7 +70,7 @@ a {
 
 @media (max-width: 480px) {
     .container {
-        width: 90vw; /* Almost full width on small mobile screens */
+        width: 90vw;
         margin: 10px auto;
         padding: 15px;
         border-radius: 20px;

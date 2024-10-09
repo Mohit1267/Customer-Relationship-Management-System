@@ -1,4 +1,5 @@
 
+
 {% extends "agentbase.html" %}
 
 {% load static %}
@@ -10,24 +11,21 @@
 
 {% block content %}
 
-<!-- <h1>DATA SHOWCASE</h1> -->
-
-<!-- Horizontal Navbar -->
 <nav class="navbar-horizontal ">
     <div class="small-nav">
       
-      <!-- Search Bar Form -->
+      
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
   
-      <!-- Filter Bar (added between search and profile) -->
+   
       <div class = "inside-filter-container">
-        <form method="GET" action="{% url 'quotes_data' %}">
+        <form method="GET" action="{% url 'data' %}">
             <label for="time_frame">Select Time Frame:</label>
-            <select name="time_frame" id="time_frame" onchange="this.form.submit()">
-                <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
+            <select name="time_frame" id="time_frame">
+                <option value="all" disabled selected hidden>Select Time Frame</option> 
                 <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                 <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
                 <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
@@ -40,7 +38,7 @@
         
         <div class="state-filter-container">
           <label for="state-filter">State:</label>
-          <select name="state" id="state-filter" onchange=" this.form.submit()">
+          <select name="state" id="state-filter">
               <option value="all" disabled selected hidden>Select State</option>
               <option value="AP">Andhra Pradesh</option>
               <option value="AR">Arunachal Pradesh</option>
@@ -73,11 +71,9 @@
             </select>
         </div>
         
-        
-        <!-- Zone Filter -->
         <div class="zone-filter-container">
             <label for="zone-filter">Zone:</label>
-            <select name="zone" id="zone-filter" onchange="this.form.submit()">
+            <select name="zone" id="zone-filter">
                 <option value="all" disabled selected hidden>Select Zone</option>
                 <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
                 <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
@@ -85,8 +81,8 @@
                 <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
             </select>
         </div>
-        <div class="buttons"><button type="button" class="button">Apply Filter</button>
-            <button type="button" class="button">Clear</button>
+        <div class="buttons"><button type="submit" class="button">Apply Filter</button>
+            <button type="reset" class="button">Clear</button>
         </div>
     </form>
         
@@ -110,17 +106,20 @@
     {% for data in data_list %}
         <tr>
             <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
-            {% if data.opportunity_name %}
-                <td>{{data.title}}</td>
+            
+            {% if data.customer_first_name %}
+                <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
+                <td>{{ data.customer_email }}</td>
+                <td>{{data.customer_mobile_number}}</td>
+                <td>{{data.company_revenue}}</td>
+            {% elif data.first_name %}
+                <td>{{ data.first_name }} {{ data.last_name }}</td>
+                <td>{{ data.email_id }}</td>
+                <td>-</td>
+                <td>-</td>
+            {% elif data.opportunity_name %}
                 <td>{{ data.opportunity_name }}</td>
-                <td>{{data.valid_until}}</td>
-                <td>{{ data.quote_stage }}</td>
-                <td>{{ data.invoice_status }}</td>
-                <td>{{ data.lead_source }}</td>
-                <td>{{ data.account }}</td>
-                <td>{{ data.contact }}</td>
-                <td>{{ data.billing_address }}</td>
-                <td>{{ data.shipping_address }}</td>
+                <td>-</td>
                 <td>{{ data.probability }}</td>
                 <td>{{ data.assigned_to }}</td>
             {% elif data.title %}

@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from .models import Profile
 from django.http import JsonResponse
 from django.utils import timezone
+from .models import UserActivity
 
 class InactivityMiddleware(MiddlewareMixin):
     def process_request(self, request):
@@ -35,9 +36,52 @@ class InactivityMiddleware(MiddlewareMixin):
             request.session['last_activity'] = timezone.now().timestamp()
             return JsonResponse({'status': 'ok'})
         return JsonResponse({'status': 'error'}, status=401)
+    
 
 
+# class ActivityMiddleware:
+#     def __init__(self, get_response):
+#         self.get_response = get_response
 
+#     def __call__(self, request):
+#         response = self.get_response(request)
+
+#         if request.user.is_authenticated:
+#             ip = request.META.get('REMOTE_ADDR')
+#             now = timezone.now()
+
+#             user_activity, created = UserActivity.objects.get_or_create(
+#                 user=request.user,
+#                 ip_address=ip,
+#                 defaults={'last_activity': now}
+#             )
+
+#             if not created:
+#                 time_since_last_activity = now - user_activity.last_activity
+#                 if time_since_last_activity.total_seconds() < 900:  # 15 minutes threshold for downtime
+#                     user_activity.total_uptime += time_since_last_activity
+#                 else:
+#                     user_activity.total_downtime += time_since_last_activity
+#                 user_activity.last_activity = now
+#                 user_activity.save()
+
+#         return response
+
+
+class UpdateLastActivityMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        if request.user.is_authenticated:
+            ip_address = request.META.get('REMOTE_ADDR')
+            UserActivity.objects.update_or_create(
+                user=request.user,
+                ip_address=ip_address,
+                defaults={'last_activity': timezone.now()}
+            )
+        return response
 
 
 # from django.utils.deprecation import MiddlewareMixin

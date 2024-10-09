@@ -1,5 +1,3 @@
-
-
 {% extends "innerbase.html" %}
 
 {% load static %}
@@ -86,6 +84,9 @@
                 <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
             </select>
         </div>
+        <div class="buttons"><button type="submit" class="button">Apply Filter</button>
+            <button type="reset" class="button">Clear</button>
+        </div>
     </form>
         
      
@@ -101,7 +102,8 @@
             <th>Client Name</th>
             <th>Email</th>
             <th>Contact Number</th>
-            <th>Company Revenue</th>
+            <th>City</th>
+            <th>State</th>
         </tr>
     </thead>
     <tbody>
@@ -113,7 +115,8 @@
                 <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
                 <td>{{ data.customer_email }}</td>
                 <td>{{data.customer_mobile_number}}</td>
-                <td>{{data.company_revenue}}</td>
+                <td>{{data.city}}</td>
+                <td>{{data.state}}</td>
             {% elif data.first_name %}
                 <td>{{ data.first_name }} {{ data.last_name }}</td>
                 <td>{{ data.email_id }}</td>

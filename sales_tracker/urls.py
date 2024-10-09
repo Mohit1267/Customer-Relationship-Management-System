@@ -32,7 +32,8 @@ urlpatterns = [
     path("createlead", views.Create_lead_view, name = "create_lead"), 
     path("lead_data", login_required(views.LeadView.as_view()), name = "lead_data"), 
     path("quotes_data", login_required(views.QuotesView.as_view()), name = "quotes_data"), 
-    path("quotes_data", login_required(views.QuotesView.as_view()), name = "view_quote"), 
+    # path("quotes_data", login_required(views.QuotesView.as_view()), name = "view_quote"), 
+    path("opp_data", login_required(views.OpportunityView.as_view()), name = "opp_data"), 
     path("opportunity_data", login_required(views.OpportunityView.as_view()), name = "opportunity_data"), 
     path("createopportunity", views.Create_opportunity_view, name = "create_opportunity"), 
     path("createquote", views.Create_quote_view, name = "create_quote"), 
@@ -41,6 +42,19 @@ urlpatterns = [
     path("tocall/<pk>", views.Tocall_detail, name = "tocalldata"),
     path("cc", views.get_calling_agents, name ="cc"),
     path('get_timer/', login_required(views.get_timer_value), name='get_timer'),
+
+    path("agentcontact", login_required(views.Agentcontact), name="agentcontact"),
+    path("agentlead", login_required(views.Agentlead), name="agentlead"),
+    path("agentquote", login_required(views.Agentquote), name="agentquote"),
+    path("agentopportunity", login_required(views.Agentopportunity), name="agentopportunity"),
+    path("agentmining", login_required(views.Agentmining), name="agentmining"),
+
+    # path("agentmessage", views.Agentmessage.as_view(), name = "agentmessage"), 
+    path("deviceAdmin", login_required(views.deviceAdmin), name="deviceAdmin"),
+    path("agentDsr", login_required(views.AdminDSR), name="agentDsr"),
+    path("dsrview", login_required(views.Dsrview), name="dsrview"),
+
+    path("DSR", login_required(views.DSR), name="DSR"),
 
 
 

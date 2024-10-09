@@ -1,0 +1,106 @@
+{% extends "agentbase.html" %}
+{% load static %}
+{% block title %}Calling Agent Dashboard{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/agentDsr.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <form method="POST" action="/submit-daily-sales-report">
+
+        {% csrf_token %}
+        
+        
+        <div class="row mt-2 mb-2">
+            <div class="col-12 text-center moving_title" style="color: white;">
+                Create Daily Sales Report
+            </div>
+        </div>
+
+        <hr>
+
+        
+        <div class="row mb-2">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="button1 mx-2">Submit</button>
+                <button type="reset" class="button2">Cancel</button>
+            </div>
+        </div>
+
+       
+        <div class="row">
+        
+            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+                <div class="form-group">
+                    <label for="name" class="required">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer_type" class="required">Customer Type</label>
+                    <input type="text" id="customer_type" name="customer_type" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="call_type" class="required">Call Type</label>
+                    <input type="text" id="call_type" name="call_type" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="date" class="required">Date</label>
+                    <input type="date" id="date" name="date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="time" class="required">Time</label>
+                    <input type="time" id="time" name="time" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="item_number" class="required">Item Number</label>
+                    <input type="text" id="item_number" name="item_number" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="item_name" class="required">Item Name</label>
+                    <input type="text" id="item_name" name="item_name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="item_description" class="required">Item Description</label>
+                    <input type="text" id="item_description" name="item_description" class="form-control" required>
+                </div>
+            </div>
+
+            
+            <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+               
+                <div class="form-group">
+                    <label for="unit_cost" class="required">Unit Cost</label>
+                    <input type="number" id="unit_cost" name="unit_cost" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity" class="required">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount" class="required">Amount</label>
+                    <input type="number" id="amount" name="amount" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="tax_rate" class="required">Tax Rate</label>
+                    <input type="number" id="tax_rate" name="tax_rate" class="form-control" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="tax" class="required">Tax</label>
+                    <input type="number" id="tax" name="tax" class="form-control" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="total" class="required">Total</label>
+                    <input type="number" id="total" name="total" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="notes" class="required">Notes</label>
+                    <textarea id="notes" name="notes" class="form-control" required></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

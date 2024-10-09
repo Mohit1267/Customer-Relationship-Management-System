@@ -10,25 +10,24 @@ body, html {
 /* Scrollable container */
 .container {
     display: flex;
-    flex-direction: column; /* Stack graphs vertically */
+    flex-direction: column; 
     justify-content: flex-start;
     padding: 20px;
     margin: 0 auto;
-    max-width: 100% !important; /* Limit the container width */
-    height: 100vh; /* Full viewport height */
-    overflow-y: auto; /* Enable vertical scroll */
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    scrollbar-width: bold; /* For Firefox */
-    scrollbar-color: #888 #f9f9f9; /* Scrollbar color */
+    max-width: 100% !important;
+    height: 100vh; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    scrollbar-width: bold; 
+    scrollbar-color: #888 #f9f9f9;
 }
 
-/* Scrollbar styling for Webkit browsers (Chrome, Safari, etc.) */
 .container::-webkit-scrollbar {
-    width: 8px; /* Width for vertical scrollbar */
+    width: 8px; 
 }
 
 .container::-webkit-scrollbar-thumb {
-    background-color: #888; /* Color of the scroll thumb */
+    background-color: #888; 
     border-radius: 10px;
 }
 
@@ -36,21 +35,21 @@ body, html {
     background-color: #f9f9f9;
 }
 
-/* Graph container styling */
+
 .graph-container {
     width: 100%;
-    margin: 20px 0; /* Add spacing between the graphs */
+    margin: 20px 0; 
     padding: 20px;
     border-radius: 8px;
     display: flex;
-    flex-direction: column; /* Stack title and graph vertically */
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
     transition: transform 0.3s ease;
 }
 
 .graph-container:hover {
-    transform: scale(1.02); /* Add a subtle hover effect */
+    transform: scale(1.02); 
 }
 
 .graph-container div {

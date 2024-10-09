@@ -118,8 +118,7 @@ body {
      background-color: #fff; 
      outline: none; 
  } 
-  
- /* Optional: Styling for form-group elements */ 
+
  .form-group input, 
  .form-group textarea { 
      width: 100%; 
@@ -138,6 +137,18 @@ body {
      border-bottom-color: #007bff; 
      outline: none; 
  } 
+
+ .form_control textarea {
+    height: 100px;
+    resize: none;
+    overflow: hidden;
+}
+
+.form-group textarea {
+    height: 100px;
+}
+
+
   
  .filter-container {
      margin: 10px;
@@ -171,8 +182,7 @@ body {
      display: flex; 
      justify-content: center;
  } 
-  
- /* Base Styles for Button1 */ 
+
  .button1 { 
      background: linear-gradient(135deg, #28a745, #218838); 
      border: none; 
@@ -189,21 +199,18 @@ body {
      margin-right: -80px; 
      letter-spacing: 2px; 
  } 
-  
- /* Hover State for Button1 */ 
+ 
  .button1:hover { 
      background: linear-gradient(135deg, #218838, #28a745); 
      transform: translateY(-3px); 
      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
  } 
-  
- /* Active State for Button1 */ 
+ 
  .button1:active { 
      transform: translateY(-1px); 
      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
  } 
-  
- /* Base Styles for Button2 */ 
+
  .button2 { 
      background: linear-gradient(135deg, #e52323, #e23a3a); 
      border: none; 
@@ -218,21 +225,18 @@ body {
      margin-left: 50px; 
      letter-spacing: 3px; 
  } 
-  
- /* Hover State for Button2 */ 
+
  .button2:hover { 
      background: linear-gradient(135deg, #ed3a40, #f60101); 
      transform: translateY(-3px); 
      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
  } 
-  
- /* Active State for Button2 */ 
+ 
  .button2:active { 
      transform: translateY(-1px); 
      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
  } 
-  
-/* Media Queries for Responsiveness */
+
 @media (max-width: 1200px) {
     .moving_title {
         font-size: 30px; 
