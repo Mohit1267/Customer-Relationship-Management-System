@@ -47,9 +47,13 @@ urlpatterns = [
     path("agentlead", login_required(views.Agentlead), name="agentlead"),
     path("agentquote", login_required(views.Agentquote), name="agentquote"),
     path("agentopportunity", login_required(views.Agentopportunity), name="agentopportunity"),
+    path("agentmining", login_required(views.Agentmining), name="agentmining"),
 
-    path("agentmessage", views.Agentmessage.as_view(), name = "agentmessage"), 
+    # path("agentmessage", views.Agentmessage.as_view(), name = "agentmessage"), 
+    path("deviceAdmin", login_required(views.Admindevice), name="deviceAdmin"),
+    path("agentDsr", login_required(views.AdminDSR), name="agentDsr"),
 
+    #  path("agentDsrData", login_required(views.DSRview.as_view()), name = "agentDsrData"), 
 
 
 

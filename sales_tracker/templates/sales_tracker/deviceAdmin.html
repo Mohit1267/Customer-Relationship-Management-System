@@ -1,0 +1,65 @@
+{% extends "adminbase.html" %}
+{% load static %}
+{% block title %}Calling agent dashboard{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/deviceAdmin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="device-content">
+ 
+
+    <section class="main_container">
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Active Device</th>
+                    <th>Passive Device</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+            {% for data in data_list %}
+                <tr>
+                    <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
+                    
+                    {% if devideAdmin.active_device %}
+                        <td>{{  devideAdmin.active_device_id}} {{ devideAdmin.active_device_id} }</td>
+                        <td>{{ devideAdmin.active_device_uptime }}</td>
+                        <td>{{devideAdmin.active_device_downtime}}</td>
+                        <td>{{devideAdmin.active_device_ip}}</td>
+                    {% elif devideAdmin.passive_device  %}
+                    <td>{{devideAdmin.passive_device_id}} {{ devideAdmin.passive_device_id} }</td>
+                    <td>{{devideAdmin.passive_device_uptime }}</td>
+                    <td>{{devideAdmin.passive_device_downtime}}</td>
+                    <td>{{devideAdmin.passive_device_ip}}</td>
+                     
+                    
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+        </section>
+        
+        
+
+    <!-- <div class="device-container">
+
+        <div class="card1">
+           
+            <div class="card-content">
+                
+                <h3>Active</h3>
+                
+            </div>
+        </div>
+
+    </div> -->
+</div>
+
+{% endblock %}
