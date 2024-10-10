@@ -397,6 +397,10 @@ def mining_view(request):
     today_mining_count = today_mining.count()
     if request.method == "POST":
         form = MiningForm(request.POST)
+        state = request.POST.get("state")
+        city = request.POST.get("city")
+        zone = request.POST.get("zone")
+
         try:
             MiningData.objects.get(organisation_name = form.data.get("organisation_name"))
             print("hello world")
@@ -425,6 +429,9 @@ def mining_view(request):
                 date = now_date,
                 assigned_to = assignTo,
                 created_by = user,
+                state = state,
+                city = city,
+                region = zone,
             )
             mining_details.save()
             print("Hello world 4")
@@ -1441,6 +1448,16 @@ def AdminDSR(request):
     return render(request, "sales_tracker/agentDsr.html")
 
 
+
+def deviceAdmin(request):
+    context = {
+        "id": "1",
+        "uptime": "7:00:00",
+        "downtime": "1:00:00",
+        "ip": "192.168.123.1"
+    }
+    return render(request, 'sales_tracker/deviceAdmin.html', context)
+
 def Dsrview(request):
 
     return render(request, "sales_tracker/dsrview.html")
@@ -1449,6 +1466,4 @@ def Dsrview(request):
 def DSR(request):
 
     return render(request, "sales_tracker/dsr.html")
-
-
 

@@ -450,8 +450,11 @@
   }
 
   function handleVoiceCommand(command) {
+    const logoutPattern = /logout|log out|sign out/i;
       const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
-      if (miningViewPattern.test(command)) {
+      if (logoutPattern.test(command)) {
+          window.location.href = "{% url 'logout' %}";}
+      else if (miningViewPattern.test(command)) {
           window.location.href = "{% url 'data' %}";
       } else {
           // Extract time frame and state using regex

@@ -51,16 +51,17 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 SESSION_COOKIE_AGE = 15*60
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',    
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'users.middleware.InactivityMiddleware',
-]
+# MIDDLEWARE = [
+#     'django.middleware.security.SecurityMiddleware',    
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     'users.middleware.InactivityMiddleware',
+#     'users.middleware.InactivityMiddleware',
+# ]
 
 ROOT_URLCONF = 'stpa.urls'
 
@@ -268,6 +269,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.InactivityMiddleware',
+    # 'users.middleware.ActivityMiddleware',
+    # 'users.middleware.UpdateLastActivityMiddleware',
 ]
 
 ROOT_URLCONF = 'stpa.urls'
@@ -398,6 +401,9 @@ STATIC_URL = 'static/'
 # STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -428,3 +434,11 @@ EMAIL_HOST_PASSWORD = "axzf ekbv uawt rugt"
 
 TIME_ZONE = 'Asia/Kolkata'
 USE_TZ = True
+
+
+CELERY_BEAT_SCHEDULE = {
+    'check-user-activity-every-15-minutes': {
+        'task': 'myapp.tasks.check_user_activity',
+        'schedule': 900.0,  # 15 minutes
+    },
+}
