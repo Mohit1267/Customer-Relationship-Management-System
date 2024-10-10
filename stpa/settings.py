@@ -51,17 +51,17 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 SESSION_COOKIE_AGE = 15*60
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',    
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'users.middleware.InactivityMiddleware',
-    'users.middleware.InactivityMiddleware',
-]
+# MIDDLEWARE = [
+#     'django.middleware.security.SecurityMiddleware',    
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     'users.middleware.InactivityMiddleware',
+#     'users.middleware.InactivityMiddleware',
+# ]
 
 ROOT_URLCONF = 'stpa.urls'
 
@@ -270,7 +270,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.InactivityMiddleware',
     # 'users.middleware.ActivityMiddleware',
-    'users.middleware.UpdateLastActivityMiddleware',
+    # 'users.middleware.UpdateLastActivityMiddleware',
 ]
 
 ROOT_URLCONF = 'stpa.urls'
