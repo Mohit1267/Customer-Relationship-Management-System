@@ -918,12 +918,14 @@ class LeadView(BaseListView):
     template_name = "sales_tracker/leadsdata.html"
     model = LeadsData
     count_context_name = 'lead_count'
+
 class OpportunityView(BaseListView):
-    template_name = "sales_tracker/quotesdata.html"
+    template_name = "sales_tracker/opp_data.html"
     model = OpportunityData
     count_context_name = 'opportunity_count'
 class QuotesView(BaseListView):
-    template_name = "sales_tracker/data.html"
+    
+    template_name = "sales_tracker/quotesdata.html"
     model = QuotesData
     count_context_name = 'opportunity_count'
 
@@ -1457,6 +1459,28 @@ def deviceAdmin(request):
         "ip": "192.168.123.1"
     }
     return render(request, 'sales_tracker/deviceAdmin.html', context)
+
+def Admin_active(request):
+    # context = {
+    #     "id": "1",
+    #     "uptime": "7:00:00",
+    #     "downtime": "1:00:00",
+    #     "ip": "192.168.123.1"
+    # }
+    return render(request, 'sales_tracker/adminActive.html')
+
+def Admin_passive(request):
+    # context = {
+    #     "id": "1",
+    #     "uptime": "7:00:00",
+    #     "downtime": "1:00:00",
+    #     "ip": "192.168.123.1"
+    # }
+    return render(request, 'sales_tracker/adminPassive.html')
+
+
+
+
 
 def Dsrview(request):
 
