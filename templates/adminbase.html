@@ -68,22 +68,22 @@
           <ul class="nav-links flex-column"> 
             <li class="nav-item ">
                <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
-                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo"  >
+                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; height: 42px;"  >
                 Dashboard
                </a>
             </li>
 
             <li class="nav-item  ">
               <a class="nav-link  spacing" href="{% url 'deviceAdmin' %}" role="button" aria-expanded="false"  >
-                <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo"  >
+                <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; height: 42px;"   >
                 Device
               </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="{% url 'agentopportunity' %}">Active Device</a></li>
+                  <li><a class="dropdown-item" href="{% url 'adminActive' %}">Active Device</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">Passive Device</a></li>
+                  <li><a class="dropdown-item" href="{% url 'adminPassive' %}">Passive Device</a></li>
                 </ul>
             </li>
 
