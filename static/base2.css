@@ -164,7 +164,8 @@ z-index: 1000;
   width: 220px;
   margin-left: 5px;
   /* margin-top: 1px; */
-}
+ }
+ 
 
 .nav-item:hover .dropdown-menu {    
   /* position: absolute; */
