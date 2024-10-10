@@ -1457,6 +1457,7 @@ def deviceAdmin(request):
         "ip": "192.168.123.1"
     }
     return render(request, 'sales_tracker/deviceAdmin.html', context)
+
 def Dsrview(request):
 
     return render(request, "sales_tracker/dsrview.html")
