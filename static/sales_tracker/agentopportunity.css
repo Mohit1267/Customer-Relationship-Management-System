@@ -49,7 +49,6 @@ body {
     margin-left: 270px;
 }
 
-/* Styling for the fixed navbar */
 .navbar {
     width: 200px;
     position: fixed;
@@ -62,7 +61,6 @@ body {
     color: white;
 }
 
-/* Adjusting content to not overlap with the navbar */
 .content {
     margin-left: 200px;
     padding: 20px;
@@ -70,7 +68,6 @@ body {
     background-color: #f9f9f9;
 }
 
-/* Styling for the form elements */
 .form {
     display: flex;
     flex-direction: column;
@@ -86,8 +83,6 @@ body {
 
 }
 
-
-/* Additional styling for form controls */
 .form_control {
     display: flex;
     flex-direction: column;
@@ -120,7 +115,6 @@ body {
     outline: none;
 }
 
-/* Optional: Styling for form-group elements */
 .form-group input,
 .form-group textarea {
     width: 100%;

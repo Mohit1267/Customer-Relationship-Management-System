@@ -194,7 +194,6 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
 } 
 
-/* Media Queries for Responsiveness */
 @media (max-width: 1200px) {
     .moving_title {
         font-size: 30px; 
