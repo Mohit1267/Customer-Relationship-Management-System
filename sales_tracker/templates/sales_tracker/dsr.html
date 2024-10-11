@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "adminbase.html" %}
 {% load static %}
 {% block title %}Daily Sales Report Table{% endblock %}
 {% block css_link %}
@@ -6,53 +6,57 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="title">
+<div class="containers">
+    <div class="headingDiv">
         <h1>Daily Sales Report</h1>
     </div>
 
-    <div class="table-container">
+    <section class="main_container">
+
+
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Customer Type</th>
-                    <th>Call Type</th>
                     <th>Date</th>
                     <th>Time</th>
-                    <th>Item Number</th>
+                    <th>Name</th>
                     <th>Item Name</th>
-                    <th>Item Description</th>
-                    <th>Unit Cost</th>
-                    <th>Quantity</th>
-                    <th>Amount</th>
-                    <th>Tax Rate</th>
-                    <th>Tax</th>
                     <th>Total</th>
-                    <th>Notes</th>
+                    <!-- <th>State</th> -->
                 </tr>
             </thead>
             <tbody>
-             
+            <!-- {% for data in data_list %} -->
                 <tr>
-                    <td>-</td>
-                    <td>{{ customer_type }}</td>
-                    <td>{{ call_type }}</td>
-                    <td>{{ date }}</td>
-                    <td>{{ time }}</td>
-                    <td>{{ item_number }}</td>
-                    <td>{{ item_name }}</td>
-                    <td>{{ item_description }}</td>
-                    <td>{{ unit_cost }}</td>
-                    <td>{{ quantity }}</td>
-                    <td>{{ amount }}</td>
-                    <td>{{ tax_rate }}</td>
-                    <td>{{ tax }}</td>
-                    <td>{{ total }}</td>
-                    <td>{{ notes }}</td>
+                    <!-- <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td> -->
+                    
+                    <!-- {% if data.customer_first_name %} -->
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    <!-- {% elif data.first_name %} -->
+                        <td>{{ data.first_name }} {{ data.last_name }}</td>
+                        <td>{{ data.email_id }}</td>
+                        <td>-</td>
+                        <td>-</td>
+                    <!-- {% elif data.opportunity_name %} -->
+                        <td>{{ data.opportunity_name }}</td>
+                        <td>-</td>
+                        <td>{{ data.probability }}</td>
+                        <td>{{ data.assigned_to }}</td>
+                    <!-- {% elif data.title %} -->
+                        <td>{{ data.title }}</td>
+                        <td>-</td>
+                        <td>{{ data.valid_until }}</td>
+                        <td>{{ data.approval_status }}</td>
+                    <!-- {% endif %} -->
                 </tr>
+            <!-- {% endfor %} -->
             </tbody>
         </table>
-    </div>
+        
+        </section>
 </div>
 {% endblock %}
