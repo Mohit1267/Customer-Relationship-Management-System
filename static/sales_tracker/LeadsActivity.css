@@ -35,7 +35,7 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
-    margin-left: 250px;
+    margin-left: 450px;
 }
 
 .inside-filter-container label {
