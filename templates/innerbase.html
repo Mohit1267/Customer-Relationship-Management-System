@@ -59,26 +59,19 @@
         <div class="" id="navbarNavDropdown">
           <ul class="nav-links flex-column">
 
-             <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false">
-             <!-- <li class="nav-item dropdown">
-              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false"> -->
- 
-                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo" style="height: 45px;">
-                Dashboard
+            <li class="nav-item dropdown dashboard-icon">
+              <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo" style="height: 45px; margin-left: -10px;">
+                  <span>Dashboard</span>
+                </div>
               </a>
             </li>
+            
 
              <li class="nav-item dropdown dashboard-icon">
                <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-             <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"> -->
- 
                 <img src="https://i.ibb.co/jTpW1Hk/datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
-
-
                 Mining
               </a>
               <ul class="dropdown-menu ">
@@ -90,62 +83,7 @@
               </ul>
             </li>
 
-             <!-- <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"> -->
- 
-                <!-- <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
-
-                Leads
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
-              </ul>
-            </li> -->
-
- 
-            <!-- <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-
-                <img src="https://i.ibb.co/8cQkyWh/contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
-
-                Contacts
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">View Contacts</a></li>
-              </ul>
-            </li> -->
-
              
-            <!-- <li class="nav-item dropdown  ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- 
-        
- 
-                <img src="https://i.ibb.co/c3sNstd/quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
-
-                Quotes
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'quotes_data' %}">View Quote</a></li>
-              </ul>
-            </li> -->
 
             <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -167,17 +105,25 @@
               </ul>
             </li>
 
+            <li class="nav-item dropdown dashboard-icon">
+              <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance logo" >
+                  <span>Attendance</span>
+                </div>
+              </a>
+            </li>
  
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="{%url 'attendance'%}" role="button" aria-expanded="false" style="margin-left: 20px;">
+            <!-- <li class="nav-item  ">
+              <a class="nav-link  spacing" href="{%url 'attendance'%}" role="button" aria-expanded="false" style="margin-left: 20px;">
  
       
  
                 <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance Logo" style=" margin-right: 2px;">
 
-                Attendance
+                <span>Attendance</span>
               </a>
-            </li>
+            </li> -->
 
 <!-- 
             <li class="nav-item dropdown ">

@@ -26,8 +26,8 @@ body {
     z-index: 1000;
     display: flex;
     justify-content: space-between;
-    border-radius: 10%;
-    border: 1px solid gray;
+    /* border-radius: 10%; */
+    /* border: 1px solid gray; */
     overflow: hidden;
     /* flex: 1 1 200px; */
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -164,6 +164,8 @@ button:hover {
    
 }
 
+
+
  @media only screen and (max-width: 1365px) {
    
     
@@ -181,7 +183,7 @@ button:hover {
         display: flex;
         justify-content: space-between;
         border-radius: 10%;
-        border: 1px solid gray;
+        /* border: 1px solid gray; */
         overflow-x: hidden;
          
         
@@ -209,7 +211,7 @@ button:hover {
         padding: 5px;
         font-size: 16px;
         border-radius: 4px;
-        border: 1px solid #ccc;
+        /* border: 1px solid #ccc; */
     }
     
     /* State Filter Container */
@@ -228,7 +230,7 @@ button:hover {
         padding: 5px;
         font-size: 16px;
         border-radius: 4px;
-        border: 1px solid #ccc;
+        /* border: 1px solid #ccc; */
     }
     
     /* Zone Filter Container */
@@ -248,7 +250,7 @@ button:hover {
         padding: 5px;
         font-size: 16px;
         border-radius: 4px;
-        border: 1px solid #ccc;
+        /* border: 1px solid #ccc; */
     }
     
     
@@ -271,7 +273,7 @@ button:hover {
     .button1{
         padding: 10px 20px; 
         color: black; 
-        border: 1px solid black; 
+        /* border: 1px solid black;  */
         border-radius: 5px; 
         cursor: pointer; 
         transition: background-color 0.3s;
@@ -283,7 +285,7 @@ button:hover {
     
     .profile-button {
         padding: 10px 20px; 
-         border: 1px solid black; 
+        /* border: 1px solid black;  */
         border-radius: 5px; 
         cursor: pointer; 
         transition: background-color 0.3s;
