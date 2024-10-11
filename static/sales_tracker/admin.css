@@ -211,8 +211,8 @@ tbody tr:hover {
 
 @media (max-width: 1400px) and (min-width: 1200px) {
     .navbar-horizontal {
-        width: calc(100% - 300px); 
-        left: 300px;
+        width: calc(100% - 230px); 
+        left: 230px;
     }
 
     .inside-filter-container {
@@ -237,10 +237,10 @@ tbody tr:hover {
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1200px) and (min-width: 1020px) {
     .navbar-horizontal {
-        width: calc(100% - 250px);
-        left: 250px;
+        width: calc(100% - 220px);
+        left: 220px;
     }
 
     .inside-filter-container {
@@ -265,10 +265,10 @@ tbody tr:hover {
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1020px) and (min-width: 800px){
     .navbar-horizontal {
-        width: calc(100% - 250px);
-        left: 250px;
+        width: calc(100% - 200px);
+        left: 200px;
     }
 
     .inside-filter-container {
@@ -293,10 +293,10 @@ tbody tr:hover {
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) and (min-width: 600px) {
     .navbar-horizontal {
-        width: calc(100% - 250px);
-        left: 250px;
+        width: calc(100% - 200px);
+        left: 200px;
     }
 
     .inside-filter-container {
@@ -326,10 +326,12 @@ tbody tr:hover {
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 600px) and (min-width: 300px) {
     .navbar-horizontal {
+        width: calc(100% - 200px);
+        left: 200px;
         flex-direction: column;
-        padding: 10px 15px;
+        /* padding: 10px 15px; */
     }
 
     .inside-filter-container {
