@@ -1,17 +1,47 @@
 {% extends "adminbase.html" %}
-{% load crispy_forms_filters %}
-{% load crispy_forms_tags %}
 {% load static %}
-
-
+{% block title %}Calling agent dashboard{% endblock %}
 {% block css_link %}
-    <link rel="stylesheet" href="{% static 'sales_tracker/opportunity.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/adminActive.css' %}">
 {% endblock %}
-
-
-{% block title %}Passive{% endblock  %}
-
 
 {% block content %}
 
+
+
+<div class="device-content">
+    <h1 class="heading">Passive Device</h1>
+    <table class="table">
+        
+            <tr>
+                <th>System ID</th>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Uptime</th>   
+                <th>Downtime</th>   
+                <th>IP</th>   
+            </tr>
+        
+        <tbody>
+            <tr>
+                <td>{{id2}}</td>
+                <th>{{eid2}}</th>
+                <th>{{ename2}}</th>
+                <td>{{ uptime2 }}</td>
+                <td>{{downtime2}}</td>
+                <td>{{ip2}}</td>
+            </tr>
+            <tr>
+                <td>{{id3}}</td>
+                <th>{{eid3}}</th>
+                <th>{{ename3}}</th>
+                <td>{{ uptime3 }}</td>
+                <td>{{downtime3}}</td>
+                <td>{{ip3}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 {% endblock %}
+ 
+

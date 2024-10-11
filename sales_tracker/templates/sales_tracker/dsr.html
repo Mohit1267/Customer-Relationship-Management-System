@@ -1,11 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "agentbase.html" %}
+{% load static %}
+{% block title %}Daily Sales Report Table{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/dsrview.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="title">
+        <h1>Daily Sales Report</h1>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Customer Type</th>
+                    <th>Call Type</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Item Number</th>
+                    <th>Item Name</th>
+                    <th>Item Description</th>
+                    <th>Unit Cost</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Tax Rate</th>
+                    <th>Tax</th>
+                    <th>Total</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+             
+                <tr>
+                    <td>-</td>
+                    <td>{{ customer_type }}</td>
+                    <td>{{ call_type }}</td>
+                    <td>{{ date }}</td>
+                    <td>{{ time }}</td>
+                    <td>{{ item_number }}</td>
+                    <td>{{ item_name }}</td>
+                    <td>{{ item_description }}</td>
+                    <td>{{ unit_cost }}</td>
+                    <td>{{ quantity }}</td>
+                    <td>{{ amount }}</td>
+                    <td>{{ tax_rate }}</td>
+                    <td>{{ tax }}</td>
+                    <td>{{ total }}</td>
+                    <td>{{ notes }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
