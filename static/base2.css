@@ -258,81 +258,209 @@ z-index: 1000;
   padding: 20px;
 }
 
-@media (max-width: 970px) {
-  .navbar {
-    width: 90%;
-    height: 0%;
-    position: relative;
-    background: transparent;
-    box-shadow: none;
+@media (max-width: 1400px) and (min-width: 1200px) {
+
+  .chart-container {
+    margin-left: 90px;
+    margin-top: 70px;
   }
 
-  .content {
-    margin-left: 0;
-    padding: 20px;
+  .navbar {
+    min-width: 230px;
   }
 
   .profile1 {
-    /* margin-top: 30px; */
-    /* margin-left: 28px; */
-    /* margin-right: 60px; */
-    margin-top: 20px;
-    margin-left: -90px;
-    margin-bottom: 80px;
-    margin-right: 70px;
-    width: 150px;
-    letter-spacing: 4px;
-    /* position: fixed; */
-  }
-
-  .hamburger {
-    margin-left: 65px;
+    margin-left: -150px;
+    width: 140px;
   }
 
   .nav-links {
-    flex-direction: column;
-    margin-top: 90px;
+    font-size: 17px;
+    margin-top: 130px;
   }
 
-  .nav-item .dropdown-menu {
-    position: static;
-    display: none;
-    width: 100%;
-    margin-top: 10px;
+  .navbar-brand img {
+    height: 35px;
   }
 
-  .nav-item.active .dropdown-menu {
-    display: block;
-    position: fixed;
+  .dropdown-menu {
+    width: 225px;
   }
 
-  .dropdown-menu.show {
-    display: block;
+  .dropdown-menu .dropdown-item {
+    font-size: 17px;
   }
 
+  .header {
+    font-size: 22px;
+  }
 }
 
+@media (max-width: 1200px) {
+  .chart-container {
+    margin-left: 80px;
+  }
 
-@media (max-width: 768px) {
-  .navbar-container {
-    max-height: 300px;
+  .navbar {
+    min-width: 220px;
   }
 
   .profile1 {
-    /* margin-top: 30px; */
-    margin-top: 20px;
-    /* margin-left: 28px; */
-    /* margin-right: 60px; */
-    margin-left: -80px;
-    margin-bottom: 80px;
-    width: 150px;
-    letter-spacing: 4px;
-    position: fixed;
+    margin-left: -130px;
   }
 }
 
-@media (min-width: 769px) {
+@media (max-width: 1024px) {
+  .navbar {
+    min-width: 200px;
+  }
+
+  .profile1 {
+    margin-left: -100px;
+    width: 120px;
+  }
+
+  .nav-links {
+    font-size: 16px;
+    margin-top: 100px;
+  }
+
+  .navbar-brand img {
+    height: 30px;
+  }
+
+  .dropdown-menu {
+    width: 200px;
+  }
+
+  .chart-container {
+    margin-left: 60px;
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    height: 100vw;
+    width: auto;
+    position: relative;
+  }
+
   .navbar-container {
-    max-height: none;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .profile1 {
+    margin-left: 0;
+    text-align: center;
+    width: 100px;
+  }
+
+  .nav-links {
+    font-size: 14px;
+    margin-top: auto30px;
+  }
+
+  .navbar-brand img {
+    height: 25px; 
+  }
+
+
+  .nav-item {
+    margin-left: 0;
+  }
+
+  .nav-item .dropdown-menu {
+    position: relative;
+    width: 100%;
+    margin-right: 0;
+    left: 0;
+    top: 0;
+  }
+
+  .chart-container {
+    margin-left: 30px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 600px) and (min-width: 300px) {
+
+  body {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .navbar {
+    height: 100vw; 
+    padding: 10px;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 50px;
+    box-shadow: none;
+  }
+
+  .profile1 {
+    display: none;
+  }
+
+  .chart-container {
+    margin: 10px auto; 
+    width: 90%;
+  }
+
+  .nav-links {
+    font-size: 14px; 
+    margin-top: 20px; 
+    padding: top 10px;
+
+  }
+
+  .navbar-brand img {
+    height: 20px;
+  }
+
+  .nav-item {
+    margin-left: 0;
+    height: auto;
+    margin-top: 20px;
+  }
+
+  .nav-links a {
+    font-size: 16px;
+    padding: 8px 5px;
+    margin-left: 0;
+  }
+
+  .dropdown-menu {
+    width: 150px; 
+    font-size: 14px;
+    position: relative;
+    left: 0;
+  }
+
+  .dropdown-menu .dropdown-item {
+    font-size: 14px;
+    padding: 5px 8px;
+  }
+
+  .header {
+    font-size: 20px;
+    padding: 15px;
+  }
+
+  .navbar-toggler {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+  }
+
+  .offcanvas {
+    width: 100%;
+    height: auto;
+    padding: 10px;
   }
 }
