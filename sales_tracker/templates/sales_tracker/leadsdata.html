@@ -10,20 +10,14 @@
 
 {% block content %}
 
-<!-- <h1>DATA SHOWCASE</h1> -->
-
-
-<!-- Horizontal Navbar -->
 <nav class="navbar-horizontal ">
     <div class="small-nav">
-      
-      <!-- Search Bar Form -->
+ 
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
   
-      <!-- Filter Bar (added between search and profile) -->
       <div class = "inside-filter-container">
         <form method="GET" action="{% url 'lead_data' %}">
             <label for="time_frame">Select Time Frame:</label>
@@ -73,9 +67,7 @@
 
             </select>
         </div>
-        
-        
-        <!-- Zone Filter -->
+    
         <div class="zone-filter-container">
             <label for="zone-filter">Zone:</label>
             <select name="zone" id="zone-filter" onchange="this.form.submit()">
@@ -86,8 +78,8 @@
                 <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
             </select>
         </div>
-           <div class="buttons"><button type="button" class="button">Apply Filter</button>
-            <button type="button" class="button">Clear</button>
+           <div class="buttons"><button type="submit" class="button">Apply Filter</button>
+            <button type="reset" class="button">Clear</button>
         </div>
     </form>
         
