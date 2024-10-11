@@ -1451,35 +1451,60 @@ def AdminDSR(request):
 
 
 
-def deviceAdmin(request):
+# def deviceAdmin(request):
+    # context = {
+    #     "id": "1",
+    #     "uptime": "7:00:00",
+    #     "downtime": "1:00:00",
+    #     "ip": "192.168.123.1"
+    # }
+    # return render(request, 'sales_tracker/deviceAdmin.html', context)
+  
+def Admin_active(request):
     context = {
         "id": "1",
         "uptime": "7:00:00",
         "downtime": "1:00:00",
-        "ip": "192.168.123.1"
-    }
-    return render(request, 'sales_tracker/deviceAdmin.html', context)
+        "ip": "192.168.123.1",
 
-def Admin_active(request):
-    # context = {
-    #     "id": "1",
-    #     "uptime": "7:00:00",
-    #     "downtime": "1:00:00",
-    #     "ip": "192.168.123.1"
-    # }
-    return render(request, 'sales_tracker/adminActive.html')
+        "id2": "2",
+        "eid2": "02",
+        "ename2": "rohit" ,
+        "uptime2": "8:00:00",
+        "downtime2": "1:00:00",
+        "ip2": "192.168.123.1",
+
+        "id3": "3",
+        "eid3": "03",
+        "ename3": "rohit" ,
+        "uptime3": "9:00:00",
+        "downtime3": "1:00:00",
+        "ip3": "192.168.123.1"
+    }
+    return render(request, 'sales_tracker/adminActive.html', context)  
 
 def Admin_passive(request):
-    # context = {
-    #     "id": "1",
-    #     "uptime": "7:00:00",
-    #     "downtime": "1:00:00",
-    #     "ip": "192.168.123.1"
-    # }
-    return render(request, 'sales_tracker/adminPassive.html')
+    context = {
+        "id": "1",
+        "uptime": "7:00:00",
+        "downtime": "1:00:00",
+        "ip": "192.168.123.1",
 
+        "id2": "2",
+        "eid2": "02",
+        "ename2": "rohit" ,
+        "uptime2": "8:00:00",
+        "downtime2": "1:00:00",
+        "ip2": "192.168.123.1",
 
-
+        "id3": "3",
+        "eid3": "03",
+        "ename3": "rohit" ,
+        "uptime3": "9:00:00",
+        "downtime3": "1:00:00",
+        "ip3": "192.168.123.1"
+     }
+    return  render(request, 'sales_tracker/adminPassive.html', context)  
 
 
 def Dsrview(request):
