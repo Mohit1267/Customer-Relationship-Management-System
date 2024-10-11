@@ -58,6 +58,9 @@ urlpatterns = [
     path("agentDsr", login_required(views.AdminDSR), name="agentDsr"),
     path("dsrview", login_required(views.Dsrview), name="dsrview"),
     path("DSR", login_required(views.DSR), name="DSR"),
+    path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
+    path("maps", login_required(views.maps), name="maps"),
+
 
 
 
