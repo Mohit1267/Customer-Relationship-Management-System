@@ -434,7 +434,7 @@ body{
 
   .navbar {
       /* min-width: 180px; */
-      width: auto;
+      width: 20% !important;
       box-shadow: none;
       padding: 6px 14px;
   }
