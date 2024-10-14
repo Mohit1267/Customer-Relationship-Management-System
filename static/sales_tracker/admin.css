@@ -35,6 +35,10 @@ body {
     gap: 5px;
 }
 
+.form-control{
+    display: flex;
+}
+
 .inside-filter-container {
     display: flex;
     align-items: center;
@@ -367,8 +371,12 @@ tbody tr:hover {
         left: 230px;
     }
 
+    .form-control{
+        display: flex;
+    }
+
     .inside-filter-container {
-        margin-left: 600px; 
+        margin-left: 320px; 
     }
 
     .filter-select {
@@ -376,22 +384,22 @@ tbody tr:hover {
     }
 
     .profile-button {
-        /* padding: 8px 14px; */
-        /* gap: 1px;
-        margin-right: 500px; */
+     
         font-size: 13px;
         border-radius: 10%; 
     }
 
     .button1{
-        /* padding: 8px 14px; */
+        /* width: 100px; */
+        padding: 2px 20px; 
         font-size: 13px;
         border-radius: 10%; 
     }
 
     .buttons{
+        padding-left: 20px;
         display: flex;
-        gap: 1px;
+        gap:21px;
         margin-right: 250px;
     }
 
