@@ -1,21 +1,32 @@
-body { 
- 
-   margin-top: 4%;
-    font-family: 'Arial', sans-serif; 
-    margin:auto; 
-    background-color: #fdfdfd; 
-    display: flex; 
+body {
+    margin-top: 4%;
+    font-family: 'Arial', sans-serif;
+    margin: auto;
+    background-color: #fdfdfd;
+    display: flex;
     min-height: 100vh;
-    overflow-y: auto;  /* Enable vertical scrolling */
+
+    overflow-y: auto;
     overflow-x: hidden;
 } 
 
 
+
 .container-fluid {
-    overflow-y: auto; 
-    overflow-x: hidden; 
+    overflow-y: auto;
+    overflow-x: hidden;
     max-height: 950px;
 }
+
+/* Scroll for smaller screens */
+/* .content {
+    margin-left: 200px;
+    padding: 20px;
+    flex: 1;
+    background-color: #f9f9f9;
+    overflow-y: auto; 
+    max-height: 100vh; 
+} */
 
 
 /* .heading_links { 
@@ -63,7 +74,7 @@ body {
     overflow-y: auto; 
 } 
  
-.content { 
+ .content { 
     margin-left: 200px;
     padding: 20px; 
     flex: 1; 
@@ -71,6 +82,7 @@ body {
     overflow-y: auto;  /* Ensure content is scrollable */
     max-height: 100vh; 
 } 
+
 
 .form {
     display: flex;
@@ -84,6 +96,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-weight: normal;
     max-height: 400px;
+    overflow-y: auto;
    
 }
  
@@ -339,6 +352,7 @@ select {
     }
 
     .content {
+
         margin-left: 160px;
         padding: 10px; 
     }
@@ -409,6 +423,7 @@ select {
     }
 
     .moving_title {
+
         font-size: 26px;
         margin-right: 80px;
         margin-left: 80px;
@@ -421,12 +436,14 @@ select {
     .content {
         margin-left: 140px;
         padding: 8px;
+
     }
 
     .form {
         width: 90%;
         padding: 12px;
     }
+
 
     .button1, .button2 {
         font-size: 14px;
