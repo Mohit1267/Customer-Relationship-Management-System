@@ -1,14 +1,14 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.decorators import login_required
-
+from .views import get_salesperson_locations
 
 
 urlpatterns = [
     path("", login_required(views.Dashboards), name="Dashboards"),
     # path("adminn", login_required(views.Admin.as_view()), name="adminn"),
     path('attendance/', (views.Attendence), name='attendance'),
-    path('maps',(views.maps.as_view()),name = 'maps'),
+    #path('maps',(views.maps.as_view()),name = 'maps'),
     # path("agent/", login_required(views.Agent.as_view()), name="agent"),
     path("agent/<pk>", login_required(views.DetailCalling), name="detail_agent"),
     path("sales/<pk>", login_required(views.DetailSales), name="detail_sales"),
@@ -59,12 +59,15 @@ urlpatterns = [
     path("dsrview", login_required(views.Dsrview), name="dsrview"),
     path("DSR", login_required(views.DSR), name="DSR"),
 
-
+    path('get-locations/', get_salesperson_locations, name='get_locations'),
 
 ]
 
 
-
+'''urlpatterns = [
+    path('get-locations/', get_salesperson_locations, name='get_locations'),
+]
+'''
 
 
 

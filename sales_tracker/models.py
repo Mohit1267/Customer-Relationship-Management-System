@@ -155,3 +155,10 @@ class QuotesData(models.Model):
     date = models.DateField(default="2000-10-10")
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
 
+    from django.db import models
+
+class Location(models.Model):
+    # Define the fields for the Location model
+    name = models.CharField(max_length=100)
+    latitude = models.FloatField()
+    longitude = models.FloatField()

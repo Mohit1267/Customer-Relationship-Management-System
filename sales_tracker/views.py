@@ -1185,16 +1185,14 @@ class AdminAnalysis(TemplateView):
     
 
 
-class maps(View):
-    template_name = "sales_tracker/maps.html"
-    def get(self,request):
-        context = {}
-        latitude = request.session.get('latitude')
-        longitude = request.session.get('longitude')
-        context['lat'] = latitude
-        context['long'] = longitude
-        return render(request, self.template_name, context)
-    
+from django.http import JsonResponse
+from .models import Location
+
+def get_salesperson_locations(request):
+    locations = Location.objects.all().values('salesperson__name', 'latitude', 'longitude', 'timestamp')
+    location_list = list(locations)
+    return JsonResponse(location_list, safe=False)
+
 
 
 
