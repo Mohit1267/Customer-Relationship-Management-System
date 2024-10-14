@@ -5,15 +5,12 @@ body {
     background-color: #fdfdfd;
     display: flex;
     min-height: 100vh;
-<<<<<<< HEAD
-    overflow: auto; /* Ensures body scrolls when content overflows */
-}
-=======
-    overflow-y: auto;  /* Enable vertical scrolling */
+
+    overflow-y: auto;
     overflow-x: hidden;
 } 
 
->>>>>>> 37cdd08032053b6eecdd4d077338557e25c31e9a
+
 
 .container-fluid {
     overflow-y: auto;
@@ -22,14 +19,14 @@ body {
 }
 
 /* Scroll for smaller screens */
-.content {
+/* .content {
     margin-left: 200px;
     padding: 20px;
     flex: 1;
     background-color: #f9f9f9;
-    overflow-y: auto; /* Adds vertical scroll when content overflows */
-    max-height: 100vh; /* Limits height so it scrolls within view */
-}
+    overflow-y: auto; 
+    max-height: 100vh; 
+} */
 
 
 /* .heading_links { 
@@ -77,18 +74,15 @@ body {
     overflow-y: auto; 
 } 
  
-/* .content { 
+ .content { 
     margin-left: 200px;
     padding: 20px; 
     flex: 1; 
     background-color: #f9f9f9; 
-<<<<<<< HEAD
-}  */
-=======
     overflow-y: auto;  /* Ensure content is scrollable */
     max-height: 100vh; 
 } 
->>>>>>> 37cdd08032053b6eecdd4d077338557e25c31e9a
+
 
 .form {
     display: flex;
@@ -358,35 +352,9 @@ select {
     }
 
     .content {
-<<<<<<< HEAD
-        margin-left: 60px; 
-    }
 
-    .form {
-        width: 80%; 
-    }
-
-    .buttons {
-        width: 100%; 
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-    .content {
-        margin-left: 0;
-        padding: 10px;
-        overflow-x: auto; /* Adds horizontal scroll for smaller screens */
-        overflow-y: auto; /* Adds vertical scroll when content overflows */
-=======
         margin-left: 160px;
         padding: 10px; 
->>>>>>> 37cdd08032053b6eecdd4d077338557e25c31e9a
     }
 
     .form {
@@ -455,10 +423,7 @@ select {
     }
 
     .moving_title {
-<<<<<<< HEAD
-        font-size: 24px;
-        margin: 10px 0;
-=======
+
         font-size: 26px;
         margin-right: 80px;
         margin-left: 80px;
@@ -471,7 +436,7 @@ select {
     .content {
         margin-left: 140px;
         padding: 8px;
->>>>>>> 37cdd08032053b6eecdd4d077338557e25c31e9a
+
     }
 
     .form {
@@ -479,11 +444,7 @@ select {
         padding: 12px;
     }
 
-<<<<<<< HEAD
-    .buttons {
-        flex-direction: column;
-        width: 100%;
-=======
+
     .button1, .button2 {
         font-size: 14px;
         padding: 5px 10px;
@@ -529,7 +490,6 @@ select {
 
     .filtered-result {
         margin-top: 5px;
->>>>>>> 37cdd08032053b6eecdd4d077338557e25c31e9a
     }
 }
 
