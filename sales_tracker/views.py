@@ -1515,8 +1515,43 @@ def DSR(request):
     return render(request, "sales_tracker/dsr.html")
 
 
-def liveStreaming(request):
 
-    return render(request, "sales_tracker/liveStreaming.html")
+from django.shortcuts import render, redirect
+from .forms import PasswordForm
+from .models import NewPasswords
+from django.core.exceptions import ValidationError
 
+def validate_password_view(request):
+    if request.method == 'POST':
+        form = PasswordForm(request.POST)
+        if form.is_valid():
+            # Get the entered password from the form
+            entered_minor_password = form.cleaned_data['Minor_password']
+            entered_sales_password = form.cleaned_data['Sales_password']
+            entered_admin_password = form.cleaned_data['Admin_password']
 
+            # Retrieve the stored passwords from the database
+            try:
+                stored_passwords = NewPasswords.objects.first()  # Assuming you have only one instance of Passwords
+                if not stored_passwords:
+                    raise ValidationError("No passwords found in the database.")
+                
+                # Compare entered passwords with the ones in the database
+                if (entered_minor_password == stored_passwords.Minor_password and
+                    entered_sales_password == stored_passwords.Sales_password and
+                    entered_admin_password == stored_passwords.Admin_password):
+                    # If passwords match, you can proceed
+                    return redirect('success_url')
+                else:
+                    # If passwords don't match, raise an error
+                    form.add_error(None, 'Passwords do not match the stored passwords.')
+            
+            except NewPasswords.DoesNotExist:
+                form.add_error(None, 'Stored passwords not found in the database.')
+        
+        # If form is invalid, re-render the form with errors
+        return render(request, 'validate_password.html', {'form': form})
+
+    else:
+        form = PasswordForm()
+    return render(request, 'validate_password.html', {'form': form})

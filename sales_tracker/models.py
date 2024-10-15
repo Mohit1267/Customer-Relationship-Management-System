@@ -1,5 +1,5 @@
-from django.db import models
-from users.models import RegisterUser
+from django.db import modls
+from users.models import RegisterUser,Profile
 from django.conf import settings
 
 
@@ -162,3 +162,58 @@ class Location(models.Model):
     name = models.CharField(max_length=100)
     latitude = models.FloatField()
     longitude = models.FloatField()
+from django.db import models
+from django.contrib.auth.models import User
+
+
+
+
+
+'''class Profile(models.Model):
+    USER_ROLES = (
+        ('Minor', 'Minor'),
+        ('Sales', 'Sales'),
+        ('Admin', 'Admin'),
+        # Add more roles as needed
+    )
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='sales_tracker_profile')
+    emp_id = models.CharField(max_length=20, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    branch = models.CharField(max_length=100, blank=True)
+    voice_recording = models.FileField(upload_to='voice_recordings/', null=True, blank=True)
+    
+    def __str__(self):
+        return f'{self.user.username} Profile'''
+
+
+
+
+
+
+from django.db import models
+from django.core.validators import RegexValidator
+
+password_regex = RegexValidator(
+    regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+    message="Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
+)
+
+class NewPasswords(models.Model):
+    Minor_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )
+
+    Sales_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )
+
+    Admin_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )

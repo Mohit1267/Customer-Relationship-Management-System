@@ -1,6 +1,8 @@
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData
 from django import forms
 
+
+
 class MiningForm(forms.ModelForm):
     class Meta:
         model = MiningData
@@ -49,6 +51,16 @@ MY_CHOICES = (
     ('week', 'week'),
     ('month', 'month'),
 )
+
+
+from django import forms
+from .models import NewPasswords
+
+class PasswordForm(forms.ModelForm):
+    class Meta:
+        model = NewPasswords
+        fields = ['Minor_password', 'Sales_password', 'Admin_password']
+
 
 class SortForm(forms.Form):
     select = forms.ChoiceField(choices=MY_CHOICES, label='Select an option')

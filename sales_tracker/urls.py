@@ -58,12 +58,13 @@ urlpatterns = [
     path("agentDsr", login_required(views.AdminDSR), name="agentDsr"),
     path("dsrview", login_required(views.Dsrview), name="dsrview"),
     path("DSR", login_required(views.DSR), name="DSR"),
-    path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
-    path("maps", login_required(views.maps), name="maps"),
+    #path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
+    #path("maps", login_required(views.maps), name="maps"),
 
 
     path('get-locations/', get_salesperson_locations, name='get_locations'),
-
+   # path('role-access/', views.role_access, name='role_access'),
+    path('validate-password/', views.validate_password_view, name='validate_password'),
 ]
 
 
