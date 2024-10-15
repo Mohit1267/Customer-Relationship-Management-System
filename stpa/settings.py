@@ -61,8 +61,7 @@ SESSION_COOKIE_AGE = 15*60
 #     'django.contrib.messages.middleware.MessageMiddleware',
 #     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 #     'users.middleware.InactivityMiddleware',
-#     # 'users.middleware.InactivityMiddleware',
-# ]
+
 
 ROOT_URLCONF = 'stpa.urls'
 

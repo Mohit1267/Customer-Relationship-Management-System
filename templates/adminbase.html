@@ -20,31 +20,6 @@
 
     <title>{% block title %}title{% endblock %}</title>
 
-    <!-- navbar to the right side -->
-    <style>
-    
-/* 
-    @media (max-width: 768px) {
-      .navbar {
-        transform: translateX(-100%);
-      }
-
-      .navbar.active {
-        transform: translateX(0);
-      }
-
-      .hamburger {
-        display: block;
-      }
-
-      .content {
-        margin-left: 0;
-      }
-    } */
-     
-  </style>
-
-
 
   </head>
   <body>
@@ -61,52 +36,38 @@
        <img class="navbar-brand" src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image" style="height: 65px;">
         </a>
       </div>       
-
-        <!-- timer  -->
-        <!-- <div>
-          {% if timer %}
-         <div class="timer" id="count_down"></div> -->
-
-
-          {% endif %}
+ 
         <div class="navbar-container">
   
-        <!-- <div>
-          <a class="btn btn-light profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
-            <b>Profile</b>
-          </a>
-        </div> -->
-
-        
         <div class="" id="navbarNavDropdown">   
           <ul class="nav-links flex-column"> 
             <li class="nav-item ">
                <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
-                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo" style="height: 43px ; margin-right: 12px; margin-left: -10px;">
+                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; height: 42px;"  >
                 Dashboard
                </a>
             </li>
 
-            <li class="nav-item ">
-              <a class="nav-link spacing" href="{% url 'deviceAdmin' %}" role="button" aria-expanded="false"  style="display: flex; align-items: center;">
-                <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo" style=" height: 42px ;margin-right: 5px; margin-left: -5px;">
+            <li class="nav-item  ">
+
+               <a class="nav-link  spacing" href=" " role="button" aria-expanded="false"  >
+                <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo"  >
+  
+
                 Device
+              </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="{% url 'agentopportunity' %}">Active Device</a></li>
+                  <li><a class="dropdown-item" href="{% url 'adminActive' %}">Active Device</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">Passive Device</a></li>
+                  <li><a class="dropdown-item" href="{% url 'adminPassive' %}">Passive Device</a></li>
                 </ul>
-              </a>
-             
             </li>
 
             <li class="nav-item ">
               <a class="nav-link spacing" href="{% url 'reports' %}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
-
                 <img src="https://i.ibb.co/2yVYr9s/reportslogo.png" alt="Reports Logo" style="height: 42px ; margin-right: 5px;">
-
                 Reports
               </a>
             </li>

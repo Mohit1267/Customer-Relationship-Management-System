@@ -31,386 +31,136 @@
 
 <body>
   <!-- <h1>Voice Command Redirection</h1> -->
-    <!-- <button onclick="startRecognition()">Start Voice Command</button> -->
+  <!-- <button onclick="startRecognition()">Start Voice Command</button> -->
 
   <script src="charts.js"></script>
   <!-- navbar to the right side -->
+  <nav class="navbar navbar-expand-lg">
+      <div class="navbar-brand-container">
+          <a href="{% url 'index' %}">
+              <img class="navbar-brand" src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image"
+                  style="height: 65px;">
+          </a>
+      </div>
 
-  <nav class="navbar  navbar-expand-lg">
-
-    <div class="navbar-brand-container">
-      <!-- <a class="navbar-brand" href="/">Logo</a> -->
-      <a href="{% url 'index' %}">
-        <img class="navbar-brand" src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image" style="height: 65px; ">
-      </a>
-    </div>
-
-    <!-- timer  -->
-    <div>
+       <!-- timer  -->
+  <div>
       {% if timer %}
       <div class="timer" id="count_down">
     </div>
       {% endif %}
-    
-    
-      <div class="navbar-container">    
-        <div class="" id="navbarNavDropdown">
-          <ul class="nav-links flex-column">
 
-             <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false">
-             <!-- <li class="nav-item dropdown">
-              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false"> -->
- 
-                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo" style="height: 45px;">
-                Dashboard
-              </a>
-            </li>
+      <div class="navbar-container">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav-links flex-column">
 
-             <li class="nav-item dropdown dashboard-icon">
-               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item profile-icon" style="margin-top: 50px;">
+                  <a class="nav-link spacing" href="#" data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                      <div style="display: flex; align-items: center; gap: 10px;">
+                          <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:50px; height: 50px; margin-left: -7px; margin-top: -2px;" alt="Profile Logo"
+                              style="height: 45px;">
+                          <span>Profile</span>
+                      </div>
+                  </a>
+              </li>
 
-             <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"> -->
- 
-                <img src="https://i.ibb.co/jTpW1Hk/datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
+                  <li class="nav-item dashboard-icon">
+                      <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
+                          <div style="display: flex; align-items: center; gap: 10px;">
+                              <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo"
+                                  style="height: 45px; margin-left: -10px;">
+                              <span>Dashboard</span>
+                          </div>
+                      </a>
+                  </li>
 
+                  <li class="nav-item dropdown dashboard-icon">
+                      <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <img src="https://i.ibb.co/jTpW1Hk/datamininglogo.png" alt="Mining Logo"
+                              style="margin-right: 5px;">
+                          Mining
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'mining' %}">Create Mining</a></li>
+                          <li>
+                              <hr class="dropdown-divider">
+                          </li>
+                          <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
+                      </ul>
+                  </li>
 
-                Mining
-              </a>
-              <ul class="dropdown-menu ">
-                <li><a class="dropdown-item" href="{% url 'mining' %}">Create Mining</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo"
+                              style="margin-right: 5px;">
+                          Calendar
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
+                          <li>
+                              <hr class="dropdown-divider">
+                          </li>
+                          <li><a class="dropdown-item" href="#">Schedule call</a></li>
+                          <li>
+                              <hr class="dropdown-divider">
+                          </li>
+                          <li><a class="dropdown-item" href="#">Create Task</a></li>
+                      </ul>
+                  </li>
+
+                  <li class="nav-item dashboard-icon">
+                      <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
+                          <div style="display: flex; align-items: center; gap: 10px;">
+                              <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance logo">
+                              <span>Attendance</span>
+                          </div>
+                      </a>
+                  </li>
+
+                 
               </ul>
-            </li>
-
-             <!-- <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"> -->
- 
-                <!-- <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
-
-                Leads
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
-              </ul>
-            </li> -->
-
- 
-            <!-- <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-
-                <img src="https://i.ibb.co/8cQkyWh/contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
-
-                Contacts
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">View Contacts</a></li>
-              </ul>
-            </li> -->
-
-             
-            <!-- <li class="nav-item dropdown  ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- 
-        
- 
-                <img src="https://i.ibb.co/c3sNstd/quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
-
-                Quotes
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'quotes_data' %}">View Quote</a></li>
-              </ul>
-            </li> -->
-
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            
-                <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
-
-                Calendar
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Schedule call</a></li>
-                <li></li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Create Task</a></li>
-              </ul>
-            </li>
-
- 
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="{%url 'attendance'%}" role="button" aria-expanded="false" style="margin-left: 20px;">
- 
-      
- 
-                <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance Logo" style=" margin-right: 2px;">
-
-                Attendance
-              </a>
-            </li>
-
-<!-- 
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
-
-
-                <img src="https://i.ibb.co/xF1RTTQ/opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
-
-                Opportunities
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
-              </ul>
-            </li> -->
-
-
-
-          </ul>
-        </div>
+          </div>
       </div>
-
   </nav>
-  {% block content %}{% endblock %}
-  <div class="offcanvas offcanvas-end" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="profile1 offcanvas-header">
-      <h5 id="offcanvasExampleLabel"><b>Profile</b></h5>
-      <!-- <button type="button" aria-label="Close"></button> -->
-    </div>
-  
-    <!-- Correcting the id attribute placement -->
-    <div class="offcanvas-body" id="offcanvasExample">
-      <div class="row p-2">
-        <a href="{% url 'detail_profile' %}" class="right_profile">View Profile</a>
+
+{% block content %} {% endblock %}
+
+  <div class="offcanvas offcanvas-end" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" data-bs-backdrop = "false">
+
+      <div class="offcanvas-body">
+          <div class="row p-2">
+              <a href="{% url 'detail_profile' %}" class="right_profile">View Profile</a>
+          </div>
+          <div class="row p-2">
+              <a href="#" class="right_profile">Edit Profile</a>
+          </div>
+          <div class="row p-2">
+              <a href="#" class="right_profile">Employees</a>
+          </div>
+          <div class="row p-2">
+              <a href="#" class="right_profile">
+          </div>
+          <div class="row p-2">
+              <a href="#" class="right_profile">Community</a>
+          </div>
+          <div class="row p-2">
+              <a href="#" class="right_profile">About</a>
+          </div>
+          <div class="row p-2">
+              <a href="{% url 'logout'%}" class="right_profile">Logout</a>
+          </div>
+
+          <button id="toggleBreakBtn" class="btn btn-primary">Start Break</button>
+          <div id="timerDisplay"></div>
+          </div>
       </div>
-      <div class="row p-2">
-        <a href="#" class="right_profile">Edit Profile</a>
-      </div>
-      <div class="row p-2">
-        <a href="#" class="right_profile">Employees</a>
-      </div>
-      <div class="row p-2">
-        <a href="#" class="right_profile">Community</a>
-      </div>
-      <div class="row p-2">
-        <a href="#" class="right_profile">About</a>
-      </div>
-      <div class="row p-2">
-        <a href="{% url 'logout'%}" class="right_profile">Logout</a>
-      </div>
-  
-      <button id="toggleBreakBtn" class="btn btn-primary">Start Break</button>
-      <div id="timerDisplay"></div>
-    </div>
-  </div>
-  
-    {%comment%}
-    {% if timer %}
-    <div class="timer_count">
-      <p>Timer: <span id="count_down">00:00:00</span></p>
-
-      <p>No of Mining: {{mining_count}}</p>
-    </div>
-    {% endif %}
-    {%endcomment%}
-
-    <!-- <script>
-      function startRecognition() {
-          if (!('webkitSpeechRecognition' in window)) {
-              alert("Sorry, your browser doesn't support speech recognition.");
-              return;
-          }
-
-          var recognition = new webkitSpeechRecognition();
-          recognition.continuous = false;
-          recognition.interimResults = false;
-          recognition.lang = 'en-US';
-
-          recognition.onstart = function() {
-              console.log('Voice recognition started.');
-          };
-
-          recognition.onresult = function(event) {
-              var transcript = event.results[0][0].transcript.trim().toLowerCase();
-              console.log('You said: ' + transcript);
-              handleVoiceCommand(transcript);
-          };
-
-          recognition.onerror = function(event) {
-              console.error('Recognition error: ', event.error);
-          };
-
-          recognition.onend = function() {
-              console.log('Voice recognition ended.');
-          };
-
-          recognition.start();
-      }
-
-      function handleVoiceCommand(command) {
-        const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
-          if (miningViewPattern.test(command)) {
-              window.location.href = "{% url 'data' %}";
-          } else {
-              alert("Command not recognized.");
-          }
-      }
-  </script> -->
 
 
 
-  <!-- <script>
-    function startRecognition() {
-        if (!('webkitSpeechRecognition' in window)) {
-            alert("Sorry, your browser doesn't support speech recognition.");
-            return;
-        }
-
-        var recognition = new webkitSpeechRecognition();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-
-        recognition.onstart = function() {
-            console.log('Voice recognition started.');
-        };
-
-        recognition.onresult = function(event) {
-            var transcript = event.results[0][0].transcript.trim().toLowerCase();
-            console.log('You said: ' + transcript);
-            handleVoiceCommand(transcript);
-        };
-
-        recognition.onerror = function(event) {
-            console.error('Recognition error: ', event.error);
-        };
-
-        recognition.onend = function() {
-            console.log('Voice recognition ended.');
-            // Restart recognition if needed
-            startRecognition();
-        };
-
-        recognition.start();
-    }
-
-    function handleVoiceCommand(command) {
-      const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
-        if (miningViewPattern.test(command)) {
-            window.location.href = "{% url 'data' %}";
-        } else {
-            // Extract time frame and state using regex
-            const timeFrame = extractTimeFrame(command);
-            const state = extractState(command);
-
-            if (timeFrame || state) {
-                if (timeFrame) {
-                    document.getElementById('time_frame').value = timeFrame;
-                    // Manually trigger the change event to submit the form
-                document.getElementById('time_frame').dispatchEvent(new Event('change'));
-                } 
-                if (state) {
-                    document.getElementById('state-filter').value = state;
-                    document.getElementById('state-filter').dispatchEvent(new Event('change'));
-                    // Check if state filter needs to submit
-                // This will depend on your form structure and behavior
-                document.querySelector('form').submit();
-                }
-                // Submit the form to refresh the data
-                // document.querySelector('form').submit();
-            } else {
-                alert("Command not recognized.");
-            }
-        }
-    }
-
-    function extractTimeFrame(command) {
-        const timeFramePattern = /(yearly|quarterly|monthly|weekly|today)/i;
-        const match = command.match(timeFramePattern);
-        return match ? match[0].toLowerCase() : null;
-    }
-
-    function extractState(command) {
-        const states = {
-            "Andhra Pradesh": "AP",
-            "Arunachal Pradesh": "AR",
-            "Assam": "AS",
-            "Bihar": "BR",
-            "Chhattisgarh": "CG",
-            "Goa": "GA",
-            "Gujarat": "GJ",
-            "Haryana": "HR",
-            "Himachal Pradesh": "HP",
-            "Jharkhand": "JH",
-            "Karnataka": "KA",
-            "Kerala": "KL",
-            "Madhya Pradesh": "MP",
-            "Maharashtra": "MH",
-            "Manipur": "MN",
-            "Meghalaya": "ML",
-            "Mizoram": "MZ",
-            "Nagaland": "NL",
-            "Odisha": "OD",
-            "Punjab": "PB",
-            "Sikkim": "SK",
-            "Tamil Nadu": "TN",
-            "Telangana": "TG",
-            "Tripura": "TR",
-            "Uttar Pradesh": "UP",
-            "Uttarakhand": "UT",
-            "West Bengal": "WB"
-        };
-
-        for (let state in states) {
-            const statePattern = new RegExp(state.toLowerCase(), "i");
-            if (statePattern.test(command)) {
-                return states[state];
-            }
-        }
-        return null;
-    }
-
-    // Start voice recognition when the page loads
-    window.onload = function() {
-        startRecognition();
-    };
-</script> -->
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/@picovoice/porcupine-web@1.8.0"></script> -->
-
-
+      
 <script>
 
   function startRecognition() {
@@ -528,333 +278,205 @@
   };
 </script>
 
-
-
-
-
-    <script>
-      // Function to toggle the navbar
-      function toggleNavbar() {
-        const navbar = document.querySelector('.nav-links');
-        navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
-      }
-    </script>
-
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script>
-      function toggleNavbar() {
-        const navbarContainer = document.querySelector('.navbar-container');
-        const navbar = document.querySelector('.navbar');
- 
-        // Toggle the 'collapsed' class on the navbar
-        navbar.classList.toggle('collapsed');
-
-        // Toggle the visibility by toggling a class
-        navbarContainer.classList.toggle('visible');
-      }
-
-    </script>
-
-  <!-- profile section-->
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const profileButton = document.querySelector('.profile1');
-  const offcanvas = document.getElementById('offcanvasExample');
-
-  // Toggle offcanvas visibility on profile button click
-  profileButton.addEventListener('click', function (e) {
-    e.stopPropagation(); // Prevent event from bubbling
-    offcanvas.classList.toggle('show'); // Toggle the "show" class to open/close offcanvas
-  });
-
-  // Close the offcanvas when clicking outside of it
-  document.addEventListener('click', function (e) {
-    if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
-      offcanvas.classList.remove('show'); // Close offcanvas if clicking outside
-    }
-  });
-
-  // Ensure the close button inside the offcanvas works
-  document.querySelector('.btn-close').addEventListener('click', function () {
-    offcanvas.classList.remove('show'); // Close offcanvas
-  });
-});
-
-    </script>
-
-
-    <!-- data chart section 1-->
-    <script>
-      // Weekly Data Chart
-      var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
-      var weeklyChart = new Chart(ctxWeekly, {
-        type: 'doughnut',
-        data: {
-          labels: ['Completed', 'Remaining'],
-          datasets: [{
-            label: 'Weekly Data',
-            data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
-            backgroundColor: ['#4CAF50', '#e0e0e0'],
-            borderColor: ['#33CC33', '#e0e0e0'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          cutout: '70%',
-          plugins: {
-            legend: {
-              labels: {
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                }
-              }
-            }
-          }
-        }
-      });
-
-      // Monthly Data Chart
-      var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
-      var monthlyChart = new Chart(ctxMonthly, {
-        type: 'doughnut',
-        data: {
-          labels: ['Completed', 'Remaining'],
-          datasets: [{
-            label: 'Monthly Data',
-            data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
-            backgroundColor: ['#4CAF50', '#e0e0e0'],
-            borderColor: ['#4CAF50', '#e0e0e0'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          cutout: '70%',
-          plugins: {
-            legend: {
-              labels: {
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                }
-              }
-            }
-          }
-        }
-      });
-
-      // Quarterly Data Chart
-      var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
-      var quarterlyChart = new Chart(ctxQuarterly, {
-        type: 'doughnut',
-        data: {
-          labels: ['Completed', 'Remaining'],
-          datasets: [{
-            label: 'Quarterly Data',
-            data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
-            backgroundColor: ['#4CAF50', '#e0e0e0'],
-            borderColor: ['#4CAF50', '#e0e0e0'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          cutout: '70%',
-          plugins: {
-            legend: {
-              labels: {
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                }
-              }
-            }
-          }
-        }
-
- 
-   </script>
-  
-    <!--data chart section 2--> 
-    <script>
-
-      });
-
-      // Yearly Data Chart
-      var ctxYearly = document.getElementById('yearlyChart').getContext('2d');
-      var yearlyChart = new Chart(ctxYearly, {
-        type: 'doughnut',
-        data: {
-          labels: ['Completed', 'Remaining'],
-          datasets: [{
-            label: 'Yearly Data',
-            data: [parseInt('{{ mining_count }}', 10), 1200 - parseInt('{{ mining_count }}', 10)], // Assuming yearly goal is 1200
-            backgroundColor: ['#4CAF50', '#e0e0e0'],
-            borderColor: ['#4CAF50', '#e0e0e0'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          cutout: '70%',
-          plugins: {
-            legend: {
-              labels: {
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                }
-              }
-            }
-          }
-        }
-      });
-    </script>
-
-
-
-    <!---->
-    <script>
-  let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 +
-    parseInt("{{ timer.min }}", 10) * 60 +
-    parseInt("{{ timer.sec }}", 10);
-
-  const countDownEle = document.getElementById("count_down");
-
-  function convertSecondsToHms(seconds) {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const sec = Math.floor(seconds % 60);
-
-    const formattedHours = hours.toString().padStart(2, "0");
-    const formattedMinutes = minutes.toString().padStart(2, "0");
-    const formattedSeconds = sec.toString().padStart(2, "0");
-
-    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+<script>
+  // Function to toggle the navbar
+  function toggleNavbar() {
+    const navbar = document.querySelector('.nav-links');
+    navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
   }
-
-  function updateCountDown() {
-    if (totalSeconds <= 0) {
-      countDownEle.innerHTML = "00:00:00";
-      clearInterval(mainTimerInterval);
-      return;
-    }
-    let formattedTimer = convertSecondsToHms(totalSeconds);
-    countDownEle.innerHTML = formattedTimer;
-    totalSeconds++;
-  }
-
-  let mainTimerInterval = setInterval(updateCountDown, 1000);
-
-  function startMainTimer() {
-    clearInterval(mainTimerInterval);  // Ensure no multiple intervals running
-    mainTimerInterval = setInterval(updateCountDown, 1000);
-  }
-
-  function pauseMainTimer() {
-    clearInterval(mainTimerInterval);
-  }
-
-  function sendHeartbeat() {
-    fetch("{% url 'heartbeat' %}", {
-      method: "GET",
-      headers: {
-        "X-Requested-With": "XMLHttpRequest"
-      }
-    }).then(response => {
-      if (response.status !== 200) {
-        console.error("Session may have expired.");
-      }
-    }).catch(error => {
-      console.error("Failed to send heartbeat:", error);
-    });
-  }
-
-  let breakTimeLeft = 3600; // 1 hour in seconds
-  let breakTimerInterval = null;
-
-  document.getElementById("toggleBreakBtn").addEventListener("click", function () {
-    if (breakTimerInterval) {
-      clearInterval(breakTimerInterval);
-      breakTimerInterval = null;
-      this.innerHTML = "Start Break";
-
-      // Resume the main timer
-      startMainTimer();
-    } else {
-      pauseMainTimer();  // Correct the function call to pause the main timer
-      breakTimeLeft = 3600;
-      startBreakTimer();
-      this.innerHTML = "End Break";
-    }
-  });
-
-  function startBreakTimer() {
-    breakTimerInterval = setInterval(() => {
-      if (breakTimeLeft === 0) {
-        clearInterval(breakTimerInterval);
-        breakTimerInterval = null;
-        document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
-        alert("Break time is over!");
-
-        // Resume the main timer after the break ends
-        startMainTimer();
-      } else {
-        breakTimeLeft--;
-        displayTime();
-        sendHeartbeat();
-      }
-    }, 1000); // 1-second intervals
-  }
-
-  function displayTime() {
-    const minutes = Math.floor(breakTimeLeft / 60);
-    const seconds = breakTimeLeft % 60;
-    document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
-
-  startMainTimer();
 </script>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="% static  IBscript.js"></script>
-    {% block javascript %}{% endblock %}
+  <script>
+    function toggleNavbar() {
+      const navbarContainer = document.querySelector('.navbar-container');
+      const navbar = document.querySelector('.navbar');
 
-    <script>
+      // Toggle the 'collapsed' class on the navbar
+      navbar.classList.toggle('collapsed');
+
+      // Toggle the visibility by toggling a class
+      navbarContainer.classList.toggle('visible');
+    }
+
+  </script>
+
+
+
+<!-- profile section-->
+<script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Get the current URL path
-    const currentPath = window.location.pathname;
-
-    // Loop through each nav-link and dropdown-item
-    document.querySelectorAll('.nav-item .nav-link, .dropdown-item').forEach(item => {
-      if (item.getAttribute('href') === currentPath) {
-        // Remove 'active' class from all nav-links
-        document.querySelectorAll('.nav-link').forEach(link => {
-          link.classList.remove('active');
-        });
-
-        // Find the closest nav-item (parent) and add 'active' class to the nav-link
-        const parentNavLink = item.closest('.nav-item').querySelector('.nav-link');
-        if (parentNavLink) {
-          parentNavLink.classList.add('active');
-        }
+    const profileButton = document.querySelector('.profile1');
+    const offcanvas = document.getElementById('offcanvasExample');
+  
+    // Toggle offcanvas visibility on profile button click
+    profileButton.addEventListener('click', function (e) {
+      e.stopPropagation(); // Prevent event from bubbling
+      offcanvas.classList.toggle('show'); // Toggle the "show" class to open/close offcanvas
+    });
+  
+    // Close the offcanvas when clicking outside of it
+    document.addEventListener('click', function (e) {
+      if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+        offcanvas.classList.remove('show'); // Close offcanvas if clicking outside
       }
     });
+  
+    // Ensure the close button inside the offcanvas works
+    document.querySelector('.btn-close').addEventListener('click', function () {
+      offcanvas.classList.remove('show'); // Close offcanvas
+    });
   });
-</script>
- 
+  
+      </script>
+  
 
-    <!-- Include necessary external scripts -->
-    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-    <script src="{% static 'js/datatables/datatables.js' %}"></script>
-    <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+  <!---->
+  <script>
+      let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 +
+        parseInt("{{ timer.min }}", 10) * 60 +
+        parseInt("{{ timer.sec }}", 10);
+    
+      const countDownEle = document.getElementById("count_down");
+    
+      function convertSecondsToHms(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const sec = Math.floor(seconds % 60);
+    
+        const formattedHours = hours.toString().padStart(2, "0");
+        const formattedMinutes = minutes.toString().padStart(2, "0");
+        const formattedSeconds = sec.toString().padStart(2, "0");
+    
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+      }
+    
+      function updateCountDown() {
+        if (totalSeconds <= 0) {
+          countDownEle.innerHTML = "00:00:00";
+          clearInterval(mainTimerInterval);
+          return;
+        }
+        let formattedTimer = convertSecondsToHms(totalSeconds);
+        countDownEle.innerHTML = formattedTimer;
+        totalSeconds++;
+      }
+    
+      let mainTimerInterval = setInterval(updateCountDown, 1000);
+    
+      function startMainTimer() {
+        clearInterval(mainTimerInterval);  // Ensure no multiple intervals running
+        mainTimerInterval = setInterval(updateCountDown, 1000);
+      }
+    
+      function pauseMainTimer() {
+        clearInterval(mainTimerInterval);
+      }
+    
+      function sendHeartbeat() {
+        fetch("{% url 'heartbeat' %}", {
+          method: "GET",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest"
+          }
+        }).then(response => {
+          if (response.status !== 200) {
+            console.error("Session may have expired.");
+          }
+        }).catch(error => {
+          console.error("Failed to send heartbeat:", error);
+        });
+      }
+    
+      let breakTimeLeft = 3600; // 1 hour in seconds
+      let breakTimerInterval = null;
+    
+      document.getElementById("toggleBreakBtn").addEventListener("click", function () {
+        if (breakTimerInterval) {
+          clearInterval(breakTimerInterval);
+          breakTimerInterval = null;
+          this.innerHTML = "Start Break";
+    
+          // Resume the main timer
+          startMainTimer();
+        } else {
+          pauseMainTimer();  // Correct the function call to pause the main timer
+          breakTimeLeft = 3600;
+          startBreakTimer();
+          this.innerHTML = "End Break";
+        }
+      });
+    
+      function startBreakTimer() {
+        breakTimerInterval = setInterval(() => {
+          if (breakTimeLeft === 0) {
+            clearInterval(breakTimerInterval);
+            breakTimerInterval = null;
+            document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+            alert("Break time is over!");
+    
+            // Resume the main timer after the break ends
+            startMainTimer();
+          } else {
+            breakTimeLeft--;
+            displayTime();
+            sendHeartbeat();
+          }
+        }, 1000); // 1-second intervals
+      }
+    
+      function displayTime() {
+        const minutes = Math.floor(breakTimeLeft / 60);
+        const seconds = breakTimeLeft % 60;
+        document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      }
+    
+      startMainTimer();
+    </script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script src="% static  IBscript.js"></script>
+{% block javascript %}{% endblock %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+// Get the current URL path
+const currentPath = window.location.pathname;
+
+// Loop through each nav-link and dropdown-item
+document.querySelectorAll('.nav-item .nav-link, .dropdown-item').forEach(item => {
+if (item.getAttribute('href') === currentPath) {
+  // Remove 'active' class from all nav-links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+  });
+
+  // Find the closest nav-item (parent) and add 'active' class to the nav-link
+  // const parentNavLink = item.closest('.nav-item').querySelector('.nav-link');
+  // if (parentNavLink) {
+  //   parentNavLink.classList.add('active');
+  // }
+}
+});
+});
+</script>
+
+
+<!-- Include necessary external scripts -->
+<script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+<script src="{% static 'js/datatables/datatables.js' %}"></script>
+<script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+
+
 
 
 </body>
+
 
 </html>
  

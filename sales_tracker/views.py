@@ -918,12 +918,14 @@ class LeadView(BaseListView):
     template_name = "sales_tracker/leadsdata.html"
     model = LeadsData
     count_context_name = 'lead_count'
+
 class OpportunityView(BaseListView):
     template_name = "sales_tracker/opp_data.html"
     model = OpportunityData
     count_context_name = 'opportunity_count'
 class QuotesView(BaseListView):
-    template_name = "sales_tracker/data.html"
+    
+    template_name = "sales_tracker/quotesdata.html"
     model = QuotesData
     count_context_name = 'opportunity_count'
 
@@ -1449,14 +1451,62 @@ def AdminDSR(request):
 
 
 
-def deviceAdmin(request):
+# def deviceAdmin(request):
+    # context = {
+    #     "id": "1",
+    #     "uptime": "7:00:00",
+    #     "downtime": "1:00:00",
+    #     "ip": "192.168.123.1"
+    # }
+    # return render(request, 'sales_tracker/deviceAdmin.html', context)
+  
+def Admin_active(request):
     context = {
         "id": "1",
         "uptime": "7:00:00",
         "downtime": "1:00:00",
-        "ip": "192.168.123.1"
+        "ip": "192.168.123.1",
+
+        "id2": "2",
+        "eid2": "02",
+        "ename2": "rohit" ,
+        "uptime2": "8:00:00",
+        "downtime2": "1:00:00",
+        "ip2": "192.168.123.1",
+
+        "id3": "3",
+        "eid3": "03",
+        "ename3": "rohit" ,
+        "uptime3": "9:00:00",
+        "downtime3": "1:00:00",
+        "ip3": "192.168.123.1"
     }
-    return render(request, 'sales_tracker/deviceAdmin.html', context)
+    return render(request, 'sales_tracker/adminActive.html', context)  
+
+def Admin_passive(request):
+    context = {
+        "id": "1",
+        "uptime": "7:00:00",
+        "downtime": "1:00:00",
+        "ip": "192.168.123.1",
+
+        "id2": "2",
+        "eid2": "02",
+        "ename2": "rohit" ,
+        "uptime2": "8:00:00",
+        "downtime2": "1:00:00",
+        "ip2": "192.168.123.1",
+
+        "id3": "3",
+        "eid3": "03",
+        "ename3": "rohit" ,
+        "uptime3": "9:00:00",
+        "downtime3": "1:00:00",
+        "ip3": "192.168.123.1"
+     }
+    return  render(request, 'sales_tracker/adminPassive.html', context)  
+
+
 def Dsrview(request):
 
     return render(request, "sales_tracker/dsrview.html")
@@ -1467,5 +1517,8 @@ def DSR(request):
     return render(request, "sales_tracker/dsr.html")
 
 
+
+def liveStreaming(request):
+    return render(request, "sales_tracker/liveStreaming.html")
 
 

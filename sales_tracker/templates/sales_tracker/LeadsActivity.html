@@ -12,18 +12,16 @@
     <nav class="navbar-horizontal ">
         <div class="small-nav">
           
-          <!-- Search Bar Form -->
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
-      
-          <!-- Filter Bar (added between search and profile) -->
+    
               <div class = "inside-filter-container">
             <form method="GET" action="{% url 'data' %}">
                 <label for="time_frame">Select Time Frame:</label>
                 <select name="time_frame" id="time_frame" >
-                    <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
+                    <option value="all" disabled selected hidden>Select Time Frame</option> 
                     <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                     <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
                     <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
@@ -66,9 +64,7 @@
       
                   </select>
               </div>
-              
-              
-              <!-- Zone Filter -->
+   
               <div class="zone-filter-container">
                   <label for="zone-filter">Zone:</label>
                   <select name="zone" id="zone-filter" >
@@ -81,19 +77,19 @@
               </div>
   
   
-        <div class="buttons"><button type="submit" class="button">Apply Filter</button>
-            <button type="reset" class="button">Clear</button></div>
+        <div class="buttons"><button type="submit" class="button1">Apply Filter</button>
+            <button type="reset" class="button1">Clear</button></div>
               
   
           </form>
         </div>
-        <button style="display: inline;" type="button" class="button profile-button">
-          <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:25px; height: 25px;"   alt="">
-        </button>
+        <!-- <button style="display: inline;" type="button" class="button profile-button">
+          <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:60px; height: 60px; margin-left: -7px; margin-top: -4px;"    alt="">
+        </button> -->
 </nav>
 
         <img class="attpiechart rotate" src="{% static 'Leads_Count.png' %}" alt="Attendance Chart"> 
-    <div class="leadcard" style=" margin-right: 1200px;">
+    <div class="leadcard" >
         <div class="card1"> 
             <h1  class="totallead">Total Leads: {{Total_Leads}}</h1> 
         </div> 
