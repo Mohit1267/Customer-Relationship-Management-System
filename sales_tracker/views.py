@@ -919,7 +919,7 @@ class LeadView(BaseListView):
     model = LeadsData
     count_context_name = 'lead_count'
 class OpportunityView(BaseListView):
-    template_name = "sales_tracker/quotesdata.html"
+    template_name = "sales_tracker/opp_data.html"
     model = OpportunityData
     count_context_name = 'opportunity_count'
 class QuotesView(BaseListView):
@@ -1465,4 +1465,7 @@ def Dsrview(request):
 def DSR(request):
 
     return render(request, "sales_tracker/dsr.html")
+
+
+
 

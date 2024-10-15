@@ -55,6 +55,7 @@ urlpatterns = [
     path("dsrview", login_required(views.Dsrview), name="dsrview"),
 
     path("DSR", login_required(views.DSR), name="DSR"),
+    # path("DSRview", login_required(views.DSRview), name="DSR"),
 
 
 

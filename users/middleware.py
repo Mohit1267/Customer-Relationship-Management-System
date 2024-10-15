@@ -68,20 +68,20 @@ class InactivityMiddleware(MiddlewareMixin):
 #         return response
 
 
-class UpdateLastActivityMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
+# class UpdateLastActivityMiddleware:
+#     def __init__(self, get_response):
+#         self.get_response = get_response
 
-    def __call__(self, request):
-        response = self.get_response(request)
-        if request.user.is_authenticated:
-            ip_address = request.META.get('REMOTE_ADDR')
-            UserActivity.objects.update_or_create(
-                user=request.user,
-                ip_address=ip_address,
-                defaults={'last_activity': timezone.now()}
-            )
-        return response
+#     def __call__(self, request):
+#         response = self.get_response(request)
+#         if request.user.is_authenticated:
+#             ip_address = request.META.get('REMOTE_ADDR')
+#             UserActivity.objects.update_or_create(
+#                 user=request.user,
+#                 ip_address=ip_address,
+#                 defaults={'last_activity': timezone.now()}
+#             )
+#         return response
 
 
 # from django.utils.deprecation import MiddlewareMixin
