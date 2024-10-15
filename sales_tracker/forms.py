@@ -52,3 +52,6 @@ MY_CHOICES = (
 
 class SortForm(forms.Form):
     select = forms.ChoiceField(choices=MY_CHOICES, label='Select an option')
+
+
+

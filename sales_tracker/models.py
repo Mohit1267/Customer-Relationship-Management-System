@@ -155,3 +155,35 @@ class QuotesData(models.Model):
     date = models.DateField(default="2000-10-10")
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
 
+
+
+
+
+
+from django.db import models
+from django.core.validators import RegexValidator
+
+password_regex = RegexValidator(
+    regex=r'^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$',
+    message="Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
+)
+
+class NewPasswords(models.Model):
+    Minor_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )
+    
+    Sales_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )
+
+    Admin_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )
+
