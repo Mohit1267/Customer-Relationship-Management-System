@@ -1518,8 +1518,8 @@ def DSR(request):
     return render(request, "sales_tracker/dsr.html")
 
 
-def liveStreaming(request):
 
+def liveStreaming(request):
     return render(request, "sales_tracker/liveStreaming.html")
 
 from django.shortcuts import render, redirect

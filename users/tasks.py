@@ -21,14 +21,14 @@ def update_previous_day_attendance():
 
 # myapp/tasks.py
 
-from celery import shared_task
-from django.utils import timezone
-from .models import UserActivity
-from datetime import timedelta
+# from celery import shared_task
+# from django.utils import timezone
+# from .models import UserActivity
+# from datetime import timedelta
 
-@shared_task
-def check_user_activity():
-    threshold_time = timezone.now() - timedelta(minutes=15)  # Set your threshold
-    inactive_users = UserActivity.objects.filter(last_activity__lt=threshold_time)
-    # Process inactive users as needed
+# @shared_task
+# def check_user_activity():
+#     threshold_time = timezone.now() - timedelta(minutes=15)  # Set your threshold
+#     inactive_users = UserActivity.objects.filter(last_activity__lt=threshold_time)
+#     # Process inactive users as needed
 

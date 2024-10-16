@@ -130,3 +130,4 @@ class Accountform(forms.Form):
             'Industry',
             'Employees'
         )
+
