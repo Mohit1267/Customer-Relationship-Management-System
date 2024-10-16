@@ -18,7 +18,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, AccountForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -1442,10 +1442,11 @@ def Agentmining(request):
     return render(request, "sales_tracker/agentmining.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
 
 
+
 def Admindevice(request):
       return render(request, "sales_tracker/deviceAdmin.html")
 
-def AdminDSR(request):
+def AgentDSR(request):
 
     return render(request, "sales_tracker/agentDsr.html")
 
@@ -1521,4 +1522,84 @@ def liveStreaming(request):
 
     return render(request, "sales_tracker/liveStreaming.html")
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import AccountForm  # Import your AccountForm
+from .models import Account 
 
+def Agentaccount(request):
+    if request.method == 'POST':
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            # Process form data
+            name = form.cleaned_data['Name']
+            website = form.cleaned_data['Website']
+            email_address = form.cleaned_data['Email_Address']
+            billing_address = form.cleaned_data['Billing_Address']
+            billing_street = form.cleaned_data['Billing_Street']
+            billing_postal_code = form.cleaned_data['Billing_Postal_Code']
+            billing_city = form.cleaned_data['Billing_City']
+            billing_state = form.cleaned_data['Billing_State']
+            billing_country = form.cleaned_data['Billing_Country']
+            description = form.cleaned_data['Description']
+            assigned_to = form.cleaned_data['Assigned_To']
+            shipping_address = form.cleaned_data['Shipping_Address']
+            shipping_street = form.cleaned_data['Shipping_Street']
+            shipping_postal_code = form.cleaned_data['Shipping_Postal_Code']
+            shipping_city = form.cleaned_data['Shipping_City']
+            shipping_state = form.cleaned_data['Shipping_State']
+            shipping_country = form.cleaned_data['Shipping_Country']
+            account_type = form.cleaned_data['Type']
+            annual_revenue = form.cleaned_data['Annual_Revenue']
+            member_of = form.cleaned_data['Member_Of']
+            campaign = form.cleaned_data['Campaign']
+            industry = form.cleaned_data['Industry']
+            employees = form.cleaned_data['Employees']
+
+            # Create and save the account instance
+            account = Account(
+                name=name,
+                website=website,
+                email_address=email_address,
+                billing_address=billing_address,
+                billing_street=billing_street,
+                billing_postal_code=billing_postal_code,
+                billing_city=billing_city,
+                billing_state=billing_state,
+                billing_country=billing_country,
+                description=description,
+                assigned_to=assigned_to,
+                shipping_address=shipping_address,
+                shipping_street=shipping_street,
+                shipping_postal_code=shipping_postal_code,
+                shipping_city=shipping_city,
+                shipping_state=shipping_state,
+                shipping_country=shipping_country,
+                account_type=account_type,
+                annual_revenue=annual_revenue,
+                member_of=member_of,
+                campaign=campaign,
+                industry=industry,
+                employees=employees,
+            )
+            # account.save() 
+            
+            # messages.success(request, 'Account created successfully!')
+            # return redirect('account_success')  
+
+        else:
+            messages.error(request, 'There was an error in the form. Please correct the highlighted fields.')
+    else:
+        form = AccountForm()  
+
+    return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+
+from django.views.generic import TemplateView
+
+# class AccountSuccessView(TemplateView):
+#     template_name = 'sales_tracker/account_success.html'  
+
+def Accountview(request):
+
+    return render(request, "sales_tracker/viewaccount.html")

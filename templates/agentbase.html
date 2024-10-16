@@ -159,6 +159,24 @@
               </ul>
             </li>
             
+             
+            <li class="nav-item dropdown dashboard-icon">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         
+               <img src="https://i.ibb.co/0Cj2QwN/accountlogo.png"  alt="Account Logo" style=" margin-right: 5px; height: 35px; ">
+
+               Accounts
+             </a>
+             <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'agentaccount' %}">Create Account</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'viewaccount' %}">View Account</a></li>
+            </ul>
+           </li>
+
             <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 
@@ -168,7 +186,8 @@
                 DSR
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'agentDsr' %}">Create DSR</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentDsr' %}">Create DSR</a>
+                </li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
