@@ -138,6 +138,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'createTask' %}">Create Task</a></li>
               </ul>
             </li>
 
@@ -175,7 +179,23 @@
                 <li><a class="dropdown-item" href="{% url 'dsrview' %}">View DSR</a></li>
               </ul>
             </li>
-            
+
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
+ 
+                <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+                Task
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'createTask' %}">Create Task</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'viewTask' %}">View Task</a></li>
+              </ul>
+            </li>
         </div>
 
   </nav>
