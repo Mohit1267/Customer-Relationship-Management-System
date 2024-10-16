@@ -18,7 +18,8 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, AccountForm
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, TaskForm, AccountForm
+
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -1527,6 +1528,47 @@ from django.contrib import messages
 from .forms import AccountForm  # Import your AccountForm
 from .models import Account 
 
+def createTask(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            # Process form data
+            subject = form.cleaned_data['subject']
+            start_date = form.cleaned_data['start_date']
+            due_date = form.cleaned_data['due_date']
+            priority = form.cleaned_data['priority']
+            description = form.cleaned_data['description']
+            status = form.cleaned_data['status']
+            related_to = form.cleaned_data['related_to']
+            contacts = form.cleaned_data['contacts']
+
+            # Here you would typically save the task to the database
+            # You could create a model instance for Task and save it
+            # Example (assuming you have a Task model):
+            # Task.objects.create(
+            #     subject=subject,
+            #     start_date=start_date,
+            #     due_date=due_date,
+            #     priority=priority,
+            #     description=description,
+            #     status=status,
+            #     related_to=related_to,
+            #     contacts=contacts
+            # )
+
+            # After saving or processing, redirect to another page (e.g., task list)
+            return redirect('createTask')  # 'createTask' should be the name of the URL pattern
+    else:
+        form = TaskForm()  # Display an empty form on GET request
+
+    return render(request, 'sales_tracker/createTask.html', {'form': form})
+
+def viewTask(request):
+    return render(request, "sales_tracker/viewTask.html")
+
+
+
+
 def Agentaccount(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
@@ -1603,3 +1645,4 @@ from django.views.generic import TemplateView
 def Accountview(request):
 
     return render(request, "sales_tracker/viewaccount.html")
+
