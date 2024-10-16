@@ -156,9 +156,55 @@ class QuotesData(models.Model):
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
 
 
+from django.db import models
 
+class Account(models.Model):
+    # Basic Fields
+    name = models.CharField(max_length=100)
+    website = models.URLField(blank=True, null=True)
+    email_address = models.EmailField()
+    
+    # Billing Information
+    billing_address = models.CharField(max_length=255)
+    billing_street = models.CharField(max_length=255)
+    billing_postal_code = models.CharField(max_length=20)
+    billing_city = models.CharField(max_length=100)
+    billing_state = models.CharField(max_length=100)
+    billing_country = models.CharField(max_length=100)
+    
+    # Description
+    description = models.TextField(blank=True, null=True)
+    
+    # Assigned To
+    assigned_to = models.CharField(max_length=100, blank=True, null=True)
+    
+    # Shipping Information
+    shipping_address = models.CharField(max_length=255, blank=True, null=True)
+    shipping_street = models.CharField(max_length=255, blank=True, null=True)
+    shipping_postal_code = models.CharField(max_length=20, blank=True, null=True)
+    shipping_city = models.CharField(max_length=100, blank=True, null=True)
+    shipping_state = models.CharField(max_length=100, blank=True, null=True)
+    shipping_country = models.CharField(max_length=100, blank=True, null=True)
+    
+    # Account Detail
+    type = models.CharField(max_length=50,choices=(
+        ('option1', 'Option 1'),
+        ('option2', 'Option 2'),
+        ('option3', 'Option 3'),
+    ))
 
+    annual_revenue = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    member_of = models.CharField(max_length=100, blank=True, null=True)
+    campaign = models.CharField(max_length=100, blank=True, null=True)
+    industry = models.CharField(max_length=100, blank=True, null=True)
+    employees = models.IntegerField(blank=True, null=True)
 
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 from django.db import models
 from django.core.validators import RegexValidator
@@ -186,4 +232,5 @@ class NewPasswords(models.Model):
         validators=[password_regex],
         help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
     )
+
 
