@@ -48,6 +48,11 @@ urlpatterns = [
     path("agentquote", login_required(views.Agentquote), name="agentquote"),
     path("agentopportunity", login_required(views.Agentopportunity), name="agentopportunity"),
     path("agentmining", login_required(views.Agentmining), name="agentmining"),
+    path("agentaccount", login_required(views.Agentaccount), name="agentaccount"),
+    path("viewaccount", login_required(views.Accountview), name="viewaccount"),
+
+    # path("account-success", login_required(views.AccountSuccessView.as_view()), name="account_success"),
+
 
     # path("agentmessage", views.Agentmessage.as_view(), name = "agentmessage"), 
     path("adminActive", login_required(views.Admin_active), name="adminActive"),
@@ -55,7 +60,7 @@ urlpatterns = [
     # path("deviceAdmin", login_required(views.deviceAdmin), name="deviceAdmin"),
     path("adminActive", login_required(views.Admin_active), name="adminActive"),
     path("adminPassive", login_required(views.Admin_passive), name="adminPassive"),
-    path("agentDsr", login_required(views.AdminDSR), name="agentDsr"),
+    path("agentDsr", login_required(views.AgentDSR), name="agentDsr"),
     path("dsrview", login_required(views.Dsrview), name="dsrview"),
     path("DSR", login_required(views.DSR), name="DSR"),
     path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
