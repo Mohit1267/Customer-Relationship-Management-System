@@ -1,4 +1,5 @@
 body {
+
     margin-top: 4%;
     font-family: 'Arial', sans-serif;
     margin: auto;
@@ -7,18 +8,36 @@ body {
     min-height: 100vh;
 }
 
+
 .container-fluid {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 950px;
 }
 
+
+/* .heading_links { 
+     
+     background: linear-gradient(90deg, rgba(0, 102, 204, 1) 0%, rgba(173, 216, 230, 1) 100%); 
+     -webkit-background-clip: text; 
+     background-clip: text; 
+     -webkit-text-fill-color: transparent; 
+     padding: 10px; 
+     font-size: 2em; 
+     text-align: center; 
+     margin-left: -20px; 
+     letter-spacing: 2px; 
+  
+ } */
+
 .moving_title {
     all: unset;
     font-size: 35px;
     font-weight: bold;
+    /* color: #333; */
     position: relative;
     background: linear-gradient(to right, #2C3E50, #5e87b0);
+    /* background: linear-gradient(90deg, rgba(0, 102, 204, 1) 0%, rgba(173, 216, 230, 1) 100%); */
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -48,53 +67,44 @@ body {
     background-color: #f9f9f9;
 }
 
-
 .form {
     display: flex;
     flex-direction: column;
-    width: 70%; 
+    width: 60%;
     margin: 0 auto;
     border: 1px solid #ddd;
-    padding: 35px; 
+    padding: 30px;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-weight: normal;
-    max-height: 100%;
-}
+    max-height: 400px;
 
+}
 
 .form_control {
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px; 
+    margin-bottom: 20px;
 }
 
 .form_control label {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: bold;
     color: #333;
 }
 
-label.required:after {
-    content: " *";
-    color: black;
-    font-weight: bold;
-}
-
-
 .form_control input,
 .form_control textarea {
     width: 100%;
-    padding: 15px;
-    border: 1px solid #ddd;
+    padding: 12px;
+    border: 2px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
     color: white;
     background-color: #f5f5f5;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s ease, background-color 0.3s ease;
-    
 }
 
 .form_control input:focus,
@@ -108,9 +118,9 @@ label.required:after {
 .form-group textarea {
     width: 100%;
     border: none;
-    border-bottom: 1px solid #0a0a0a;
+    border-bottom: 2px solid #0a0a0a;
     border-radius: 0;
-    padding: 10px 0; 
+    padding: 0px 0;
     background: transparent;
     color: black;
     box-shadow: none;
@@ -124,23 +134,22 @@ label.required:after {
 }
 
 .form_control textarea {
-    height: 150px; 
+    height: 100px;
     resize: none;
     overflow: hidden;
 }
 
 .form-group textarea {
-    height: 120px;
+    height: 100px;
 }
-
 
 .filter-container {
     margin: 10px;
 }
 
 select {
-    padding: 12px; 
-    font-size: 12px;
+    padding: 10px;
+    font-size: 10px;
 }
 
 .filtered-result {
@@ -160,17 +169,13 @@ select {
 }
 
 .buttons {
-    width: 100%; 
-    display: flex;
-    justify-content: center;
-    margin-top: 30px; 
+    width: 800px;
 }
 
 .row {
     display: flex;
     justify-content: center;
 }
-
 
 .button1 {
     background: linear-gradient(135deg, #28a745, #218838);
@@ -200,12 +205,11 @@ select {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-
 .button2 {
     background: linear-gradient(135deg, #e52323, #e23a3a);
     border: none;
     color: white;
-    padding: 15px 30px; 
+    padding: 10px 20px;
     font-size: 18px;
     font-weight: bold;
     border-radius: 50px;
@@ -234,6 +238,7 @@ select {
     }
 }
 
+
 @media (max-width: 1098px) {
     .navbar {
         width: 50px;
@@ -248,10 +253,6 @@ select {
         width: 80%;
     }
 
-    .form_control {
-        margin-bottom: 20px;
-    }
-
     .buttons {
         width: 100%;
     }
@@ -260,6 +261,8 @@ select {
         font-size: 28px;
     }
 }
+
+
 
 @media (max-width: 992px) {
     .navbar {
@@ -272,7 +275,7 @@ select {
     }
 
     .form {
-        width: 85%; 
+        width: 80%;
     }
 
     .buttons {
@@ -299,11 +302,6 @@ select {
 
     .form {
         width: 90%;
-        padding: 25px; 
-    }
-
-    .form_control {
-        margin-bottom: 20px; 
     }
 
     .buttons {
@@ -323,7 +321,7 @@ select {
 
     .button1,
     .button2 {
-        padding: 12px; 
+        padding: 10px;
         font-size: 16px;
         width: 100%;
     }

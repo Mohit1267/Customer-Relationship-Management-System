@@ -14,63 +14,55 @@
 
 {% block content %}
 <div class="container">
-    <!-- <div ></div> -->
-        <!-- Example of an image element -->
-        <img class="pic" src="https://i.ibb.co/QKvrngm/loginpic2.jpg" alt="Picture" class="pic">
-    </div>
-    <div class="row">
-        <div class="col-md-4"></div>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="col-md-4"><h3>{{ message }}</h3></div>
-            {% endfor %}
-        {% endif %}
-    </div>
-  
+    <img class="pic" src="https://i.ibb.co/QKvrngm/loginpic2.jpg" alt="Picture" class="pic">
+</div>
+<div class="row">
+    <div class="col-md-4"></div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="col-md-4"><h3>{{ message }}</h3></div>
+        {% endfor %}
+    {% endif %}
+</div>
 
-  <!-- Add this block to display error messages -->
-  {% if error_message %}
-  <div class="alert alert-danger" role="alert">
-      {{ error_message }}
-  </div>
-  {% endif %}
-  <div class="login-wrapper">
+{% if error_message %}
+<div class="alert alert-danger" role="alert">
+    {{ error_message }}
+</div>
+{% endif %}
+<div class="login-wrapper">
     <div class="circle1"></div>
     <div class="circle2"></div>
-    <form class="login-box" method="POST">
-        {% csrf_token %} <!-- Include CSRF token here -->
+    <form id="loginForm" class="login-box" method="POST">
+        {% csrf_token %}
       
         <div>
-            <!-- <img class="hand" src="\static\loginpic7.png" alt="Handshaking Image"> -->
             <img class="hand" src="https://i.ibb.co/RNX37Jc/loginpic7.png" alt="Handshaking Image">
-
         </div>
         <div class="login-header">
             <div class="welcome">Welcome to Shanaya</div>
             <div class="input-box">
                 <input type="email" name="email" placeholder="Email" class="login-input" required>
                 <span class="icon"></span>
-                <!-- <label>Email</label> -->
             </div>
             
-                <div class="input-box">
-                    <input type="password" name="password" id="password" placeholder="Password" class="login-input" required>
-                    <button type="button" class="see-password" onclick="togglePassword()">
-                        <img id="toggleButton" src="https://i.ibb.co/hFM7LBM/passwordhide.png" alt="See Password" />
-                    </button>
-                </div>
-                <input type="hidden" id="latitude" name="latitude">
-                <input type="hidden" id="longitude" name="longitude">
-                <button type="submit">Login</button>
-                <div class="forgot-password">
-                    <a href="{% url 'password_reset' %}">Forgot password?</a>
-                </div>
-                <div class="signup-text">
-                    Don't have an account? <a href="{% url 'register' %}">Sign up</a>
-                </div>
+            <div class="input-box">
+                <input type="password" name="password" id="password" placeholder="Password" class="login-input" required>
+                <button type="button" class="see-password" onclick="togglePassword()">
+                    <img id="toggleButton" src="https://i.ibb.co/hFM7LBM/passwordhide.png" alt="See Password" />
+                </button>
             </div>
-        </form>
-    </div>
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <button type="submit">Login</button>
+            <div class="forgot-password">
+                <a href="{% url 'password_reset' %}">Forgot password?</a>
+            </div>
+            <div class="signup-text">
+                Don't have an account? <a href="{% url 'register' %}">Sign up</a>
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock %}
 

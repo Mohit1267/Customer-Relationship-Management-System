@@ -43,6 +43,7 @@ body {
 }
 
 .inside-filter-container {
+    margin-left: 80px;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -59,7 +60,7 @@ body {
     font-size: 16px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    background-color: #eff3f7
+    background-color: #eff3f7;
     
 }
 
@@ -140,14 +141,12 @@ body {
     
 }
 
-button:hover {
+.button1:hover {
     border-color: white;
     color: white;
     background-color: black;
-    border-radius: 17%;;
+    /* border-radius: 17%;; */
 }
-
-
 
 .profile-button:hover{
     background-color: #eff3f7;
@@ -496,8 +495,8 @@ button:hover {
     }
 
     .navbar-horizontal {
-        width: calc(100% - 200px); 
-        left: 200px; 
+        width: calc(100% - 180px); 
+        left: 180px; 
         padding: 8px 10px;
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
     }

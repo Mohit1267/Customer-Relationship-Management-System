@@ -5,7 +5,7 @@
 
 
 {% block css_link %}
-    <link rel="stylesheet" href="{% static 'sales_tracker/agentcalling.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_tracker/agentmeeting.css' %}">
 {% endblock %}
 
 
@@ -29,70 +29,75 @@
       <div class="col-12 d-flex justify-content-end"> 
         <button type="submit" class="button1 mx-2">Submit</button> 
         <button type="button" class="button2">Cancel</button> 
+        <button type="button" class="button3"><a href="{% url 'view_calling' %}">View calling</a></button>
+
       </div> 
     </div> 
 
-    <div class="row">
-        <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
-            <!-- Add these fields to your existing form -->
+    <div class="row d-flex justify-content-start">
+      <div class="form">
+        <div class="form-section left left-form"> 
 
-<!-- Start Date Section -->
-<div class="form-group">
-    {{form.start_date|as_crispy_field}}
-  </div>
-  
-  <!-- End Date Section -->
-  <div class="form-group">
-    {{form.end_date|as_crispy_field}}
-  </div>
-  
-  <!-- Duration Section -->
-  <div class="form-group">
-    {{form.duration|as_crispy_field}}
-  </div>
-  
-  <!-- Frequency Section -->
-  <div class="form-group">
-    {{form.frequency|as_crispy_field}}
-  </div>
-  
-  <!-- Time Section -->
-  <div class="form-group">
-    {{form.start_time|as_crispy_field}}
-  </div>
-  
-  <!-- End Time Section -->
-  <div class="form-group">
-    {{form.end_time|as_crispy_field}}
-  </div>
-  
-  <!-- Subject Section -->
-<div class="form-group">
-    {{form.subject|as_crispy_field}}
-</div>
+        <!-- Start Date Section -->
+        <div class="form-group">
+          {{form.start_date|as_crispy_field}}
+        </div>
 
-<!-- Related To Section -->
-<div class="form-group">
-    {{form.related_to|as_crispy_field}}
-</div>
+        <!-- End Date Section -->
+        <div class="form-group">
+          {{form.end_date|as_crispy_field}}
+        </div>
 
-<!-- Assigned To Section -->
-<div class="form-group">
-    {{form.assigned_to|as_crispy_field}}
-</div>
+        <!-- Duration Section -->
+        <div class="form-group">
+          {{form.duration|as_crispy_field}}
+        </div>
 
-<!-- Notification Section -->
-<div class="form-group">
-    {{form.notification|as_crispy_field}}
-</div>
+        <!-- Frequency Section -->
+        <div class="form-group">
+          {{form.frequency|as_crispy_field}}
+        </div>
 
+        <!-- Time Section -->
+        <div class="form-group">
+          {{form.start_time|as_crispy_field}}
+        </div>
 
-<div class="form-group">
-  {{form.contact|as_crispy_field}}
-</div>
+        <!-- End Time Section -->
+        <div class="form-group">
+          {{form.end_time|as_crispy_field}}
+        </div>
 
+      </div>
+
+      <div class="form-section right right-form">
+        <!-- Subject Section -->
+        <div class="form-group">
+          {{form.subject|as_crispy_field}}
+        </div>
+
+        <!-- Related To Section -->
+        <div class="form-group">
+          {{form.related_to|as_crispy_field}}
+        </div>
+
+        <!-- Assigned To Section -->
+        <div class="form-group">
+          {{form.assigned_to|as_crispy_field}}
+        </div>
+
+        <!-- Notification Section -->
+        <div class="form-group">
+          {{form.notification|as_crispy_field}}
+        </div>
+
+        <div class="form-group">
+          {{form.notes|as_crispy_field}}
+        </div>
+
+      </div>
+    </div>
 </div>
 </form>
 </div>
-
 {% endblock %}

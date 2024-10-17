@@ -1,0 +1,136 @@
+{% extends "agentbase.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/agentaccount.css' %}">
+
+{% endblock %}
+
+
+{% block title %}New Account{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- Title Section -->
+    <div class="row mt-2 mb-2">
+      <div class="col-12 text-center moving_title" style="color: white;">
+        Create Account
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Button Section -->
+    <div class="row mb-2">
+      <div class="col-12 d-flex justify-content-end">
+        <button type="submit" class="button1 mx-2">Submit</button>
+        <button type="button" class="button2">Cancel</button>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+        <div class="form-group">
+          {{form.Name|as_crispy_field}}
+        </div>
+        <div class="form-group">
+          {{form.Website|as_crispy_field}}
+        </div>
+        <div class="form-group">
+          {{form.Email_Address|as_crispy_field}}
+        </div>
+        
+        <h4 style="padding-top: 20px;">Billing Address :</h4>
+        <div class="form-group">
+          {{form.Billing_Street|as_crispy_field}}
+        </div>
+        <div class="form-group">
+          {{form.Billing_Postal_Code|as_crispy_field}}
+        </div>
+        <div class="form-group">
+          {{form.Billing_City|as_crispy_field}}
+        </div>
+        <div class="form-group">
+            {{form.Billing_State|as_crispy_field}}
+        </div>
+        <div class="form-group" style="padding-bottom: 20px;">
+            {{form.Billing_Country|as_crispy_field}}
+        </div>
+
+
+        <div class="form-group">
+            {{form.Description|as_crispy_field}}
+        </div>
+        <div class="form-group">
+            {{form.Assigned_To|as_crispy_field}}
+          </div>
+      </div>
+
+      <div class="col-md-6 pt-5 px-4" style="color:rgb(15, 14, 14) ; border-left: 1px solid rgb(15, 14, 14)">
+
+        <h4 style="padding-top: 20px;">Shipping Address :</h4>
+          <div class="form-group">
+            {{form.Shipping_Street|as_crispy_field}}
+          </div>
+          <div class="form-group">
+            {{form.Shipping_Postal_Code|as_crispy_field}}
+          </div>
+          <div class="form-group">
+            {{form.Shipping_City|as_crispy_field}}
+          </div>
+          <div class="form-group">
+              {{form.Shipping_State|as_crispy_field}}
+          </div>
+          <div class="form-group">
+              {{form.Shipping_Country|as_crispy_field}}
+          </div>
+
+          <div class="form-group">
+            {{form.Type|as_crispy_field}}
+          </div>
+          <div class="form-group">
+            {{form.Annual_Revenue|as_crispy_field}}
+          </div>
+          <div class="form-group">
+            {{form.Member_Of|as_crispy_field}}
+          </div>
+          <div class="form-group">
+            {{form.Campaign|as_crispy_field}}
+          </div>
+          <div class="form-group">
+            {{form.Industry|as_crispy_field}}
+          </div>
+          <div class="form-group">
+            {{form.Employees|as_crispy_field}}
+          </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+{%comment%}
+<form method="POST" class="form">
+  {% csrf_token %}
+  <div class="form_control">
+    {{form|crispy}}
+  </div>
+  <button type="submit">Submit</button>
+</form>
+{%endcomment%}
+
+
+{% endblock %}
+
+
+
+{% block javascript %}{% endblock %}

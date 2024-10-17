@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegisterForm, ProfileForm, LoginForm, CallingDetailsForm
-from .models import Profile, CallingDetail, AttendanceRecord
+from .models import Profile, CallingDetail, AttendanceRecord, UpdownTime
 from django.contrib.auth.decorators import login_required
 from users.models import Profile
 from django.views.generic.base import TemplateView
@@ -141,22 +141,44 @@ def Reason(request):
     user = request.user
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
-    elapsed_time_in_sec = int(elapsed_time[0])*60*60 + int(elapsed_time[1])*60 + int(elapsed_time[2])
+    elapsed_time_in_sec = int(elapsed_time[0]) * 60 * 60 + int(elapsed_time[1]) * 60 + int(elapsed_time[2])
+
     if request.method == "POST":
         current_datetime = timezone.localtime()
         current_time = current_datetime.strftime('%H:%M:%S')
         now_date_time = datetime.datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         print("Current Time:", current_time)
+
         existing_record = AttendanceRecord.objects.filter(user=user, date=now_date).first()
+        existing_updown_time = UpdownTime.objects.filter(user=user, date=now_date).first()
+
+        if existing_updown_time:
+            existing_updown_time.check_out_time = current_time
+
+            # Calculate uptime
+            if existing_updown_time.check_in_time:
+                last_checkin = timezone.datetime.combine(existing_updown_time.date, existing_updown_time.check_in_time)
+                last_checkin = timezone.make_aware(last_checkin)  # Make it aware
+                current_uptime = current_datetime - last_checkin
+                print("this is current uptime",current_uptime)
+                if existing_updown_time.uptime:
+                    existing_updown_time.uptime += current_uptime  # Cumulative uptime
+                else:
+                    existing_updown_time.uptime = current_uptime
+
+                existing_updown_time.save()  # Save changes to database
+
         if existing_record:
             # Update the check_out_time with the current time
             existing_record.check_out_time = current_time
             existing_record.save()
+
         reason = request.POST.get("reason_form")
         password = "axzf ekbv uawt rugt"
         print("check")
         print(user)
+
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587
         sender_email = 'pjisvgreat@gmail.com'
@@ -168,6 +190,7 @@ def Reason(request):
         message['To'] = receiver_email
         message['Subject'] = subject
         message.attach(MIMEText(full_message, 'html'))      
+
         try:
             server = smtplib.SMTP(smtp_server, smtp_port)
             server.starttls()  
@@ -178,12 +201,12 @@ def Reason(request):
             messages.error(request, f"Error sending email: {e}")
         finally:
             server.quit()
-        user_profile = Profile.objects.get(user = user.id)
+
+        user_profile = Profile.objects.get(user=user.id)
         user_profile.can_logout = False
         user_profile.save()
         logout(request)
         return redirect("login")
-
 
 
 def Mining_ct(user):
@@ -218,6 +241,11 @@ def Logout(request):
      
 from django.contrib.auth import authenticate, login
     
+
+
+
+
+
 def manual_login(request):
     error_message = None
     if request.method == 'POST':
@@ -225,7 +253,7 @@ def manual_login(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            latitude = request.POST.get('latitude')
+            latitude = request.POST.get('latitude') 
             longitude = request.POST.get('longitude')
 
             # Implement secure user authentication logic using username and password
@@ -241,10 +269,12 @@ def manual_login(request):
                 except:
                     login(request, user)
                     return redirect("profile")
-                if user_profile.can_login:
+                if user_profile.can_login:  
                     login(request, user)
-                    request.latitude = latitude
-                    request.longitude = longitude
+                    # request.latitude = latitude
+                    # request.longitude = longitude
+                    request.session['latitude'] = latitude
+                    request.session['longitude'] = longitude
                     generate_bar_chart(request)
                     # admin_attendence_graph()
                     # print(timezone.now().time())
@@ -293,15 +323,26 @@ def manual_login(request):
                             check_in_time=current_time,
                             status=status
                         )
+                    updown_time, created = UpdownTime.objects.get_or_create(
+                        user=user,
+                        date=current_date
+                    )
 
+                    # Update check-in time
+                    updown_time.check_in_time = current_time
 
-                         # Log the user activity
-                        ip_address = request.META.get('REMOTE_ADDR')
-                        UserActivity.objects.update_or_create(
-                            user=user,
-                            ip_address=ip_address,
-                            defaults={'last_activity': timezone.now()}
-                    )   
+                    if updown_time.check_out_time:
+                        last_checkout = timezone.datetime.combine(updown_time.date, updown_time.check_out_time)
+                        last_checkout = timezone.make_aware(last_checkout)  # Make it aware
+                        downtime = current_datetime - last_checkout
+                        print("this is downtime",downtime)
+                        if updown_time.downtime:
+                            updown_time.downtime += downtime  # Cumulative downtime
+                        else:
+                            updown_time.downtime = downtime
+                    updown_time.save()
+
+             
                     print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
                     print(Nuser)
                     
@@ -410,24 +451,10 @@ def heartbeat(request):
 from django.shortcuts import render
 from .models import UserActivity
 
-def uptime_view(request):
-    activities = UserActivity.objects.all().order_by('-last_activity')
-    return render(request, 'users/uptime.html', {'activities': activities})
-
-def uptime_report(request):
-    user_activities = UserActivity.objects.all()
-    report_data = []
-    print(f"this is user activity {user_activities}")
-    for activity in user_activities:
-        report_data.append({
-            'user': activity.user.email,
-            'ip_address': activity.ip_address,
-            'last_activity': activity.last_activity,
-            'total_uptime': activity.total_uptime,
-            'total_downtime': activity.total_downtime,
-        })
-
-    context = {'report_data': report_data}
-    return render(request, 'users/uptime_report.html', context)
 
 
+from django.shortcuts import render
+
+def device_list(request):
+    devices = UserActivity.objects.all()
+    return render(request, 'device_list.html', {'devices': devices})

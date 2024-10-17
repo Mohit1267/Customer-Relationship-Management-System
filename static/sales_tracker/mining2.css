@@ -1,19 +1,32 @@
-body { 
- 
-   margin-top: 4%;
-    font-family: 'Arial', sans-serif; 
-    margin:auto; 
-    background-color: #fdfdfd; 
-    display: flex; 
+body {
+    margin-top: 4%;
+    font-family: 'Arial', sans-serif;
+    margin: auto;
+    background-color: #fdfdfd;
+    display: flex;
     min-height: 100vh;
+
+    overflow-y: auto;
+    overflow-x: hidden;
 } 
 
 
+
 .container-fluid {
-    overflow-y: auto; 
-    overflow-x: hidden; 
+    overflow-y: auto;
+    overflow-x: hidden;
     max-height: 950px;
 }
+
+/* Scroll for smaller screens */
+/* .content {
+    margin-left: 200px;
+    padding: 20px;
+    flex: 1;
+    background-color: #f9f9f9;
+    overflow-y: auto; 
+    max-height: 100vh; 
+} */
 
 
 /* .heading_links { 
@@ -58,14 +71,18 @@ body {
     padding-top: 20px; 
     z-index: 1000; 
     color: white; 
+    overflow-y: auto; 
 } 
  
-.content { 
+ .content { 
     margin-left: 200px;
     padding: 20px; 
     flex: 1; 
     background-color: #f9f9f9; 
+    overflow-y: auto;  /* Ensure content is scrollable */
+    max-height: 100vh; 
 } 
+
 
 .form {
     display: flex;
@@ -79,6 +96,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-weight: normal;
     max-height: 400px;
+    overflow-y: auto;
    
 }
  
@@ -236,98 +254,321 @@ select {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
 } 
 
-@media (max-width: 1200px) {
-    .moving_title {
-        font-size: 30px; 
-        margin: 20px 0; 
+@media (max-width: 1400px) and (min-width: 1200px) {
+
+    body {
+        margin-top: 2%;
+        font-size: 1rem;
+        padding: 10px;
     }
-}
 
+    .container-fluid {
+        max-height: 850px;
+    }
 
-@media (max-width: 1098px) {
+    .moving_title {
+        font-size: 30px;
+        margin-right: 150px;
+        margin-left: 150px;
+    }
+
     .navbar {
-        width: 50px; 
-        padding-top: 10px; 
+        width: 180px;
     }
 
     .content {
-        margin-left: 50px; 
+        margin-left: 180px;
+        padding: 15px;
     }
 
     .form {
         width: 80%; 
+        padding: 20px;
     }
 
-    .buttons {
-        width: 100%; 
+    .button1, .button2 {
+        font-size: 16px;
+        padding: 8px 16px;
+        margin: 0 5px;
+    }
+
+    .button1 {
+        margin-right: -60px;
+    }
+
+    .button2 {
+        margin-left: 30px;
+    }
+
+    .row {
+        flex-direction: row;
+    }
+
+    .col-md-2 {
+        font-size: 1.2rem;
+        padding: 8px 0;
+    }
+
+    .form_control input, .form_control textarea,
+    .form-group input, .form-group textarea {
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    .filter-container, .filter-container-zone {
+        margin: 5px;
+    }
+
+    select {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .filtered-result {
+        margin-top: 8px;
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 1020px) {
+
+    body {
+        margin-top: 2%;
+        font-size: 0.95rem;
+        padding: 8px;
+    }
+
+    .container-fluid {
+        max-height: 800px;
     }
 
     .moving_title {
         font-size: 28px; 
+        margin-right: 100px; 
+        margin-left: 100px;
     }
-}
 
-
-
-@media (max-width: 992px) {
     .navbar {
-        width: 60px; 
-        padding-top: 10px; 
+        width: 160px; 
     }
 
     .content {
-        margin-left: 60px; 
-    }
 
-    .form {
-        width: 80%; 
-    }
-
-    .buttons {
-        width: 100%; 
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        width: 100%; 
-        height: auto; 
-        position: relative; 
-    }
-
-    .content {
-        margin-left: 0; 
+        margin-left: 160px;
         padding: 10px; 
     }
 
+    .form {
+        width: 85%;
+        padding: 15px; 
+    }
+
+    .button1, .button2 {
+        font-size: 15px;
+        padding: 6px 12px; 
+        margin: 0 4px; 
+    }
+
+    .button1 {
+        margin-right: -50px; 
+    }
+
+    .button2 {
+        margin-left: 25px; 
+    }
+
+    .row {
+        flex-direction: row; 
+    }
+
+    .col-md-6 {
+        flex: 1;
+        max-width: 50%; 
+    }
+
+    .col-md-2 {
+        font-size: 1.1rem;
+        padding: 6px 0; 
+    }
+
+    .form_control input, .form_control textarea,
+    .form-group input, .form-group textarea {
+        font-size: 14px;
+        padding: 8px; 
+    }
+
+    .filter-container, .filter-container-zone {
+        margin: 4px;
+    }
+
+    select {
+        font-size: 11px; 
+        padding: 6px; 
+    }
+
+    .filtered-result {
+        margin-top: 6px;
+    }
+}
+
+@media (max-width: 1020px) and (min-width: 800px) {
+
+    body {
+        margin-top: 2%;
+        font-size: 0.9rem;
+        padding: 6px;
+    }
+
+    .container-fluid {
+        max-height: 750px;
+    }
+
     .moving_title {
-        font-size: 24px; 
-        margin: 10px 0; 
+
+        font-size: 26px;
+        margin-right: 80px;
+        margin-left: 80px;
+    }
+
+    .navbar {
+        width: 140px;
+    }
+
+    .content {
+        margin-left: 140px;
+        padding: 8px;
+
     }
 
     .form {
         width: 90%;
+        padding: 12px;
     }
 
-    .buttons {
-        flex-direction: column; 
-        width: 100%;
+
+    .button1, .button2 {
+        font-size: 14px;
+        padding: 5px 10px;
+        margin: 0 3px;
+    }
+
+    .button1 {
+        margin-right: -40px;
+    }
+
+    .button2 {
+        margin-left: 20px;
+    }
+
+    .row {
+        flex-direction: row;
+    }
+
+    .col-md-6 {
+        flex: 1;
+        max-width: 50%;
+    }
+
+    .col-md-2 {
+        font-size: 1rem;
+        padding: 5px 0;
+    }
+
+    .form_control input, .form_control textarea,
+    .form-group input, .form-group textarea {
+        font-size: 13px;
+        padding: 7px;
+    }
+
+    .filter-container, .filter-container-zone {
+        margin: 3px;
+    }
+
+    select {
+        font-size: 10px;
+        padding: 5px;
+    }
+
+    .filtered-result {
+        margin-top: 5px;
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 800px) and (min-width: 600px) {
+
+    body {
+        margin-top: 3%;
+        font-size: 0.85rem;
+        padding: 4px;
+    }
+
+    .container-fluid {
+        max-height: 700px;
+    }
+
     .moving_title {
-        font-size: 20px; 
+        font-size: 22px;
+        margin-right: 40px;
+        margin-left: 40px;
+    }
+
+    .navbar {
+        width: 120px;
+    }
+
+    .content {
+        margin-left: 120px;
+        padding: 6px;
     }
 
     .form {
-        padding: 20px; 
+        width: 95%;
+        padding: 8px;
     }
 
-    .button1,
+    .button1, .button2 {
+        font-size: 12px;
+        padding: 4px 8px;
+        margin: 0 2px;
+    }
+
+    .button1 {
+        margin-right: -30px;
+    }
+
     .button2 {
-        padding: 10px; 
-        font-size: 16px; 
-        width: 100%; 
+        margin-left: 15px;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    .col-md-6 {
+        flex: 1;
+        max-width: 100%;
+    }
+
+    .col-md-2 {
+        font-size: 0.9rem;
+        padding: 4px 0;
+    }
+
+    .form_control input, .form_control textarea,
+    .form-group input, .form-group textarea {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .filter-container, .filter-container-zone {
+        margin: 2px;
+    }
+
+    select {
+        font-size: 9px;
+        padding: 4px;
+    }
+
+    .filtered-result {
+        margin-top: 4px;
     }
 }

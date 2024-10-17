@@ -1588,8 +1588,8 @@ from .models import Schedule_Calling ,Schedule_Meeting
 class ViewScheduledCalls(View):
     def get(self, request):
         scheduled_calls = Schedule_Calling.objects.all()
-        return render(request, 'sales_tracker/view_scheduled_calls.html', {'scheduled_calls': scheduled_calls})
+        return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
 
 def ViewScheduledMeeting(request):
     scheduled_meetings = Schedule_Meeting.objects.all()
-    return render(request, 'sales_tracker/viewMeeting.html', {'scheduled_meetings': scheduled_meetings})
+    return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})

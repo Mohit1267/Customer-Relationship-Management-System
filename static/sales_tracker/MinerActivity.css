@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-
+    overflow-y: auto;
 } 
 
 
@@ -23,6 +23,7 @@ body {
 }
 
 .small-nav {
+    gap: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,6 +46,7 @@ body {
     font-size: 16px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    background-color: #eff3f7;
 }
 
 .state-filter-container {
@@ -63,6 +65,7 @@ body {
     font-size: 16px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    background-color: #eff3f7;
 }
 
 .zone-filter-container {
@@ -81,6 +84,7 @@ body {
     font-size: 16px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    background-color: #eff3f7;
 }
 
 .filter-bar {
@@ -93,8 +97,6 @@ body {
     margin-left: 1100p
 }
 
-
-
 button {
     padding: 10px 20px;
     color: black;
@@ -102,6 +104,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    background-color: #eff3f7;
 }
 
 button:hover {
@@ -110,9 +113,9 @@ button:hover {
     background-color: black;
 }
 
-.profile-button:hover {
+/* .profile-button:hover {
     background-color: #ccc;
-}
+} */
 
 .profile-button:hover img {
     border-color: white;
@@ -129,6 +132,7 @@ button:hover {
     flex-direction: column; 
     align-items: center;
     justify-content: flex-start; 
+    overflow-y: auto;
 }
 
 .attpiechart {
@@ -215,129 +219,278 @@ td {
     color: #495057;
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1400px) and (min-width: 1200px) {
     .navbar-horizontal {
-        width: calc(100% - 200px);
-        left: 200px;
+        width: calc(100% - 230px);
+        left: 230px;
+        padding: 8px 16px; 
+    }
+
+    .small-nav {
+        gap: 5px;
+        padding: 0 10px; 
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        font-size: 14px; 
+    }
+
+    .filter-select {
+        width: 130px;
+    }
+
+    .buttons{
+        margin-left: 5px;
+        /* border-radius: 15% !important; */
+        display: flex;
+        gap: 2px;
+        /* margin-right: 180px; */
+    }
+
+    button {
+        padding: 5px 16px; 
+    }
+
+    .miner-content {
+        padding: 10px; 
+        overflow-y: auto;
     }
 
     .attpiechart {
-        margin-right: 900px;
-    }
-
-    .mining-info-container {
-        margin-left: 1000px;
-    }
-
-    .cards-container {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .card {
-        width: 45%;
-    }
-}
-
-@media (max-width: 1366px) {
-    .navbar-horizontal {
-        width: calc(100% - 180px);
-        left: 180px;
-    }
-
-    .attpiechart {
-        margin-right: 850px;
-    }
-
-    .mining-info-container {
-        margin-left: 950px;
-    }
-
-    .cards-container {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .card {
-        width: 40%;
-    }
-}
-
-@media (max-width: 1024px) {
-    .navbar-horizontal {
-        width: 100%;
-        left: 0;
-    }
-
-    .attpiechart {
-        margin-right: 500px;
-        max-width: 50%;
-    }
-
-    .mining-info-container {
-        margin-left: 600px;
+        margin-top: 80px;
+        max-width: 30%; 
+        margin-right: auto; 
     }
 
     .cards-container {
         flex-direction: column;
-        align-items: center;
+        padding: 20px; 
     }
 
     .card {
-        width: 80%;
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar-horizontal {
-        flex-direction: column;
-        padding: 15px;
+        width: 90%; 
+        margin: 10px auto; 
     }
 
-    .attpiechart {
-        margin-right: 0;
-        max-width: 80%;
+    .leftpart {
+        font-size: 1.2rem; 
+    }
+
+    .total, .expected {
+        font-size: 1rem;
     }
 
     .mining-info-container {
         margin-left: 0;
-        margin-top: 20px;
-    }
-
-    .cards-container {
-        padding: 20px;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .card {
-        width: 100%;
-        margin: 10px 0;
+        margin-right: auto; 
+        margin-top: 10px; 
     }
 }
 
-/* @media (max-width: 768px) { 
-    .leftpart, .rightpart1, .rightpart2 { 
-        font-size: 1.2rem; 
-    } 
-
-    .attpiechart { 
-        margin: 10px 0; 
-    } 
-
-    .cards-container { 
-        flex-direction: column;
-        align-items: center;
+@media (max-width: 1200px) and (min-width: 1020px) {
+    .navbar-horizontal {
+        width: calc(100% - 220px); 
+        left: 220px; 
+        padding: 8px 12px; 
     }
 
-    .card { 
-        width: 100%;
-        height: auto;
+    .small-nav {
+        gap: 3px; 
+        padding: 0 8px; 
     }
-} */
 
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        font-size: 12px;
+    }
 
-/* .miners-list {
-    display: flex; 
-    flex-direction: column; 
-}  */
+    .filter-select {
+        width: 120px; /
+    }
+
+    .buttons {
+        margin-left: 3px;
+        display: flex;
+        gap: 2px;
+    }
+
+    button {
+        padding: 5px 12px; 
+    }
+
+    .miner-content {
+        padding: 8px; 
+        overflow-y: auto;
+    }
+
+    .attpiechart {
+        margin-top: 60px;
+        max-width: 35%; 
+        margin-right: auto; 
+    }
+
+    .cards-container {
+        flex-direction: column; 
+        padding: 15px;
+    }
+
+    .card {
+        width: 95%; 
+        margin: 5px auto; 
+    }
+
+    .leftpart {
+        font-size: 1.1rem; 
+    }
+
+    .total, .expected {
+        font-size: 0.9rem; 
+    }
+
+    .mining-info-container {
+        margin-left: 0; 
+        margin-right: auto; 
+        margin-top: 5px; 
+    }
+}
+
+@media (max-width: 1020px) and (min-width: 800px) {
+    .navbar-horizontal {
+        width: calc(100% - 200px);
+        left: 200px;
+        padding: 6px 10px; 
+    }
+
+    .small-nav {
+        gap: 2px;
+        padding: 0 6px; 
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        font-size: 11px; 
+    }
+
+    .filter-select {
+        width: 100px; 
+    }
+
+    .buttons {
+        margin-left: 2px;
+        display: flex;
+        gap: 2px;
+    }
+
+    button {
+        padding: 4px 10px;
+        font-size: 12px; 
+    }
+
+    .miner-content {
+        padding: 6px; 
+        overflow-y: auto;
+    }
+
+    .attpiechart {
+        margin-top: 40px; 
+        max-width: 40%; 
+        margin-right: auto; 
+    }
+
+    .cards-container {
+        flex-direction: column; 
+        padding: 10px; 
+    }
+
+    .card {
+        width: 95%;
+        margin: 5px auto; 
+    }
+
+    .leftpart {
+        font-size: 1rem; 
+    }
+
+    .total, .expected {
+        font-size: 0.8rem; 
+    }
+
+    .mining-info-container {
+        margin-left: 0; 
+        margin-right: auto; 
+        margin-top: 5px; 
+    }
+}
+
+@media (max-width: 800px) and (min-width: 600px) {
+    .navbar-horizontal {
+        width: calc(100% - 200px); 
+        left: 200px; 
+        padding: 5px 8px; 
+    }
+
+    .small-nav {
+        gap: 2px; 
+        padding: 0 5px;
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        font-size: 10px; 
+    }
+
+    .filter-select {
+        width: 90px; 
+    }
+
+    .buttons {
+        margin-left: 1px; 
+        display: flex;
+        gap: 1px; 
+    }
+
+    button {
+        padding: 4px 8px;
+        font-size: 10px; 
+    }
+
+    .miner-content {
+        padding: 5px;
+        overflow-y: auto; 
+    }
+
+    .attpiechart {
+        margin-top: 30px; 
+        max-width: 50%; 
+        margin-right: auto; 
+    }
+
+    .cards-container {
+        flex-direction: column; 
+        padding: 8px;
+    }
+
+    .card {
+        width: 95%; 
+        margin: 5px auto; 
+    }
+
+    .leftpart {
+        font-size: 0.9rem;
+    }
+
+    .total, .expected {
+        font-size: 0.7rem; 
+    }
+
+    .mining-info-container {
+        margin-left: 0; 
+        margin-right: auto; 
+        margin-top: 5px; 
+    }
+}

@@ -192,10 +192,61 @@ from django.contrib.auth.models import User
 
 
 from django.db import models
+
+class Account(models.Model):
+    # Basic Fields
+    name = models.CharField(max_length=100)
+    website = models.URLField(blank=True, null=True)
+    email_address = models.EmailField()
+    
+    # Billing Information
+    billing_address = models.CharField(max_length=255)
+    billing_street = models.CharField(max_length=255)
+    billing_postal_code = models.CharField(max_length=20)
+    billing_city = models.CharField(max_length=100)
+    billing_state = models.CharField(max_length=100)
+    billing_country = models.CharField(max_length=100)
+    
+    # Description
+    description = models.TextField(blank=True, null=True)
+    
+    # Assigned To
+    assigned_to = models.CharField(max_length=100, blank=True, null=True)
+    
+    # Shipping Information
+    shipping_address = models.CharField(max_length=255, blank=True, null=True)
+    shipping_street = models.CharField(max_length=255, blank=True, null=True)
+    shipping_postal_code = models.CharField(max_length=20, blank=True, null=True)
+    shipping_city = models.CharField(max_length=100, blank=True, null=True)
+    shipping_state = models.CharField(max_length=100, blank=True, null=True)
+    shipping_country = models.CharField(max_length=100, blank=True, null=True)
+    
+    # Account Detail
+    type = models.CharField(max_length=50,choices=(
+        ('option1', 'Option 1'),
+        ('option2', 'Option 2'),
+        ('option3', 'Option 3'),
+    ))
+
+    annual_revenue = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    member_of = models.CharField(max_length=100, blank=True, null=True)
+    campaign = models.CharField(max_length=100, blank=True, null=True)
+    industry = models.CharField(max_length=100, blank=True, null=True)
+    employees = models.IntegerField(blank=True, null=True)
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+from django.db import models
 from django.core.validators import RegexValidator
 
 password_regex = RegexValidator(
-    regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+     regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+ 
     message="Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
 )
 
@@ -205,7 +256,7 @@ class NewPasswords(models.Model):
         validators=[password_regex],
         help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
     )
-
+ 
     Sales_password = models.CharField(
         max_length=128,
         validators=[password_regex],
@@ -219,7 +270,7 @@ class NewPasswords(models.Model):
     )
 
 
-
+ 
 class Schedule_Meeting(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
@@ -253,6 +304,8 @@ class Schedule_Calling(models.Model):
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
     contact= models.IntegerField()
+    notes = models.CharField(max_length=255)
 
     def __str__(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
+ 
