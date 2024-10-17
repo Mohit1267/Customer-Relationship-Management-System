@@ -1,4 +1,4 @@
-from django.db import modls
+from django.db import models
 from users.models import RegisterUser,Profile
 from django.conf import settings
 
@@ -217,3 +217,42 @@ class NewPasswords(models.Model):
         validators=[password_regex],
         help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
     )
+
+
+
+class Schedule_Meeting(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    duration = models.DurationField()
+    frequency = models.CharField(max_length=100)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    subject = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255)
+    assigned_to = models.CharField(max_length=255)
+    notification = models.CharField(max_length=255)
+    notes = models.CharField(max_length=255)
+    temp = models.CharField(max_length=233, null = True,  blank = True)
+
+
+    def str(self):
+        return f"Schedule from {self.start_date} to {self.end_date}"
+
+
+
+
+class Schedule_Calling(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    duration = models.DurationField()
+    frequency = models.CharField(max_length=100)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    subject = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255)
+    assigned_to = models.CharField(max_length=255)
+    notification = models.CharField(max_length=255)
+    contact= models.IntegerField()
+
+    def __str__(self):
+        return f"Schedule_Calling from {self.start_date} to {self.end_date}"

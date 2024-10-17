@@ -29,10 +29,8 @@ from users.models import AttendanceRecord
 import random
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
-
-
-
-
+from .forms import agentmeeting
+from .forms import agentcalling
 
 
 
@@ -1555,3 +1553,43 @@ def validate_password_view(request):
     else:
         form = PasswordForm()
     return render(request, 'validate_password.html', {'form': form})
+
+
+
+class AgentMeeting(View):
+    def get(self, request):
+        form = agentmeeting()
+        return render(request, 'sales_tracker/agentmeeting.html', {'form': form})
+
+    def post(self, request):
+        form = agentmeeting(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            form.save()
+        return render(request, 'sales_tracker/agentmeeting.html', {'form': form})
+    
+
+
+class AgentCalling(View):
+    def get(self, request):
+        form = agentcalling()
+        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+    def post(self, request):
+        form = agentcalling(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            form.save()
+        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+
+from .models import Schedule_Calling ,Schedule_Meeting
+
+class ViewScheduledCalls(View):
+    def get(self, request):
+        scheduled_calls = Schedule_Calling.objects.all()
+        return render(request, 'sales_tracker/view_scheduled_calls.html', {'scheduled_calls': scheduled_calls})
+
+def ViewScheduledMeeting(request):
+    scheduled_meetings = Schedule_Meeting.objects.all()
+    return render(request, 'sales_tracker/viewMeeting.html', {'scheduled_meetings': scheduled_meetings})

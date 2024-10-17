@@ -65,14 +65,14 @@ urlpatterns = [
     path('get-locations/', get_salesperson_locations, name='get_locations'),
    # path('role-access/', views.role_access, name='role_access'),
     path('validate-password/', views.validate_password_view, name='validate_password'),
+    path("agentmeeting", login_required((views.AgentMeeting.as_view())), name="agentmeeting"),
+    path("agentcalling", login_required((views.AgentCalling.as_view())), name="agentcalling"),
+
+    path("view_scheduled_calls", login_required(views.ViewScheduledCalls.as_view()), name="view_scheduled_calls"),
+    path("viewMeeting", login_required(views.ViewScheduledMeeting), name='viewMeeting'),
+
+
+
+
+
 ]
-
-
-'''urlpatterns = [
-    path('get-locations/', get_salesperson_locations, name='get_locations'),
-]
-'''
-
-
-
-
