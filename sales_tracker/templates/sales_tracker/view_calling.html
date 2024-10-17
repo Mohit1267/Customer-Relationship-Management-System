@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scheduled Calls</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scheduled Calls</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Duration</th>
+                <th>Frequency</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Subject</th>
+                <th>Related To</th>
+                <th>Assigned To</th>
+                <th>Notification</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for call in scheduled_calls %}
+            <tr>
+                <td>{{ call.start_date }}</td>
+                <td>{{ call.end_date }}</td>
+                <td>{{ call.duration }}</td>
+                <td>{{ call.frequency }}</td>
+                <td>{{ call.start_time }}</td>
+                <td>{{ call.end_time }}</td>
+                <td>{{ call.subject }}</td>
+                <td>{{ call.related_to }}</td>
+                <td>{{ call.assigned_to }}</td>
+                <td>{{ call.notification }}</td>
+                <td>{{ call.contact }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="11">No scheduled calls found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

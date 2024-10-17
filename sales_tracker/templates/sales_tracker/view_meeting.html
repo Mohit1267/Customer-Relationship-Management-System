@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scheduled Meetings</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scheduled Meetings</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Subject</th>
+                <th>Assigned To</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for meeting in scheduled_meetings %}
+            <tr>
+                <td>{{ meeting.start_date }}</td>
+                <td>{{ meeting.end_date }}</td>
+                <td>{{ meeting.start_time }}</td>
+                <td>{{ meeting.end_time }}</td>
+                <td>{{ meeting.subject }}</td>
+                <td>{{ meeting.assigned_to }}</td>
+                <td>{{ meeting.contact }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No scheduled meetings found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -133,11 +133,12 @@
                 Calendar
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
-                <li>
+                <li><a class="dropdown-item" href="{% url 'agentmeeting' %}">Schedule Meeting</a></li>
                   <hr class="dropdown-divider">
+
                 </li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
+
               </ul>
             </li>
 
@@ -168,12 +169,12 @@
                Accounts
              </a>
              <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'agentaccount' %}">Create Account</a>
+              <li><a class="dropdown-item" href="#">Create Account</a>
               </li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="{% url 'viewaccount' %}">View Account</a></li>
+              <li><a class="dropdown-item" href="#">View Account</a></li>
             </ul>
            </li>
           
@@ -205,11 +206,11 @@
                 Task
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'createTask' %}">Create Task</a></li>
+                <li><a class="dropdown-item" href="#">Create Task</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="{% url 'viewTask' %}">View Task</a></li>
+                <li><a class="dropdown-item" href="#">View Task</a></li>
               </ul>
             </li>
         </div>

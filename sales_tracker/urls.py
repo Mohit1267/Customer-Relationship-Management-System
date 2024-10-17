@@ -1,14 +1,14 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.decorators import login_required
-
+from .views import get_salesperson_locations,ViewScheduledCalls
 
 
 urlpatterns = [
     path("", login_required(views.Dashboards), name="Dashboards"),
     # path("adminn", login_required(views.Admin.as_view()), name="adminn"),
     path('attendance/', (views.Attendence), name='attendance'),
-    path('maps',(views.maps.as_view()),name = 'maps'),
+    #path('maps',(views.maps.as_view()),name = 'maps'),
     # path("agent/", login_required(views.Agent.as_view()), name="agent"),
     path("agent/<pk>", login_required(views.DetailCalling), name="detail_agent"),
     path("sales/<pk>", login_required(views.DetailSales), name="detail_sales"),
@@ -48,11 +48,6 @@ urlpatterns = [
     path("agentquote", login_required(views.Agentquote), name="agentquote"),
     path("agentopportunity", login_required(views.Agentopportunity), name="agentopportunity"),
     path("agentmining", login_required(views.Agentmining), name="agentmining"),
-    path("agentaccount", login_required(views.Agentaccount), name="agentaccount"),
-    path("viewaccount", login_required(views.Accountview), name="viewaccount"),
-
-    # path("account-success", login_required(views.AccountSuccessView.as_view()), name="account_success"),
-
 
     # path("agentmessage", views.Agentmessage.as_view(), name = "agentmessage"), 
     path("adminActive", login_required(views.Admin_active), name="adminActive"),
@@ -60,22 +55,25 @@ urlpatterns = [
     # path("deviceAdmin", login_required(views.deviceAdmin), name="deviceAdmin"),
     path("adminActive", login_required(views.Admin_active), name="adminActive"),
     path("adminPassive", login_required(views.Admin_passive), name="adminPassive"),
-    path("agentDsr", login_required(views.AgentDSR), name="agentDsr"),
+    path("agentDsr", login_required(views.AdminDSR), name="agentDsr"),
     path("dsrview", login_required(views.Dsrview), name="dsrview"),
     path("DSR", login_required(views.DSR), name="DSR"),
-    path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
-    path("createTask", login_required(views.createTask), name="createTask"),
+
+    #path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
+    #path("createTask", login_required(views.createTask), name="createTask"),
     path("viewTask", login_required(views.viewTask), name="viewTask"),
     path("createDocument", login_required(views.createDocument), name="createDocument"),
     path("viewDocument", login_required(views.viewDocument), name="viewDocument"),
     # path("maps", login_required(views.maps), name="maps"),
+    path('get-locations/', get_salesperson_locations, name='get_locations'),
+   # path('role-access/', views.role_access, name='role_access'),
+    path('validate-password/', views.validate_password_view, name='validate_password'),
+    path("agentmeeting", login_required((views.AgentMeeting.as_view())), name="agentmeeting"),
+    path("agentcalling", login_required((views.AgentCalling.as_view())), name="agentcalling"),
+
+    path('view_calling/', views.ViewScheduledCalls.as_view(), name='view_calling'),
+    path("view_meeting", login_required(views.ViewScheduledMeeting), name='view_meeting'),
+
 
 
 ]
-
-
-
-
-
-
-

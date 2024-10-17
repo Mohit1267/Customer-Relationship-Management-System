@@ -1,7 +1,10 @@
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling
+
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
+
+
 
 
 class MiningForm(forms.ModelForm):
@@ -53,9 +56,198 @@ MY_CHOICES = (
     ('month', 'month'),
 )
 
+
+from django import forms
+from .models import NewPasswords
+
+class PasswordForm(forms.ModelForm):
+    class Meta:
+        model = NewPasswords
+        fields = ['Minor_password', 'Sales_password', 'Admin_password']
+
+
 class SortForm(forms.Form):
     select = forms.ChoiceField(choices=MY_CHOICES, label='Select an option')
 
+ 
+class agentmeeting(forms.ModelForm):
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='Start Date',
+        required=True
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='End Date',
+        required=True
+    )
+    duration = forms.CharField(
+        max_length=255,
+        label='Duration',
+        required=False,
+        help_text='Enter the duration (e.g., 2 hours, 30 minutes)'
+    )
+    frequency = forms.ChoiceField(
+        choices=[
+            ('daily', 'Daily'),
+            ('weekly', 'Weekly'),
+            ('monthly', 'Monthly'),
+            ('yearly', 'Yearly'),
+        ],
+        label='Frequency',
+        required=True
+    )
+    start_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='Start Time',
+        required=True
+    )
+    end_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='End Time',
+        required=True
+    )
+
+    subject = forms.CharField(
+        max_length=255,
+        label='subject',
+        required=True
+    )
+
+     
+    related_to = forms.ChoiceField(
+         choices=[
+        ('', 'Select an option'),
+        ('Client', 'Client'),
+        ('Lead', 'Lead'),
+        ('Opportunity', 'Opportunity'),
+        ('Account', 'Account'),
+    ],
+        
+        label='Related To',
+        required=True
+    )
+
+    assigned_to = forms.CharField(
+        max_length=255,
+        label='Assigned To',
+        required=True
+    )
+
+    notification = forms.CharField(
+        max_length=255,
+        label='Notification',
+        required=True
+    )
+    class Meta:
+        model = Schedule_Meeting  # Replace with your actual model name
+        fields = [
+           'start_date',
+            'end_date',
+            'duration',
+            'frequency',
+            'start_time',
+            'end_time',
+            'subject',
+            'related_to',
+            'assigned_to',
+            'notification',
+            
+        ]
+
+
+
+
+
+class agentcalling(forms.ModelForm):
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='Start Date',
+        required=True
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='End Date',
+        required=True
+    )
+    duration = forms.CharField(
+        max_length=255,
+        label='Duration',
+        required=False,
+        help_text='Enter the duration (e.g., 2 hours, 30 minutes)'
+    )
+    frequency = forms.ChoiceField(
+        choices=[
+            ('daily', 'Daily'),
+            ('weekly', 'Weekly'),
+            ('monthly', 'Monthly'),
+            ('yearly', 'Yearly'),
+        ],
+        label='Frequency',
+        required=True
+    )
+    start_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='Start Time',
+        required=True
+    )
+    end_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='End Time',
+        required=True
+    )
+
+    subject = forms.CharField(
+        max_length=255,
+        label='subject',
+        required=True
+    )
+
+     
+    related_to = forms.ChoiceField(
+        choices=[
+        ('', 'Select an option'),
+        ('Client', 'Client'),
+        ('Lead', 'Lead'),
+        ('Opportunity', 'Opportunity'),
+        ('Account', 'Account'),
+    ],
+        
+        label='Related To',
+        required=True
+    )
+
+    assigned_to = forms.CharField(
+        max_length=255,
+        label='Assigned To',
+        required=True
+    )
+
+    notification = forms.CharField(
+        max_length=255,
+        label='Notification',
+        required=True
+    )
+    contact = forms.IntegerField(
+        label='Contact_Number',
+        required=True
+    )
+    class Meta:
+        model = Schedule_Calling  # Replace with your actual model name
+        fields = [
+           'start_date',
+            'end_date',
+            'duration',
+            'frequency',
+            'start_time',
+            'end_time',
+            'subject',
+            'related_to',
+            'assigned_to',
+            'notification',
+            'contact',
+
+        ]   
 class TaskForm(forms.Form):
     # Priority choices
     PRIORITY_CHOICES = [
@@ -185,6 +377,7 @@ class Accountform(forms.Form):
 
 
 
+
 class DocumentForm(forms.ModelForm):
     # Custom widgets can be defined here if needed
     publish_date = forms.DateField(
@@ -215,4 +408,194 @@ class DocumentForm(forms.ModelForm):
             'related_document': forms.TextInput(attrs={'class': 'form-control'}),
             'assigned_to': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
         }
+
+
+class agentmeeting(forms.ModelForm):
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='Start Date',
+        required=True
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='End Date',
+        required=True
+    )
+    duration = forms.CharField(
+        max_length=255,
+        label='Duration',
+        required=False,
+        help_text='Enter the duration (e.g., 2 hours, 30 minutes)'
+    )
+    frequency = forms.ChoiceField(
+        choices=[
+            ('daily', 'Daily'),
+            ('weekly', 'Weekly'),
+            ('monthly', 'Monthly'),
+            ('yearly', 'Yearly'),
+        ],
+        label='Frequency',
+        required=True
+    )
+    start_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='Start Time',
+        required=True
+    )
+    end_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='End Time',
+        required=True
+    )
+
+    subject = forms.CharField(
+        max_length=255,
+        label='subject',
+        required=True
+    )
+
+     
+    related_to = forms.ChoiceField(
+        choices=[
+        ('', 'Select an option'),
+        ('Client', 'Client'),
+        ('Lead', 'Lead'),
+        ('Opportunity', 'Opportunity'),
+        ('Account', 'Account'),
+    ],
+        
+        label='Related To',
+        required=True
+    )
+
+    assigned_to = forms.ChoiceField(
+        choices=[
+        ('', 'Select an option'),
+        ('Client', 'Client'),
+        ('Lead', 'Lead'),
+        ('Opportunity', 'Opportunity'),
+        ('Account', 'Account'),
+    ],
+        label='Assigned To',
+        required=True
+    )
+
+    notification = forms.CharField(
+        max_length=255,
+        label='Notification',
+        required=True
+    )
+
+    notes = forms.CharField(
+        max_length=255,
+        label='note',
+        required=True
+    )
+    class Meta:
+        model = Schedule_Meeting  # Replace with your actual model name
+        fields = [
+           'start_date',
+            'end_date',
+            'duration',
+            'frequency',
+            'start_time',
+            'end_time',
+            'subject',
+            'related_to',
+            'assigned_to',
+            'notification',
+            'notes',
+        ]
+
+class agentcalling(forms.ModelForm):
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='Start Date',
+        required=True
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='End Date',
+        required=True
+    )
+    duration = forms.CharField(
+        max_length=255,
+        label='Duration',
+        required=False,
+        help_text='Enter the duration (e.g., 2 hours, 30 minutes)'
+    )
+    frequency = forms.ChoiceField(
+        choices=[
+            ('daily', 'Daily'),
+            ('weekly', 'Weekly'),
+            ('monthly', 'Monthly'),
+            ('yearly', 'Yearly'),
+        ],
+        label='Frequency',
+        required=True
+    )
+    start_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='Start Time',
+        required=True
+    )
+    end_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        label='End Time',
+        required=True
+    )
+
+    subject = forms.CharField(
+        max_length=255,
+        label='subject',
+        required=True
+    )
+
+     
+    related_to = forms.ChoiceField(
+        choices=[
+        ('', 'Select an option'),
+        ('Client', 'Client'),
+        ('Lead', 'Lead'),
+        ('Opportunity', 'Opportunity'),
+        ('Account', 'Account'),
+    ],
+        
+        label='Related To',
+        required=True
+    )
+
+    assigned_to = forms.CharField(
+        max_length=255,
+        label='Assigned To',
+        required=True
+    )
+
+    notification = forms.CharField(
+        max_length=255,
+        label='Notification',
+        required=True
+    )
+    contact = forms.IntegerField(
+        label='Contact_Number',
+        required=True
+    )
+    class Meta:
+        model = Schedule_Calling  # Replace with your actual model name
+        fields = [
+           'start_date',
+            'end_date',
+            'duration',
+            'frequency',
+            'start_time',
+            'end_time',
+            'subject',
+            'related_to',
+            'assigned_to',
+            'notification',
+            'contact',
+            'notes',
+            'reason',
+
+        ]           
 

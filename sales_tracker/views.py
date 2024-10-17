@@ -20,6 +20,7 @@ from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, TaskForm, AccountForm, DocumentForm
 
+
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -30,10 +31,8 @@ from users.models import AttendanceRecord
 import random
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
-
-
-
-
+from .forms import agentmeeting
+from .forms import agentcalling
 
 
 
@@ -1186,16 +1185,14 @@ class AdminAnalysis(TemplateView):
     
 
 
-class maps(View):
-    template_name = "sales_tracker/maps.html"
-    def get(self,request):
-        context = {}
-        latitude = request.session.get('latitude')
-        longitude = request.session.get('longitude')
-        context['lat'] = latitude
-        context['long'] = longitude
-        return render(request, self.template_name, context)
-    
+from django.http import JsonResponse
+from .models import Location
+
+def get_salesperson_locations(request):
+    locations = Location.objects.all().values('salesperson__name', 'latitude', 'longitude', 'timestamp')
+    location_list = list(locations)
+    return JsonResponse(location_list, safe=False)
+
 
 
 
@@ -1443,11 +1440,10 @@ def Agentmining(request):
     return render(request, "sales_tracker/agentmining.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
 
 
-
 def Admindevice(request):
       return render(request, "sales_tracker/deviceAdmin.html")
 
-def AgentDSR(request):
+def AdminDSR(request):
 
     return render(request, "sales_tracker/agentDsr.html")
 
@@ -1520,27 +1516,26 @@ def DSR(request):
 
 
 
-def liveStreaming(request):
-    return render(request, "sales_tracker/liveStreaming.html")
-
 from django.shortcuts import render, redirect
+
 from django.contrib import messages
 from .forms import AccountForm
 from .models import Account 
 
-def createTask(request):
+from .forms import PasswordForm
+from .models import NewPasswords
+from django.core.exceptions import ValidationError
+
+
+def validate_password_view(request):
     if request.method == 'POST':
-        form = TaskForm(request.POST)
+        form = PasswordForm(request.POST)
         if form.is_valid():
-            # Process form data
-            subject = form.cleaned_data['subject']
-            start_date = form.cleaned_data['start_date']
-            due_date = form.cleaned_data['due_date']
-            priority = form.cleaned_data['priority']
-            description = form.cleaned_data['description']
-            status = form.cleaned_data['status']
-            related_to = form.cleaned_data['related_to']
-            contacts = form.cleaned_data['contacts']
+            # Get the entered password from the form
+            entered_minor_password = form.cleaned_data['Minor_password']
+            entered_sales_password = form.cleaned_data['Sales_password']
+            entered_admin_password = form.cleaned_data['Admin_password']
+
 
             # Here you would typically save the task to the database
             # You could create a model instance for Task and save it
@@ -1623,26 +1618,50 @@ def Agentaccount(request):
                 employees=employees,
             )
             # account.save() 
+
+            # Retrieve the stored passwords from the database
+            try:
+                stored_passwords = NewPasswords.objects.first()  # Assuming you have only one instance of Passwords
+                if not stored_passwords:
+                    raise ValidationError("No passwords found in the database.")
+                
+                # Compare entered passwords with the ones in the database
+                if (entered_minor_password == stored_passwords.Minor_password and
+                    entered_sales_password == stored_passwords.Sales_password and
+                    entered_admin_password == stored_passwords.Admin_password):
+                    # If passwords match, you can proceed
+                    return redirect('success_url')
+                else:
+                    # If passwords don't match, raise an error
+                    form.add_error(None, 'Passwords do not match the stored passwords.')
+
             
-            # messages.success(request, 'Account created successfully!')
-            # return redirect('account_success')  
+            except NewPasswords.DoesNotExist:
+                form.add_error(None, 'Stored passwords not found in the database.')
+        
+        # If form is invalid, re-render the form with errors
+        return render(request, 'validate_password.html', {'form': form})
 
-        else:
-            messages.error(request, 'There was an error in the form. Please correct the highlighted fields.')
     else:
-        form = AccountForm()  
+        form = PasswordForm()
+    return render(request, 'validate_password.html', {'form': form})
 
-    return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
 
-from django.views.generic import TemplateView
+class AgentMeeting(View):
+    def get(self, request):
+        form = agentmeeting()
+        return render(request, 'sales_tracker/agentmeeting.html', {'form': form})
 
-# class AccountSuccessView(TemplateView):
-#     template_name = 'sales_tracker/account_success.html'  
+    def post(self, request):
+        form = agentmeeting(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            form.save()
+        return render(request, 'sales_tracker/agentmeeting.html', {'form': form})
+    
 
-def Accountview(request):
 
-    return render(request, "sales_tracker/viewaccount.html")
 
 def createDocument(request):
     if request.method == 'POST':
@@ -1659,3 +1678,29 @@ def viewDocument(request):
 
     return render(request, "sales_tracker/viewDocument.html")
 
+
+class AgentCalling(View):
+    def get(self, request):
+        form = agentcalling()
+        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+    
+
+    def post(self, request):
+        form = agentcalling(request.POST)
+        if form.is_valid():
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            
+            form.save()
+        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+
+from .models import Schedule_Calling ,Schedule_Meeting
+
+class ViewScheduledCalls(View):
+    def get(self, request):
+        scheduled_calls = Schedule_Calling.objects.all()
+        return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
+
+def ViewScheduledMeeting(request):
+    scheduled_meetings = Schedule_Meeting.objects.all()
+    return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})
