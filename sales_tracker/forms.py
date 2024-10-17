@@ -559,6 +559,7 @@ class agentcalling(forms.ModelForm):
             'assigned_to',
             'notification',
             'contact',
-            'notes'
+            'notes',
+            'reason',
 
         ]           

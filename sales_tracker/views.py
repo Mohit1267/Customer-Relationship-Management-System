@@ -1574,11 +1574,13 @@ class AgentCalling(View):
     def get(self, request):
         form = agentcalling()
         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+    
 
     def post(self, request):
         form = agentcalling(request.POST)
         if form.is_valid():
-            # Save the form data to the database
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            
             form.save()
         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
 

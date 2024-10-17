@@ -305,7 +305,8 @@ class Schedule_Calling(models.Model):
     notification = models.CharField(max_length=255)
     contact= models.IntegerField()
     notes = models.CharField(max_length=255)
-
+    reason = models.CharField(max_length=255)
+    
     def __str__(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
  
