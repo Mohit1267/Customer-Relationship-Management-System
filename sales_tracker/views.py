@@ -18,7 +18,9 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, TaskForm, AccountForm, DocumentForm
+
+
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -1515,9 +1517,15 @@ def DSR(request):
 
 
 from django.shortcuts import render, redirect
+
+from django.contrib import messages
+from .forms import AccountForm
+from .models import Account 
+
 from .forms import PasswordForm
 from .models import NewPasswords
 from django.core.exceptions import ValidationError
+
 
 def validate_password_view(request):
     if request.method == 'POST':
@@ -1527,6 +1535,89 @@ def validate_password_view(request):
             entered_minor_password = form.cleaned_data['Minor_password']
             entered_sales_password = form.cleaned_data['Sales_password']
             entered_admin_password = form.cleaned_data['Admin_password']
+
+
+            # Here you would typically save the task to the database
+            # You could create a model instance for Task and save it
+            # Example (assuming you have a Task model):
+            # Task.objects.create(
+            #     subject=subject,
+            #     start_date=start_date,
+            #     due_date=due_date,
+            #     priority=priority,
+            #     description=description,
+            #     status=status,
+            #     related_to=related_to,
+            #     contacts=contacts
+            # )
+
+            # After saving or processing, redirect to another page (e.g., task list)
+            return redirect('createTask')  # 'createTask' should be the name of the URL pattern
+    else:
+        form = TaskForm()
+
+    return render(request, 'sales_tracker/createTask.html', {'form': form})
+
+def viewTask(request):
+    return render(request, "sales_tracker/viewTask.html")
+
+
+
+
+def Agentaccount(request):
+    if request.method == 'POST':
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['Name']
+            website = form.cleaned_data['Website']
+            email_address = form.cleaned_data['Email_Address']
+            billing_address = form.cleaned_data['Billing_Address']
+            billing_street = form.cleaned_data['Billing_Street']
+            billing_postal_code = form.cleaned_data['Billing_Postal_Code']
+            billing_city = form.cleaned_data['Billing_City']
+            billing_state = form.cleaned_data['Billing_State']
+            billing_country = form.cleaned_data['Billing_Country']
+            description = form.cleaned_data['Description']
+            assigned_to = form.cleaned_data['Assigned_To']
+            shipping_address = form.cleaned_data['Shipping_Address']
+            shipping_street = form.cleaned_data['Shipping_Street']
+            shipping_postal_code = form.cleaned_data['Shipping_Postal_Code']
+            shipping_city = form.cleaned_data['Shipping_City']
+            shipping_state = form.cleaned_data['Shipping_State']
+            shipping_country = form.cleaned_data['Shipping_Country']
+            account_type = form.cleaned_data['Type']
+            annual_revenue = form.cleaned_data['Annual_Revenue']
+            member_of = form.cleaned_data['Member_Of']
+            campaign = form.cleaned_data['Campaign']
+            industry = form.cleaned_data['Industry']
+            employees = form.cleaned_data['Employees']
+
+            account = Account(
+                name=name,
+                website=website,
+                email_address=email_address,
+                billing_address=billing_address,
+                billing_street=billing_street,
+                billing_postal_code=billing_postal_code,
+                billing_city=billing_city,
+                billing_state=billing_state,
+                billing_country=billing_country,
+                description=description,
+                assigned_to=assigned_to,
+                shipping_address=shipping_address,
+                shipping_street=shipping_street,
+                shipping_postal_code=shipping_postal_code,
+                shipping_city=shipping_city,
+                shipping_state=shipping_state,
+                shipping_country=shipping_country,
+                account_type=account_type,
+                annual_revenue=annual_revenue,
+                member_of=member_of,
+                campaign=campaign,
+                industry=industry,
+                employees=employees,
+            )
+            # account.save() 
 
             # Retrieve the stored passwords from the database
             try:
@@ -1543,6 +1634,7 @@ def validate_password_view(request):
                 else:
                     # If passwords don't match, raise an error
                     form.add_error(None, 'Passwords do not match the stored passwords.')
+
             
             except NewPasswords.DoesNotExist:
                 form.add_error(None, 'Stored passwords not found in the database.')
@@ -1568,6 +1660,23 @@ class AgentMeeting(View):
             form.save()
         return render(request, 'sales_tracker/agentmeeting.html', {'form': form})
     
+
+
+
+def createDocument(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')
+    else:
+        form = DocumentForm()
+    
+    return render(request, 'sales_tracker/createDocument.html', {'form': form})
+
+def viewDocument(request):
+
+    return render(request, "sales_tracker/viewDocument.html")
 
 
 class AgentCalling(View):
