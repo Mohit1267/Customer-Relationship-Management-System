@@ -1,0 +1,60 @@
+{% extends "agentbase.html" %}
+
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
+{% endblock %}
+
+{% block title %}Data{% endblock %}
+
+{% block content %}
+
+<section class="main_container">
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Start Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Contacts</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in data_list %}
+            <tr>
+                <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
+                
+                {% if data.customer_first_name %}
+                    <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
+                    <td>{{ data.customer_email }}</td>
+                    <td>{{data.customer_mobile_number}}</td>
+                    <td>{{data.city}}</td>
+                    <td>{{data.state}}</td>
+                {% elif data.first_name %}
+                    <td>{{ data.first_name }} {{ data.last_name }}</td>
+                    <td>{{ data.email_id }}</td>
+                    <td>-</td>
+                    <td>-</td>
+                {% elif data.opportunity_name %}
+                    <td>{{ data.opportunity_name }}</td>
+                    <td>-</td>
+                    <td>{{ data.probability }}</td>
+                    <td>{{ data.assigned_to }}</td>
+                {% elif data.title %}
+                    <td>{{ data.title }}</td>
+                    <td>-</td>
+                    <td>{{ data.valid_until }}</td>
+                    <td>{{ data.approval_status }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    </section>
+{% endblock %}
+
+{% block javascript %}{% endblock %}

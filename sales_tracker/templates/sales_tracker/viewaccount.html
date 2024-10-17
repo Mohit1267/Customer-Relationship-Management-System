@@ -1,0 +1,42 @@
+{% extends "agentbase.html" %}
+{% load static %}
+{% block title %}Account Table{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewaccount.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="containers">
+
+    <div class="headingDiv">
+        <h1>Accounts</h1>
+    </div>
+
+    <section class="main_container">
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Website</th>
+                    <th>Email_Address</th>
+                    <th>Type</th>
+                    <th>Annual_Revenue</th>
+                    <th>Industry</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <td>{{ data.name }}</td>
+                <td>{{ data.website }}</td>
+                <td>{{ data.email }}</td>
+                <td>{{ data.type }}</td>
+                <td>{{ data.revenue }}</td>
+                <td>{{ data.industry }}</td>
+            </tbody>
+        </table>
+
+    </section>
+</div>
+{% endblock %}

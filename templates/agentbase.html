@@ -133,11 +133,11 @@
                 Calendar
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
-                <li>
+                <li><a class="dropdown-item" href="{% url 'agentmeeting' %}">Schedule Meeting</a></li>
                   <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Schedule call</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentcalling' %}">Schedule call</a></li>
+                  <hr class="dropdown-divider">
+                <li><a class="dropdown-item" href="#">Create Task</a></li>
               </ul>
             </li>
 
@@ -159,6 +159,24 @@
               </ul>
             </li>
             
+             
+            <li class="nav-item dropdown dashboard-icon">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         
+               <img src="https://i.ibb.co/0Cj2QwN/accountlogo.png"  alt="Account Logo" style=" margin-right: 5px; height: 35px; ">
+
+               Accounts
+             </a>
+             <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Create Account</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">View Account</a></li>
+            </ul>
+           </li>
+
             <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 
@@ -168,14 +186,31 @@
                 DSR
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'agentDsr' %}">Create DSR</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentDsr' %}">Create DSR</a>
+                </li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{% url 'dsrview' %}">View DSR</a></li>
               </ul>
             </li>
-            
+
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
+ 
+                <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+                Task
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Create Task</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">View Task</a></li>
+              </ul>
+            </li>
         </div>
 
   </nav>

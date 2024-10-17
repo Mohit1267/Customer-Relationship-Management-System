@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'users',
     'sales_tracker',
+    'Unique_voice',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -101,16 +102,16 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'shanaya2',
-#         'HOST' : '34.100.214.94',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'shanaya',
+        'USER': 'root',
+        'PASSWORD':'shanaya2',
+        'HOST' : '34.100.214.94',
+        'PORT': '3306',
+    }
+}
 
 
 
