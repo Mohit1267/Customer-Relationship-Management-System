@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import RegisterUser
+from users.models import RegisterUser,Profile
 from django.conf import settings
 
 
@@ -155,6 +155,41 @@ class QuotesData(models.Model):
     date = models.DateField(default="2000-10-10")
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
 
+    from django.db import models
+
+class Location(models.Model):
+    # Define the fields for the Location model
+    name = models.CharField(max_length=100)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+from django.db import models
+from django.contrib.auth.models import User
+
+
+
+
+
+'''class Profile(models.Model):
+    USER_ROLES = (
+        ('Minor', 'Minor'),
+        ('Sales', 'Sales'),
+        ('Admin', 'Admin'),
+        # Add more roles as needed
+    )
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='sales_tracker_profile')
+    emp_id = models.CharField(max_length=20, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    branch = models.CharField(max_length=100, blank=True)
+    voice_recording = models.FileField(upload_to='voice_recordings/', null=True, blank=True)
+    
+    def __str__(self):
+        return f'{self.user.username} Profile'''
+
+
+
+
+
 
 from django.db import models
 
@@ -210,7 +245,8 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 password_regex = RegexValidator(
-    regex=r'^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$',
+     regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+ 
     message="Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
 )
 
@@ -220,7 +256,7 @@ class NewPasswords(models.Model):
         validators=[password_regex],
         help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
     )
-    
+ 
     Sales_password = models.CharField(
         max_length=128,
         validators=[password_regex],
@@ -234,3 +270,43 @@ class NewPasswords(models.Model):
     )
 
 
+ 
+class Schedule_Meeting(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    duration = models.DurationField()
+    frequency = models.CharField(max_length=100)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    subject = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255)
+    assigned_to = models.CharField(max_length=255)
+    notification = models.CharField(max_length=255)
+    notes = models.CharField(max_length=255)
+    temp = models.CharField(max_length=233, null = True,  blank = True)
+
+
+    def str(self):
+        return f"Schedule from {self.start_date} to {self.end_date}"
+
+
+
+
+class Schedule_Calling(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    duration = models.DurationField()
+    frequency = models.CharField(max_length=100)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    subject = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255)
+    assigned_to = models.CharField(max_length=255)
+    notification = models.CharField(max_length=255)
+    contact= models.IntegerField()
+    notes = models.CharField(max_length=255)
+    reason = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return f"Schedule_Calling from {self.start_date} to {self.end_date}"
+ 
