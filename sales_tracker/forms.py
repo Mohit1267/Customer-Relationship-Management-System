@@ -1,4 +1,4 @@
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
@@ -111,7 +111,6 @@ class TaskForm(forms.Form):
 
 
 class AccountForm(forms.Form):
-    # Left Column Fields
     Name = forms.CharField(max_length=100, label='Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Website = forms.URLField(label='Website', widget=forms.URLInput(attrs={'class': 'form-control'}))
     Email_Address = forms.EmailField(label='Email Address', widget=forms.EmailInput(attrs={'class': 'form-control'}))
@@ -124,7 +123,7 @@ class AccountForm(forms.Form):
     Description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}), label='Description')
     Assigned_To = forms.CharField(max_length=100, label='Assigned To', widget=forms.TextInput(attrs={'class': 'form-control'}))
 
-    # Right Column Fields
+   
     Shipping_Address = forms.CharField(max_length=255, label='Shipping Address', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Shipping_Street = forms.CharField(max_length=255, label='Shipping Street', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Shipping_Postal_Code = forms.CharField(max_length=20, label='Shipping Postal Code', widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -183,4 +182,37 @@ class Accountform(forms.Form):
             'Industry',
             'Employees'
         )
+
+
+
+class DocumentForm(forms.ModelForm):
+    # Custom widgets can be defined here if needed
+    publish_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=False
+    )
+    expiration_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=False
+    )
+    
+    class Meta:
+        model = Document
+        fields = ['file_name', 'document_name', 'document_type', 'publish_date', 'category',
+                  'description', 'status', 'revision', 'template', 'expiration_date',
+                  'subcategory', 'related_document', 'assigned_to']
+
+        widgets = {
+            'file_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'document_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'document_type': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+            'category': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'status': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+            'revision': forms.TextInput(attrs={'class': 'form-control'}),
+            'template': forms.TextInput(attrs={'class': 'form-control'}),
+            'subcategory': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+            'related_document': forms.TextInput(attrs={'class': 'form-control'}),
+            'assigned_to': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+        }
 

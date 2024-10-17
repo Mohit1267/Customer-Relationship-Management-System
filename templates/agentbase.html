@@ -138,10 +138,6 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'createTask' %}">Create Task</a></li>
               </ul>
             </li>
 
@@ -180,6 +176,7 @@
               <li><a class="dropdown-item" href="{% url 'viewaccount' %}">View Account</a></li>
             </ul>
            </li>
+          
 
             <li class="nav-item dropdown ">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -257,29 +254,29 @@ document.addEventListener('DOMContentLoaded', function () {
   const profileButton = document.querySelector('.profile1');
   const offcanvas = document.getElementById('offcanvasExample');
 
-  // Toggle offcanvas visibility on profile button click
+  
   profileButton.addEventListener('click', function (e) {
-    e.stopPropagation(); // Prevent event from bubbling
-    offcanvas.classList.toggle('show'); // Toggle the "show" class to open/close offcanvas
+    e.stopPropagation();
+    offcanvas.classList.toggle('show');
   });
 
-  // Close the offcanvas when clicking outside of it
+  
   document.addEventListener('click', function (e) {
     if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
-      offcanvas.classList.remove('show'); // Close offcanvas if clicking outside
+      offcanvas.classList.remove('show');
     }
   });
 
-  // Ensure the close button inside the offcanvas works
+  
   document.querySelector('.btn-close').addEventListener('click', function () {
-    offcanvas.classList.remove('show'); // Close offcanvas
+    offcanvas.classList.remove('show');
   });
 });
 
     </script>
 
     <script>
-      // Function to toggle the navbar
+      
       function toggleNavbar() {
         const navbar = document.querySelector('.nav-links');
         navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
@@ -292,12 +289,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const navbar = document.querySelector('.navbar');
         const hamburger = document.querySelector('.hamburger');
 
-        // Toggle the 'collapsed' class on the navbar
+        
         navbar.classList.toggle('collapsed');
 
        
 
-        // Toggle the visibility of the navbar container
+        
         if (navbarContainer.style.display === 'block') {
           navbarContainer.style.display = 'none';
         } else {
@@ -309,7 +306,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <script>
 
-      // Weekly Data Chart
       var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
       var weeklyChart = new Chart(ctxWeekly, {
         type: 'doughnut',
@@ -328,9 +324,9 @@ document.addEventListener('DOMContentLoaded', function () {
           plugins: {
             legend: {
               labels: {
-                color: '#FFFFFF', // Font color for the legend
+                color: '#FFFFFF',
                 font: {
-                  size: 14, // Font size for the legend
+                  size: 14,
                 }
               }
             }
@@ -338,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
 
-      // Monthly Data Chart
+     
       var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
       var monthlyChart = new Chart(ctxMonthly, {
         type: 'doughnut',
@@ -357,9 +353,9 @@ document.addEventListener('DOMContentLoaded', function () {
           plugins: {
             legend: {
               labels: {
-                color: '#FFFFFF', // Font color for the legend
+                color: '#FFFFFF',
                 font: {
-                  size: 14, // Font size for the legend
+                  size: 14,
                 }
               }
             }
@@ -367,7 +363,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
 
-      // Quarterly Data Chart
       var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
       var quarterlyChart = new Chart(ctxQuarterly, {
         type: 'doughnut',
@@ -386,9 +381,9 @@ document.addEventListener('DOMContentLoaded', function () {
           plugins: {
             legend: {
               labels: {
-                color: '#FFFFFF', // Font color for the legend
+                color: '#FFFFFF',
                 font: {
-                  size: 14, // Font size for the legend
+                  size: 14,
                 }
               }
             }
@@ -406,12 +401,9 @@ document.addEventListener('DOMContentLoaded', function () {
     <script src="% static  IBscript.js"></script>
     {% block javascript %}{% endblock %}
 
-
-    <!-- Include necessary external scripts -->
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
     <script src="{% static 'js/datatables/datatables.js' %}"></script>
     <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
-
 
 </body>
 </html>

@@ -18,7 +18,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, TaskForm, AccountForm
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, TaskForm, AccountForm, DocumentForm
 
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
@@ -1525,7 +1525,7 @@ def liveStreaming(request):
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import AccountForm  # Import your AccountForm
+from .forms import AccountForm
 from .models import Account 
 
 def createTask(request):
@@ -1559,7 +1559,7 @@ def createTask(request):
             # After saving or processing, redirect to another page (e.g., task list)
             return redirect('createTask')  # 'createTask' should be the name of the URL pattern
     else:
-        form = TaskForm()  # Display an empty form on GET request
+        form = TaskForm()
 
     return render(request, 'sales_tracker/createTask.html', {'form': form})
 
@@ -1573,7 +1573,6 @@ def Agentaccount(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
         if form.is_valid():
-            # Process form data
             name = form.cleaned_data['Name']
             website = form.cleaned_data['Website']
             email_address = form.cleaned_data['Email_Address']
@@ -1598,7 +1597,6 @@ def Agentaccount(request):
             industry = form.cleaned_data['Industry']
             employees = form.cleaned_data['Employees']
 
-            # Create and save the account instance
             account = Account(
                 name=name,
                 website=website,
@@ -1645,4 +1643,19 @@ from django.views.generic import TemplateView
 def Accountview(request):
 
     return render(request, "sales_tracker/viewaccount.html")
+
+def createDocument(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')
+    else:
+        form = DocumentForm()
+    
+    return render(request, 'sales_tracker/createDocument.html', {'form': form})
+
+def viewDocument(request):
+
+    return render(request, "sales_tracker/viewDocument.html")
 

@@ -66,6 +66,8 @@ urlpatterns = [
     path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
     path("createTask", login_required(views.createTask), name="createTask"),
     path("viewTask", login_required(views.viewTask), name="viewTask"),
+    path("createDocument", login_required(views.createDocument), name="createDocument"),
+    path("viewDocument", login_required(views.viewDocument), name="viewDocument"),
     # path("maps", login_required(views.maps), name="maps"),
 
 
