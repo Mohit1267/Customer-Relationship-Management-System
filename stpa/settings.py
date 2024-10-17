@@ -126,16 +126,16 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 # }
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shanaya',
-        'USER': 'root',
-        'PASSWORD':'mysql',
-        'HOST' : 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'mysql',
+#         'HOST' : 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
  

@@ -1,5 +1,6 @@
 # from typing import Any
 # from django.db.models.query import QuerySet
+import json
 from django.http import JsonResponse
 from django.db.models import Count, OuterRef, Subquery
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,7 +19,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -141,27 +142,35 @@ def Dashboards(request):
         context["yearlymining"] = yearly
 
         return render(request,'sales_tracker/index.html',context)
-    elif(request.user.profile.branch == 'agent'):
+    elif request.user.profile.branch == 'agent':
         context = {}
+        if request.method == 'POST':
+            data = json.loads(request.body)  # Load the JSON data
+            latitude = data.get('latitude')
+            longitude = data.get('longitude')
+            request.session['latitude'] = latitude
+            request.session['longitude'] = longitude
+            context = {
+            "lat": latitude,
+            "long": longitude,
+            }
+        else:
+            latitude = request.session.get('latitude')
+            longitude = request.session.get('longitude')
+        
+        context = {
+            "lat": latitude,
+            "long": longitude,
+            "user": RegisterUser.objects.get(email=request.user.email),
+        }
         now_date_time = datetime.datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-        users = request.user
-        u = RegisterUser.objects.get(email=users)
-        uid = u.id
-        ToCall = MiningData.objects.filter(assigned_to=uid,date = now_date)
-        context["user"] = u
-        context["Tocall"] = ToCall
-        daily = dailyleads(request)
-        monthly = monthlyleads(request)
-        quarterly = quarterlyleads(request)
-        yearlyl = yearlyleads(request)
-        context["daily"] = daily
-        context["yearlyl"] = yearlyl
-        context["monthly"] = monthly
-        context["quarterly"] = quarterly
-
-        print(ToCall, "This is the value of ToCall")
-        return render(request,'sales_tracker/agent.html',context)
+        context["Tocall"] = MiningData.objects.filter(assigned_to=context["user"].id, date=now_date)
+        context["daily"] = dailyleads(request)
+        context["monthly"] = monthlyleads(request)
+        context["quarterly"] = quarterlyleads(request)
+        context["yearlyl"] = yearlyleads(request)
+        return render(request, 'sales_tracker/agent.html', context)
     elif(request.user.profile.branch == 'sales'):
         context = {}
         now_date_time = datetime.datetime.now()
@@ -1522,3 +1531,14 @@ def liveStreaming(request):
     return render(request, "sales_tracker/liveStreaming.html")
 
 
+class AgentMeeting(View):
+    def get(self, request):
+        form = agentmeeting()
+        return render(request, 'sales_tracker/agentmeeting.html', {'form': form})
+
+    def post(self, request):
+        form = agentmeeting(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            form.save()
+        return render(request, 'sales_tracker/agentmeeting.html', {'form': form})

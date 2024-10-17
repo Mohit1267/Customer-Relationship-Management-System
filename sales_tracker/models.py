@@ -187,3 +187,82 @@ class NewPasswords(models.Model):
         help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
     )
 
+
+class Schedule_Meeting(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    duration = models.DurationField()
+    frequency = models.CharField(max_length=100)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    subject = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255)
+    assigned_to = models.CharField(max_length=255)
+    notification = models.CharField(max_length=255)
+    notes = models.CharField(max_length=255)
+    temp = models.CharField(max_length=233, null = True,  blank = True)
+
+
+    def str(self):
+        return f"Schedule from {self.start_date} to {self.end_date}"
+
+class Schedule_Calling(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    duration = models.DurationField()
+    frequency = models.CharField(max_length=100)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    subject = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255)
+    assigned_to = models.CharField(max_length=255)
+    notification = models.CharField(max_length=255)
+    contact= models.IntegerField()
+
+    def _str_(self):
+        return f"Schedule_Calling from {self.start_date} to {self.end_date}"
+    
+
+class Document(models.Model):
+    FILE_TYPES = (
+        ('pdf', 'PDF'),
+        ('doc', 'Word Document'),
+        ('xls', 'Excel Spreadsheet'),
+        # Add other file types here
+    )
+
+    STATUSES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+        ('archived', 'Archived'),
+    )
+
+    CATEGORIES = (
+        ('legal', 'Legal'),
+        ('finance', 'Finance'),
+        ('technical', 'Technical'),
+        # Add other categories here
+    )
+    
+    SUBCATEGORIES = (
+        ('subcat1', 'Subcategory 1'),
+        ('subcat2', 'Subcategory 2'),
+        # Add other subcategories here
+    )
+
+    file_name = models.CharField(max_length=255)
+    document_name = models.CharField(max_length=255)
+    document_type = models.CharField(max_length=10, choices=FILE_TYPES)
+    publish_date = models.DateField(null=True, blank=True)
+    category = models.CharField(max_length=50, choices=CATEGORIES)
+    description = models.TextField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUSES)
+    revision = models.CharField(max_length=10)
+    template = models.CharField(max_length=255, null=True, blank=True)
+    expiration_date = models.DateField(null=True, blank=True)
+    subcategory = models.CharField(max_length=50, choices=SUBCATEGORIES)
+    related_document = models.CharField(max_length=255, null=True, blank=True)
+    assigned_to = models.ForeignKey(RegisterUser, on_delete=models.SET_NULL, null=True)  # Assuming User model for assignee
+
+    def _str_(self):
+        return self.document_name
