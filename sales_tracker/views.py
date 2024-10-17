@@ -17,7 +17,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 # import pymysql
 from django.contrib.auth import get_user_model
-from users.models import Profile, RegisterUser
+from users.models import Profile, RegisterUser, Location
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
@@ -1194,9 +1194,21 @@ class AdminAnalysis(TemplateView):
     
 
 
+# class maps(View):
+#     template_name = "sales_tracker/maps.html"
+#     def get(self,request):
+#         context = {}
+#         latitude = request.session.get('latitude')
+#         longitude = request.session.get('longitude')
+#         context['lat'] = latitude
+#         context['long'] = longitude
+#         return render(request, self.template_name, context)
+    
+
 class maps(View):
     template_name = "sales_tracker/maps.html"
-    def get(self,request):
+    
+    def get(self, request):
         context = {}
         latitude = request.session.get('latitude')
         longitude = request.session.get('longitude')
@@ -1204,8 +1216,20 @@ class maps(View):
         context['long'] = longitude
         return render(request, self.template_name, context)
     
+    def post(self, request):
+        data = json.loads(request.body)
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
 
+        # Save latitude and longitude to session
+        request.session['latitude'] = latitude
+        request.session['longitude'] = longitude
 
+        # Save to the database
+        profile = Profile.objects.get(user=request.user)
+        Location.objects.create(profile=profile, latitude=latitude, longitude=longitude)
+
+        return JsonResponse({'status': 'success'})
 
 def ViewQuote(request):
     pass

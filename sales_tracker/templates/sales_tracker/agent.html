@@ -195,7 +195,7 @@
 
 
 
-<script>
+<!-- <script>
   window.onload = function() {
     const locationButton = document.getElementById('locationButton');
     console.log("Hello");
@@ -240,6 +240,47 @@
         }
     });
 };
+</script> -->
+
+
+
+
+<script>
+  window.onload = function() {
+    const locationButton = document.getElementById('locationButton');
+    
+    locationButton.addEventListener('click', function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                fetch("{% url 'maps' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({
+                        latitude: latitude,
+                        longitude: longitude
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    location.reload(); // Refresh the page after handling the response
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            }, function (error) {
+                console.error("Error getting position:", error);
+            });
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    });
+  };
 </script>
 
 {% endblock %}

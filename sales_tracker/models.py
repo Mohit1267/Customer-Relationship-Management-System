@@ -218,6 +218,8 @@ class Schedule_Calling(models.Model):
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
     contact= models.IntegerField()
+    notes = models.CharField(max_length=255, null = True)
+    reason = models.CharField(max_length=255, null = True)
 
     def _str_(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
