@@ -102,7 +102,7 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">View Contacts</a></li>
+                <li><a class="dropdown-item" href="{% url 'viewcontact' %}">View Contacts</a></li>
               </ul>
             </li>
 
@@ -137,7 +137,7 @@
                   <hr class="dropdown-divider">
 
                 </li>
-                <li><a class="dropdown-item" href="#">Schedule call</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentcalling' %}">Schedule call</a></li>
 
               </ul>
             </li>
@@ -169,12 +169,12 @@
                Accounts
              </a>
              <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Create Account</a>
+              <li><a class="dropdown-item" href="{% url 'agentaccount' %}">Create Account</a>
               </li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">View Account</a></li>
+              <li><a class="dropdown-item" href="{% url 'viewaccount' %}">View Account</a></li>
             </ul>
            </li>
           

@@ -1,10 +1,27 @@
-{% extends "adminbase.html" %} 
-{% load static %} 
-{% block title %}Live Streaming{% endblock %} 
-{% block css_link %} 
-<link rel="stylesheet" href="{% static 'sales_tracker/LeadsActivity.css' %}"> 
-{% endblock %} 
- 
-{% block content %}
+{% extends "adminbase.html" %}
+{% load static %}
+{% block title %}Live Streaming{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/LeadsActivity.css' %}">
+{% endblock %}
 
+{% block content %}
+<div class="container-grid">
+    <div class="small-container">
+        <h3>Container 1</h3>
+        <p>Content for container 1 goes here.</p>
+    </div>
+    <div class="small-container">
+        <h3>Container 2</h3>
+        <p>Content for container 2 goes here.</p>
+    </div>
+    <div class="small-container">
+        <h3>Container 3</h3>
+        <p>Content for container 3 goes here.</p>
+    </div>
+    <div class="small-container">
+        <h3>Container 4</h3>
+        <p>Content for container 4 goes here.</p>
+    </div>
+</div>
 {% endblock %}
