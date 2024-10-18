@@ -1,0 +1,137 @@
+{% extends "agentbase.html" %}
+
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
+{% endblock %}
+
+{% block title %}Data{% endblock %}
+
+{% block content %}
+
+<section class="main_container">
+
+    <div class="filter-container">
+        <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
+        <div id="filterForm" class="filter-form">
+            <div class="form-group">
+                <label for="subject">Name:</label>
+                <input type="text" id="subject" name="subject">
+            </div>
+            <div class="form-group">
+                <label for="contactName">Contact Name:</label>
+                <input type="text" id="contactName" name="contactName">
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value=""> -- Empty -- </option>
+                    <option value="open">Not Started</option>
+                    <option value="closed">In Progress</option>
+                    <option value="open">Completed</option>
+                    <option value="closed">Pending Input</option>
+                    <option value="closed">Deferred</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="relatedTo">Related To:</label>
+                <input type="text" id="relatedTo" name="relatedTo">
+            </div>
+            <div class="form-group">
+                <label for="assignedTo">Assigned To:</label>
+                <input type="text" id="assignedTo" name="assignedTo">
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="clearForm()">Clear</button>
+                <button type="submit">Search</button>
+            </div>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Job title</th>
+                <th>Account Name</th>
+                <th>Email</th>
+                <th>Office Phone</th>
+                <th>User</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in data_list %}
+            <tr>
+                <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
+                
+                {% if data.customer_first_name %}
+                    <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
+                    <td>{{ data.customer_email }}</td>
+                    <td>{{data.customer_mobile_number}}</td>
+                    <td>{{data.city}}</td>
+                    <td>{{data.state}}</td>
+                {% elif data.first_name %}
+                    <td>{{ data.first_name }} {{ data.last_name }}</td>
+                    <td>{{ data.email_id }}</td>
+                    <td>-</td>
+                    <td>-</td>
+                {% elif data.opportunity_name %}
+                    <td>{{ data.opportunity_name }}</td>
+                    <td>-</td>
+                    <td>{{ data.probability }}</td>
+                    <td>{{ data.assigned_to }}</td>
+                {% elif data.title %}
+                    <td>{{ data.title }}</td>
+                    <td>-</td>
+                    <td>{{ data.valid_until }}</td>
+                    <td>{{ data.approval_status }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    </section>
+
+    <script>
+        function toggleFilter() {
+          var filterForm = document.getElementById("filterForm");
+          if (filterForm.style.display === "block") {
+              filterForm.style.display = "none";
+          } else {
+              filterForm.style.display = "block";
+          }
+      }
+      
+      function clearForm() {
+          document.getElementById("subject").value = "";
+          document.getElementById("contactName").value = "";
+          document.getElementById("status").value = "";
+          document.getElementById("relatedTo").value = "";
+          document.getElementById("assignedTo").value = "";
+      }
+
+      function performSearch() {
+    // Collect form data
+    var subject = document.getElementById("subject").value;
+    var contactName = document.getElementById("contactName").value;
+    var status = document.getElementById("status").value;
+    var relatedTo = document.getElementById("relatedTo").value;
+    var assignedTo = document.getElementById("assignedTo").value;
+
+    // Simulate search (this is where you'd add real search functionality, e.g., an API call)
+    var results = "Search results for: \n" +
+                  "Subject: " + subject + "\n" +
+                  "Contact Name: " + contactName + "\n" +
+                  "Status: " + status + "\n" +
+                  "Related To: " + relatedTo + "\n" +
+                  "Assigned To: " + assignedTo;
+
+    // Display search results (you can modify this to display real search results)
+    document.getElementById("searchResults").innerText = results;
+}
+      </script>
+{% endblock %}
+
+{% block javascript %}{% endblock %}

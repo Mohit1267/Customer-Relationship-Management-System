@@ -596,8 +596,6 @@ class ScheduleCallingForm(forms.ModelForm):
         widget=forms.Textarea(attrs={'rows': 3})
     )
 
-    
-
     class Meta:
         model = Schedule_Calling
         fields = [
@@ -606,8 +604,8 @@ class ScheduleCallingForm(forms.ModelForm):
             'notification', 'contact', 'notes', 'reason'
         ]
 
-    def __init__(self, *args, **kwargs):
-        super(ScheduleCallingForm, self).__init__(*args, **kwargs)
+    def _init_(self, *args, **kwargs):
+        super(ScheduleCallingForm, self)._init_(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.layout = Layout(
@@ -630,10 +628,8 @@ class ScheduleCallingForm(forms.ModelForm):
             'contact',
             'notes',
             'reason',
-
             Submit('submit', 'Save')
-
-        )    
+        )
 
         
 

@@ -1756,12 +1756,12 @@ def schedule_calling_create(request):
     if request.method == 'POST':
         form = ScheduleCallingForm(request.POST)
         if form.is_valid():
-
             form.save()
             # return redirect('schedule_calling_list')
     else:
         form = ScheduleCallingForm()
-    return render(request, 'sales_tracker/agentcontact.html', {'form': form})
+    return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
 def ViewScheduledMeeting(request):
     scheduled_meetings = Schedule_Meeting.objects.all()
     return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})
@@ -1784,4 +1784,7 @@ def createNotes(request):
 
 def liveStreaming(request):
     return render(request, "sales_tracker/liveStreaming.html")
+
+def viewcontact(request):
+    return render(request, "sales_tracker/viewcontact.html")
 
