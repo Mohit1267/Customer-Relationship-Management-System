@@ -5,6 +5,8 @@
 
 
 {% block css_link %}
+<link rel="stylesheet" href="{% static 'users/profile.css' %}">
+
 {% endblock %}
 
 
@@ -13,10 +15,8 @@
 
 {% block content %}
 
+<div class="wrapper">
 <div class="container">
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4 mt-3">
       <div class="card">
         <div class="card-header">
           <h2>Profile</h2>
@@ -25,15 +25,62 @@
           <form method="POST">
             {% csrf_token %}
             {{ form|crispy }}
+
+
+            <!-- Voice Recording Section -->
+            <button type="button" id="recordButton" class="btn btn-secondary">Start Recording</button>
+            <button type="button" id="stopButton" class="btn btn-secondary" disabled>Stop Recording</button>
+            <audio id="audioPlayback" controls style="display: none;"></audio> <!-- Hide initially -->
+            <input type="hidden" name="voice_recording" id="voiceRecordingInput">
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
-      </div>
     </div>
   </div>
+</div>
 
 
 
 {% endblock %}
         
-{% block javascript %}{% endblock %}
+{% block javascript %}
+
+<script>
+  let mediaRecorder;
+  let audioChunks = [];
+
+  document.getElementById('recordButton').addEventListener('click', async () => {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.start();
+
+      mediaRecorder.ondataavailable = event => {
+          audioChunks.push(event.data);
+      };
+
+      document.getElementById('stopButton').disabled = false;
+      document.getElementById('recordButton').disabled = true;
+
+      mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audioPlayback = document.getElementById('audioPlayback');
+          audioPlayback.src = audioUrl;
+          audioPlayback.style.display = 'block'; // Show the audio playback controls
+
+          // Convert the Blob to a File object and set it in the hidden input
+          const file = new File([audioBlob], 'voice_recording.wav', { type: 'audio/wav' });
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          document.getElementById('voiceRecordingInput').files = dataTransfer.files;
+      };
+  });
+
+  document.getElementById('stopButton').addEventListener('click', () => {
+      mediaRecorder.stop();
+      document.getElementById('stopButton').disabled = true;
+      document.getElementById('recordButton').disabled = false;
+  });
+</script>
+
+{% endblock %}

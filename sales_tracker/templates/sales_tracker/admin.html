@@ -10,19 +10,136 @@
 
 
 {% block content %}
-<div class="chart-container">
-    <img class="chart1" src="{% static 'admin_attendence.png' %}" alt="Attendance Chart">
-    <img src="{% static 'Time_worked.png' %}" alt="Attendance Chart">
+
+
+<div class="center-content">
+
+   
+  <nav class="navbar-horizontal ">
+      <div class="small-nav">
+    
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    
+            <div class = "inside-filter-container">
+          <form method="GET" action="{% url 'data' %}">
+              <label for="time_frame">Select Time Frame:</label>
+              <select name="time_frame" id="time_frame" >
+                  <option value="all" disabled selected hidden>Select Time Frame</option> 
+                  <option value="today" {% if time_frame == "today" %}selected{% endif %}>Day</option>
+                  <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Week</option>
+                  <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Month</option>
+                  <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Year</option>
+              </select>
+            </div>
+
+
+      <div class="buttons"><button type="submit" class="button1">Apply Filter</button>
+          <button type="reset" class="button1">Clear</button></div>
+          
+      </div>
+      <button style="display: inline;" type="button" class="button profile-button">
+        <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:60px; height: 60px; margin-left: -7px; margin-top: -4px;"  alt="">
+      </button>
+      </nav>
+      <div class="graphBox">
+      <div>{{ attendence_graph|safe }}</div>
+      </div>
+      <!-- <p>{{lat}}</p> -->
+      <!-- <p>{{long}}</p> -->
+
+      <div class="tablebox">
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee_Name</th>
+                    <th>Employee_Id</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Late</th>
+                </tr>
+            </thead>
+            <tbody>
+             
+                <tr>
+                    <td>{{ employee_name }}</td>
+                    <td>{{ employee_id }}</td>
+                    <td>{{ att }}</td>
+                    <td>{{ absent }}</td>
+                    <td>{{ late }}</td>
+                </tr>
+            </tbody>
+        </table>  
+    </div>
 </div>
 
-  <div class="card-container">
-    <div class="card">
-        <p>Attendence : {{ att }}</p>
+
+<div class="offcanvas offcanvas-end"  id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <!-- <h5 class="" id="offcanvasExampleLabel"><b>Profile</b></h5> -->
+   </div>
+
+
+  <div class="offcanvas-body"  id="offcanvasExample">
+    <div class="row p-2">
+      <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
     </div>
-    <div class="card">
-        <p>Late : {{ late }}</p>
+    <div class="row p-2">
+      <a href="#" class=" right_profile" ">Edit Profile</a>
+      </div>
+      <hr>
+      <div class=" row p-2">
+        <a href="#" class=" right_profile"">Employees</a>
+      </div>
+      <div class=" row p-2">
+          <a href="#" class=" right_profile"">Community Forum</a>
+      </div>
+      <div class=" row p-2">
+            <a href="#" class=" right_profile"">About</a>
+      </div>
+      <hr>
+      <div class=" row p-2">
+              <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
     </div>
-  </div>
+    </div>
 </div>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const profileButton = document.querySelector('.profile-button');
+    const offcanvas = document.getElementById('offcanvasExample');
+  
+    
+    profileButton.addEventListener('click', function (e) {
+      e.stopPropagation(); 
+      offcanvas.classList.toggle('show'); 
+    });
+  
+  
+    document.addEventListener('click', function (e) {
+      if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+        offcanvas.classList.remove('show');
+      }
+    });
+  
+
+    document.querySelector('.btn-close').addEventListener('click', function () {
+      offcanvas.classList.remove('show'); 
+    });
+  });
+  
+      </script>
+
+
+<!-- <h1>{{temp}}</h1>
+<h1>{{lat}}</h1>
+
+<h1>{{long}}</h1>
+<div>{{ attendence_graph|safe }}</div> -->
+
 {% endblock %}
 

@@ -20,6 +20,21 @@
     padding: 0;
     margin: 0; /* Reset margin */
 }
+.call-list1 {
+    list-style-type: none; /* Remove bullets */
+    padding: 0;
+    margin: 0; /* Reset margin */
+}
+.call-list2 {
+    list-style-type: none; /* Remove bullets */
+    padding: 0;
+    margin: 0; /* Reset margin */
+}
+.call-list3 {
+    list-style-type: none; /* Remove bullets */
+    padding: 0;
+    margin: 0; /* Reset margin */
+}
 
 /* Style each list item */
 .call-list li {
@@ -41,3 +56,90 @@
     color: #333; /* Dark text color */
     display: block; /* Make the whole list item clickable */
 }
+.call-list1 a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Dark text color */
+    display: block; /* Make the whole list item clickable */
+}
+.call-list2 a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Dark text color */
+    display: block; /* Make the whole list item clickable */
+}
+.call-list3 a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Dark text color */
+    display: block; /* Make the whole list item clickable */
+}
+
+
+
+
+
+
+.call-list1 li {
+    background-color: red; /* Light gray background */
+    margin: 10px 0; /* Space between list items */
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+/* Hover effect for list items */
+.call-list1 li:hover {
+    background-color: rgb(128, 3, 3); /* Darker gray on hover */
+}
+
+/* Style the links */
+.call-list1 a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Dark text color */
+    display: block; /* Make the whole list item clickable */
+}
+
+
+
+
+
+.call-list2 li {
+    background-color: yellow; /* Light gray background */
+    margin: 10px 0; /* Space between list items */
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+/* Hover effect for list items */
+.call-list2 li:hover {
+    background-color: rgb(112, 112, 3); /* Darker gray on hover */
+}
+
+/* Style the links */
+.call-list2 a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Dark text color */
+    display: block; /* Make the whole list item clickable */
+}
+
+
+.call-list3 li {
+    background-color:lightblue; /* Light gray background */
+    margin: 10px 0; /* Space between list items */
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+/* Hover effect for list items */
+.call-list3 li:hover {
+    background-color: rgb(3, 112, 148); /* Darker gray on hover */
+}
+
+/* Style the links */
+.call-list3 a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Dark text color */
+    display: block; /* Make the whole list item clickable */
+}
+
+

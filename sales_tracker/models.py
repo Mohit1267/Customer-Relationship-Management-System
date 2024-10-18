@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import RegisterUser
+from users.models import RegisterUser,Profile
 from django.conf import settings
 
 
@@ -42,6 +42,10 @@ class MiningData(models.Model):
     date = models.DateField()
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1, null = True, blank = True)
     created_by = models.ForeignKey(RegisterUser,on_delete=models.CASCADE, related_name='mining_data',null=True,blank = True)
+    state = models.CharField(max_length=50,default='MP')
+    city = models.CharField(max_length=50,default='Indore')
+    region = models.CharField(max_length=50, default='North')
+
 
     def __str__(self):
         return f"{self.organisation_name}"
@@ -56,23 +60,33 @@ class ContactData(models.Model):
     date = models.DateField(default="2000-10-10")
     organization = models.ForeignKey(MiningData, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
+    created_by = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, related_name='calling_data',default=1)
     # calling_agent = foreign key to agent profile to which call is assigned
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
 
 class LeadsData(models.Model):
+    LEAD_STATUS_CHOICES = [
+        ('HOT', 'Hot'),
+        ('COLD', 'Cold'),
+        ('MILD', 'Mild'),
+    ]
     lead_name = models.CharField( max_length=50)
     first_name = models.CharField( max_length=50)
     last_name = models.CharField( max_length=50)
     email_id = models.EmailField()
-    contact_number = models.IntegerField()
+    contact_number = models.CharField(max_length=15)
     job_title = models.CharField( max_length=50)
     address = models.TextField( )
     date = models.DateField(default="2000-10-10")
     contact_link = models.ForeignKey(ContactData, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
-
+    status = models.CharField(max_length=4, choices=LEAD_STATUS_CHOICES, default='COLD')
+    created_by = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, related_name='leads_by',default=11)
+    remarks = models.TextField( default="nothing" )
+    nextdate = models.DateField(default="2024-11-11")
+    
     def __str__(self):
         return f"{self.lead_name}"
     
@@ -111,7 +125,7 @@ class QuotesData(models.Model):
     opportunity = models.ForeignKey(OpportunityData, on_delete=models.CASCADE)
     quote_stage = models.CharField(max_length=50, choices=(
         ('draft', 'Draft'),
-        ('negotiation', 'Negotiation'),
+        ('negotiation', 'Negotiation'), 
         ('delivered', 'delivered'),
         ('on hold', 'On Hold'),
         ('confirmed', 'Confirmed'),
@@ -140,3 +154,184 @@ class QuotesData(models.Model):
     grandtotal = models.CharField(max_length=50)
     date = models.DateField(default="2000-10-10")
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
+
+    from django.db import models
+
+class Location(models.Model):
+    # Define the fields for the Location model
+    name = models.CharField(max_length=100)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+from django.db import models
+from django.contrib.auth.models import User
+
+
+
+from django.db import models
+
+class Account(models.Model):
+    # Basic Fields
+    name = models.CharField(max_length=100)
+    website = models.URLField(blank=True, null=True)
+    email_address = models.EmailField()
+    
+    # Billing Information
+    billing_address = models.CharField(max_length=255)
+    billing_street = models.CharField(max_length=255)
+    billing_postal_code = models.CharField(max_length=20)
+    billing_city = models.CharField(max_length=100)
+    billing_state = models.CharField(max_length=100)
+    billing_country = models.CharField(max_length=100)
+    
+    # Description
+    description = models.TextField(blank=True, null=True)
+    
+    # Assigned To
+    assigned_to = models.CharField(max_length=100, blank=True, null=True)
+    
+    # Shipping Information
+    shipping_address = models.CharField(max_length=255, blank=True, null=True)
+    shipping_street = models.CharField(max_length=255, blank=True, null=True)
+    shipping_postal_code = models.CharField(max_length=20, blank=True, null=True)
+    shipping_city = models.CharField(max_length=100, blank=True, null=True)
+    shipping_state = models.CharField(max_length=100, blank=True, null=True)
+    shipping_country = models.CharField(max_length=100, blank=True, null=True)
+    
+    # Account Detail
+    type = models.CharField(max_length=50,choices=(
+        ('option1', 'Option 1'),
+        ('option2', 'Option 2'),
+        ('option3', 'Option 3'),
+    ))
+
+    annual_revenue = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    member_of = models.CharField(max_length=100, blank=True, null=True)
+    campaign = models.CharField(max_length=100, blank=True, null=True)
+    industry = models.CharField(max_length=100, blank=True, null=True)
+    employees = models.IntegerField(blank=True, null=True)
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+from django.db import models
+from django.core.validators import RegexValidator
+
+password_regex = RegexValidator(
+     regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+ 
+    message="Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
+)
+
+class NewPasswords(models.Model):
+    Minor_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )
+ 
+    Sales_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )
+
+    Admin_password = models.CharField(
+        max_length=128,
+        validators=[password_regex],
+        help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
+    )
+
+
+
+ 
+class Schedule_Meeting(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    duration = models.DurationField()
+    frequency = models.CharField(max_length=100)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    subject = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255)
+    assigned_to = models.CharField(max_length=255)
+    notification = models.CharField(max_length=255)
+    notes = models.CharField(max_length=255, null = True)
+    temp = models.CharField(max_length=233, null = True,  blank = True)
+
+
+    def str(self):
+        return f"Schedule from {self.start_date} to {self.end_date}"
+
+class Schedule_Calling(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    duration = models.DurationField()
+    frequency = models.CharField(max_length=100)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    subject = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255)
+    assigned_to = models.CharField(max_length=255)
+    notification = models.CharField(max_length=255)
+    contact= models.IntegerField()
+    notes = models.CharField(max_length=255, null = True)
+    reason = models.CharField(max_length=255, null = True)
+
+    def str(self):
+        return f"Schedule_Calling from {self.start_date} to {self.end_date}"
+    
+
+class Document(models.Model):
+    FILE_TYPES = (
+        ('pdf', 'PDF'),
+        ('doc', 'Word Document'),
+        ('xls', 'Excel Spreadsheet'),
+        # Add other file types here
+    )
+
+    STATUSES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+        ('archived', 'Archived'),
+    )
+
+    CATEGORIES = (
+        ('legal', 'Legal'),
+        ('finance', 'Finance'),
+        ('technical', 'Technical'),
+        # Add other categories here
+    )
+    
+    SUBCATEGORIES = (
+        ('subcat1', 'Subcategory 1'),
+        ('subcat2', 'Subcategory 2'),
+        # Add other subcategories here
+    )
+
+    file_name = models.CharField(max_length=255)
+    document_name = models.CharField(max_length=255)
+    document_type = models.CharField(max_length=10, choices=FILE_TYPES)
+    publish_date = models.DateField(null=True, blank=True)
+    category = models.CharField(max_length=50, choices=CATEGORIES)
+    description = models.TextField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUSES)
+    revision = models.CharField(max_length=10)
+    template = models.CharField(max_length=255, null=True, blank=True)
+    expiration_date = models.DateField(null=True, blank=True)
+    subcategory = models.CharField(max_length=50, choices=SUBCATEGORIES)
+    related_document = models.CharField(max_length=255, null=True, blank=True)
+    assigned_to = models.ForeignKey(RegisterUser, on_delete=models.SET_NULL, null=True)  # Assuming User model for assignee
+
+    def _str_(self):
+        return self.document_name
+    notes = models.CharField(max_length=255,  null=True, blank=True)
+
+    reason = models.CharField(max_length=255,  null=True, blank=True)
+
+    
+    def __str__(self):
+        return f"Schedule_Calling from {self.start_date} to {self.end_date}"

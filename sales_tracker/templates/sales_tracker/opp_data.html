@@ -1,0 +1,134 @@
+{% extends "agentbase.html" %}
+
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/temp.css' %}">
+{% endblock %}
+
+{% block title %}Data{% endblock %}
+
+{% block content %}
+
+<!-- <h1>DATA SHOWCASE</h1> -->
+
+<!-- Horizontal Navbar -->
+<nav class="navbar-horizontal ">
+    <div class="small-nav">
+      
+      <!-- Search Bar Form -->
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+      <!-- Filter Bar (added between search and profile) -->
+      <div class = "inside-filter-container">
+        <form method="GET" action="{% url 'opp_data' %}">
+            <label for="time_frame">Select Time Frame:</label>
+            <select name="time_frame" id="time_frame" onchange="this.form.submit()">
+                <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
+                <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
+                <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
+                <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
+                <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
+                <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
+            </select>
+        </div>
+
+        
+        
+        <div class="state-filter-container">
+          <label for="state-filter">State:</label>
+          <select name="state" id="state-filter" onchange=" this.form.submit()">
+              <option value="all" disabled selected hidden>Select State</option>
+              <option value="AP">Andhra Pradesh</option>
+              <option value="AR">Arunachal Pradesh</option>
+              <option value="AS">Assam</option>
+              <option value="BR">Bihar</option>
+              <option value="CG">Chhattisgarh</option>
+              <option value="GA">Goa</option>
+              <option value="GJ">Gujarat</option>
+              <option value="HR">Haryana</option>
+              <option value="HP">Himachal Pradesh</option>
+              <option value="JH">Jharkhand</option>
+              <option value="KA">Karnataka</option>
+              <option value="KL">Kerala</option>
+              <option value="MP">Madhya Pradesh</option>
+              <option value="MH">Maharashtra</option>
+              <option value="MN">Manipur</option>
+              <option value="ML">Meghalaya</option>
+              <option value="MZ">Mizoram</option>
+              <option value="NL">Nagaland</option>
+              <option value="OD">Odisha</option>
+              <option value="PB">Punjab</option>
+              <option value="SK">Sikkim</option>
+              <option value="TN">Tamil Nadu</option>
+              <option value="TG">Telangana</option>
+              <option value="TR">Tripura</option>
+              <option value="UP">Uttar Pradesh</option>
+              <option value="UT">Uttarakhand</option>
+              <option value="WB">West Bengal</option>
+
+            </select>
+        </div>
+        
+        
+        <!-- Zone Filter -->
+        <div class="zone-filter-container">
+            <label for="zone-filter">Zone:</label>
+            <select name="zone" id="zone-filter" onchange="this.form.submit()">
+                <option value="all" disabled selected hidden>Select Zone</option>
+                <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
+                <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
+                <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
+                <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
+            </select>
+        </div>
+
+        
+    </form>
+        
+     
+  </nav>
+
+<section class="main_container">
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Organsation Name</th>
+            <th>Client Name</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Company Revenue</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for data in data_list %}
+        <tr>
+            <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
+            {% if data.opportunity_name %}
+                <td>{{ data.opportunity_name }}</td>
+                <td>-</td>
+                <td>{{ data.probability }}</td>
+                <td>{{ data.assigned_to }}</td>
+            {% elif data.title %}
+                <td>{{ data.title }}</td>
+                <td>-</td>
+                <td>{{ data.valid_until }}</td>
+                <td>{{ data.approval_status }}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</section>
+
+
+
+{% endblock %}
+
+{% block javascript %}{% endblock %}
+

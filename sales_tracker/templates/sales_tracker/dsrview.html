@@ -1,0 +1,64 @@
+{% extends "agentbase.html" %}
+{% load static %}
+{% block title %}Daily Sales Report Table{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/dsrview.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="containers">
+    
+    <div class="headingDiv">
+        <h1>Daily Sales Report</h1>
+    </div>
+
+    <section class="main_container">
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Name</th>
+                    <th>Item Name</th>
+                    <th>Total</th>
+                    <!-- <th>State</th> -->
+                </tr>
+            </thead>
+            <tbody>
+            <!-- {% for data in data_list %} -->
+                <tr>
+                    <!-- <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td> -->
+                    
+                    <!-- {% if data.customer_first_name %} -->
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    <!-- {% elif data.first_name %} -->
+                        <td>{{ data.first_name }} {{ data.last_name }}</td>
+                        <td>{{ data.email_id }}</td>
+                        <td>-</td>
+                        <td>-</td>
+                    <!-- {% elif data.opportunity_name %} -->
+                        <td>{{ data.opportunity_name }}</td>
+                        <td>-</td>
+                        <td>{{ data.probability }}</td>
+                        <td>{{ data.assigned_to }}</td>
+                    <!-- {% elif data.title %} -->
+                        <td>{{ data.title }}</td>
+                        <td>-</td>
+                        <td>{{ data.valid_until }}</td>
+                        <td>{{ data.approval_status }}</td>
+                    <!-- {% endif %} -->
+                </tr>
+            <!-- {% endfor %} -->
+            </tbody>
+        </table>
+        
+        </section>
+</div>
+{% endblock %}
+

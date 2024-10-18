@@ -1,0 +1,34 @@
+{% extends "innerbase.html" %}
+
+{% load static %}
+
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/detail.css' %}"> 
+{% endblock %}
+
+{% block title %}Web Call{% endblock  %}
+
+
+{% block content %}
+
+<h1>{{ mining_data.organisation_name | upper}}</h1>
+
+{% include "include/dash.html" %}
+
+<section>
+    <div class = "client">
+        <h2>Client Details</h2>
+        <p><strong>Name :</strong> {{ leads_data.first_name }} {{ mining_data.last_name }}</p>
+        <p><strong>Email :</strong> {{ leads_data.email_id }}</p>
+        <p><strong>Contact NO. :</strong> {{ leads_data.contact_number }}</p>
+        <p><strong>Address :</strong> {{ leads_data.address }}</p>
+        <p><strong>Address :</strong> {{ leads_data.status }}</p>
+        </div>
+
+    <hr>
+</section>
+
+{% endblock %}
+        
+{% block javascript %}{% endblock %}

@@ -8,39 +8,79 @@
 {% endblock %}
 
 
-{% block title %}Detail{% endblock  %}
-
+{% comment %} {% block title %}Detail{% endblock %} {% endcomment %}
 
 {% block content %}
+{% comment %} <h1>{{ detail.organisation_name | upper}}</h1> {% endcomment %}
 
-<h1>{{ detail.organisation_name | upper}}</h1>
-
-{% include "include/dash.html" %}
+{% comment %} {% include "include/dash.html" %} {% endcomment %}
 
 <section>
-    <div class = "client">
-        <h2>Client Details</h2>
-        <p><strong>Name :</strong> {{ detail.customer_first_name }} {{ detail.clinet_last_name }}</p>
-        <p><strong>Email :</strong> {{ detail.customer_email }}</p>
-        <p><strong>Contact NO. :</strong> {{ detail.customer_contact_number }}</p>
-        <p><strong>Mobile No. :</strong> {{ detail.customer_mobile_number }}</p>
-        <p><strong>Address :</strong> {{ detail.customer_address }}</p>
-        </div>
-
-    <hr>
-    <div class = "info">
-    <p><strong>Company Revenue :</strong> {{ detail.company_revenue }}</p>
-    <p><strong>Company Employee Size :</strong> {{ detail.company_emp_size }}</p>
-    <p><strong>competition of AT :</strong> {{ detail.competition_of_AT }}</p>
-    <p><strong>Stock Market Registered :</strong> {{ detail.stock_market_registered }}</p>
-    <p><strong>IT spending Budget :</strong> {{ detail.IT_spending_budget }}</p>
-    <p><strong>Source of Data :</strong> {{ detail.source_of_data_mining }}</p>
-    <p><strong>Influncer :</strong> {{ detail.influncer }}</p>
-    <p><strong>Desition Maker :</strong> {{ detail.desition_maker }}</p>
-    <p><strong>asigned_to :</strong> {{ detail.assigned_to }}</p>
-    </div>
+    <h2>Client Details</h2>
+    <table class="client-details-table">
+        <tr>
+            <td><strong>Name:</strong></td>
+            <td>{{ detail.customer_first_name }} {{ detail.clinet_last_name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Email:</strong></td>
+            <td>{{ detail.customer_email }}</td>
+        </tr>
+        <tr>
+            <td><strong>Contact No.:</strong></td>
+            <td>{{ detail.customer_contact_number }}</td>
+        </tr>
+        <tr>
+            <td><strong>Mobile No.:</strong></td>
+            <td>{{ detail.customer_mobile_number }}</td>
+        </tr>
+        <tr>
+            <td><strong>Address:</strong></td>
+            <td>{{ detail.customer_address }}</td>
+        </tr>
+        <tr>
+            <td><strong>Company Revenue:</strong></td>
+            <td>{{ detail.company_revenue }}</td>
+        </tr>
+        <tr>
+            <td><strong>Company Employee Size:</strong></td>
+            <td>{{ detail.company_emp_size }}</td>
+        </tr>
+        <tr>
+            <td><strong>Competition of AT:</strong></td>
+            <td>{{ detail.competition_of_AT }}</td>
+        </tr>
+        <tr>
+            <td><strong>Stock Market Registered:</strong></td>
+            <td>{{ detail.stock_market_registered }}</td>
+        </tr>
+        <tr>
+            <td><strong>IT Spending Budget:</strong></td>
+            <td>{{ detail.IT_spending_budget }}</td>
+        </tr>
+        <tr>
+            <td><strong>Source of Data:</strong></td>
+            <td>{{ detail.source_of_data_mining }}</td>
+        </tr>
+        <tr>
+            <td><strong>Influencer:</strong></td>
+            <td>{{ detail.influncer }}</td>
+        </tr>
+        <tr>
+            <td><strong>Decision Maker:</strong></td>
+            <td>{{ detail.desition_maker }}</td>
+        </tr>
+        <tr>
+            <td><strong>Assigned To:</strong></td>
+            <td>{{ detail.assigned_to }}</td>
+        </tr>
+        <tr>
+            <td><strong>State:</strong></td>
+            <td>{{ detail.state }}</td>
+        </tr>
+    </table>
 </section>
 
 {% endblock %}
-        
+
 {% block javascript %}{% endblock %}

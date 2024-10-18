@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Device List</title>
+</head>
+<body>
+    <h1>Device List</h1>
+    <table>
+        <tr>
+            <th>IP Address</th>
+            <th>Uptime</th>
+            <th>Downtime</th>
+            <th>Last Check</th>
+            <th>Is Active</th>
+        </tr>
+        {% for device in devices %}
+        <tr>
+            <td>{{ device.ip_address }}</td>
+            <td>{{ device.uptime }}</td>
+            <td>{{ device.downtime }}</td>
+            <td>{{ device.last_check }}</td>
+            <td>{{ device.is_active }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

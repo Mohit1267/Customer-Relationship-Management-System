@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegisterForm, ProfileForm, LoginForm, CallingDetailsForm
-from .models import Profile, CallingDetail, AttendanceRecord
+from .models import Profile, CallingDetail, AttendanceRecord, UpdownTime
 from django.contrib.auth.decorators import login_required
 from users.models import Profile
 from django.views.generic.base import TemplateView
@@ -21,7 +21,11 @@ from django.contrib.auth import authenticate, login
 from django.utils import timezone
 import datetime
 from sales_tracker.analysis import generate_bar_chart, TotalDays
-from sales_tracker.admin_analysis import admin_attendence_graph
+from datetime import time
+from datetime import timedelta
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+# from sales_tracker.admin_analysis import admin_attendence_graph
 
 # MY CODE 
 
@@ -60,6 +64,24 @@ def profile(request):
         form = ProfileForm()
     return render(request, "users/profile.html", {"form":form})
 
+# def profile(request):
+#     if request.method == "POST":
+#         form = ProfileForm(request.POST, request.FILES)  # Include request.FILES to handle file uploads
+#         if form.is_valid():
+#             user = request.user
+#             profile, created = Profile.objects.get_or_create(user=user)
+
+#             # Update the profile fields
+#             profile.emp_id = form.cleaned_data['emp_id']
+#             profile.dob = form.cleaned_data['dob']
+#             profile.branch = form.cleaned_data['branch']
+#             profile.voice_sample = form.cleaned_data['voice_recording']  # Save the audio file
+#             profile.save()  # Save the profile
+
+#             return redirect("index")
+#     else:
+#         form = ProfileForm()
+#     return render(request, "users/profile.html", {"form": form})
 
 @login_required
 def detail_profile(request):
@@ -119,22 +141,44 @@ def Reason(request):
     user = request.user
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
-    elapsed_time_in_sec = int(elapsed_time[0])*60*60 + int(elapsed_time[1])*60 + int(elapsed_time[2])
+    elapsed_time_in_sec = int(elapsed_time[0]) * 60 * 60 + int(elapsed_time[1]) * 60 + int(elapsed_time[2])
+
     if request.method == "POST":
         current_datetime = timezone.localtime()
         current_time = current_datetime.strftime('%H:%M:%S')
         now_date_time = datetime.datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         print("Current Time:", current_time)
+
         existing_record = AttendanceRecord.objects.filter(user=user, date=now_date).first()
+        existing_updown_time = UpdownTime.objects.filter(user=user, date=now_date).first()
+
+        if existing_updown_time:
+            existing_updown_time.check_out_time = current_time
+
+            # Calculate uptime
+            if existing_updown_time.check_in_time:
+                last_checkin = timezone.datetime.combine(existing_updown_time.date, existing_updown_time.check_in_time)
+                last_checkin = timezone.make_aware(last_checkin)  # Make it aware
+                current_uptime = current_datetime - last_checkin
+                print("this is current uptime",current_uptime)
+                if existing_updown_time.uptime:
+                    existing_updown_time.uptime += current_uptime  # Cumulative uptime
+                else:
+                    existing_updown_time.uptime = current_uptime
+
+                existing_updown_time.save()  # Save changes to database
+
         if existing_record:
             # Update the check_out_time with the current time
             existing_record.check_out_time = current_time
             existing_record.save()
+
         reason = request.POST.get("reason_form")
         password = "axzf ekbv uawt rugt"
         print("check")
         print(user)
+
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587
         sender_email = 'pjisvgreat@gmail.com'
@@ -146,6 +190,7 @@ def Reason(request):
         message['To'] = receiver_email
         message['Subject'] = subject
         message.attach(MIMEText(full_message, 'html'))      
+
         try:
             server = smtplib.SMTP(smtp_server, smtp_port)
             server.starttls()  
@@ -156,12 +201,12 @@ def Reason(request):
             messages.error(request, f"Error sending email: {e}")
         finally:
             server.quit()
-        user_profile = Profile.objects.get(user = user.id)
+
+        user_profile = Profile.objects.get(user=user.id)
         user_profile.can_logout = False
         user_profile.save()
         logout(request)
         return redirect("login")
-
 
 
 def Mining_ct(user):
@@ -172,6 +217,8 @@ def Mining_ct(user):
     return today_mining_count
     
 def Logout(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     context = {}
     user = request.user
     utc_login_time = user.last_login
@@ -194,6 +241,11 @@ def Logout(request):
      
 from django.contrib.auth import authenticate, login
     
+
+
+
+
+
 def manual_login(request):
     error_message = None
     if request.method == 'POST':
@@ -201,6 +253,8 @@ def manual_login(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            latitude = request.POST.get('latitude') 
+            longitude = request.POST.get('longitude')
 
             # Implement secure user authentication logic using username and password
             # ...
@@ -215,20 +269,51 @@ def manual_login(request):
                 except:
                     login(request, user)
                     return redirect("profile")
-                if user_profile.can_login:
+                if user_profile.can_login:  
                     login(request, user)
+                    # request.latitude = latitude
+                    # request.longitude = longitude
+                    request.session['latitude'] = latitude
+                    request.session['longitude'] = longitude
                     generate_bar_chart(request)
-                    admin_attendence_graph()
+                    # admin_attendence_graph()
                     # print(timezone.now().time())
                     current_date = timezone.now().date()
                     Nuser = request.user.id
                     current_datetime = timezone.now()
                     current_date = current_datetime.date()
                     current_time = current_datetime.time()
-                    now = datetime.datetime.now()
+                    # now = datetime.datetime.now()
                     # print("Current Time:", now.time())
                     current_datetime = timezone.localtime()
-                    current_time = current_datetime.strftime('%H:%M:%S')
+                    current_time_str = current_datetime.strftime('%H:%M:%S')
+                    current_time = datetime.datetime.strptime(current_time_str, '%H:%M:%S').time()
+
+    
+
+                    #Attendence Rules
+                    # allowerd_grace_time = timezone.datetime.combine(current_date, timezone.time(9,15)).time()
+                    on_time = time(9, 0)
+                    grace_time = time(9, 15)
+                    cutoff_time = time(14, 10)
+                    if current_time<=on_time:
+                        status = 'Present'
+                    elif on_time<current_time<=grace_time:
+                        start_of_week = current_date - timedelta(days=current_date.weekday())  # Monday of current week
+                        late_entries_count = AttendanceRecord.objects.filter(
+                            user=user, 
+                            date__gte=start_of_week,
+                            date__lte=current_date,
+                            status='Late'
+                        ).count()
+                        if late_entries_count < 2:
+                            status = 'Present'
+                        else:
+                            status = 'Late'
+                    elif current_time > cutoff_time:
+                        status = 'Absent'
+                    else:
+                        status = 'Late'
                     print("Current Time:", current_time)
                     existing_record = AttendanceRecord.objects.filter(user=user, date=current_date).first()
                     if not existing_record:
@@ -236,17 +321,39 @@ def manual_login(request):
                             user=user,
                             date=current_date,
                             check_in_time=current_time,
-                            status='Present'
+                            status=status
                         )
+                    updown_time, created = UpdownTime.objects.get_or_create(
+                        user=user,
+                        date=current_date
+                    )
+
+                    # Update check-in time
+                    updown_time.check_in_time = current_time
+
+                    if updown_time.check_out_time:
+                        last_checkout = timezone.datetime.combine(updown_time.date, updown_time.check_out_time)
+                        last_checkout = timezone.make_aware(last_checkout)  # Make it aware
+                        downtime = current_datetime - last_checkout
+                        print("this is downtime",downtime)
+                        if updown_time.downtime:
+                            updown_time.downtime += downtime  # Cumulative downtime
+                        else:
+                            updown_time.downtime = downtime
+                    updown_time.save()
+
+             
                     print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
                     print(Nuser)
-                    if user_profile.branch == "admin":
+                    
+                    return redirect("Dashboards")
+                    # if user_profile.branch == "admin":
                         
-                        return redirect("adminn")
-                    elif user_profile.branch == "miner":
-                        return redirect("index")
-                    elif user_profile.branch == "agent":
-                        return redirect("agent")
+                    #     return redirect("adminn")
+                    # elif user_profile.branch == "miner":
+                    #     return redirect("index")
+                    # elif user_profile.branch == "agent":
+                    #     return redirect("agent")
 
                 else:
                     error_message = 'Your access is denied, Please contact Admin for access'
@@ -328,3 +435,26 @@ def some_view(request):
     finally:
         server.quit()
     return render(request, 'users/login.html')
+
+
+
+@login_required
+def heartbeat(request):
+    return JsonResponse({"status": "alive"})
+
+
+# def get_stored_voice_path(user):
+#     user_profile = Profile.objects.get(user=user)
+#     return user_profile.voice_file_path.path if user_profile.voice_file_path else None
+# myapp/views.py
+
+from django.shortcuts import render
+from .models import UserActivity
+
+
+
+from django.shortcuts import render
+
+def device_list(request):
+    devices = UserActivity.objects.all()
+    return render(request, 'device_list.html', {'devices': devices})

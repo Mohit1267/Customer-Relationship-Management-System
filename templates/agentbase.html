@@ -2,327 +2,409 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {% block css_link %}{% endblock %} 
 
-    <link rel="stylesheet" href="{% static 'base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/datatables/datatables.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/datatables/datatables.css' %}">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1 " />
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}title{% endblock %}</title>
+  {% block css_link %}{% endblock %}
 
-    <!-- navbar to the right side -->
-    <style>
-      body {
-          margin: 0;
-          font-family: Arial, sans-serif;
-          display: flex;
-          background-color: #f9f9f9;
-      }
-
-      .navbar-container{
-        margin-top: -20px;
-        
-      }
-
-      .navbar {
-          height: 100vh; /* Full height */
-          width: 200px; /* Width of the navbar */
-          position: fixed; /* Fixes the navbar to the left of the screen */
-          top: 0;
-          left: 0;
-          background-color: #333; /* Background color of the navbar */
-          padding-top: 20px;
-          display: flex;
-          flex-direction: column;
-          color: white;
-      }
-
-      .navbar-brand-container {
-          text-align: center;
-          padding-bottom: 20px;
-      }
-
-      .navbar-nav {
-          list-style-type: none;
-          padding-left: 0;
-          margin: 0;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-      }
-
-      .navbar-nav .nav-item {
-          width: 100%;
-      }
-
-      .navbar-nav .nav-link {
-          display: block;
-          padding: 15px 25px;
-          color: white;
-          text-decoration: none;
-          transition: background-color 0.3s ease;
-      }
-
-      .navbar-nav .nav-link:hover {
-          background-color: #575757;
-      }
-
-      .content {
-          margin-left: 200px; /* Pushes the content to the right by the width of the navbar */
-          padding: 20px;
-          flex-grow: 1;
-      }
-  </style>
+  <link rel="stylesheet" href="{% static 'base1.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+  <link href="dist/hamburgers.css" rel="stylesheet">
 
 
+  <title>{% block title %}title{% endblock %}</title>
 
-  </head>
-  <body>
-    <script src="charts.js"></script>
-    <!-- navbar to the right side -->
-    <div class="navbar-container">
-    <nav class="navbar  navbar-expand-lg">
-      <div class="navbar-brand-container"> 
+</head>
 
-        <!-- <a class="navbar-brand" href="/">Logo</a> -->
-        <a href="{% url 'index' %}">
-    <img src="static/Logo.png" alt="Brand Image" style="height: 40px;">
-        </a>
-      </div>
+<body>
 
-        
-        <!-- timer  -->
-        <!-- <div>
-          {% if timer %}
-            <span id="count_down" class="nav-link px-2">00:00:00</span>
-          {% endif %}
-        </div>
-        <-- profile offcanvas -->
-        <!-- <div>
-          <a class="btn btn-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-            Profile
-          </a>
-        </div> -->
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav flex-column dropdown-menu-right">
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Mining
-              </a>
+  <script src="charts.js"></script>
+  <!-- navbar to the right side -->
 
-              
-              <ul class="dropdown-menu ">   
-                <li><a class="dropdown-item" href="{% url 'mining' %}">Create Mining</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'data' %}">View Mining</a></li>
-              </ul>
-            </li> -->
-            <div>
-              {% if timer %}
-                <span id="count_down" class="nav-link px-2">00:00:00</span>
-              {% endif %}
-            </div>
-            <!-- profile offcanvas -->
-            <div>
-              <a class="btn btn-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                Profile
-              </a>
-            </div>
+   <nav class="navbar  navbar-expand-lg">
+
+    <div class="navbar-brand-container">
+      <a href="{% url 'Dashboards'%}">
+        <img class="navbar-brand " src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image" style="height: 65px; ; ">
+      </a>
+
+      <!-- <a class="btn btn-light profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+      aria-controls="offcanvasExample">
+      <b>Profile</b>
+      </a> -->
+    </div>
+  
+      <div class="navbar-container" >
+ 
+        <div class="" id="navbarNavDropdown">
+          <ul class="nav-links flex-column">
+
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Contacts
+
+              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false">
+                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard logo"  style=" margin-left: -10px; height: 40px;">
+
+               Dashboard
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_contact' %}">Create Contacts</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">View Contacts</a></li>
-              </ul>
             </li>
+
+            
+            <li class="nav-item dropdown dashboard-icon">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         
+               <img src="https://i.ibb.co/jTpW1Hk/datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
+
+               Mining
+             </a>
+             <ul class="dropdown-menu ">
+               <li><a class="dropdown-item" href="{% url 'agentmining' %}">View Mining</a></li>
+             </ul>
+           </li>
+         
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+
+                <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
+
                 Leads
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'agentlead' %}">Create Leads</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
               </ul>
             </li>
+
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Opportunities
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+
+                <img src="https://i.ibb.co/8cQkyWh/contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
+
+                Contacts
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentcontact' %}">Create Contacts</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">View Contacts</a></li>
               </ul>
             </li>
+
+
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+
+                <img src="https://i.ibb.co/c3sNstd/quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
+
                 Quotes
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">View Quote</a></li>
+                <li><a class="dropdown-item" href="{% url 'agentquote' %}">Create Quote</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="quotes_data">View Quote</a></li>
               </ul>
             </li>
+
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Calender
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+
+                <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
+
+                Calendar
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'agentmeeting' %}">Schedule Meeting</a></li>
+                  <hr class="dropdown-divider">
+
+                </li>
                 <li><a class="dropdown-item" href="#">Schedule call</a></li>
+
               </ul>
             </li>
-          </ul>
+
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
+
+                <img src="https://i.ibb.co/xF1RTTQ/opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
+
+                Opportunity
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'agentopportunity' %}">Create Opportunity</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
+              </ul>
+            </li>
+            
+             
+            <li class="nav-item dropdown dashboard-icon">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         
+               <img src="https://i.ibb.co/0Cj2QwN/accountlogo.png"  alt="Account Logo" style=" margin-right: 5px; height: 35px; ">
+
+               Accounts
+             </a>
+             <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Create Account</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">View Account</a></li>
+            </ul>
+           </li>
+          
+
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
+ 
+                <img src="https://i.ibb.co/r5n97Vx/DSR-icon.png" alt="DSRLogo" style="margin-right: 5px;">
+                DSR
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'agentDsr' %}">Create DSR</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'dsrview' %}">View DSR</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
+ 
+                <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+                Task
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Create Task</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">View Task</a></li>
+              </ul>
+            </li>
         </div>
-        
+
+  </nav>
+
+
+  {% block content %}{% endblock %}
+  <!-- <div class="offcanvas offcanvas-end"  " id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="profile1 offcanvas-header">
+      <h5 class="" id="offcanvasExampleLabel"><b>Profile</b></h5>
+     </div>
+
+
+    <div class="offcanvas-body"  id="offcanvasExample">
+      <div class="row p-2">
+        <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
       </div>
-    </nav>
-    {% block content %}{% endblock %}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Profile</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body ">
-        <div class="row p-2">
-          <a href="{% url 'detail_profile' %}" class="text-decoration-none">View Profile</a>
-        </div>
-        <div class="row p-2">
-          <a href="#" class="text-decoration-none">Edit Profile</a>
+      <div class="row p-2">
+        <a href="#" class=" right_profile" ">Edit Profile</a>
         </div>
         <hr>
-        <div class="row p-2">
-          <a href="#" class="text-decoration-none">Employees</a>
+        <div class=" row p-2">
+          <a href="#" class=" right_profile"">Employees</a>
         </div>
-        <div class="row p-2">
-          <a href="#" class="text-decoration-none">Community Forum</a>
+        <div class=" row p-2">
+            <a href="#" class=" right_profile"">Community Forum</a>
         </div>
-        <div class="row p-2">
-          <a href="#" class="text-decoration-none">About</a>
+        <div class=" row p-2">
+              <a href="#" class=" right_profile"">About</a>
         </div>
         <hr>
-        <div class="row p-2">
-          <a href = "{% url 'logout'%}"  class="text-decoration-none">logoutttt</a>
-        </div>
+        <div class=" row p-2">
+                <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
       </div>
+      </div>
+  </div> -->
 
-    {%comment%}
-    {% if timer %}
-    <div class="timer_count">
-      <p>Timer: <span id="count_down">00:00:00</span></p>
-
-      <p>No of Mining: {{mining_count}}</p>
-    </div>
-    {% endif %}
-    {%endcomment%}
-
-   
-  
+<!-- profile section-->
     <script>
-          // Weekly Data Chart
-    var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
-    var weeklyChart = new Chart(ctxWeekly, {
-        type: 'doughnut',
-        data: {
-            labels: ['Completed', 'Remaining'],
-            datasets: [{
-                label: 'Weekly Data',
-                data: [parseInt('{{ mining_count }}'), 40 - parseInt('{{ mining_count }}')],
-                backgroundColor: ['#4CAF50', '#e0e0e0'],
-                borderColor: ['#4CAF50', '#e0e0e0'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            cutout: '70%',
-        }
-    });
+document.addEventListener('DOMContentLoaded', function () {
+  const profileButton = document.querySelector('.profile1');
+  const offcanvas = document.getElementById('offcanvasExample');
 
-    // Monthly Data Chart
-    var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
-    var monthlyChart = new Chart(ctxMonthly, {
-        type: 'doughnut',
-        data: {
-            labels: ['Completed', 'Remaining'],
-            datasets: [{
-                label: 'Monthly Data',
-                data: [{{ mining_count }}, 100 - {{ mining_count }}],
-                backgroundColor: ['#4CAF50', '#e0e0e0'],
-                borderColor: ['#4CAF50', '#e0e0e0'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            cutout: '70%',
-        }
-    });
+  
+  profileButton.addEventListener('click', function (e) {
+    e.stopPropagation();
+    offcanvas.classList.toggle('show');
+  });
 
-    // Quarterly Data Chart
-    var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
-    var quarterlyChart = new Chart(ctxQuarterly, {
-        type: 'doughnut',
-        data: {
-            labels: ['Completed', 'Remaining'],
-            datasets: [{
-                label: 'Quarterly Data',
-                data: [{{ mining_count }}, 300 - {{ mining_count }}],
-                backgroundColor: ['#4CAF50', '#e0e0e0'],
-                borderColor: ['#4CAF50', '#e0e0e0'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            cutout: '70%',
-        }
-    });
+  
+  document.addEventListener('click', function (e) {
+    if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+      offcanvas.classList.remove('show');
+    }
+  });
 
+  
+  document.querySelector('.btn-close').addEventListener('click', function () {
+    offcanvas.classList.remove('show');
+  });
+});
 
-      let totalSeconds = {{timer.hrs}}*60*60 + {{timer.min}}*60 + {{timer.sec}}
-
-      const countDownEle = document.getElementById("count_down")
-
-      function convertSecondsToHms(seconds) {
-          const hours = Math.floor(seconds / 3600);
-          const minutes = Math.floor((seconds % 3600) / 60);
-          const sec = Math.floor(seconds % 60);
-
-          // Add leading zeros for hours and minutes if needed
-          const formattedHours = hours.toString().padStart(2, "0");
-          const formattedMinutes = minutes.toString().padStart(2, "0");
-          const formattedSeconds = sec.toString().padStart(2, "0");
-
-          return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-        }
-
-      function updateCountDown() {
-
-          let formatedTimer = convertSecondsToHms(totalSeconds)
-
-          countDownEle.innerHTML = formatedTimer
-          totalSeconds++;
-      }
-
-      setInterval(updateCountDown, 1000);
     </script>
+
+    <script>
+      
+      function toggleNavbar() {
+        const navbar = document.querySelector('.nav-links');
+        navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
+      }
+    </script>
+
+     <script>
+      function toggleNavbar() {
+        const navbarContainer = document.querySelector('.navbar-container');
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('.hamburger');
+
+        
+        navbar.classList.toggle('collapsed');
+
+       
+
+        
+        if (navbarContainer.style.display === 'block') {
+          navbarContainer.style.display = 'none';
+        } else {
+          navbarContainer.style.display = 'block';
+        }
+      }
+    </script>
+ 
+
+    <script>
+
+      var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+      var weeklyChart = new Chart(ctxWeekly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
+            label: 'Weekly Data',
+            data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
+            backgroundColor: ['#4CAF50', '#e0e0e0'],
+            borderColor: ['#33CC33', '#e0e0e0'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
+            legend: {
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
+                }
+              }
+            }
+          }
+        }
+      });
+
+     
+      var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+      var monthlyChart = new Chart(ctxMonthly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
+            label: 'Monthly Data',
+            data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
+            backgroundColor: ['#4CAF50', '#e0e0e0'],
+            borderColor: ['#4CAF50', '#e0e0e0'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
+            legend: {
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
+                }
+              }
+            }
+          }
+        }
+      });
+
+      var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
+      var quarterlyChart = new Chart(ctxQuarterly, {
+        type: 'doughnut',
+        data: {
+          labels: ['Completed', 'Remaining'],
+          datasets: [{
+            label: 'Quarterly Data',
+            data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
+            backgroundColor: ['#4CAF50', '#e0e0e0'],
+            borderColor: ['#4CAF50', '#e0e0e0'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
+            legend: {
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
+                }
+              }
+            }
+          }
+        }
+      });
+
+    </script>
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="% static  IBscript.js"></script>
     {% block javascript %}{% endblock %}
 
-<script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-<script src="{% static 'js/datatables/datatables.js' %}"></script>
-<script src="{% static 'js/datatables/datatables.min.js' %}"></script>
-  </body>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables.js' %}"></script>
+    <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+
+</body>
 </html>
-
-
-

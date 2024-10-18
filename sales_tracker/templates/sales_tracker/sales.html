@@ -1,0 +1,38 @@
+{% extends "Salesbase.html" %}
+{% load static %}
+{% block title %}Calling agent dashboard{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/agent.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="centered-content">
+    <div class="content-wrapper">
+        <h1>Hello</h1>
+        <h1>{{user.username}}</h1>
+        <h1>{{Lead}}</h1>
+        <ul class="call-list1">
+            {% for H in HLeads %}
+            <li><a href="{% url "detail_sales" H %}">{{ H }}</a></li>
+            {% endfor %}
+        </ul>
+
+            <br>
+
+        <ul class="call-list2">
+            {% for M in MLeads %}
+            <li><a href="{% url "detail_sales" M %}">{{ M }}</a></li>
+            {% endfor %}
+        </ul>
+
+            <br>
+
+        <ul class="call-list3">
+            {% for C in CLeads %}
+            <li><a href="{% url "detail_sales" C %}">{{ C }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

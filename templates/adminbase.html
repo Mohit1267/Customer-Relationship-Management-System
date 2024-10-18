@@ -20,31 +20,6 @@
 
     <title>{% block title %}title{% endblock %}</title>
 
-    <!-- navbar to the right side -->
-    <style>
-    
-/* 
-    @media (max-width: 768px) {
-      .navbar {
-        transform: translateX(-100%);
-      }
-
-      .navbar.active {
-        transform: translateX(0);
-      }
-
-      .hamburger {
-        display: block;
-      }
-
-      .content {
-        margin-left: 0;
-      }
-    } */
-     
-  </style>
-
-
 
   </head>
   <body>
@@ -57,116 +32,84 @@
     <nav class="navbar  navbar-expand-lg">
       <div class="navbar-brand-container">
         <!-- <a class="navbar-brand" href="/">Logo</a> -->
-        <a  href="{% url 'index' %}">
-       <img class="navbar-brand" src="static/Logo.png" alt="Brand Image" style="height: 65px;">
+        <a  href="{% url 'Dashboards'%}">
+       <img class="navbar-brand" src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image" style="height: 65px;">
         </a>
       </div>       
-
-        <!-- timer  -->
-        <div>
-          {% if timer %}
-         <div class="timer" id="count_down"></div>
-
-
-          {% endif %}
+ 
         <div class="navbar-container">
-        <!-- profile offcanvas -->
-        <div>
-          <a class="btn btn-dark profile1" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-            <b>Profile</b>
-          </a>
-          <div class="hamburger" onclick="toggleNavbar()">
-            <div class="stick stick-1"></div>
-            <div class="stick stick-2"></div>
-            <div class="stick stick-3"></div>
-          </div>
-        </div>
-
-        
+  
         <div class="" id="navbarNavDropdown">   
           <ul class="nav-links flex-column"> 
             <li class="nav-item ">
-               <a class="nav-link  spacing" href="{% url 'adminn'%}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
-
-                <img src="\static\Dashboardlogo.png" alt="Dashboard Logo" style="height: 43px ; margin-right: 12px; margin-left: -10px;">
-
+               <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
+                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; height: 42px;"  >
                 Dashboard
                </a>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item  ">
 
-                <img src="\static\devicelogo.png" alt="Lead Logo" style=" height: 42px ;margin-right: 5px; margin-left: -5px;">
+               <a class="nav-link  spacing" href=" " role="button" aria-expanded="false"  >
+                <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo"  >
+  
 
                 Device
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_quote' %}">Create Quote</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">View Quote</a></li>
-              </ul>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'adminActive' %}">Active Device</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'adminPassive' %}">Passive Device</a></li>
+                </ul>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="{% url 'reports' %}" role="button" aria-expanded="false">
-
-                <img src="\static\reportslogo.png" alt="Reports Logo" style="height: 42px ; margin-right: 5px;">
-
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="{% url 'reports' %}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
+                <img src="https://i.ibb.co/2yVYr9s/reportslogo.png" alt="Reports Logo" style="height: 42px ; margin-right: 5px;">
                 Reports
               </a>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="{%url 'AdminAnalysis'%}" role="button" aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="{%url 'AdminAnalysis'%}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
                 
-                <img src="\static\Analyticslogo.png" alt="Analytics Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/87ymdrx/Analyticslogo.png" alt="Analytics Logo" style=" margin-right: 5px;">
 
                 Analytics
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_opportunity' %}">Create Opportunity</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
-              </ul>
+            
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\realtimelogo.png" alt="realtimelogo Logo" style=" margin-left: -6px  ;margin-right: 5px;">
+                <img src="https://i.ibb.co/j33vnyT/realtimelogo.png" alt="realtimelogo Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; ">
+                <span style="white-space: nowrap;">Real Time</span>
 
-               Real time
+               <!-- Real time -->
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'create_lead' %}">Create Leads</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
-              </ul>
+          
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="{% url 'attendance' %}" role="button"  aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link spacing" href="{% url 'attendance' %}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\attendancelogo.png" alt="Attendance Logo" style=" margin-right: 5px;">
+                <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance Logo" style=" margin-right: 5px;">
 
                 Attendance
               </a>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item ">
+              <a class="nav-link  spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
 
-                <img src="\static\manualtimelogo.png" alt="manualtimelogo" style=" margin-right: 5px;">
-
-                Manual Time
+                <img src="https://i.ibb.co/8cMsRZk/manualtimelogo.png" alt="manualtimelogo"  style="margin-left: -6px ; margin-right: 5px;  max-width: 35px;">
+                <span style="white-space: nowrap;">Manual Time</span>
+                <!-- Manual Time -->
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Schedule call</a></li>
-              </ul>
-            </li>
+             
             
           </ul>
         </div>
@@ -174,7 +117,7 @@
 </nav>
 
     {% block content %}{% endblock %}
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel"><b>Profile</b></h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -200,118 +143,21 @@
         </div>
         <hr>
         <div class="row p-2">
-          <a href = "{% url 'logout'%}"  class="right_profile ">logout</a>
+          <a href = "{% url 'logout'%}"  class="right_profile ">Logout</a>
         </div>
-      </div>
+      </div> -->
 
     {%comment%}
-    {% if timer %}
+    <!-- {% if timer %}
     <div class="timer_count">
       <p>Timer: <span id="count_down">00:00:00</span></p>
 
       <p>No of Mining: {{mining_count}}</p>
     </div>
-    {% endif %}
+    {% endif %} -->
     {%endcomment%}
 
-
-    <script>
-      // Function to toggle the navbar
-      function toggleNavbar() {
-  const navbar = document.querySelector('.nav-links');
-  navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
-}
-
-    </script>
-  
-    <script>
-      // Weekly Data Chart
-      var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
-      var weeklyChart = new Chart(ctxWeekly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Weekly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
-                  backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#33CC33', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  
-      // Monthly Data Chart
-      var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
-      var monthlyChart = new Chart(ctxMonthly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Monthly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
-                 backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#4CAF50', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  
-      // Quarterly Data Chart
-      var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
-      var quarterlyChart = new Chart(ctxQuarterly, {
-          type: 'doughnut',
-          data: {
-              labels: ['Completed', 'Remaining'],
-              datasets: [{
-                  label: 'Quarterly Data',
-                  data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
-                  backgroundColor: ['#4CAF50', '#e0e0e0'],
-                  borderColor: ['#4CAF50', '#e0e0e0'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              cutout: '70%',
-              plugins: {
-                  legend: {
-                      labels: {
-                          color: '#1f1d1c', // Font color for the legend
-                          font: {
-                              size: 14, // Font size for the legend
-                          }
-                      }
-                  }
-              }
-          }
-      });
-  </script>
+    
   
   <script>
     // Convert Django template variables to integers and calculate total seconds.
@@ -372,6 +218,3 @@
 
   </body>
 </html>
-
-
-

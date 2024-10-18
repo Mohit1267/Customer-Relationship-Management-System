@@ -6,27 +6,21 @@ body {
 }
 
 .attpiechart {
-        margin-left: 870px;
-        margin-top: -700px;
+    transition: transform 0.5s ease;
+}
 
-        /* width: 100px; Initial width */
-        /* height: auto; Maintain aspect ratio */
-        transition: transform 2s ease-in-out; /* Smooth transition */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
     }
-    
-    
-    
-    @keyframes rotateImage {
-        from {
-            transform: scale(1) rotate(0deg);
-        }
-        to {
-            transform: scale(1.2) rotate(360deg);
-        }
+    50% {
+        transform: scale(1.1);
     }
-    .attpiechart:hover {
-        animation: rotateImage 2s ease-in-out 1; /* Rotate and scale on hover, then stop */
-    }
+}
+
+.attpiechart:hover {
+    animation: pulse 1s infinite;
+}
 .container h1
 {
     color:rgb(224, 187, 187);   
