@@ -22,7 +22,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser, Location
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, ScheduleCallingForm
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, ScheduleCallingForm, DocumentForm, TaskForm
 
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
