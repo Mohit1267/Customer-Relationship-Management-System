@@ -302,51 +302,101 @@ class TaskForm(forms.Form):
     )
 
 
+from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit
+
+# Define choices for Type, Campaign, and Industry
+TYPE_CHOICES = [
+    ('select', 'Select'),
+    ('analyst', 'Analyst'),
+    ('competitor', 'Competitor'),
+    ('customer', 'Customer'),
+    ('integrator', 'Integrator'),
+    ('investor', 'Investor'),
+    ('partner', 'Partner'),
+    ('press', 'Press'),
+    ('prospect', 'Prospect'),
+    ('reseller', 'Reseller'),
+    ('other', 'Other')]
+
+CAMPAIGN_CHOICES = [
+    
+]
+
+INDUSTRY_CHOICES = [
+     ('apparel', 'Apparel'),
+    ('banking', 'Banking'),
+    ('biotechnology', 'Biotechnology'),
+    ('chemicals', 'Chemicals'),
+    ('communications', 'Communications'),
+    ('construction', 'Construction'),
+    ('consulting', 'Consulting'),
+    ('education', 'Education'),
+    ('electronics', 'Electronics'),
+    ('energy', 'Energy'),
+    ('engineering', 'Engineering'),
+    ('entertainment', 'Entertainment'),
+    ('environmental', 'Environmental'),
+    ('finance', 'Finance'),
+    ('government', 'Government'),
+    ('healthcare', 'Healthcare'),
+    ('hospitality', 'Hospitality'),
+    ('insurance', 'Insurance'),
+    ('machinery', 'Machinery'),
+    ('manufacturing', 'Manufacturing'),
+    ('media', 'Media'),
+    ('not_for_profit', 'Not For Profit'),
+    ('recreation', 'Recreation'),
+    ('retail', 'Retail'),
+    ('shipping', 'Shipping'),
+    ('technology', 'Technology'),
+    ('telecommunications', 'Telecommunications'),
+    ('transportation', 'Transportation'),
+    ('utilities', 'Utilities'),
+    ('other', 'Other'),
+]
+
 class AccountForm(forms.Form):
+    # Basic Information
     Name = forms.CharField(max_length=100, label='Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Website = forms.URLField(label='Website', widget=forms.URLInput(attrs={'class': 'form-control'}))
     Email_Address = forms.EmailField(label='Email Address', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    
+    # Billing Information
     Billing_Address = forms.CharField(max_length=255, label='Billing Address', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Billing_Street = forms.CharField(max_length=255, label='Billing Street', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Billing_Postal_Code = forms.CharField(max_length=20, label='Billing Postal Code', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Billing_City = forms.CharField(max_length=100, label='Billing City', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Billing_State = forms.CharField(max_length=100, label='Billing State', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Billing_Country = forms.CharField(max_length=100, label='Billing Country', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
+    # Description and Assignment
     Description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}), label='Description')
     Assigned_To = forms.CharField(max_length=100, label='Assigned To', widget=forms.TextInput(attrs={'class': 'form-control'}))
-
-   
+    
+    # Shipping Information
     Shipping_Address = forms.CharField(max_length=255, label='Shipping Address', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Shipping_Street = forms.CharField(max_length=255, label='Shipping Street', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Shipping_Postal_Code = forms.CharField(max_length=20, label='Shipping Postal Code', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Shipping_City = forms.CharField(max_length=100, label='Shipping City', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Shipping_State = forms.CharField(max_length=100, label='Shipping State', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Shipping_Country = forms.CharField(max_length=100, label='Shipping Country', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    Type = forms.CharField(max_length=50, label='Type', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
+    # Dropdowns for Type, Campaign, and Industry
+    Type = forms.ChoiceField(choices=TYPE_CHOICES, label='Type', widget=forms.Select(attrs={'class': 'form-control'}))
+    Campaign = forms.ChoiceField(choices=CAMPAIGN_CHOICES, label='Campaign', widget=forms.Select(attrs={'class': 'form-control'}))
+    Industry = forms.ChoiceField(choices=INDUSTRY_CHOICES, label='Industry', widget=forms.Select(attrs={'class': 'form-control'}))
+    
+    # Other Information
     Annual_Revenue = forms.DecimalField(max_digits=10, decimal_places=2, label='Annual Revenue', widget=forms.NumberInput(attrs={'class': 'form-control'}))
     Member_Of = forms.CharField(max_length=100, label='Member Of', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    Campaign = forms.CharField(max_length=100, label='Campaign', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    Industry = forms.CharField(max_length=100, label='Industry', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Employees = forms.IntegerField(label='Employees', widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
-
-
-TYPE_CHOICES = [
-    ('option1', 'Option 1'),
-    ('option2', 'Option 2'),
-    ('option3', 'Option 3'),
-]
-
-class Accountform(forms.Form):
-    type = forms.ChoiceField(
-        choices=TYPE_CHOICES, 
-        label='Type', 
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
-
-    def __init__(self, *args, **kwargs):
-        super(AccountForm, self).__init__(*args, **kwargs)
+    # Form Initialization
+    def _init_(self, *args, **kwargs):
+        super(AccountForm, self)._init_(*args, **kwargs)
+        # Use Crispy Forms' FormHelper for layout management
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.layout = Layout(
@@ -368,13 +418,14 @@ class Accountform(forms.Form):
             'Shipping_State',
             'Shipping_Country',
             'Type',
-            'Annual_Revenue',
-            'Member_Of',
             'Campaign',
             'Industry',
+            'Annual_Revenue',
+            'Member_Of',
             'Employees'
         )
-
+        # Add submit button
+        self.helper.add_input(Submit('submit', 'Create Account'))
 
 
 
@@ -599,3 +650,17 @@ class agentcalling(forms.ModelForm):
 
         ]           
 
+from django import forms
+from .models import Task
+
+class TaskForm(forms.ModelForm):
+    # Fields definition
+    contact = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter Contact Name'}))
+    subject = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter Subject'}))
+    attachment = forms.FileField(required=False)  # Optional attachment
+    note = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter Notes'}), required=False)
+    related_to = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'placeholder': 'Enter Related To'}))
+
+    class Meta:
+        model = Task  # Use your actual model name
+        fields = ['contact', 'subject', 'attachment', 'note', 'related_to']

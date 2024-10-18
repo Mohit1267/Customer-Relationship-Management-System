@@ -1564,6 +1564,11 @@ def viewTask(request):
 
 
 
+from django.shortcuts import render, redirect
+from .forms import AccountForm  # Assuming you have AccountForm in forms.py
+from .models import Account  # Assuming you have Account model in models.py
+from django.contrib import messages
+
 def Agentaccount(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
@@ -1571,7 +1576,6 @@ def Agentaccount(request):
             name = form.cleaned_data['Name']
             website = form.cleaned_data['Website']
             email_address = form.cleaned_data['Email_Address']
-            billing_address = form.cleaned_data['Billing_Address']
             billing_street = form.cleaned_data['Billing_Street']
             billing_postal_code = form.cleaned_data['Billing_Postal_Code']
             billing_city = form.cleaned_data['Billing_City']
@@ -1579,7 +1583,6 @@ def Agentaccount(request):
             billing_country = form.cleaned_data['Billing_Country']
             description = form.cleaned_data['Description']
             assigned_to = form.cleaned_data['Assigned_To']
-            shipping_address = form.cleaned_data['Shipping_Address']
             shipping_street = form.cleaned_data['Shipping_Street']
             shipping_postal_code = form.cleaned_data['Shipping_Postal_Code']
             shipping_city = form.cleaned_data['Shipping_City']
@@ -1592,60 +1595,44 @@ def Agentaccount(request):
             industry = form.cleaned_data['Industry']
             employees = form.cleaned_data['Employees']
 
+            # Create the Account object and save it to the database
             account = Account(
-                name=name,
-                website=website,
-                email_address=email_address,
-                billing_address=billing_address,
-                billing_street=billing_street,
-                billing_postal_code=billing_postal_code,
-                billing_city=billing_city,
-                billing_state=billing_state,
-                billing_country=billing_country,
-                description=description,
-                assigned_to=assigned_to,
-                shipping_address=shipping_address,
-                shipping_street=shipping_street,
-                shipping_postal_code=shipping_postal_code,
-                shipping_city=shipping_city,
-                shipping_state=shipping_state,
-                shipping_country=shipping_country,
-                account_type=account_type,
-                annual_revenue=annual_revenue,
-                member_of=member_of,
-                campaign=campaign,
-                industry=industry,
-                employees=employees,
+                Name=name,
+                Website=website,
+                Email_Address=email_address,
+                Billing_Street=billing_street,
+                Billing_Postal_Code=billing_postal_code,
+                Billing_City=billing_city,
+                Billing_State=billing_state,
+                Billing_Country=billing_country,
+                Description=description,
+                Assigned_To=assigned_to,
+                Shipping_Street=shipping_street,
+                Shipping_Postal_Code=shipping_postal_code,
+                Shipping_City=shipping_city,
+                Shipping_State=shipping_state,
+                Shipping_Country=shipping_country,
+                Type=account_type,
+                Annual_Revenue=annual_revenue,
+                Member_Of=member_of,
+                Campaign=campaign,
+                Industry=industry,
+                Employees=employees,
             )
-            # account.save() 
+            account.save()  # Save the account instance
 
-            # Retrieve the stored passwords from the database
-            try:
-                stored_passwords = NewPasswords.objects.first()  # Assuming you have only one instance of Passwords
-                if not stored_passwords:
-                    raise ValidationError("No passwords found in the database.")
-                
-                # Compare entered passwords with the ones in the database
-                if (entered_minor_password == stored_passwords.Minor_password and
-                    entered_sales_password == stored_passwords.Sales_password and
-                    entered_admin_password == stored_passwords.Admin_password):
-                    # If passwords match, you can proceed
-                    return redirect('success_url')
-                else:
-                    # If passwords don't match, raise an error
-                    form.add_error(None, 'Passwords do not match the stored passwords.')
-
-            
-            except NewPasswords.DoesNotExist:
-                form.add_error(None, 'Stored passwords not found in the database.')
-        
-        # If form is invalid, re-render the form with errors
-        return render(request, 'validate_password.html', {'form': form})
-
+            messages.success(request, "Account created successfully!")
+            return redirect('agentaccount')  # Redirect to the account list page after successful submission
+        else:
+            messages.error(request, "There was an error creating the account. Please check the form.")
     else:
-        form = PasswordForm()
-    return render(request, 'validate_password.html', {'form': form})
+        form = AccountForm()
 
+    return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # account.save() 
+def viewAccount(request):
+    return render(request, "sales_tracker/viewaccount.html")
 
 
 class AgentMeeting(View):
@@ -1688,7 +1675,7 @@ class AgentCalling(View):
     def post(self, request):
         form = agentcalling(request.POST)
         if form.is_valid():
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            
             
             form.save()
         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
@@ -1704,3 +1691,25 @@ class ViewScheduledCalls(View):
 def ViewScheduledMeeting(request):
     scheduled_meetings = Schedule_Meeting.objects.all()
     return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})
+
+
+
+from django.shortcuts import render, redirect
+from .forms import TaskForm
+
+def createNotes(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST, request.FILES)  # Handling file upload
+        if form.is_valid():
+            form.save()  # Save the form data to the database
+            return redirect('task_list')  # Redirect to a success page (replace 'task_list' with your own URL)
+    else:
+        form = TaskForm()
+
+    return render(request, 'sales_tracker/createNotes.html', {'form': form})
+
+def liveStreaming(request):
+    return render(request, "sales_tracker/liveStreaming.html")
+
+def maps(request):
+    return render(request, "sales_tracker/maps.html")
