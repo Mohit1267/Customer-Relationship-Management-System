@@ -259,7 +259,7 @@ class Schedule_Meeting(models.Model):
     related_to = models.CharField(max_length=255)
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
-    notes = models.CharField(max_length=255)
+    notes = models.CharField(max_length=255, null = True)
     temp = models.CharField(max_length=233, null = True,  blank = True)
 
 
@@ -281,7 +281,7 @@ class Schedule_Calling(models.Model):
     notes = models.CharField(max_length=255, null = True)
     reason = models.CharField(max_length=255, null = True)
 
-    def _str_(self):
+    def str(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
     
 
@@ -328,8 +328,10 @@ class Document(models.Model):
 
     def _str_(self):
         return self.document_name
-    notes = models.CharField(max_length=255)
-    reason = models.CharField(max_length=255)
+    notes = models.CharField(max_length=255,  null=True, blank=True)
+
+    reason = models.CharField(max_length=255,  null=True, blank=True)
+
     
     def __str__(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"

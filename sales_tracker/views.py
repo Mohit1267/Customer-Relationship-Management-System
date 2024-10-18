@@ -1,6 +1,9 @@
 # from typing import Any
 # from django.db.models.query import QuerySet
 import json
+from django.utils import timezone
+from datetime import date, datetime, timedelta
+from django.utils import timezone
 from django.http import JsonResponse
 from django.db.models import Count, OuterRef, Subquery
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,8 +21,8 @@ from django.shortcuts import render, get_object_or_404
 # import pymysql
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser, Location
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, ScheduleCallingForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -31,8 +34,9 @@ import random
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from .forms import agentmeeting
-from .forms import agentcalling
-
+# from .forms import agentcalling
+from django.http import JsonResponse
+from datetime import date
 
 
 def get_timer_value(request):
@@ -1202,10 +1206,10 @@ class AdminAnalysis(TemplateView):
 #         context['long'] = longitude
 #         return render(request, self.template_name, context)
     
-
+import json
 class maps(View):
     template_name = "sales_tracker/maps.html"
-    
+
     def get(self, request):
         context = {}
         latitude = request.session.get('latitude')
@@ -1213,14 +1217,32 @@ class maps(View):
         context['lat'] = latitude
         context['long'] = longitude
         return render(request, self.template_name, context)
-    
+
     def post(self, request):
         data = json.loads(request.body)
         latitude = data.get('latitude')
         longitude = data.get('longitude')
-from django.http import JsonResponse
-from .models import Location
 
+        # Save latitude and longitude to session
+        request.session['latitude'] = latitude
+        request.session['longitude'] = longitude
+
+        # Save to the database
+        profile = Profile.objects.get(user=request.user)
+        now = timezone.now()
+        today = now.date()
+
+        # Fetch the last location entry for the profile
+        last_location = Location.objects.filter(profile=profile).order_by('-date', '-time').first()
+
+        # Define a time threshold for significant time difference (e.g., 5 minutes)
+        time_threshold = timedelta(minutes=5)
+
+        # Create a new entry if the location is different or the date is different
+        if not last_location or (last_location.latitude != latitude or last_location.longitude != longitude) or (now - datetime.combine(last_location.date, last_location.time) > time_threshold):
+            Location.objects.create(profile=profile, latitude=latitude, longitude=longitude, date=today, time=now.time())
+
+        return JsonResponse({'status': 'success'})
 # def get_salesperson_locations(request):
 #     locations = Location.objects.all().values('salesperson__name', 'latitude', 'longitude', 'timestamp')
 #     location_list = list(locations)
@@ -1609,34 +1631,45 @@ class AgentMeeting(View):
         form = agentmeeting(request.POST)
         if form.is_valid():
             # Save the form data to the database
+            print("FOrm is valid")
             form.save()
 
         return render(request, 'sales_tracker/agentmeeting.html', {'form': form})
     
 
 
-class AgentCalling(View):
-    def get(self, request):
-        form = agentcalling()
-        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
-    
+# class AgentCalling(View):
+#     def get(self, request):
+#         form = agentcalling()
+#         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
 
-    def post(self, request):
-        form = agentcalling(request.POST)
+#     def post(self, request):
+#         form = agentcalling(request.POST)
+#         if form.is_valid():
+#             # Save the form data to the database
+#             form.save()
+#             print("Form is valid")
+#         else:
+#             print("Form errors: ", form.errors)
+
+#         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+
+# class ViewScheduledCalls(View):
+#     def get(self, request):
+#         scheduled_calls = Schedule_Calling.objects.all()
+#         return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
+
+
+def schedule_calling_create(request):
+    if request.method == 'POST':
+        form = ScheduleCallingForm(request.POST)
         if form.is_valid():
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-            
             form.save()
-        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
-
-
-from .models import Schedule_Calling ,Schedule_Meeting
-
-class ViewScheduledCalls(View):
-    def get(self, request):
-        scheduled_calls = Schedule_Calling.objects.all()
-        return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
-
+            # return redirect('schedule_calling_list')
+    else:
+        form = ScheduleCallingForm()
+    return render(request, 'sales_tracker/agentcontact.html', {'form': form})
 def ViewScheduledMeeting(request):
     scheduled_meetings = Schedule_Meeting.objects.all()
     return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})
