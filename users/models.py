@@ -130,8 +130,10 @@ class Location(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     date = models.DateField(auto_now_add=True)
     time = models.TimeField(auto_now_add=True)
+    temp = models.CharField(max_length=255, null = True)
 
 
     def __str__(self):
         return f"{self.profile.user.username} at {self.date} {self.time}"
     
+

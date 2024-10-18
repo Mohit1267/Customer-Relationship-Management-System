@@ -1,14 +1,14 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.decorators import login_required
-from .views import get_salesperson_locations,ViewScheduledCalls
+# from .views import ViewScheduledCalls
 
 
 urlpatterns = [
     path("", login_required(views.Dashboards), name="Dashboards"),
     # path("adminn", login_required(views.Admin.as_view()), name="adminn"),
     path('attendance/', (views.Attendence), name='attendance'),
-    #path('maps',(views.maps.as_view()),name = 'maps'),
+    path('maps',(views.maps.as_view()),name = 'maps'),
     # path("agent/", login_required(views.Agent.as_view()), name="agent"),
     path("agent/<pk>", login_required(views.DetailCalling), name="detail_agent"),
     path("sales/<pk>", login_required(views.DetailSales), name="detail_sales"),
@@ -65,15 +65,14 @@ urlpatterns = [
     path("createDocument", login_required(views.createDocument), name="createDocument"),
     path("viewDocument", login_required(views.viewDocument), name="viewDocument"),
     # path("maps", login_required(views.maps), name="maps"),
-    path('get-locations/', get_salesperson_locations, name='get_locations'),
+    # path('get-locations/', get_salesperson_locations, name='get_locations'),
    # path('role-access/', views.role_access, name='role_access'),
     path('validate-password/', views.validate_password_view, name='validate_password'),
     path("agentmeeting", login_required((views.AgentMeeting.as_view())), name="agentmeeting"),
-    path("agentcalling", login_required((views.AgentCalling.as_view())), name="agentcalling"),
+    # path("agentcalling", login_required((views.AgentCalling.as_view())), name="agentcalling"),
+    path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
 
-    path('view_calling/', views.ViewScheduledCalls.as_view(), name='view_calling'),
+    # path('view_calling/', views.ViewScheduledCalls.as_view(), name='view_calling'),
     path("view_meeting", login_required(views.ViewScheduledMeeting), name='view_meeting'),
-
-
 
 ]

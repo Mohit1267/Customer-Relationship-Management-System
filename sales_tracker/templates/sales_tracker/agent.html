@@ -87,17 +87,23 @@
               </div>
 
 
-        <div class="buttons">
-            <button type="submit" class="button1" style="margin-left: 20px;">Apply Filter</button>
-            <button type="reset" class="button1"  style="margin-left: 20px;">Clear</button></div>
-              
-          </form>
-        </div>
-          <button style="display: inline;" type="button" class="button profile-button">
+              <div class="buttons">
+                <button type="submit" class="button1" style="margin-left: 20px;">Apply Filter</button>
+                <button type="reset" class="button1"  style="margin-left: 20px;">Clear</button></div>
+                
+              </form>
+            </div>
+            <button style="display: inline;" type="button" class="button profile-button">
             <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:60px; height: 60px; margin-left: -7px; margin-top: -4px;"   alt="">
           </button>
         </nav>
-    
+        
+        <!-- Location submission button -->
+        <div class="location-container">
+        <button id="locationButton" class="button">Submit Location</button>
+        </div>
+    <h1>{{lat}}</h1>
+    <h1>{{long}}</h1>
     <div class="graphBox">
         <div class="graph">
             {{ daily|safe }}
@@ -148,6 +154,11 @@
   </div>
 
 
+
+
+
+
+
   <!-- profile section-->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -171,18 +182,106 @@
       document.querySelector('.btn-close').addEventListener('click', function () {
         offcanvas.classList.remove('show'); // Close offcanvas
       });
+
+
+
+      // Location submission
+      
     });
+    
     
         </script>
 
+
+
+
+<!-- <script>
+  window.onload = function() {
+    const locationButton = document.getElementById('locationButton');
+    console.log("Hello");
+    
+    locationButton.addEventListener('click', function () {
+        console.log("Location button clicked."); // Log click event
+        if (navigator.geolocation) {
+            console.log("Geolocation is supported."); // Log geolocation support
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                console.log("Latitude:", latitude); // Log latitude
+                console.log("Longitude:", longitude); // Log longitude
+
+                fetch("{% url 'Dashboards' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({
+                        latitude: latitude,
+                        longitude: longitude
+                    })
+                })
+                .then(response => {
+                    console.log("Response status:", response.status); // Log response status
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Response data:", data); // Log the response data
+                    location.reload(); // Refresh the page after handling the response
+                })
+                .catch(error => {
+                    console.error("Error:", error); // Log any errors
+                });
+            }, function (error) {
+                console.error("Error getting position:", error); // Log geolocation error
+            });
+        } else {
+            console.error("Geolocation is not supported by this browser."); // Log unsupported geolocation
+        }
+    });
+};
+</script> -->
+
+
+
+
+<script>
+  window.onload = function() {
+    const locationButton = document.getElementById('locationButton');
+    
+    locationButton.addEventListener('click', function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                fetch("{% url 'maps' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({
+                        latitude: latitude,
+                        longitude: longitude
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    location.reload(); // Refresh the page after handling the response
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            }, function (error) {
+                console.error("Error getting position:", error);
+            });
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    });
+  };
+</script>
+
 {% endblock %}
 
-
-
-
-
-
-
-
-
-/**/
