@@ -1670,6 +1670,7 @@ def schedule_calling_create(request):
     else:
         form = ScheduleCallingForm()
     return render(request, 'sales_tracker/agentcontact.html', {'form': form})
+
 def ViewScheduledMeeting(request):
     scheduled_meetings = Schedule_Meeting.objects.all()
     return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})
