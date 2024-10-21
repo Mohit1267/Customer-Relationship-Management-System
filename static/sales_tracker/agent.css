@@ -121,6 +121,67 @@ body {
     padding: 2px;
 } */
 
+
+.location-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start (left) */
+    margin-top: 40px; /* Add some space above the container */
+}
+.button-location {
+    display: flex; /* Use flexbox to align items */
+    justify-content: flex-start; /* Align items to the start */
+    align-items: center; /* Center items vertically */
+    margin-top: 20px; /* Space above the button container */
+    gap: 20px;
+}
+
+.button5 {
+    padding: 10px 20px; /* Add padding for spacing */
+    color: white; /* Text color */
+    background-color: #00ffb3; /* Primary background color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and scale */
+    font-size: 16px; /* Font size for the button */
+}
+
+.button5:hover {
+    background-color: #b0b300; /* Darker background color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.button5:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Add a focus ring */
+}
+
+ 
+
+.lat {
+    display: flex;
+    justify-content: flex-start;  
+    align-items: flex-start;  
+    /* margin-bottom: 27%; */
+    margin-top: 30px;
+    padding: 15px;  
+    background-color: #b1e9dd;  
+    border: 1px solid #d1d1d1;  
+    border-radius: 8px;  
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
+    transition: transform 0.3s ease; 
+}
+.lat:hover {
+    transform: scale(1.02);  
+}
+
+.lat label {
+     
+    color: #333; /* Darker text color for better contrast */
+    margin-right: 10px; /* Spacing between label and input */
+}   
+
  .profile-button {
     padding: 5px 10px; 
     color: black; 
