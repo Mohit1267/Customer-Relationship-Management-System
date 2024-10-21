@@ -1,6 +1,9 @@
 # from typing import Any
 # from django.db.models.query import QuerySet
 import json
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import HttpResponse
 from django.utils import timezone
 from datetime import date, datetime, timedelta
 from django.utils import timezone
@@ -22,7 +25,8 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser, Location
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, ScheduleCallingForm
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, agentcalling, DocumentForm, TaskForm
+
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -1581,9 +1585,15 @@ def DSR(request):
 
 
 from django.shortcuts import render, redirect
+
+from django.contrib import messages
+from .forms import AccountForm
+from .models import Account 
+
 from .forms import PasswordForm
 from .models import NewPasswords
 from django.core.exceptions import ValidationError
+
 
 def validate_password_view(request):
     if request.method == 'POST':
@@ -1594,32 +1604,103 @@ def validate_password_view(request):
             entered_sales_password = form.cleaned_data['Sales_password']
             entered_admin_password = form.cleaned_data['Admin_password']
 
-            # Retrieve the stored passwords from the database
-            try:
-                stored_passwords = NewPasswords.objects.first()  # Assuming you have only one instance of Passwords
-                if not stored_passwords:
-                    raise ValidationError("No passwords found in the database.")
-                
-                # Compare entered passwords with the ones in the database
-                if (entered_minor_password == stored_passwords.Minor_password and
-                    entered_sales_password == stored_passwords.Sales_password and
-                    entered_admin_password == stored_passwords.Admin_password):
-                    # If passwords match, you can proceed
-                    return redirect('success_url')
-                else:
-                    # If passwords don't match, raise an error
-                    form.add_error(None, 'Passwords do not match the stored passwords.')
-            
-            except NewPasswords.DoesNotExist:
-                form.add_error(None, 'Stored passwords not found in the database.')
-        
-        # If form is invalid, re-render the form with errors
-        return render(request, 'validate_password.html', {'form': form})
 
+            # Here you would typically save the task to the database
+            # You could create a model instance for Task and save it
+            # Example (assuming you have a Task model):
+            # Task.objects.create(
+            #     subject=subject,
+            #     start_date=start_date,
+            #     due_date=due_date,
+            #     priority=priority,
+            #     description=description,
+            #     status=status,
+            #     related_to=related_to,
+            #     contacts=contacts
+            # )
+
+            # After saving or processing, redirect to another page (e.g., task list)
+            return redirect('createTask')  # 'createTask' should be the name of the URL pattern
     else:
-        form = PasswordForm()
-    return render(request, 'validate_password.html', {'form': form})
+        form = TaskForm()
 
+    return render(request, 'sales_tracker/createTask.html', {'form': form})
+
+def viewTask(request):
+    return render(request, "sales_tracker/viewTask.html")
+
+
+
+
+from django.shortcuts import render, redirect
+from .forms import AccountForm  # Assuming you have AccountForm in forms.py
+from .models import Account  # Assuming you have Account model in models.py
+from django.contrib import messages
+
+def Agentaccount(request):
+    if request.method == 'POST':
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['Name']
+            website = form.cleaned_data['Website']
+            email_address = form.cleaned_data['Email_Address']
+            billing_street = form.cleaned_data['Billing_Street']
+            billing_postal_code = form.cleaned_data['Billing_Postal_Code']
+            billing_city = form.cleaned_data['Billing_City']
+            billing_state = form.cleaned_data['Billing_State']
+            billing_country = form.cleaned_data['Billing_Country']
+            description = form.cleaned_data['Description']
+            assigned_to = form.cleaned_data['Assigned_To']
+            shipping_street = form.cleaned_data['Shipping_Street']
+            shipping_postal_code = form.cleaned_data['Shipping_Postal_Code']
+            shipping_city = form.cleaned_data['Shipping_City']
+            shipping_state = form.cleaned_data['Shipping_State']
+            shipping_country = form.cleaned_data['Shipping_Country']
+            account_type = form.cleaned_data['Type']
+            annual_revenue = form.cleaned_data['Annual_Revenue']
+            member_of = form.cleaned_data['Member_Of']
+            campaign = form.cleaned_data['Campaign']
+            industry = form.cleaned_data['Industry']
+            employees = form.cleaned_data['Employees']
+
+            # Create the Account object and save it to the database
+            account = Account(
+                Name=name,
+                Website=website,
+                Email_Address=email_address,
+                Billing_Street=billing_street,
+                Billing_Postal_Code=billing_postal_code,
+                Billing_City=billing_city,
+                Billing_State=billing_state,
+                Billing_Country=billing_country,
+                Description=description,
+                Assigned_To=assigned_to,
+                Shipping_Street=shipping_street,
+                Shipping_Postal_Code=shipping_postal_code,
+                Shipping_City=shipping_city,
+                Shipping_State=shipping_state,
+                Shipping_Country=shipping_country,
+                Type=account_type,
+                Annual_Revenue=annual_revenue,
+                Member_Of=member_of,
+                Campaign=campaign,
+                Industry=industry,
+                Employees=employees,
+            )
+            account.save()  # Save the account instance
+
+            messages.success(request, "Account created successfully!")
+            return redirect('agentaccount')  # Redirect to the account list page after successful submission
+        else:
+            messages.error(request, "There was an error creating the account. Please check the form.")
+    else:
+        form = AccountForm()
+
+    return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # account.save() 
+def viewAccount(request):
+    return render(request, "sales_tracker/viewaccount.html")
 
 
 class AgentMeeting(View):
@@ -1638,10 +1719,23 @@ class AgentMeeting(View):
     
 
 
-# class AgentCalling(View):
-#     def get(self, request):
-#         form = agentcalling()
-#         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+def createDocument(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')
+    else:
+        form = DocumentForm()
+    
+    return render(request, 'sales_tracker/createDocument.html', {'form': form})
+
+def viewDocument(request):
+
+    return render(request, "sales_tracker/viewDocument.html")
+
+
 
 #     def post(self, request):
 #         form = agentcalling(request.POST)
@@ -1661,17 +1755,65 @@ class AgentMeeting(View):
 #         return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
 
 
-def schedule_calling_create(request):
-    if request.method == 'POST':
-        form = ScheduleCallingForm(request.POST)
+# def schedule_calling_create(request):
+#     if request.method == 'POST':
+#         form = ScheduleCallingForm(request.POST)
+#         if form.is_valid():
+#             print("this is valid form")
+#             form.save()
+#     else:
+#         form = ScheduleCallingForm()
+#     return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+class AgentCalling(View):
+    def get(self, request):
+        form = agentcalling()
+        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+    def post(self, request):
+        form = agentcalling(request.POST)
         if form.is_valid():
+            # Save the form data to the database
+            print("FOrm is valid")
             form.save()
-            # return redirect('schedule_calling_list')
-    else:
-        form = ScheduleCallingForm()
-    return render(request, 'sales_tracker/agentcontact.html', {'form': form})
+
+        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
 
 def ViewScheduledMeeting(request):
     scheduled_meetings = Schedule_Meeting.objects.all()
     return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})
 
+
+
+from django.shortcuts import render, redirect
+from .forms import TaskForm
+
+def createNotes(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST, request.FILES)  # Handling file upload
+        if form.is_valid():
+            form.save()  # Save the form data to the database
+            return redirect('task_list')  # Redirect to a success page (replace 'task_list' with your own URL)
+    else:
+        form = TaskForm()
+
+    return render(request, 'sales_tracker/createNotes.html', {'form': form})
+
+def liveStreaming(request):
+    return render(request, "sales_tracker/liveStreaming.html")
+
+def viewcontact(request):
+    return render(request, "sales_tracker/viewcontact.html")
+
+def send_meeting_email(request, meeting_id):
+    meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
+    subject = "Meeting Reminder"
+    message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n\nBest regards,\nYour Company"
+    recipient_list = [meeting.contact]
+
+    try:
+        send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+        return HttpResponse("Email sent successfully!")
+    except Exception as e:
+        return HttpResponse(f"Failed to send email: {e}")

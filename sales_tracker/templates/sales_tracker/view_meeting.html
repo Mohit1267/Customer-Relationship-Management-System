@@ -43,6 +43,12 @@
                 <td>{{ meeting.subject }}</td>
                 <td>{{ meeting.assigned_to }}</td>
                 <td>{{ meeting.contact }}</td>
+                <td>
+                    <form action="{% url 'send_meeting_email' meeting.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Send Email</button>
+                    </form>
+                </td>
             </tr>
             {% empty %}
             <tr>

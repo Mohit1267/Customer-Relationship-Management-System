@@ -20,7 +20,7 @@ body{
   .navbar {
       background-color: #1E2A38;
       position: relative;  
-      height: 100vh; 
+      height: 150vh; 
       min-width: 250px;
       width: 15%;  
       top: 0; 
@@ -36,6 +36,33 @@ body{
       transform: translateX(0);
       transition: transform 0.3s ease-in-out;
       background-attachment: fixed;
+  }
+.navbar .links li .sub-menu .more-sub-menu {
+	  display: none;
+	  position: relative;
+	  left: 0;
+	}
+.navbar .links li .sub-menu .more-sub-menu li {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	}
+
+  .navbar .links li .sub-menu .more-arrow {
+	line-height: 40px;
+  }
+  
+  .navbar .links li .sub-menu .more-sub-menu {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	border-radius: 0 4px 4px 4px;
+	z-index: 1;
+	display: none;
+  }
+  
+  .links li .sub-menu .more:hover .more-sub-menu {
+	display: block;
   }
   
   .navbar.collapsed {
