@@ -21,7 +21,7 @@ from django.shortcuts import render, get_object_or_404
 # import pymysql
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser, Location
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting, Schedule_Calling
 from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, ScheduleCallingForm, DocumentForm, TaskForm
 
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
@@ -49,44 +49,6 @@ def get_timer_value(request):
         'min': int(elapsed_time[1]),
         'sec': int(elapsed_time[2])
     })
-
-
-# Create your views here.
-# class IndexView(TemplateView):
-#     template_name = "sales_tracker/index.html"
-#     def dispatch(self, request, *args, **kwargs):
-#         if self.request.user.profile.branch != 'miner': 
-#             return HttpResponseForbidden("You do not have access to this page.")
-#         return super().dispatch(request, *args, **kwargs)
-#     # def dispatch(self, request, *args, **kwargs):
-#     #     print("Thisis ")
-#     #     if self.request.user.profile.branch == 'agent': 
-#     #         self.template_name = "sales_tracker/agent.html"
-#     #     return super().dispatch(request, *args, **kwargs)
-
-#     def get_context_data(self, **kwargs):
-#         context =  super().get_context_data(**kwargs)
-#         request = self.request
-#         user = request.user
-#         context["user"] = user.username
-#         utc_login_time = user.last_login
-#         elapsed_time = timer(utc_login_time)
-#         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-#         now_date_time = datetime.datetime.now()
-#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-#         today_mining = MiningData.objects.filter(date = now_date)
-#         today_mining_count = today_mining.count()
-#         context["mining_count"] = today_mining_count
-#         today_lead = LeadsData.objects.filter(date = now_date)
-#         today_lead_count = today_lead.count()
-#         context["lead_count"] = today_lead_count
-#         today_contact = ContactData.objects.filter(date = now_date)
-#         today_contact_count = today_contact.count()
-#         context["contact_count"] = today_contact_count
-#         today_Opportunity = OpportunityData.objects.filter(date = now_date)
-#         today_Opportunity_count = today_Opportunity.count()
-#         context["Opportunity_count"] = today_Opportunity_count
-#         return context
 
 
 
@@ -217,75 +179,6 @@ def agent_required(view_func):
             return HttpResponseForbidden("You are not authorized to view this page.")
     return _wrapped_view
 
-
-
-# @admin_required
-# class Admin(TemplateView):
-#     template_name = "sales_tracker/admin.html"
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         attendances = AttendanceRecord.objects.all()
-#         att = Att_perct()
-#         late = Late_perct()
-#         context['admin_message'] = "Welcome to the Admin Page"
-#         context['attendances'] = attendances
-#         context['att'] = att
-#         context['late'] = Late_perct 
-#         return context
-    
-
-# class Agent(TemplateView):
-#     template_name = "sales_tracker/agent.html"
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         request = self.request
-#         users = request.user
-#         u = RegisterUser.objects.get(email=users)
-#         u = u.id
-#         ToCall = MiningData.objects.filter(assigned_to=u)
-#         context["user"] = u
-#         context["Tocall"] = ToCall
-#         return context
-
-
-# class MiningView(CreateView):
-#     model = MiningData
-#     form_class = MiningForm
-#     template_name = "sales_tracker/mining.html"
-#     success_url = "mining"
-#     def get_context_data(self, **kwargs):
-#         context =  super().get_context_data(**kwargs)
-#         request = self.request
-#         user = request.user
-#         utc_login_time = user.last_login
-#         elapsed_time = timer(utc_login_time)
-#         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-#         now_date_time = datetime.datetime.now()
-#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-#         today_mining = MiningData.objects.filter(date = now_date)
-#         today_mining_count = today_mining.count()
-#         context["mining_count"] = today_mining_count
-#         return context
-    
-
-
-# def assign_miningCt():
-#     # user = request.user
-#     least_occurring_assigned_to_id = (
-#     MiningData.objects
-#     .filter(assigned_to__profile__branch='agent')
-#     .values('assigned_to')
-#     .annotate(count=Count('assigned_to'))
-#     .order_by('count')
-#     .first()
-# )
-#     # return least_occurring_assigned_to_id
-#     assigned_to_id = least_occurring_assigned_to_id['assigned_to']
-#     return RegisterUser.objects.get(id=assigned_to_id)
-
-
-
-
 def assign_miningCt():
     # Get the user with the least assignments
     least_occurring_assigned_to_id = (
@@ -311,90 +204,6 @@ def assign_miningCt():
     # Otherwise, assign to the least occurring agent
     assigned_to_id = least_occurring_assigned_to_id['assigned_to']
     return RegisterUser.objects.get(id=assigned_to_id)
-
-
-
-
-
-
-# def assign_miningCt():
-#     # Get IDs of profiles with branch='agent'
-#     agent_profile_ids = Profile.objects.filter(branch='agent').values_list('user_id', flat=True)
-    
-#     # Subquery to get the least occurring assigned_to ID
-#     least_occurring_subquery = MiningData.objects.filter(
-#         assigned_to__in=agent_profile_ids
-#     ).values('assigned_to').annotate(count=Count('assigned_to')).order_by('count').values('assigned_to')[:1]
-
-#     # Use the subquery to get the least occurring assigned_to
-#     least_occurring_assigned_to_id = Subquery(least_occurring_subquery)
-
-#     # Get the corresponding RegisterUser
-#     assigned_to_user = RegisterUser.objects.filter(
-#         user_id=least_occurring_assigned_to_id
-#     ).first()
-
-#     return assigned_to_user
-
-
-# ---------------------------------------------------------------------
-# def assign_miningCt():
-#     # Raw SQL query to find the least occurring `assigned_to` ID
-#     with connection.cursor() as cursor:
-#         cursor.execute("""
-#             SELECT M.assigned_to_id
-#             FROM sales_tracker_miningdata as M
-#             LEFT JOIN users_profile as P
-#             ON M.assigned_to_id = P.user_id
-#             WHERE P.branch = 'agent'
-#             GROUP BY P.user_id
-#             LIMIT 1;
-#         """)
-        
-#         # Fetch the result
-#         result = cursor.fetchone()
-    
-#     if result:
-#         assigned_to_id = result[0]
-#         # Fetch and return the RegisterUser object
-#         return RegisterUser.objects.get(id=assigned_to_id)
-#     else:
-#         print("None is returned")
-#         return None
-
-
-
-
-# def assign_miningCt():
-#     # Raw SQL query to find the least occurring `assigned_to` ID
-#     with connection.cursor() as cursor:
-#         cursor.execute("""
-#             SELECT assigned_to_id
-#             FROM sales_tracker_miningdata
-#             JOIN users_registeruser ON sales_tracker_miningdata.assigned_to_id = users_registeruser.id
-#             JOIN users_profile ON users_registeruser.id = users_profile.user_id
-#             WHERE users_profile.branch = %s
-#             GROUP BY assigned_to_id
-#             ORDER BY COUNT(*) ASC
-#             LIMIT 1
-#         """, ['agent'])
-        
-#         # Fetch the result
-#         result = cursor.fetchone()
-#         if result:
-#             assigned_to_id = result[0]
-#             # Debugging: Print the fetched ID
-#             print(f"Fetched assigned_to_id: {assigned_to_id}")
-#             try:
-#                 # Fetch and return the RegisterUser object
-#                 return RegisterUser.objects.get(id=assigned_to_id)
-#             except RegisterUser.DoesNotExist:
-#                 # Handle case where the RegisterUser object is not found
-#                 print(f"RegisterUser with id {assigned_to_id} does not exist.")
-#                 return None
-#         else:
-#             print("No result returned from the query.")
-#             return None
 
 
 
@@ -1032,42 +841,6 @@ def DetailSales(request, pk):
     return render(request,"sales_tracker/detail_leads_sales.html",context)
 
 
-
-
-
-
-
-# def get_call_center_data():
-#     # Connect to the external MySQL database
-#     connection = pymysql.connect(
-#         host='localhost',        # Replace with your database host
-#         user='root',    # Replace with your database username
-#         password='Pj@123456',# Replace with your database password
-#         database='CallCenter',           # Replace with your database name
-#         port=3306                # Replace with your database port if different
-#     )
-
-#     try:
-#         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-#             # Execute an SQL query
-#             sql = "SELECT * FROM CallingAgent"  # Replace with your SQL query
-#             cursor.execute(sql)
-
-#             # Fetch all the rows from the result
-#             result = cursor.fetchall()
-#             return result
-#     finally:
-#         connection.close()
-
-# def call_center_view(request):
-#     context = {}
-#     data = get_call_center_data()
-#     context['data'] = data
-#     return render(request, "sales_tracker/call_center.html",context)
-#     # return JsonResponse({'data': data})
-
-
-
 def get_calling_agents(request):
     context = {}
     with connection.cursor() as cursor:
@@ -1105,21 +878,6 @@ def Attendence(request):
 def attendance_list(request):
     attendances = AttendanceRecord.objects.all()
     return render(request, "sales_tracker/ADMIN.html", {'attendances': attendances})
-
-
-
-# class Admin(TemplateView):
-#     template_name = "sales_tracker/admin.html"
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         attendances = AttendanceRecord.objects.all()
-#         att = Att_perct()
-#         late = Late_perct()
-#         context['admin_message'] = "Welcome to the Admin Page"
-#         context['attendances'] = attendances
-#         context['att'] = att
-#         context['late'] = Late_perct 
-#         return context
 
 
 @method_decorator(admin_required, name = 'dispatch')
@@ -1191,22 +949,7 @@ class AdminAnalysis(TemplateView):
         context['time_graph']=time_graph
         return context
 
-# class DailyAttendence(TemplateView):
-#     DailyAttendance()
-#     template_name = "sales_tracker/DailyAttendence.html"
-    
 
-
-# class maps(View):
-#     template_name = "sales_tracker/maps.html"
-#     def get(self,request):
-#         context = {}
-#         latitude = request.session.get('latitude')
-#         longitude = request.session.get('longitude')
-#         context['lat'] = latitude
-#         context['long'] = longitude
-#         return render(request, self.template_name, context)
-    
 import json
 class maps(View):
     template_name = "sales_tracker/maps.html"
@@ -1244,22 +987,6 @@ class maps(View):
             Location.objects.create(profile=profile, latitude=latitude, longitude=longitude, date=today, time=now.time())
 
         return JsonResponse({'status': 'success'})
-# def get_salesperson_locations(request):
-#     locations = Location.objects.all().values('salesperson__name', 'latitude', 'longitude', 'timestamp')
-#     location_list = list(locations)
-#     return JsonResponse(location_list, safe=False)
-
-# >>>>>>> 16756faba89c5c4438801884b3e586a32b127c3e
-
-#         # Save latitude and longitude to session
-#         request.session['latitude'] = latitude
-#         request.session['longitude'] = longitude
-
-#         # Save to the database
-#         profile = Profile.objects.get(user=request.user)
-#         Location.objects.create(profile=profile, latitude=latitude, longitude=longitude)
-
-#         return JsonResponse({'status': 'success'})
 
 def ViewQuote(request):
     pass
@@ -1602,21 +1329,7 @@ def validate_password_view(request):
             entered_admin_password = form.cleaned_data['Admin_password']
 
 
-            # Here you would typically save the task to the database
-            # You could create a model instance for Task and save it
-            # Example (assuming you have a Task model):
-            # Task.objects.create(
-            #     subject=subject,
-            #     start_date=start_date,
-            #     due_date=due_date,
-            #     priority=priority,
-            #     description=description,
-            #     status=status,
-            #     related_to=related_to,
-            #     contacts=contacts
-            # )
 
-            # After saving or processing, redirect to another page (e.g., task list)
             return redirect('createTask')  # 'createTask' should be the name of the URL pattern
     else:
         form = TaskForm()
@@ -1629,6 +1342,11 @@ def viewTask(request):
 
 
 
+from django.shortcuts import render, redirect
+from .forms import AccountForm  # Assuming you have AccountForm in forms.py
+from .models import Account  # Assuming you have Account model in models.py
+from django.contrib import messages
+
 def Agentaccount(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
@@ -1636,7 +1354,6 @@ def Agentaccount(request):
             name = form.cleaned_data['Name']
             website = form.cleaned_data['Website']
             email_address = form.cleaned_data['Email_Address']
-            billing_address = form.cleaned_data['Billing_Address']
             billing_street = form.cleaned_data['Billing_Street']
             billing_postal_code = form.cleaned_data['Billing_Postal_Code']
             billing_city = form.cleaned_data['Billing_City']
@@ -1644,7 +1361,6 @@ def Agentaccount(request):
             billing_country = form.cleaned_data['Billing_Country']
             description = form.cleaned_data['Description']
             assigned_to = form.cleaned_data['Assigned_To']
-            shipping_address = form.cleaned_data['Shipping_Address']
             shipping_street = form.cleaned_data['Shipping_Street']
             shipping_postal_code = form.cleaned_data['Shipping_Postal_Code']
             shipping_city = form.cleaned_data['Shipping_City']
@@ -1657,60 +1373,44 @@ def Agentaccount(request):
             industry = form.cleaned_data['Industry']
             employees = form.cleaned_data['Employees']
 
+            # Create the Account object and save it to the database
             account = Account(
-                name=name,
-                website=website,
-                email_address=email_address,
-                billing_address=billing_address,
-                billing_street=billing_street,
-                billing_postal_code=billing_postal_code,
-                billing_city=billing_city,
-                billing_state=billing_state,
-                billing_country=billing_country,
-                description=description,
-                assigned_to=assigned_to,
-                shipping_address=shipping_address,
-                shipping_street=shipping_street,
-                shipping_postal_code=shipping_postal_code,
-                shipping_city=shipping_city,
-                shipping_state=shipping_state,
-                shipping_country=shipping_country,
-                account_type=account_type,
-                annual_revenue=annual_revenue,
-                member_of=member_of,
-                campaign=campaign,
-                industry=industry,
-                employees=employees,
+                Name=name,
+                Website=website,
+                Email_Address=email_address,
+                Billing_Street=billing_street,
+                Billing_Postal_Code=billing_postal_code,
+                Billing_City=billing_city,
+                Billing_State=billing_state,
+                Billing_Country=billing_country,
+                Description=description,
+                Assigned_To=assigned_to,
+                Shipping_Street=shipping_street,
+                Shipping_Postal_Code=shipping_postal_code,
+                Shipping_City=shipping_city,
+                Shipping_State=shipping_state,
+                Shipping_Country=shipping_country,
+                Type=account_type,
+                Annual_Revenue=annual_revenue,
+                Member_Of=member_of,
+                Campaign=campaign,
+                Industry=industry,
+                Employees=employees,
             )
-            # account.save() 
+            account.save()  # Save the account instance
 
-            # Retrieve the stored passwords from the database
-            try:
-                stored_passwords = NewPasswords.objects.first()  # Assuming you have only one instance of Passwords
-                if not stored_passwords:
-                    raise ValidationError("No passwords found in the database.")
-                
-                # Compare entered passwords with the ones in the database
-                if (entered_minor_password == stored_passwords.Minor_password and
-                    entered_sales_password == stored_passwords.Sales_password and
-                    entered_admin_password == stored_passwords.Admin_password):
-                    # If passwords match, you can proceed
-                    return redirect('success_url')
-                else:
-                    # If passwords don't match, raise an error
-                    form.add_error(None, 'Passwords do not match the stored passwords.')
-
-            
-            except NewPasswords.DoesNotExist:
-                form.add_error(None, 'Stored passwords not found in the database.')
-        
-        # If form is invalid, re-render the form with errors
-        return render(request, 'validate_password.html', {'form': form})
-
+            messages.success(request, "Account created successfully!")
+            return redirect('agentaccount')  # Redirect to the account list page after successful submission
+        else:
+            messages.error(request, "There was an error creating the account. Please check the form.")
     else:
-        form = PasswordForm()
-    return render(request, 'validate_password.html', {'form': form})
+        form = AccountForm()
 
+    return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # account.save() 
+def viewAccount(request):
+    return render(request, "sales_tracker/viewaccount.html")
 
 
 class AgentMeeting(View):
@@ -1759,10 +1459,10 @@ def viewDocument(request):
 #         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
 
 
-# class ViewScheduledCalls(View):
-#     def get(self, request):
-#         scheduled_calls = Schedule_Calling.objects.all()
-#         return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
+class ViewScheduledCalls(View):
+    def get(self, request):
+        scheduled_calls = Schedule_Calling.objects.all()
+        return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
 
 
 def schedule_calling_create(request):
@@ -1775,7 +1475,30 @@ def schedule_calling_create(request):
         form = ScheduleCallingForm()
     return render(request, 'sales_tracker/agentcalling.html', {'form': form})
 
-
+ 
 def ViewScheduledMeeting(request):
     scheduled_meetings = Schedule_Meeting.objects.all()
     return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})
+
+
+
+from django.shortcuts import render, redirect
+from .forms import TaskForm
+
+def createNotes(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST, request.FILES)  # Handling file upload
+        if form.is_valid():
+            form.save()  # Save the form data to the database
+            return redirect('task_list')  # Redirect to a success page (replace 'task_list' with your own URL)
+    else:
+        form = TaskForm()
+
+    return render(request, 'sales_tracker/createNotes.html', {'form': form})
+
+def liveStreaming(request):
+    return render(request, "sales_tracker/liveStreaming.html")
+
+def viewcontact(request):
+    return render(request, "sales_tracker/viewcontact.html")
+

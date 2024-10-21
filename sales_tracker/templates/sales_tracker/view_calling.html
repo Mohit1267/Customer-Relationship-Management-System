@@ -1,63 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scheduled Calls</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        html, body {
+        height: 100%;
+        margin: 0; /* Remove default margin */
         }
-
-        table, th, td {
-            border: 1px solid black;
+        .wrapper {
+        height: 100%; /* Ensure wrapper takes full height */
         }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
+        .bg-gradient {
+            background: linear-gradient(to right, #a2e9da, #69d4c6);
+        }
+        .bg-gradient1 {
+            background: linear-gradient(to right, #2e2d2d, #e6dfd4);
         }
     </style>
 </head>
 <body>
-    <h1>Scheduled Calls</h1>
+    <div class="wrapper bg-gradient1 ">
+         <div class="container-fluid   ">
+             <div class="container  bg-gradient">
+        <h1 class="text-center mb-4">Scheduled Calls</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Duration</th>
-                <th>Frequency</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Subject</th>
-                <th>Related To</th>
-                <th>Assigned To</th>
-                <th>Notification</th>
-                <th>Contact</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for call in scheduled_calls %}
-            <tr>
-                <td>{{ call.start_date }}</td>
-                <td>{{ call.end_date }}</td>
-                <td>{{ call.duration }}</td>
-                <td>{{ call.frequency }}</td>
-                <td>{{ call.start_time }}</td>
-                <td>{{ call.end_time }}</td>
-                <td>{{ call.subject }}</td>
-                <td>{{ call.related_to }}</td>
-                <td>{{ call.assigned_to }}</td>
-                <td>{{ call.notification }}</td>
-                <td>{{ call.contact }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="11">No scheduled calls found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Duration</th>
+                    <th>Frequency</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Subject</th>
+                    <th>Related To</th>
+                    <th>Assigned To</th>
+                    <th>Notification</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for call in scheduled_calls %}
+                <tr>
+                    <td>{{ call.start_date }}</td>
+                    <td>{{ call.end_date }}</td>
+                    <td>{{ call.duration }}</td>
+                    <td>{{ call.frequency }}</td>
+                    <td>{{ call.start_time }}</td>
+                    <td>{{ call.end_time }}</td>
+                    <td>{{ call.subject }}</td>
+                    <td>{{ call.related_to }}</td>
+                    <td>{{ call.assigned_to }}</td>
+                    <td>{{ call.notification }}</td>
+                    <td>{{ call.contact }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="11" class="text-center">No scheduled calls found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            </div>
+        </div>
+    </div>
+ </body>
 </html>
