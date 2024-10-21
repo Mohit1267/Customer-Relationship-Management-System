@@ -155,8 +155,8 @@ def Reason(request):
 
         if existing_updown_time:
             existing_updown_time.check_out_time = current_time
-upt
-            # Calculate ime
+
+            # Calculate uptime
             if existing_updown_time.check_in_time:
                 last_checkin = timezone.datetime.combine(existing_updown_time.date, existing_updown_time.check_in_time)
                 last_checkin = timezone.make_aware(last_checkin)  # Make it aware
@@ -253,55 +253,43 @@ def manual_login(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            latitude = request.POST.get('latitude') 
+            latitude = request.POST.get('latitude')
             longitude = request.POST.get('longitude')
 
             # Implement secure user authentication logic using username and password
             # ...
-            user = authenticate(request, email = email, password = password)
-            print("this is userrrrrrrr" ,user)
-
+            user = authenticate(request, email=email, password=password)
+            print("this is userrrrrrrr", user)
 
             if user is not None:
                 # User is authenticated, proceed with login logic...
                 try:
-                    user_profile = Profile.objects.get(user = user)
-                except:
+                    user_profile = Profile.objects.get(user=user)
+                except Profile.DoesNotExist:
                     login(request, user)
                     return redirect("profile")
-                if user_profile.can_login:  
+
+                if user_profile.can_login:
                     login(request, user)
-                    # request.latitude = latitude
-                    # request.longitude = longitude
                     request.session['latitude'] = latitude
                     request.session['longitude'] = longitude
                     generate_bar_chart(request)
-                    # admin_attendence_graph()
-                    # print(timezone.now().time())
+                    
                     current_date = timezone.now().date()
-                    Nuser = request.user.id
                     current_datetime = timezone.now()
-                    current_date = current_datetime.date()
                     current_time = current_datetime.time()
-                    # now = datetime.datetime.now()
-                    # print("Current Time:", now.time())
-                    current_datetime = timezone.localtime()
-                    current_time_str = current_datetime.strftime('%H:%M:%S')
-                    current_time = datetime.datetime.strptime(current_time_str, '%H:%M:%S').time()
 
-    
-
-                    #Attendence Rules
-                    # allowerd_grace_time = timezone.datetime.combine(current_date, timezone.time(9,15)).time()
+                    # Attendance Rules
                     on_time = time(9, 0)
                     grace_time = time(9, 15)
                     cutoff_time = time(14, 10)
-                    if current_time<=on_time:
+
+                    if current_time <= on_time:
                         status = 'Present'
-                    elif on_time<current_time<=grace_time:
+                    elif on_time < current_time <= grace_time:
                         start_of_week = current_date - timedelta(days=current_date.weekday())  # Monday of current week
                         late_entries_count = AttendanceRecord.objects.filter(
-                            user=user, 
+                            user=user,
                             date__gte=start_of_week,
                             date__lte=current_date,
                             status='Late'
@@ -314,7 +302,9 @@ def manual_login(request):
                         status = 'Absent'
                     else:
                         status = 'Late'
+
                     print("Current Time:", current_time)
+
                     existing_record = AttendanceRecord.objects.filter(user=user, date=current_date).first()
                     if not existing_record:
                         AttendanceRecord.objects.create(
@@ -323,10 +313,14 @@ def manual_login(request):
                             check_in_time=current_time,
                             status=status
                         )
-                    updown_time, created = UpdownTime.objects.get_or_create(
-                        user=user,
-                        date=current_date
-                    )
+
+                    try:
+                        updown_time = UpdownTime.objects.get(user=user, date=current_date)
+                    except UpdownTime.DoesNotExist:
+                        updown_time = UpdownTime.objects.create(user=user, date=current_date)
+                    except UpdownTime.MultipleObjectsReturned:
+                        updown_time = UpdownTime.objects.filter(user=user, date=current_date).first()
+                        # Optionally, log a warning here about the multiple objects
 
                     # Update check-in time
                     updown_time.check_in_time = current_time
@@ -335,30 +329,19 @@ def manual_login(request):
                         last_checkout = timezone.datetime.combine(updown_time.date, updown_time.check_out_time)
                         last_checkout = timezone.make_aware(last_checkout)  # Make it aware
                         downtime = current_datetime - last_checkout
-                        print("this is downtime",downtime)
+                        print("this is downtime", downtime)
                         if updown_time.downtime:
                             updown_time.downtime += downtime  # Cumulative downtime
                         else:
                             updown_time.downtime = downtime
+
                     updown_time.save()
 
-             
-                    print("Nusewwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwr")
-                    print(Nuser)
-                    
                     return redirect("Dashboards")
-                    # if user_profile.branch == "admin":
-                        
-                    #     return redirect("adminn")
-                    # elif user_profile.branch == "miner":
-                    #     return redirect("index")
-                    # elif user_profile.branch == "agent":
-                    #     return redirect("agent")
 
                 else:
                     error_message = 'Your access is denied, Please contact Admin for access'
                     return render(request, 'users/login.html', {'form': form, 'error_message': error_message})
-                # return redirect("index")
             else:
                 error_message = 'Invalid username or password.'
         else:
@@ -368,6 +351,7 @@ def manual_login(request):
         error_message = None
 
     return render(request, 'users/login.html', {'form': form, 'error_message': error_message})
+
 
 class EmailBackend(ModelBackend):
     def authenticate(self, request, email=None, password=None, **kwargs):

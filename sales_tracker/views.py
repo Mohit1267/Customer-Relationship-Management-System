@@ -1,6 +1,9 @@
 # from typing import Any
 # from django.db.models.query import QuerySet
 import json
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import HttpResponse
 from django.utils import timezone
 from datetime import date, datetime, timedelta
 from django.utils import timezone
@@ -22,8 +25,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser, Location
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting, Schedule_Calling
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, ScheduleCallingForm, DocumentForm, TaskForm
-
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, DocumentForm, TaskForm,agentcalling
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -35,7 +37,6 @@ import random
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from .forms import agentmeeting
-# from .forms import agentcalling
 from django.http import JsonResponse
 from datetime import date
 
@@ -1465,15 +1466,30 @@ class ViewScheduledCalls(View):
         return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
 
 
-def schedule_calling_create(request):
-    if request.method == 'POST':
-        form = ScheduleCallingForm(request.POST)
+# def schedule_calling_create(request):
+#     if request.method == 'POST':
+#         form = ScheduleCallingForm(request.POST)
+#         if form.is_valid():
+#             print("this is valid form")
+#             form.save()
+#     else:
+#         form = ScheduleCallingForm()
+#     return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+class AgentCalling(View):
+    def get(self, request):
+        form = agentcalling()
+        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+    def post(self, request):
+        form = agentcalling(request.POST)
         if form.is_valid():
+            # Save the form data to the database
+            print("FOrm is valid")
             form.save()
-            # return redirect('schedule_calling_list')
-    else:
-        form = ScheduleCallingForm()
-    return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+        return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
 
  
 def ViewScheduledMeeting(request):
@@ -1502,3 +1518,14 @@ def liveStreaming(request):
 def viewcontact(request):
     return render(request, "sales_tracker/viewcontact.html")
 
+def send_meeting_email(request, meeting_id):
+    meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
+    subject = "Meeting Reminder"
+    message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n\nBest regards,\nYour Company"
+    recipient_list = [meeting.contact]
+
+    try:
+        send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+        return HttpResponse("Email sent successfully!")
+    except Exception as e:
+        return HttpResponse(f"Failed to send email: {e}")

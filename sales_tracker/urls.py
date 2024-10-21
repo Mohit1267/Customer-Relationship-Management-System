@@ -67,6 +67,7 @@ urlpatterns = [
    # path('role-access/', views.role_access, name='role_access'),
     path('validate-password/', views.validate_password_view, name='validate_password'),
     path("agentmeeting", login_required((views.AgentMeeting.as_view())), name="agentmeeting"),
+    path("agentcalling", login_required((views.AgentCalling.as_view())), name="agentcalling"),
     # path("agentcalling", login_required((views.AgentCalling.as_view())), name="agentcalling"),
 
     path('view_calling/', views.ViewScheduledCalls.as_view(), name='view_calling'),
@@ -75,7 +76,9 @@ urlpatterns = [
     path("agentaccount", login_required(views.Agentaccount), name='agentaccount'),
     path("viewaccount", login_required(views.viewAccount), name='viewaccount'),
     path("viewcontact", login_required(views.viewcontact), name='viewcontact'),
-    path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
-
+    # path("view_contact", login_required(views.ViewScheduledMeeting), name='view_contact'),
+    path('send-email/<int:meeting_id>/', views.send_meeting_email, name='send_meeting_email'),
+    # path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
+    
 
 ]
