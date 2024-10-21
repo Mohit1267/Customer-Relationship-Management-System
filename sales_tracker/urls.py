@@ -69,7 +69,7 @@ urlpatterns = [
     path("agentmeeting", login_required((views.AgentMeeting.as_view())), name="agentmeeting"),
     # path("agentcalling", login_required((views.AgentCalling.as_view())), name="agentcalling"),
 
-    # path('view_calling/', views.ViewScheduledCalls.as_view(), name='view_calling'),
+    path('view_calling/', views.ViewScheduledCalls.as_view(), name='view_calling'),
     path("view_meeting", login_required(views.ViewScheduledMeeting), name='view_meeting'),
     path("createNotes", login_required(views.createNotes), name='createNotes'),
     path("agentaccount", login_required(views.Agentaccount), name='agentaccount'),

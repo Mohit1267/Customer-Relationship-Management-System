@@ -155,8 +155,8 @@ def Reason(request):
 
         if existing_updown_time:
             existing_updown_time.check_out_time = current_time
-
-            # Calculate uptime
+upt
+            # Calculate ime
             if existing_updown_time.check_in_time:
                 last_checkin = timezone.datetime.combine(existing_updown_time.date, existing_updown_time.check_in_time)
                 last_checkin = timezone.make_aware(last_checkin)  # Make it aware
