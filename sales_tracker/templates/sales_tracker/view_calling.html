@@ -1,30 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scheduled Calls</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        html, body {
-        height: 100%;
-        margin: 0; /* Remove default margin */
-        }
-        .wrapper {
-        height: 100%; /* Ensure wrapper takes full height */
-        }
-        .bg-gradient {
-            background: linear-gradient(to right, #a2e9da, #69d4c6);
-        }
-        .bg-gradient1 {
-            background: linear-gradient(to right, #cee0e0, #e6dfd4);
-        }
-    </style>
-</head>
-<body>
-    <div class="wrapper bg-gradient1 z-5 ">
-         <div class="container-fluid   ">
+{% extends "agentbase.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+ 
+{% block css_link %}
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <style>
+       html, body {
+       height: 100%;
+       margin: 0; /* Remove default margin */
+       }
+       .wrapper {
+       height: 100%; /* Ensure wrapper takes full height */
+       }
+       .bg-gradient {
+           background: linear-gradient(to right, #a2e9da, #69d4c6);
+       }
+       .bg-gradient1 {
+           background: linear-gradient(to right, #cee0e0, #e6dfd4);
+       }
+       .container-fluid {
+    z-index: -1000 !important;
+}
+   </style>
+{% endblock %}
+
+{% block title %}Scheduled Calls{% endblock %}
+{% block content %} 
+    <div class="wrapper  ">
+         <div class="container-fluid  ">
              <div class="container  bg-gradient">
         <h1 class="text-center mb-4">Scheduled Calls</h1>
 
@@ -58,6 +63,9 @@
                     <td>{{ call.assigned_to }}</td>
                     <td>{{ call.notification }}</td>
                     <td>{{ call.contact }}</td>
+
+
+                    
                 </tr>
                 {% empty %}
                 <tr>
@@ -69,5 +77,4 @@
             </div>
         </div>
     </div>
- </body>
-</html>
+{% endblock %}
