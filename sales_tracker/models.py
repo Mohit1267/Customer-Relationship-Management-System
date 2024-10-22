@@ -168,11 +168,6 @@ from django.contrib.auth.models import User
 
 
 from django.db import models
-from django.contrib.auth.models import User
-
-
-
-from django.db import models
 
 class Account(models.Model):
     # Basic Fields
@@ -203,64 +198,21 @@ class Account(models.Model):
     shipping_country = models.CharField(max_length=100, blank=True, null=True)
     
     # Account Detail
-    TYPE_CHOICES = (
-    ('select', 'Select'),
-    ('analyst', 'Analyst'),
-    ('competitor', 'Competitor'),
-    ('customer', 'Customer'),
-    ('integrator', 'Integrator'),
-    ('investor', 'Investor'),
-    ('partner', 'Partner'),
-    ('press', 'Press'),
-    ('prospect', 'Prospect'),
-    ('reseller', 'Reseller'),
-    ('other', 'Other'))
-
-    type = models.CharField(max_length=50, choices=TYPE_CHOICES)
-
-    CAMPAIGN_CHOICES = (
-        
-    )
-    campaign = models.CharField(max_length=100, choices=CAMPAIGN_CHOICES, blank=True, null=True)
-
-    INDUSTRY_CHOICES = (
-    ('apparel', 'Apparel'),
-    ('banking', 'Banking'),
-    ('biotechnology', 'Biotechnology'),
-    ('chemicals', 'Chemicals'),
-    ('communications', 'Communications'),
-    ('construction', 'Construction'),
-    ('consulting', 'Consulting'),
-    ('education', 'Education'),
-    ('electronics', 'Electronics'),
-    ('energy', 'Energy'),
-    ('engineering', 'Engineering'),
-    ('entertainment', 'Entertainment'),
-    ('environmental', 'Environmental'),
-    ('finance', 'Finance'),
-    ('government', 'Government'),
-    ('healthcare', 'Healthcare'),
-    ('hospitality', 'Hospitality'),
-    ('insurance', 'Insurance'),
-    ('machinery', 'Machinery'),
-    ('manufacturing', 'Manufacturing'),
-    ('media', 'Media'),
-    ('not_for_profit', 'Not For Profit'),
-    ('recreation', 'Recreation'),
-    ('retail', 'Retail'),
-    ('shipping', 'Shipping'),
-    ('technology', 'Technology'),
-    ('telecommunications', 'Telecommunications'),
-    ('transportation', 'Transportation'),
-    ('utilities', 'Utilities'),
-    ('other', 'Other'),
-)
-
-    industry = models.CharField(max_length=100, choices=INDUSTRY_CHOICES, blank=True, null=True)
+    type = models.CharField(max_length=50,choices=(
+        ('option1', 'Option 1'),
+        ('option2', 'Option 2'),
+        ('option3', 'Option 3'),
+    ))
 
     annual_revenue = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     member_of = models.CharField(max_length=100, blank=True, null=True)
+    campaign = models.CharField(max_length=100, blank=True, null=True)
+    industry = models.CharField(max_length=100, blank=True, null=True)
     employees = models.IntegerField(blank=True, null=True)
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -308,6 +260,7 @@ class Schedule_Meeting(models.Model):
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
     notes = models.CharField(max_length=255, null = True)
+    contact= models.EmailField(null = True)
     temp = models.CharField(max_length=233, null = True,  blank = True)
 
 
@@ -325,7 +278,7 @@ class Schedule_Calling(models.Model):
     related_to = models.CharField(max_length=255)
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
-    contact= models.IntegerField()
+    contact= models.IntegerField(null = True)
     notes = models.CharField(max_length=255, null = True)
     reason = models.CharField(max_length=255, null = True)
 
@@ -382,22 +335,4 @@ class Document(models.Model):
 
     
     def __str__(self):
-
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
- 
-
-
-class Task(models.Model):
-    # Fields
-    contact = models.CharField(max_length=255)  # Name of the contact
-    subject = models.CharField(max_length=255)  # Subject of the task
-    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)  # File attachment (optional)
-    note = models.TextField(blank=True, null=True)  # Note for the task (optional)
-    related_to = models.CharField(max_length=255, blank=True, null=True)  # Related to (optional)
-
-    created_at = models.DateTimeField(auto_now_add=True)  # Automatically adds timestamp when task is created
-    updated_at = models.DateTimeField(auto_now=True)  # Updates timestamp whenever task is modified
-
-    def __str__(self):
-        return self.subject  # Display the subject as a string representation of the model
-

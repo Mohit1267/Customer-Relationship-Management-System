@@ -99,11 +99,7 @@
         </nav>
         
         <!-- Location submission button -->
-        <div class="location-container">
-        <button id="locationButton" class="button">Submit Location</button>
-        </div>
-    <h1>{{lat}}</h1>
-    <h1>{{long}}</h1>
+  
     <div class="graphBox">
         <div class="graph">
             {{ daily|safe }}
@@ -118,6 +114,19 @@
             {{ yearlyl|safe }}
         </div> 
     </div>
+
+    
+    <div class="location-container d-flex">
+      <div class="button-location">
+          <button id = "locationButton" class="button5">Submit Location</button>
+          <button class="button5">Testing</button>
+      </div>
+      <div class="lat">
+          Latitude: <span id="latitude">{{lat}}</span>, Longitude: <span id="longitude">{{long}}</span>
+      </div>
+    </div>
+  
+ 
     
 </div>
 
@@ -134,17 +143,17 @@
         <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
       </div>
       <div class="row p-2">
-        <a href="#" class=" right_profile" ">Edit Profile</a>
+        <a href="#" class=" right_profile" >Edit Profile</a>
         </div>
         <hr>
         <div class=" row p-2">
-          <a href="#" class=" right_profile"">Employees</a>
+          <a href="#" class=" right_profile">Employees</a>
         </div>
         <div class=" row p-2">
-            <a href="#" class=" right_profile"">Community Forum</a>
+            <a href="#" class=" right_profile">Community Forum</a>
         </div>
         <div class=" row p-2">
-              <a href="#" class=" right_profile"">About</a>
+              <a href="#" class=" right_profile">About</a>
         </div>
         <hr>
         <div class=" row p-2">
@@ -191,56 +200,6 @@
     
     
         </script>
-
-
-
-
-<!-- <script>
-  window.onload = function() {
-    const locationButton = document.getElementById('locationButton');
-    console.log("Hello");
-    
-    locationButton.addEventListener('click', function () {
-        console.log("Location button clicked."); // Log click event
-        if (navigator.geolocation) {
-            console.log("Geolocation is supported."); // Log geolocation support
-            navigator.geolocation.getCurrentPosition(function (position) {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                console.log("Latitude:", latitude); // Log latitude
-                console.log("Longitude:", longitude); // Log longitude
-
-                fetch("{% url 'Dashboards' %}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRFToken": "{{ csrf_token }}"
-                    },
-                    body: JSON.stringify({
-                        latitude: latitude,
-                        longitude: longitude
-                    })
-                })
-                .then(response => {
-                    console.log("Response status:", response.status); // Log response status
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Response data:", data); // Log the response data
-                    location.reload(); // Refresh the page after handling the response
-                })
-                .catch(error => {
-                    console.error("Error:", error); // Log any errors
-                });
-            }, function (error) {
-                console.error("Error getting position:", error); // Log geolocation error
-            });
-        } else {
-            console.error("Geolocation is not supported by this browser."); // Log unsupported geolocation
-        }
-    });
-};
-</script> -->
 
 
 
