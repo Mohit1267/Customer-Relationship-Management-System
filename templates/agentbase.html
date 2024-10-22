@@ -86,6 +86,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'leadImport'%}">Import</a></li>
               </ul>
             </li>
 
@@ -103,6 +107,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{% url 'viewcontact' %}">View Contacts</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'contactImport'%}">Import</a></li>
               </ul>
             </li>
 
@@ -120,7 +128,11 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="quotes_data">View Quote</a></li>
+                <li><a class="dropdown-item" href="{% url 'quotes_data' %}">View Quote</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'quoteimport'%}">Import</a></li>
               </ul>
             </li>
 
@@ -157,6 +169,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'opportunityimport'%}">Import</a></li>
               </ul>
             </li>
             
@@ -175,6 +191,10 @@
                 <hr class="dropdown-divider">
               </li>
               <li><a class="dropdown-item" href="{% url 'viewaccount' %}">View Account</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{%url 'accountimport'%}">Import</a></li>
             </ul>
            </li>
           
@@ -194,6 +214,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{% url 'dsrview' %}">View DSR</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'DSRimport'%}">Import</a></li>
               </ul>
             </li>
 
