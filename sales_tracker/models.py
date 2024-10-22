@@ -384,20 +384,34 @@ class Document(models.Model):
     def __str__(self):
 
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
+    
+
+
+
  
 
 
 class Task(models.Model):
-    # Fields
-    contact = models.CharField(max_length=255)  # Name of the contact
-    subject = models.CharField(max_length=255)  # Subject of the task
-    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)  # File attachment (optional)
-    note = models.TextField(blank=True, null=True)  # Note for the task (optional)
-    related_to = models.CharField(max_length=255, blank=True, null=True)  # Related to (optional)
-
-    created_at = models.DateTimeField(auto_now_add=True)  # Automatically adds timestamp when task is created
-    updated_at = models.DateTimeField(auto_now=True)  # Updates timestamp whenever task is modified
+    PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+    
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+    ]
+    
+    subject = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    start_date = models.DateField()
+    due_date = models.DateField()
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='low')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    related_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Updated to use AUTH_USER_MODEL
+    contacts = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return self.subject  # Display the subject as a string representation of the model
-
+        return self.subject

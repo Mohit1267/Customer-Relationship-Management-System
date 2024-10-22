@@ -1788,3 +1788,19 @@ def liveStreaming(request):
 def viewcontact(request):
     return render(request, "sales_tracker/viewcontact.html")
 
+
+def createTask(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')  # Redirect after form submission
+    else:
+        form = TaskForm()
+    
+    return render(request, 'sales_tracker/createTask.html', {'form': form})
+
+
+
+def temp(request):
+    return render(request, 'sales_tracker/temp.html')

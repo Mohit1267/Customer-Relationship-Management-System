@@ -60,7 +60,7 @@ urlpatterns = [
     path("DSR", login_required(views.DSR), name="DSR"),
 
     path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
-    #path("createTask", login_required(views.createTask), name="createTask"),
+    path("createTask", login_required(views.createTask), name="createTask"),
     path("viewTask", login_required(views.viewTask), name="viewTask"),
     path("createDocument", login_required(views.createDocument), name="createDocument"),
     path("viewDocument", login_required(views.viewDocument), name="viewDocument"),
@@ -76,6 +76,9 @@ urlpatterns = [
     path("viewaccount", login_required(views.viewAccount), name='viewaccount'),
     path("viewcontact", login_required(views.viewcontact), name='viewcontact'),
     path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
+    path("temp", login_required((views.temp)), name="temp"),
+
+
 
 
 ]
