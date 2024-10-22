@@ -60,7 +60,8 @@ urlpatterns = [
     path("DSR", login_required(views.DSR), name="DSR"),
 
     path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
-    # path("createTask", login_required(views.createTask), name="createTask"),
+
+    path("createTask", login_required(views.createTask), name="createTask"),
     path("viewTask", login_required(views.viewTask), name="viewTask"),
     path("createDocument", login_required(views.createDocument), name="createDocument"),
     path("viewDocument", login_required(views.viewDocument), name="viewDocument"),
@@ -85,10 +86,17 @@ urlpatterns = [
     path("opportunityimport", login_required((views.opportunityimport)), name="opportunityimport"),
     path("accountimport", login_required((views.accountimport)), name="accountimport"),
     path("DSRimport", login_required((views.DSRimport)), name="DSRimport"),
+    path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
+    path("temp", login_required((views.temp)), name="temp"),
+    path("miningimport", login_required((views.miningimport)), name="miningimport"),
+
+
 
 
     # path("view_contact", login_required(views.ViewScheduledMeeting), name='view_contact'),
     path('send-email/<int:meeting_id>/', views.send_meeting_email, name='send_meeting_email'),
     # path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
+
+
 
 ]

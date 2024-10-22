@@ -1603,15 +1603,15 @@ class ViewScheduledCalls(View):
         return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
 
 
-# def schedule_calling_create(request):
-#     if request.method == 'POST':
-#         form = ScheduleCallingForm(request.POST)
-#         if form.is_valid():
-#             print("this is valid form")
-#             form.save()
-#     else:
-#         form = ScheduleCallingForm()
-#     return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+def schedule_calling_create(request):
+    if request.method == 'POST':
+        form = Schedule_Calling(request.POST)
+        if form.is_valid():
+            print("this is valid form")
+            form.save()
+    else:
+        form = Schedule_Calling()
+    return render(request, 'sales_tracker/agentcalling.html', {'form': form})
 
 class AgentCalling(View):
     def get(self, request):
@@ -1674,6 +1674,26 @@ def DSRimport(request):
     return render(request, "sales_tracker/DSRimport.html")
 
 
+from django.shortcuts import render, redirect
+from .forms import TaskForm
+
+def createTask(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('task_list')  # Redirect to a task list page or any success page after saving
+    else:
+        form = TaskForm()
+
+    return render(request, 'sales_tracker/createTask.html', {'form': form})
+
+
+
+
+def temp(request):
+    return render(request, 'sales_tracker/temp.html')
+
 def send_meeting_email(request, meeting_id):
     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
     subject = "Meeting Reminder"
@@ -1685,4 +1705,9 @@ def send_meeting_email(request, meeting_id):
         return HttpResponse("Email sent successfully!")
     except Exception as e:
         return HttpResponse(f"Failed to send email: {e}")
+
+
+def miningimport(request):
+    return render(request, "sales_tracker/miningimport.html")
+
 
