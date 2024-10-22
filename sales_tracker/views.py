@@ -397,65 +397,201 @@ def assign_miningCt():
 #             return None
 
 
+import re
+import datetime  # Ensure datetime is imported
+from django.shortcuts import render, redirect
 
 def mining_view(request):
     user = request.user
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
-    formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+    formated_timer = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
     now_date_time = datetime.datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-    today_mining = MiningData.objects.filter(date = now_date)
+    today_mining = MiningData.objects.filter(date=now_date)
     today_mining_count = today_mining.count()
+
     if request.method == "POST":
         form = MiningForm(request.POST)
         state = request.POST.get("state")
         city = request.POST.get("city")
         zone = request.POST.get("zone")
 
+        organisation_name = form.data.get("organisation_name")
+        customer_first_name = form.data.get("customer_first_name")
+        customer_last_name = form.data.get("customer_last_name")
+        customer_contact_number = form.data.get("customer_contact_number")
+        customer_mobile_number = form.data.get("customer_mobile_number")
+        company_revenue = form.data.get("company_revenue")
+        customer_offering = form.data.get("customer_offering")
+        competition_of_AT = form.data.get("competition_of_AT")
+        stock_market_registered = form.data.get("stock_market_registered")
+        it_spending_budget = form.data.get("IT_spending_budget")
+        source_of_data_mining = form.data.get("source_of_data_mining")
+        company_emp_size = form.data.get("company_emp_size")
+
+        # Validate organisation_name (allow only alphabets and numbers)
+        if not re.match("^[A-Za-z0-9 ]+$", organisation_name):
+            form.add_error('organisation_name', "Organisation name can only contain alphabets and numbers.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate customer_first_name (allow only alphabets)
+        if not re.match("^[A-Za-z ]+$", customer_first_name):
+            form.add_error('customer_first_name', "First name can only contain alphabets.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate customer_last_name (allow only alphabets)
+        if not re.match("^[A-Za-z ]+$", customer_last_name):
+            form.add_error('customer_last_name', "Last name can only contain alphabets.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate customer_contact_number (must be exactly 10 digits)
+        if not re.match(r"^\d{10}$", customer_contact_number):
+            form.add_error('customer_contact_number', "Contact number must be exactly 10 digits.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate customer_mobile_number (must be exactly 10 digits)
+        if not re.match(r"^\d{10}$", customer_mobile_number):
+            form.add_error('customer_mobile_number', "Mobile number must be exactly 10 digits.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate company_revenue (must be a number)
+        if not company_revenue.isdigit():
+            form.add_error('company_revenue', "Company revenue must be a numeric value.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate customer_offering (allow only alphabets and numbers)
+        if not re.match("^[A-Za-z0-9 ]+$", customer_offering):
+            form.add_error('customer_offering', "Customer offering can only contain alphabets and numbers.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate competition_of_AT (allow only alphabets and numbers)
+        if not re.match("^[A-Za-z0-9 ]+$", competition_of_AT):
+            form.add_error('competition_of_AT', "Competition of AT can only contain alphabets and numbers.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate stock_market_registered (allow only alphabets and numbers)
+        if not re.match("^[A-Za-z0-9 ]+$", stock_market_registered):
+            form.add_error('stock_market_registered', "Stock market registered can only contain alphabets and numbers.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate IT spending budget (must be a number)
+        if not it_spending_budget.isdigit():
+            form.add_error('IT_spending_budget', "IT spending budget must be a numeric value.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate source_of_data_mining (allow only alphabets and numbers)
+        if not re.match("^[A-Za-z0-9 ]+$", source_of_data_mining):
+            form.add_error('source_of_data_mining', "Source of data mining can only contain alphabets and numbers.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
+        # Validate company_emp_size (must be a positive number)
+        if not company_emp_size.isdigit() or int(company_emp_size) <= 0:
+            form.add_error('company_emp_size', "Employee size must be a positive numeric value.")
+            return render(request, "sales_tracker/mining.html", {
+                "form": form,
+                "timer": formated_timer,
+                "mining_count": today_mining_count
+            })
+
         try:
-            MiningData.objects.get(organisation_name = form.data.get("organisation_name"))
+            MiningData.objects.get(organisation_name=organisation_name)
             print("hello world")
-        except:
+        except MiningData.DoesNotExist:
             assignTo = assign_miningCt()
             now_date_time = datetime.datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
             mining_details = MiningData(
-                organisation_name = form.data.get("organisation_name"),
-                customer_first_name = form.data.get("customer_first_name"),
-                customer_last_name = form.data.get("customer_last_name"),
-                customer_address = form.data.get("customer_address"),
-                customer_contact_number = form.data.get("customer_contact_number"),
-                customer_mobile_number = form.data.get("customer_mobile_number"),
-                customer_email = form.data.get("customer_email"),
-                company_revenue = form.data.get("company_revenue"),
-                company_emp_size = form.data.get("company_emp_size"),
-                customer_offering = form.data.get("customer_offering"),
-                competition_of_AT = form.data.get("competition_of_AT"),
-                stock_market_registered = form.data.get("stock_market_registered"),
-                influncer = form.data.get("influncer") == "on",
-                desition_maker = form.data.get("desition_maker") == "on",
-                IT_spending_budget = form.data.get("IT_spending_budget"),
-                source_of_data_mining = form.data.get("source_of_data_mining"),
-                date = now_date,
-                assigned_to = assignTo,
-                created_by = user,
-                state = state,
-                city = city,
-                region = zone,
+                organisation_name=organisation_name,
+                customer_first_name=customer_first_name,
+                customer_last_name=customer_last_name,
+                customer_address=form.data.get("customer_address"),
+                customer_contact_number=customer_contact_number,
+                customer_mobile_number=customer_mobile_number,
+                customer_email=form.data.get("customer_email"),
+                company_revenue=company_revenue,
+                company_emp_size=company_emp_size,
+                customer_offering=customer_offering,
+                competition_of_AT=competition_of_AT,
+                stock_market_registered=stock_market_registered,
+                influncer=form.data.get("influncer") == "on",
+                desition_maker=form.data.get("desition_maker") == "on",
+                IT_spending_budget=it_spending_budget,
+                source_of_data_mining=source_of_data_mining,
+                date=now_date,
+                assigned_to=assignTo,
+                created_by=user,
+                state=state,
+                city=city,
+                region=zone,
             )
             mining_details.save()
             print("Hello world 4")
-            return redirect("mining")    
-        
-        print("Hello world 2")
-        return render(request, "sales_tracker/mining.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+            return redirect("mining")
 
+        print("Hello world 2")
+        return render(request, "sales_tracker/mining.html", {
+            "form": form,
+            "timer": formated_timer,
+            "mining_count": today_mining_count
+        })
 
     else:
         form = MiningForm()
-    return render(request, "sales_tracker/mining.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count})
+
+    return render(request, "sales_tracker/mining.html", {
+        "form": form,
+        "timer": formated_timer,
+        "mining_count": today_mining_count
+    })
+
+
+
 
 # class DataView(ListView):
 #     template_name = "sales_tracker/data.html"
@@ -1787,4 +1923,28 @@ def liveStreaming(request):
 
 def viewcontact(request):
     return render(request, "sales_tracker/viewcontact.html")
+
+def leadImport(request):
+    return render(request, "sales_tracker/leadImport.html")
+
+def contactImport(request):
+    return render(request, "sales_tracker/contactImport.html")
+
+def quotesImport(request):
+    return render(request, "sales_tracker/quoteimport.html")
+
+def opportunityimport(request):
+    return render(request, "sales_tracker/opportunityimport.html")
+
+def accountimport(request):
+    return render(request, "sales_tracker/accountimport.html")
+
+def DSRimport(request):
+    return render(request, "sales_tracker/DSRimport.html")
+
+def miningimport(request):
+    return render(request, "sales_tracker/miningimport.html")
+
+
+
 

@@ -60,7 +60,7 @@ urlpatterns = [
     path("DSR", login_required(views.DSR), name="DSR"),
 
     path("liveStreaming", login_required(views.liveStreaming), name="liveStreaming"),
-    #path("createTask", login_required(views.createTask), name="createTask"),
+    # path("createTask", login_required(views.createTask), name="createTask"),
     path("viewTask", login_required(views.viewTask), name="viewTask"),
     path("createDocument", login_required(views.createDocument), name="createDocument"),
     path("viewDocument", login_required(views.viewDocument), name="viewDocument"),
@@ -77,5 +77,11 @@ urlpatterns = [
     path("viewcontact", login_required(views.viewcontact), name='viewcontact'),
     path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
 
-
+    path("leadImport", login_required((views.leadImport)), name="leadImport"),
+    path("contactImport", login_required((views.contactImport)), name="contactImport"),
+    path("quoteimport", login_required((views.quotesImport)), name="quoteimport"),
+    path("opportunityimport", login_required((views.opportunityimport)), name="opportunityimport"),
+    path("accountimport", login_required((views.accountimport)), name="accountimport"),
+    path("DSRimport", login_required((views.DSRimport)), name="DSRimport"),
+    path("miningimport", login_required((views.miningimport)), name="miningimport"),
 ]
