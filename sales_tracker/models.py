@@ -260,6 +260,7 @@ class Schedule_Meeting(models.Model):
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
     notes = models.CharField(max_length=255, null = True)
+    contact= models.EmailField(null = True)
     temp = models.CharField(max_length=233, null = True,  blank = True)
 
 
@@ -277,7 +278,7 @@ class Schedule_Calling(models.Model):
     related_to = models.CharField(max_length=255)
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
-    contact= models.IntegerField()
+    contact= models.IntegerField(null = True)
     notes = models.CharField(max_length=255, null = True)
     reason = models.CharField(max_length=255, null = True)
 

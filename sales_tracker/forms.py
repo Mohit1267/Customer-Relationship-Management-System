@@ -316,6 +316,10 @@ class agentmeeting(forms.ModelForm):
         label='note',
         required=True
     )
+    contact = forms.EmailField(
+    label='Contact',
+    required=True
+)
     class Meta:
         model = Schedule_Meeting  # Replace with your actual model name
         fields = [
@@ -330,11 +334,13 @@ class agentmeeting(forms.ModelForm):
             'assigned_to',
             'notification',
             'notes',
+            'contact',  
         ]
 
 
 
-class ScheduleCallingForm(forms.ModelForm):
+class agentcalling(forms.ModelForm):
+
     start_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
         label='Start Date',
@@ -371,86 +377,89 @@ class ScheduleCallingForm(forms.ModelForm):
         label='End Time',
         required=True
     )
+
     subject = forms.CharField(
         max_length=255,
-        label='Subject',
+        label='subject',
         required=True
     )
+
+     
     related_to = forms.ChoiceField(
         choices=[
-            ('', 'Select an option'),
-            ('Client', 'Client'),
-            ('Lead', 'Lead'),
-            ('Opportunity', 'Opportunity'),
-            ('Account', 'Account'),
-        ],
+        ('', 'Select an option'),
+        ('Client', 'Client'),
+        ('Lead', 'Lead'),
+        ('Opportunity', 'Opportunity'),
+        ('Account', 'Account'),
+    ],
+        
         label='Related To',
         required=True
     )
+
     assigned_to = forms.ChoiceField(
         choices=[
-            ('', 'Select an option'),
-            ('Client', 'Client'),
-            ('Lead', 'Lead'),
-            ('Opportunity', 'Opportunity'),
-            ('Account', 'Account'),
-        ],
+        ('', 'Select an option'),
+        ('Client', 'Client'),
+        ('Lead', 'Lead'),
+        ('Opportunity', 'Opportunity'),
+        ('Account', 'Account'),
+    ],
         label='Assigned To',
         required=True
     )
+
     notification = forms.CharField(
         max_length=255,
         label='Notification',
         required=True
     )
+
+    notes = forms.CharField(
+        max_length=255,
+        label='note',
+        required=True
+    )
+
     contact = forms.IntegerField(
         label='Contact',
         required=True
     )
-    notes = forms.CharField(
-        max_length=255,
-        label='Notes',
-        required=False,
-        widget=forms.Textarea(attrs={'rows': 3})
-    )
-    reason = forms.CharField(
-        max_length=255,
-        label='Reason',
-        required=False,
-        widget=forms.Textarea(attrs={'rows': 3})
-    )
-
     class Meta:
-        model = Schedule_Calling
+        model = Schedule_Calling  # Replace with your actual model name
         fields = [
-            'start_date', 'end_date', 'duration', 'frequency', 'start_time', 
-            'end_time', 'subject', 'related_to', 'assigned_to', 
-            'notification', 'contact', 'notes', 'reason'
-        ]
-
-    def __init__(self, *args, **kwargs):
-        super(ScheduleCallingForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.layout = Layout(
-            Row(
-                Column('start_date', css_class='form-group col-md-6 mb-0'),
-                Column('end_date', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-            Row(
-                Column('start_time', css_class='form-group col-md-6 mb-0'),
-                Column('end_time', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
+           'start_date',
+            'end_date',
             'duration',
             'frequency',
+            'start_time',
+            'end_time',
             'subject',
             'related_to',
             'assigned_to',
             'notification',
-            'contact',
             'notes',
-            'reason',
-            Submit('submit', 'Save')
-        )
+            'contact',
+        ]
+
+
+
+
+# from django import forms
+# from .models import Task
+
+# class TaskForm(forms.ModelForm):
+#     # Fields definition
+#     contact = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter Contact Name'}))
+#     subject = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter Subject'}))
+#     attachment = forms.FileField(required=False)  # Optional attachment
+#     note = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter Notes'}), required=False)
+#     related_to = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'placeholder': 'Enter Related To'}))
+
+#     class Meta:
+#         model = Task  # Use your actual model name
+#         fields = ['contact', 'subject', 'attachment', 'note', 'related_to']
+# =======
+            
+
