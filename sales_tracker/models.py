@@ -168,11 +168,6 @@ from django.contrib.auth.models import User
 
 
 from django.db import models
-from django.contrib.auth.models import User
-
-
-
-from django.db import models
 
 class Account(models.Model):
     # Basic Fields
@@ -203,64 +198,21 @@ class Account(models.Model):
     shipping_country = models.CharField(max_length=100, blank=True, null=True)
     
     # Account Detail
-    TYPE_CHOICES = (
-    ('select', 'Select'),
-    ('analyst', 'Analyst'),
-    ('competitor', 'Competitor'),
-    ('customer', 'Customer'),
-    ('integrator', 'Integrator'),
-    ('investor', 'Investor'),
-    ('partner', 'Partner'),
-    ('press', 'Press'),
-    ('prospect', 'Prospect'),
-    ('reseller', 'Reseller'),
-    ('other', 'Other'))
-
-    type = models.CharField(max_length=50, choices=TYPE_CHOICES)
-
-    CAMPAIGN_CHOICES = (
-        
-    )
-    campaign = models.CharField(max_length=100, choices=CAMPAIGN_CHOICES, blank=True, null=True)
-
-    INDUSTRY_CHOICES = (
-    ('apparel', 'Apparel'),
-    ('banking', 'Banking'),
-    ('biotechnology', 'Biotechnology'),
-    ('chemicals', 'Chemicals'),
-    ('communications', 'Communications'),
-    ('construction', 'Construction'),
-    ('consulting', 'Consulting'),
-    ('education', 'Education'),
-    ('electronics', 'Electronics'),
-    ('energy', 'Energy'),
-    ('engineering', 'Engineering'),
-    ('entertainment', 'Entertainment'),
-    ('environmental', 'Environmental'),
-    ('finance', 'Finance'),
-    ('government', 'Government'),
-    ('healthcare', 'Healthcare'),
-    ('hospitality', 'Hospitality'),
-    ('insurance', 'Insurance'),
-    ('machinery', 'Machinery'),
-    ('manufacturing', 'Manufacturing'),
-    ('media', 'Media'),
-    ('not_for_profit', 'Not For Profit'),
-    ('recreation', 'Recreation'),
-    ('retail', 'Retail'),
-    ('shipping', 'Shipping'),
-    ('technology', 'Technology'),
-    ('telecommunications', 'Telecommunications'),
-    ('transportation', 'Transportation'),
-    ('utilities', 'Utilities'),
-    ('other', 'Other'),
-)
-
-    industry = models.CharField(max_length=100, choices=INDUSTRY_CHOICES, blank=True, null=True)
+    type = models.CharField(max_length=50,choices=(
+        ('option1', 'Option 1'),
+        ('option2', 'Option 2'),
+        ('option3', 'Option 3'),
+    ))
 
     annual_revenue = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     member_of = models.CharField(max_length=100, blank=True, null=True)
+    campaign = models.CharField(max_length=100, blank=True, null=True)
+    industry = models.CharField(max_length=100, blank=True, null=True)
     employees = models.IntegerField(blank=True, null=True)
+
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -382,36 +334,43 @@ class Document(models.Model):
 
     
     def __str__(self):
-
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
     
 
 
+from django.db import models
 
- 
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.name
 
 
 class Task(models.Model):
-    PRIORITY_CHOICES = [
+    TASK_PRIORITY_CHOICES = [
         ('low', 'Low'),
         ('medium', 'Medium'),
         ('high', 'High'),
     ]
-    
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
+
+    TASK_STATUS_CHOICES = [
+        ('open', 'Open'),
         ('in_progress', 'In Progress'),
         ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
     ]
-    
-    subject = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
+
+    subject = models.CharField(max_length=100)
     start_date = models.DateField()
     due_date = models.DateField()
-    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='low')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    related_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Updated to use AUTH_USER_MODEL
-    contacts = models.CharField(max_length=255, blank=True, null=True)
+    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
+    description = models.TextField()
+    status = models.CharField(max_length=12, choices=TASK_STATUS_CHOICES, default='open')
+    related_to = models.CharField(max_length=100, blank=True, null=True)  # Can reference other models later
+    contacts = models.ManyToManyField(Contact, related_name='tasks')
 
     def __str__(self):
         return self.subject
