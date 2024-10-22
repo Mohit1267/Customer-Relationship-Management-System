@@ -1,4 +1,4 @@
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling, Task
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
@@ -72,59 +72,32 @@ class PasswordForm(forms.ModelForm):
 class SortForm(forms.Form):
     select = forms.ChoiceField(choices=MY_CHOICES, label='Select an option')
 
+from django import forms
+from .models import Task
 
-class TaskForm(forms.Form):
-    # Priority choices
-    PRIORITY_CHOICES = [
-        ('Low', 'Low'),
-        ('Medium', 'Medium'),
-        ('High', 'High'),
-    ]
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['subject', 'start_date', 'due_date', 'priority', 'description', 'status', 'related_to', 'contacts']
+        
+        # Custom widgets for form fields
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter task subject'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'due_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Enter task description'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to (optional)'}),
+            'contacts': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        # Customizing the labels or adding help texts if needed
+        self.fields['subject'].label = "Task Subject"
+        self.fields['contacts'].help_text = "Hold Ctrl to select multiple contacts"
 
-    # Status choices
-    STATUS_CHOICES = [
-        ('Pending', 'Pending'),
-        ('In Progress', 'In Progress'),
-        ('Completed', 'Completed'),
-    ]
-
-    # Defining form fields
-    subject = forms.CharField(
-        max_length=200,
-        label='Subject',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter task subject'})
-    )
-    start_date = forms.DateField(
-        label='Start Date',
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
-    )
-    due_date = forms.DateField(
-        label='Due Date',
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
-    )
-    priority = forms.ChoiceField(
-        choices=PRIORITY_CHOICES,
-        label='Priority',
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-    description = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter task description'}),
-        label='Description'
-    )
-    status = forms.ChoiceField(
-        choices=STATUS_CHOICES,
-        label='Status',
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-    related_to = forms.CharField(
-        max_length=100,
-        label='Related To',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter related entity'})
-    )
-    contacts = forms.EmailField(
-        label='Contacts',
-        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter email contact'})
-    )
 
 
 class AccountForm(forms.Form):
