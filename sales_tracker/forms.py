@@ -72,19 +72,33 @@ class PasswordForm(forms.ModelForm):
 class SortForm(forms.Form):
     select = forms.ChoiceField(choices=MY_CHOICES, label='Select an option')
 
-
 from django import forms
-from .models import Task, Contact
+from .models import Task
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['subject', 'start_date', 'due_date', 'priority', 'description', 'status', 'related_to', 'contacts']
+        
+        # Custom widgets for form fields
         widgets = {
-            'start_date': forms.DateInput(attrs={'type': 'date'}),
-            'due_date': forms.DateInput(attrs={'type': 'date'}),
-            'description': forms.Textarea(attrs={'rows': 4}),
+            'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter task subject'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'due_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Enter task description'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to (optional)'}),
+            'contacts': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        # Customizing the labels or adding help texts if needed
+        self.fields['subject'].label = "Task Subject"
+        self.fields['contacts'].help_text = "Hold Ctrl to select multiple contacts"
+
+
 
 class AccountForm(forms.Form):
     Name = forms.CharField(max_length=100, label='Name', widget=forms.TextInput(attrs={'class': 'form-control'}))

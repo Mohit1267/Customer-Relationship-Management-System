@@ -1551,4 +1551,8 @@ def send_meeting_email(request, meeting_id):
         return HttpResponse("Email sent successfully!")
     except Exception as e:
         return HttpResponse(f"Failed to send email: {e}")
+    
+
+def miningimport(request):
+    return render(request, "sales_tracker/miningimport.html")
 
