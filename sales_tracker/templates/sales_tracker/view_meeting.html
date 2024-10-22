@@ -45,19 +45,19 @@
                 </tr>
             </thead>
             <tbody>
-                {% for call in scheduled_meetings %}
+                {% for meeting in scheduled_meetings %}
                 <tr>
-                    <td>{{ call.start_date }}</td>
-                    <td>{{ call.end_date }}</td>
-                    <td>{{ call.duration }}</td>
-                    <td>{{ call.frequency }}</td>
-                    <td>{{ call.start_time }}</td>
-                    <td>{{ call.end_time }}</td>
-                    <td>{{ call.subject }}</td>
-                    <td>{{ call.related_to }}</td>
-                    <td>{{ call.assigned_to }}</td>
-                    <td>{{ call.notification }}</td>
-                    <td>{{ call.contact }}</td>
+                    <td>{{ meeting.start_date }}</td>
+                    <td>{{ meeting.end_date }}</td>
+                    <td>{{ meeting.duration }}</td>
+                    <td>{{ meeting.frequency }}</td>
+                    <td>{{ meeting.start_time }}</td>
+                    <td>{{ meeting.end_time }}</td>
+                    <td>{{ meeting.subject }}</td>
+                    <td>{{ meeting.related_to }}</td>
+                    <td>{{ meeting.assigned_to }}</td>
+                    <td>{{ meeting.notification }}</td>
+                    <td>{{ meeting.contact }}</td>
                 </tr>
                 {% empty %}
                 <tr>
