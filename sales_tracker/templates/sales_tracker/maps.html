@@ -7,26 +7,19 @@
 {% endblock %} 
 
 {% block content %}
-<!-- <h1>{{lat}}</h1> -->
-<!-- <h1>{{long}}</h1> -->
-<!-- <script>
-    let map
 
-    function initMap(){
-        map = new google.maps.Map(document.getElementById("map"),{
-            center:{lat:-34.379 , lng: 150.644},
-            zoom: 8,
-        }
-    );
-    }
+<div class="mapholder">
+    <h1>{{lat}} , {{long}}</h1>
+    <div id="map">
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC5IR5-5KuTsr2zrfUU04v5MBT9muhptI&callback=initMap&v=weekly"
+        defer
+        ></script>
+    </div>
+</div>
+<a href="{% url 'maps' %}"> Go to the map </a>
 
-    window.initMap = initMap
-</script> -->
-
-
-
-
-
+ 
 <script>
     let map;
 
@@ -45,29 +38,12 @@
         new google.maps.Marker({
             position: { lat: latitude, lng: longitude },
             map: map,
-            title: "User Location",
+            title: "User  Location",
         });
     }
 
+    // Declare the initMap function globally
     window.initMap = initMap;
 </script>
 
-
-
-
-
-
-
-
-
-<div class="mapholder">
-    <h1>{{lat}} , {{long}}</h1>
-    <div id="map">
-        <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC5IR5-5KuTsr2zrfUU04v5MBT9muhptI&callback=initMap&v=weekly"
-        defer
-        ></script>
-    </div>
-</div>
-<a href="{% url 'maps' %}"> Go to the map </a>
 {% endblock %}

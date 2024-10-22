@@ -289,7 +289,7 @@ class agentmeeting(forms.ModelForm):
         label='note',
         required=True
     )
-    contact = forms.EmailField(
+    contact = forms.CharField(
     label='Contact',
     required=True
 )
@@ -312,10 +312,8 @@ class agentmeeting(forms.ModelForm):
 
 
 
-
-
-
 class agentcalling(forms.ModelForm):
+
     start_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
         label='Start Date',
@@ -417,24 +415,4 @@ class agentcalling(forms.ModelForm):
             'notes',
             'contact',
         ]
-
-
-
-
-# from django import forms
-# from .models import Task
-
-# class TaskForm(forms.ModelForm):
-#     # Fields definition
-#     contact = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter Contact Name'}))
-#     subject = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter Subject'}))
-#     attachment = forms.FileField(required=False)  # Optional attachment
-#     note = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter Notes'}), required=False)
-#     related_to = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'placeholder': 'Enter Related To'}))
-
-#     class Meta:
-#         model = Task  # Use your actual model name
-#         fields = ['contact', 'subject', 'attachment', 'note', 'related_to']
-# =======
-            
 

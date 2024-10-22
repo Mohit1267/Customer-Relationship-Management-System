@@ -1,30 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scheduled Calls</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        html, body {
-        height: 100%;
-        margin: 0; /* Remove default margin */
-        }
-        .wrapper {
-        height: 100%; /* Ensure wrapper takes full height */
-        }
-        .bg-gradient {
-            background: linear-gradient(to right, #a2e9da, #69d4c6);
-        }
-        .bg-gradient1 {
-            background: linear-gradient(to right, #2e2d2d, #e6dfd4);
-        }
-    </style>
-</head>
-<body>
-    <div class="wrapper bg-gradient1 ">
-         <div class="container-fluid   ">
+{% extends "agentbase.html" %}
+{% load static %}
+ 
+{% block css_link %}
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <style>
+       html, body {
+       height: 100%;
+       margin: 0; /* Remove default margin */
+       }
+       .wrapper {
+       height: 100%; /* Ensure wrapper takes full height */
+       }
+       .bg-gradient {
+           background: linear-gradient(to right, #a2e9da, #69d4c6);
+       }
+       .bg-gradient1 {
+           background: linear-gradient(to right, #cee0e0, #e6dfd4);
+       }
+       .container-fluid{
+         margin-left: 30px;
+       }
+       .wrapper{
+        margin-left: 60px;
+        z-index: 100;
+       }
+       .container {
+        z-index: 100;
+       }
+       
+   </style>
+{% endblock %}
+
+
+{% block title %}Scheduled Meetings {% endblock %}
+
+{% block content %} 
+    <div class="wrapper   overflow-auto  ">
+         <div class="container-fluid    ">
              <div class="container  bg-gradient">
         <h1 class="text-center mb-4">Scheduled Meetings</h1>
 
@@ -64,6 +77,7 @@
                             <button type="submit">Send Email</button>
                         </form>
                     </td>
+                   
                 </tr>
                 {% empty %}
                 <tr>
@@ -75,5 +89,4 @@
             </div>
         </div>
     </div>
- </body>
-</html>
+{% endblock %}
