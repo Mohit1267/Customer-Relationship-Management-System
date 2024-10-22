@@ -260,7 +260,6 @@ class Schedule_Meeting(models.Model):
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
     notes = models.CharField(max_length=255, null = True)
-    contact= models.EmailField(null = True)
     temp = models.CharField(max_length=233, null = True,  blank = True)
 
 
@@ -278,7 +277,7 @@ class Schedule_Calling(models.Model):
     related_to = models.CharField(max_length=255)
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
-    contact= models.IntegerField(null = True)
+    contact= models.IntegerField()
     notes = models.CharField(max_length=255, null = True)
     reason = models.CharField(max_length=255, null = True)
 
@@ -336,3 +335,30 @@ class Document(models.Model):
     
     def __str__(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
+    
+
+class Task(models.Model):
+    TASK_PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    TASK_STATUS_CHOICES = [
+        ('open', 'Open'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    subject = models.CharField(max_length=100)
+    start_date = models.DateField()
+    due_date = models.DateField()
+    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
+    description = models.TextField()
+    status = models.CharField(max_length=12, choices=TASK_STATUS_CHOICES, default='open')
+    related_to = models.CharField(max_length=100, blank=True, null=True)  # Can reference other models later
+    contacts = models.ManyToManyField(ContactData, related_name='tasks')
+
+    def __str__(self):
+        return self.subject
