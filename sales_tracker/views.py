@@ -1673,8 +1673,6 @@ def accountimport(request):
 def DSRimport(request):
     return render(request, "sales_tracker/DSRimport.html")
 
-def miningimport(request):
-    return render(request, "sales_tracker/miningimport.html")
 
 def send_meeting_email(request, meeting_id):
     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)

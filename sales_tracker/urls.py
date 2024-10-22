@@ -77,7 +77,7 @@ urlpatterns = [
     path("viewaccount", login_required(views.viewAccount), name='viewaccount'),
     path("viewcontact", login_required(views.viewcontact), name='viewcontact'),
 
-    path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
+    path("agentcalling", login_required((views.Schedule_Calling)), name="agentcalling"),
 
     path("leadImport", login_required((views.leadImport)), name="leadImport"),
     path("contactImport", login_required((views.contactImport)), name="contactImport"),
@@ -85,7 +85,7 @@ urlpatterns = [
     path("opportunityimport", login_required((views.opportunityimport)), name="opportunityimport"),
     path("accountimport", login_required((views.accountimport)), name="accountimport"),
     path("DSRimport", login_required((views.DSRimport)), name="DSRimport"),
-    path("miningimport", login_required((views.miningimport)), name="miningimport"),
+
 
     # path("view_contact", login_required(views.ViewScheduledMeeting), name='view_contact'),
     path('send-email/<int:meeting_id>/', views.send_meeting_email, name='send_meeting_email'),
