@@ -113,7 +113,7 @@ button:hover {
 .graphBox {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     /* max-width: 900px; */
