@@ -10,13 +10,25 @@
 <div class="miner-content">
 
    
-    <div class="filter-container">
-        <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
-        <div id="filterForm" class="filter-form">
-            <div class="form-group">
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+
+            
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        
+        <button id="filter-btn" class="filter-button">Filter</button>
+
+    </div>
+    
+    <div id="filter-section" class="filter-section" style="display: none;">
+    
+        <form method="GET" action="{% url 'lead_data' %}">
+            <div class="inside-filter-container">
                 <label for="time_frame">Select Time Frame:</label>
                 <select name="time_frame" id="time_frame">
-                    <option value="all" disabled selected hidden>Select Time Frame</option> 
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
                     <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                     <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
                     <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
@@ -25,7 +37,7 @@
                 </select>
             </div>
     
-            <div class="form-group">
+            <div class="state-filter-container">
                 <label for="state-filter">State:</label>
                 <select name="state" id="state-filter">
                     <option value="all" disabled selected hidden>Select State</option>
@@ -59,7 +71,7 @@
                 </select>
             </div>
     
-            <div class="form-group">
+            <div class="zone-filter-container">
                 <label for="zone-filter">Zone:</label>
                 <select name="zone" id="zone-filter">
                     <option value="all" disabled selected hidden>Select Zone</option>
@@ -69,14 +81,13 @@
                     <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
                 </select>
             </div>
-
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
-                <button class="btn btn-outline-success" type="submit" style="height: 35px;">Search</button>
-            </form>
-         </div>
-
-      </div>
+    
+            <div class="buttons">
+                <button type="submit" class="button">Apply Filter</button>
+                <button type="button" class="button" onclick="clearFilters()">Clear</button>
+            </div>
+        </form>
+    </div>
 
        
             <img class="attpiechart" src="{% static 'Mining_Count.png' %}" alt="Attendance Chart">

@@ -19,93 +19,69 @@ body {
 }
 
 
-.filter-container {
-    margin: 20px;
+.filter-section {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 40px;
 }
 
-.filter-toggle-btn {
+
+
+.filter-button {
+    padding: 10px 20px;
+    font-size: 1rem;
     background-color: #1E2A38;
     color: white;
-    padding: 10px 20px;
-    border: 2px solid black;
-    border-radius: 3px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    width: 150px;
+    transition: background-color 0.3s ease;
 }
 
-.filter-toggle-btn:hover{
-    border-color: white;
-    color: white;
+.filter-button:hover {
     background-color: rgb(78, 81, 82);
 }
 
-.filter-form {
-    display: none;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.filter-form {
-    display: none;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    /* display: grid; */
-    grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
-    grid-gap: 20px; /* Space between form fields */
-}
-
-.form-group {
+.inside-filter-container, .state-filter-container, .zone-filter-container {
     margin-bottom: 15px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
+.buttons {
+    display: flex;
+    gap: 10px;
 }
 
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.form-actions {
-    grid-column: span 3; /* Form actions take up full width of the grid */
-    margin-top: 20px;
-}
-
-.form-actions button {
+.button {
     padding: 10px 15px;
-    margin-right: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.form-actions button[type="submit"] {
+.button[type="submit"] {
     background-color: #28a745;
     color: white;
 }
 
-.form-actions button[type="button"] {
+.button[type="button"] {
     background-color: #dc3545;
     color: white;
 }
 
+.button:hover {
+    opacity: 0.9;
+}
 
 .containers {
     margin: 0;
-    padding: 0; /* Remove default padding to align content properly */
+    padding: 0;
     background-color: #e0eaf6;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Set container width to 100% to align content */
+    width: 100%;
 }
 
 .headingDiv {
@@ -125,17 +101,18 @@ h1 {
 }
 
 table {
-    width: 100%; /* Make table fill the container width */
+    width: 100%;
     border-collapse: collapse;
-    margin: 0; /* Remove margin to avoid extra spacing */
+    margin: 0;
     font-size: 16px;
     text-align: left;
+    margin-top: 20px;
 }
 
 th, td {
     padding: 12px 15px;
     border: 1px solid #ddd;
-    white-space: nowrap; /* Prevent wrapping of text */
+    white-space: nowrap;
 }
 
 thead {
