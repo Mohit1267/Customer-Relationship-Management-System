@@ -39,7 +39,6 @@
               <div class="state-filter-container">
                 <label for="state-filter" style="margin-left: 30px;">State:</label>
                 <select name="state" id="state-filter" onchange=" this.form.submit()">
-
                     <option value="all" disabled selected hidden>Select State</option>
                     <option value="AP">Andhra Pradesh</option>
                     <option value="AR">Arunachal Pradesh</option>
@@ -68,7 +67,6 @@
                     <option value="UP">Uttar Pradesh</option>
                     <option value="UT">Uttarakhand</option>
                     <option value="WB">West Bengal</option>
-      
                   </select>
               </div>
               
@@ -89,7 +87,8 @@
 
               <div class="buttons">
                 <button type="submit" class="button1" style="margin-left: 20px;">Apply Filter</button>
-                <button type="reset" class="button1"  style="margin-left: 20px;">Clear</button></div>
+                <button type="reset" class="button1"  style="margin-left: 20px;">Clear</button>
+              </div>
                 
               </form>
             </div>
@@ -138,24 +137,23 @@
      </div>
 
 
-    <div class="offcanvas-body"  id="offcanvasExample">
+     <div class="offcanvas-body"  id="offcanvasExample">
       <div class="row p-2">
         <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
       </div>
       <div class="row p-2">
         <a href="#" class=" right_profile" >Edit Profile</a>
         </div>
-        <hr>
         <div class=" row p-2">
           <a href="#" class=" right_profile">Employees</a>
         </div>
         <div class=" row p-2">
-            <a href="#" class=" right_profile">Community Forum</a>
+            <a href="#" class=" right_profile">Community</a>
         </div>
         <div class=" row p-2">
               <a href="#" class=" right_profile">About</a>
         </div>
-        <hr>
+         
         <div class=" row p-2">
                 <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
       </div>

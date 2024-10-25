@@ -5,96 +5,77 @@ body {
     padding: 0;
 }
 .main_container {
-    margin: 20px auto;
+    /* margin: 20px auto; */
     padding: 20px;
     /* max-width: 1200px; */
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    margin-top: 74px;
+    /* margin-top: 74px; */
     width: 100%;
     overflow-y: auto;
     overflow-x: auto;
 }
 
-.filter-container {
-    margin: 20px;
+.filter-section {
+    display: none; /* Hidden by default */
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 40px;
 }
 
-.filter-toggle-btn {
+
+/* Filter Button */
+.filter-button {
+    padding: 10px 20px;
+    font-size: 1rem;
     background-color: #1E2A38;
     color: white;
-    padding: 10px 20px;
-    border: 2px solid black;
-    border-radius: 3px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    width: 150px;
+    transition: background-color 0.3s ease;
 }
 
-.filter-form {
-    display: none;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.filter-toggle-btn:hover{
-    border-color: white;
-    color: white;
+.filter-button:hover {
     background-color: rgb(78, 81, 82);
 }
 
-.filter-form {
-    display: none;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    /* display: grid; */
-    grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
-    grid-gap: 20px; /* Space between form fields */
-}
+/* Filter Section - initially hidden */
 
-.form-group {
+
+/* General styling for the filter form */
+.inside-filter-container, .state-filter-container, .zone-filter-container {
     margin-bottom: 15px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
+.buttons {
+    display: flex;
+    gap: 10px;
 }
 
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.form-actions {
-    grid-column: span 3; /* Form actions take up full width of the grid */
-    margin-top: 20px;
-}
-
-.form-actions button {
+.button {
     padding: 10px 15px;
-    margin-right: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.form-actions button[type="submit"] {
-    background-color: #28a745;
+.button[type="submit"] {
+    background-color: #28a745; /* Apply Filter: Green */
     color: white;
 }
 
-.form-actions button[type="button"] {
-    background-color: #dc3545;
+.button[type="button"] {
+    background-color: #dc3545; /* Clear Filter: Red */
     color: white;
+}
+
+.button:hover {
+    opacity: 0.9;
 }
 
 
@@ -129,6 +110,7 @@ table {
     margin: 0; /* Remove margin to avoid extra spacing */
     font-size: 16px;
     text-align: left;
+    margin-top: 20px;
 }
 
 th, td {

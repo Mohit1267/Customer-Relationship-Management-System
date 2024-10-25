@@ -12,97 +12,64 @@
     overflow-x: auto;
 }
 
-
-
-.filter-container {
-    margin: 20px;
+.filter-section {
+    display: none; /* Hidden by default */
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
-.filter-toggle-btn {
+
+/* Filter Button */
+.filter-button {
+    padding: 10px 20px;
+    font-size: 1rem;
     background-color: #1E2A38;
     color: white;
-    padding: 10px 20px;
-    border: 2px solid black;
-    border-radius: 3px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    width: 150px;
+    transition: background-color 0.3s ease;
 }
 
-.filter-toggle-btn:hover{
-    border-color: white;
-    color: white;
+.filter-button:hover {
     background-color: rgb(78, 81, 82);
 }
 
-.filter-form {
-    display: none;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
+/* Filter Section - initially hidden */
 
-.form-group {
+
+/* General styling for the filter form */
+.inside-filter-container, .state-filter-container, .zone-filter-container {
     margin-bottom: 15px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
+.buttons {
+    display: flex;
+    gap: 10px;
 }
 
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.form-actions {
-    margin-top: 20px;
-}
-
-.form-actions button {
+.button {
     padding: 10px 15px;
-    margin-right: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.form-actions button[type="submit"] {
-    background-color: #28a745;
+.button[type="submit"] {
+    background-color: #28a745; /* Apply Filter: Green */
     color: white;
 }
 
-.form-actions button[type="button"] {
-    background-color: #dc3545;
+.button[type="button"] {
+    background-color: #dc3545; /* Clear Filter: Red */
     color: white;
 }
 
-
-.form-control {
-    width: 300px;
-    margin-right: 10px;
-    border-radius: 20px 0 0 20px;
-    height: 35px;
-
-}
-
-button {
-    padding: 5px 20px; 
-    color: black; 
-    border: 1px solid black; 
-    cursor: pointer; 
-    transition: background-color 0.3s;
-    background-color: #eff3f7;
-}
-
-button:hover {
-    border-color: white;
-    color: white;
-    background-color: black;
+.button:hover {
+    opacity: 0.9;
 }
 
 .table-responsive {
@@ -121,6 +88,7 @@ table {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden; 
+    margin-top: 20px;
 }
 
 
