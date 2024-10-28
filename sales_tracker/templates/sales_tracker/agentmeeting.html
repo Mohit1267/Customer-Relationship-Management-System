@@ -15,7 +15,7 @@
   <form method="POST">
     {% csrf_token %}
 
-    <!-- Title Section -->
+    
     <div class="row mt-2 mb-2">
       <div class="col-12 text-center moving_title " style="color: white ">
         Agent Meeting
@@ -24,7 +24,7 @@
 
     <hr>
 
-    <!-- Button Section -->
+   
     <div class="row mb-2">
       <div class="col-12 d-flex justify-content-end">
         <button type="submit" class="button1 mx-2">Submit</button>
@@ -37,32 +37,27 @@
       <div class="form">
         <div class="form-section left left-form"> 
 
-        <!-- Start Date Section -->
         <div class="form-group">
           {{form.start_date|as_crispy_field}}
         </div>
 
-        <!-- End Date Section -->
         <div class="form-group">
           {{form.end_date|as_crispy_field}}
         </div>
 
-        <!-- Duration Section -->
         <div class="form-group">
           {{form.duration|as_crispy_field}}
         </div>
 
-        <!-- Frequency Section -->
         <div class="form-group">
           {{form.frequency|as_crispy_field}}
         </div>
 
-        <!-- Time Section -->
+
         <div class="form-group">
           {{form.start_time|as_crispy_field}}
         </div>
 
-        <!-- End Time Section -->
         <div class="form-group">
           {{form.end_time|as_crispy_field}}
         </div>
@@ -70,17 +65,17 @@
       </div>
 
       <div class="form-section right right-form">
-        <!-- Subject Section -->
+
         <div class="form-group">
           {{form.subject|as_crispy_field}}
         </div>
 
-        <!-- Related To Section -->
+
         <div class="form-group">
           {{form.related_to|as_crispy_field}}
         </div>
 
-        <!-- Assigned To Section -->
+
         <div class="form-group">
           {{form.assigned_to|as_crispy_field}}
         </div>
@@ -88,7 +83,7 @@
           {{ form.contact|as_crispy_field }}
         </div>
 
-        <!-- Notification Section -->
+
         <div class="form-group">
           {{form.notification|as_crispy_field}}
         </div>

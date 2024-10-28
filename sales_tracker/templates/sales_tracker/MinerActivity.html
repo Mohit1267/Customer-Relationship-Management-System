@@ -119,40 +119,56 @@
 
 <script>
     function toggleFilter() {
-      var filterForm = document.getElementById("filterForm");
-      if (filterForm.style.display === "none") {
-          filterForm.style.display = "grid";
-      } else {
-          filterForm.style.display = "none";
-      }
-  }
-  
-  function clearForm() {
-      document.getElementById("subject").value = "";
-      document.getElementById("contactName").value = "";
-      document.getElementById("status").value = "";
-      document.getElementById("relatedTo").value = "";
-      document.getElementById("assignedTo").value = "";
-  }
-
-  function performSearch() {
-// Collect form data
-var subject = document.getElementById("subject").value;
-var contactName = document.getElementById("contactName").value;
-var status = document.getElementById("status").value;
-var relatedTo = document.getElementById("relatedTo").value;
-var assignedTo = document.getElementById("assignedTo").value;
-
-// Simulate search (this is where you'd add real search functionality, e.g., an API call)
-var results = "Search results for: \n" +
-              "Subject: " + subject + "\n" +
-              "Contact Name: " + contactName + "\n" +
-              "Status: " + status + "\n" +
-              "Related To: " + relatedTo + "\n" +
-              "Assigned To: " + assignedTo;
-
-// Display search results (you can modify this to display real search results)
-document.getElementById("searchResults").innerText = results;
-}
+            var filterForm = document.getElementById("filterForm");
+            filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
+        }
+    
+        function clearForm() {
+            document.getElementById("subject").value = "";
+            document.getElementById("contact").value = "";
+            document.getElementById("priority").value = "";
+            document.getElementById("status").value = "";
+            document.getElementById("contacts").value = "";
+            document.getElementById("assignedTo").value = "";
+        }
+    
+        function performSearch() {
+            // Get filter values
+            var subject = document.getElementById("subject").value.toLowerCase();
+            var contact = document.getElementById("contact").value.toLowerCase();
+            var priority = document.getElementById("priority").value.toLowerCase();
+            var status = document.getElementById("status").value.toLowerCase();
+            var contacts = document.getElementById("contacts").value.toLowerCase();
+            var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+    
+            // Log values for debugging
+            console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
+    
+            // Get all rows in the table
+            var rows = document.querySelectorAll("table tbody tr");
+    
+            rows.forEach(function(row) {
+                var rowSubject = row.cells[0].innerText.toLowerCase();
+                var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
+                var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
+                var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
+                var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
+                var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
+    
+                // Check if the row matches the filters
+                var match = (!subject || rowSubject.includes(subject)) &&
+                            (!contact || rowContact.includes(contact)) &&
+                            (!priority || rowPriority.includes(priority)) &&
+                            (!status || rowStatus.includes(status)) &&
+                            (!contacts || rowContacts.includes(contacts)) &&
+                            (!assignedTo || rowAssignedTo.includes(assignedTo));
+    
+                // Log matching status for each row
+                console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
+    
+                // Show or hide the row based on match
+                row.style.display = match ? "" : "none";
+            });
+        }
   </script>
 {% endblock %}
