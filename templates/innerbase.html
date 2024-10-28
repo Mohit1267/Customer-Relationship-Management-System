@@ -33,7 +33,7 @@
   <!-- <button onclick="startRecognition()">Start Voice Command</button> -->
 
   <script src="charts.js"></script>
-  <!-- navbar to the right side -->
+  
   <nav class="navbar navbar-expand-lg">
     <div class="navbar-brand-container">
       <a href="{% url 'index' %}">
@@ -41,7 +41,6 @@
       </a>
     </div>
 
-    <!-- timer  -->
     <div>
       {% if timer %}
       <div class="timer" id="count_down">
@@ -192,7 +191,6 @@
 
       recognition.onend = function () {
         console.log('Voice recognition ended.');
-        // Restart recognition if needed
         startRecognition();
       };
 
@@ -208,19 +206,19 @@
       else if (miningViewPattern.test(command)) {
         window.location.href = "{% url 'data' %}";
       } else {
-        // Extract time frame and state using regex
+
         const timeFrame = extractTimeFrame(command);
         const state = extractState(command);
 
         if (timeFrame || state) {
           if (timeFrame) {
             document.getElementById('time_frame').value = timeFrame;
-            // Manually trigger the change event to submit the form
+
             document.getElementById('time_frame').dispatchEvent(new Event('change'));
           }
           if (state) {
             document.getElementById('state-filter').value = state;
-            // Manually trigger the change event to submit the form
+
             document.getElementById('state-filter').dispatchEvent(new Event('change'));
           }
         } else {
@@ -275,14 +273,13 @@
       return null;
     }
 
-    // Start voice recognition when the page loads
     window.onload = function () {
       startRecognition();
     };
   </script>
 
   <script>
-    // Function to toggle the navbar
+
     function toggleNavbar() {
       const navbar = document.querySelector('.nav-links');
       navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
@@ -290,53 +287,43 @@
   </script>
 
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<!-- 
   <script>
     function toggleNavbar() {
       const navbarContainer = document.querySelector('.navbar-container');
       const navbar = document.querySelector('.navbar');
 
-      // Toggle the 'collapsed' class on the navbar
       navbar.classList.toggle('collapsed');
 
-      // Toggle the visibility by toggling a class
       navbarContainer.classList.toggle('visible');
     }
 
-  </script>
+  </script> -->
 
-
-
-  <!-- profile section-->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const profileButton = document.querySelector('.profile1');
       const offcanvas = document.getElementById('offcanvasExample');
 
-      // Toggle offcanvas visibility on profile button click
       profileButton.addEventListener('click', function (e) {
-        e.stopPropagation(); // Prevent event from bubbling
-        offcanvas.classList.toggle('show'); // Toggle the "show" class to open/close offcanvas
+        e.stopPropagation(); 
+        offcanvas.classList.toggle('show'); 
       });
 
-      // Close the offcanvas when clicking outside of it
       document.addEventListener('click', function (e) {
         if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
-          offcanvas.classList.remove('show'); // Close offcanvas if clicking outside
+          offcanvas.classList.remove('show');
         }
       });
 
-      // Ensure the close button inside the offcanvas works
       document.querySelector('.btn-close').addEventListener('click', function () {
-        offcanvas.classList.remove('show'); // Close offcanvas
+        offcanvas.classList.remove('show'); 
       });
     });
 
   </script>
 
-
-  <!---->
   <script>
     let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 +
       parseInt("{{ timer.min }}", 10) * 60 +
@@ -370,7 +357,7 @@
     let mainTimerInterval = setInterval(updateCountDown, 1000);
 
     function startMainTimer() {
-      clearInterval(mainTimerInterval);  // Ensure no multiple intervals running
+      clearInterval(mainTimerInterval);
       mainTimerInterval = setInterval(updateCountDown, 1000);
     }
 
@@ -393,7 +380,7 @@
       });
     }
 
-    let breakTimeLeft = 3600; // 1 hour in seconds
+    let breakTimeLeft = 3600;
     let breakTimerInterval = null;
 
     document.getElementById("toggleBreakBtn").addEventListener("click", function () {
@@ -402,10 +389,9 @@
         breakTimerInterval = null;
         this.innerHTML = "Start Break";
 
-        // Resume the main timer
         startMainTimer();
       } else {
-        pauseMainTimer();  // Correct the function call to pause the main timer
+        pauseMainTimer();
         breakTimeLeft = 3600;
         startBreakTimer();
         this.innerHTML = "End Break";
@@ -420,14 +406,13 @@
           document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
           alert("Break time is over!");
 
-          // Resume the main timer after the break ends
           startMainTimer();
         } else {
           breakTimeLeft--;
           displayTime();
           sendHeartbeat();
         }
-      }, 1000); // 1-second intervals
+      }, 1000);
     }
 
     function displayTime() {
@@ -448,29 +433,21 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Get the current URL path
+
       const currentPath = window.location.pathname;
 
-      // Loop through each nav-link and dropdown-item
       document.querySelectorAll('.nav-item .nav-link, .dropdown-item').forEach(item => {
         if (item.getAttribute('href') === currentPath) {
-          // Remove 'active' class from all nav-links
+
           document.querySelectorAll('.nav-link').forEach(link => {
             link.classList.remove('active');
           });
 
-          // Find the closest nav-item (parent) and add 'active' class to the nav-link
-          // const parentNavLink = item.closest('.nav-item').querySelector('.nav-link');
-          // if (parentNavLink) {
-          //   parentNavLink.classList.add('active');
-          // }
         }
       });
     });
   </script>
 
-
-  <!-- Include necessary external scripts -->
   <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
   <script src="{% static 'js/datatables/datatables.js' %}"></script>
   <script src="{% static 'js/datatables/datatables.min.js' %}"></script>

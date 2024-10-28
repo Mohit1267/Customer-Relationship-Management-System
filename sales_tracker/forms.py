@@ -416,3 +416,106 @@ class agentcalling(forms.ModelForm):
             'contact',
         ]
 
+
+import re  # Make sure to import the re module
+from django import forms
+from .models import DailySalesReport  # Assuming you have a DailySalesReport model
+
+class DailySalesReportForm(forms.ModelForm):
+    class Meta:
+        model = DailySalesReport  # Specify your model
+        fields = [
+            'name',
+            'customer_type',
+            'call_type',
+            'date',
+            'time',
+            'item_number',
+            'item_name',
+            'item_description',
+            'unit_cost',
+            'quantity',
+            'amount',
+            'tax_rate',
+            'tax',
+            'total',
+            'notes',  # Include notes in the fields
+        ]
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if not re.match("^[A-Za-z ]+$", name):
+            raise forms.ValidationError("Name can only contain alphabets and spaces.")
+        return name
+
+    def clean_customer_type(self):
+        customer_type = self.cleaned_data.get('customer_type')
+        if not re.match("^[A-Za-z ]+$", customer_type):
+            raise forms.ValidationError("Customer Type can only contain alphabets and spaces.")
+        return customer_type
+
+    def clean_call_type(self):
+        call_type = self.cleaned_data.get('call_type')
+        if not re.match("^[A-Za-z ]+$", call_type):
+            raise forms.ValidationError("Call Type can only contain alphabets and spaces.")
+        return call_type
+
+    def clean_item_number(self):
+        item_number = self.cleaned_data.get('item_number')
+        if not re.match("^\d+$", item_number):  # Ensure only numbers
+            raise forms.ValidationError("Item Number can only contain digits.")
+        return item_number
+
+    def clean_item_name(self):
+        item_name = self.cleaned_data.get('item_name')
+        if not re.match("^[A-Za-z0-9 ]+$", item_name):  # Allow alphabets and numbers
+            raise forms.ValidationError("Item Name can only contain alphabets and numbers.")
+        return item_name
+
+    def clean_item_description(self):
+        item_description = self.cleaned_data.get('item_description')
+        if not re.match("^[A-Za-z0-9 ]+$", item_description):  # Allow alphabets and numbers
+            raise forms.ValidationError("Item Description can only contain alphabets and numbers.")
+        return item_description
+
+    def clean_unit_cost(self):
+        unit_cost = self.cleaned_data.get('unit_cost')
+        if unit_cost is None or not isinstance(unit_cost, (int, float)) or unit_cost < 0:
+            raise forms.ValidationError("Unit Cost must be a positive number.")
+        return unit_cost
+
+    def clean_quantity(self):
+        quantity = self.cleaned_data.get('quantity')
+        if quantity is None or not isinstance(quantity, (int, float)) or quantity < 0:
+            raise forms.ValidationError("Quantity must be a positive number.")
+        return quantity
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if amount is None or not isinstance(amount, (int, float)) or amount < 0:
+            raise forms.ValidationError("Amount must be a positive number.")
+        return amount
+
+    def clean_tax_rate(self):
+        tax_rate = self.cleaned_data.get('tax_rate')
+        if tax_rate is None or not isinstance(tax_rate, (int, float)) or tax_rate < 0:
+            raise forms.ValidationError("Tax Rate must be a positive number.")
+        return tax_rate
+
+    def clean_tax(self):
+        tax = self.cleaned_data.get('tax')
+        if tax is None or not isinstance(tax, (int, float)) or tax < 0:
+            raise forms.ValidationError("Tax must be a positive number.")
+        return tax
+
+    def clean_total(self):
+        total = self.cleaned_data.get('total')
+        if total is None or not isinstance(total, (int, float)) or total < 0:
+            raise forms.ValidationError("Total must be a positive number.")
+        return total
+
+    def clean_notes(self):
+        notes = self.cleaned_data.get('notes')
+        if notes is not None and not re.match("^[A-Za-z0-9 ]*$", notes):  # Allow alphabets and numbers
+            raise forms.ValidationError("Notes can only contain alphabets, numbers, and spaces.")
+        return notes

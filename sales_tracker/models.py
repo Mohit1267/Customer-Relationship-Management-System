@@ -365,3 +365,31 @@ class Task(models.Model):
     def __str__(self):
         return self.subject
 
+
+from django.db import models
+
+class DailySalesReport(models.Model):
+    name = models.CharField(max_length=100)
+    customer_type = models.CharField(max_length=50)
+    call_type = models.CharField(max_length=50)
+    date = models.DateField()
+    time = models.TimeField()
+    item_number = models.CharField(max_length=50)
+    item_name = models.CharField(max_length=100)
+    item_description = models.TextField()
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    tax_rate = models.DecimalField(max_digits=5, decimal_places=2)
+    tax = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    notes = models.TextField(blank=True)  # Optional field
+
+    def __str__(self):
+        return f"{self.name} - {self.date} - {self.item_name}"
+
+    class Meta:
+        verbose_name = "Daily Sales Report"
+        verbose_name_plural = "Daily Sales Reports"
+        ordering = ['-date']  # Orders reports by date, newest first
+
