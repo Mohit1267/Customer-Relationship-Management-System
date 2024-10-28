@@ -207,6 +207,7 @@ class DocumentForm(forms.ModelForm):
             'assigned_to': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
         }
 
+from django.core.exceptions import ValidationError
 
 class agentmeeting(forms.ModelForm):
     start_date = forms.DateField(
@@ -292,7 +293,22 @@ class agentmeeting(forms.ModelForm):
     contact = forms.CharField(
     label='Contact',
     required=True
-)
+    )
+    email = forms.EmailField(
+        max_length=255,
+        label='Email',
+        required=True
+    )
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        # Basic email validation example
+        if not email.endswith('@example.com'):
+            raise ValidationError('Please use an email address ending with @example.com')
+        
+        return email
+
     class Meta:
         model = Schedule_Meeting  # Replace with your actual model name
         fields = [
@@ -308,6 +324,7 @@ class agentmeeting(forms.ModelForm):
             'notification',
             'notes',
             'contact',  
+            'email'
         ]
 
 
@@ -399,6 +416,11 @@ class agentcalling(forms.ModelForm):
         label='Contact',
         required=True
     )
+    email = forms.EmailField(
+        max_length=255,
+        label='Email',
+        required=True
+    )
     class Meta:
         model = Schedule_Calling  # Replace with your actual model name
         fields = [
@@ -414,7 +436,17 @@ class agentcalling(forms.ModelForm):
             'notification',
             'notes',
             'contact',
+            'email'
         ]
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        # Basic email validation example
+        if not email.endswith('@example.com'):
+            raise ValidationError('Please use an email address ending with @example.com')
+        
+        return email
 
 
 import re  # Make sure to import the re module
