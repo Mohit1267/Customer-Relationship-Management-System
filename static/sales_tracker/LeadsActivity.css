@@ -54,6 +54,27 @@ body {
     background-color: #f9f9f9;
 }
 
+.filter-container {
+    margin: 20px;
+}
+
+.filter-toggle-btn {
+    background-color: #1E2A38;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.filter-form {
+    display: none;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
 .filter-form {
     display: none;
     margin-top: 20px;
@@ -105,6 +126,28 @@ body {
     color: white;
 }
 
+.form-control {
+    width: 300px;
+    margin-right: 10px;
+    border-radius: 20px 0 0 20px;
+    height: 35px;
+
+}
+
+button {
+    padding: 5px 20px; 
+    color: black; 
+    border: 1px solid black; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+    background-color: #eff3f7;
+}
+
+button:hover {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
 
 .attpiechart { 
     margin-right: 1200px;

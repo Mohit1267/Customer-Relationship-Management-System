@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Daily Sales Report Table{% endblock %}
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/dsrview.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/dsr.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -12,51 +12,36 @@
     </div>
 
     <section class="main_container">
+        <!-- Start of form with POST method and CSRF token -->
+        <form method="POST" action="">
+            {% csrf_token %}
 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Name</th>
+                        <th>Item Name</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in data_list %}
+                        <tr>
+                            <td>{{ data.date|default:"-" }}</td>
+                            <td>{{ data.time|default:"-" }}</td>
+                            <td>{{ data.name|default:"-" }}</td>
+                            <td>{{ data.item_name|default:"-" }}</td>
+                            <td>{{ data.total|default:"-" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Name</th>
-                    <th>Item Name</th>
-                    <th>Total</th>
-                    <!-- <th>State</th> -->
-                </tr>
-            </thead>
-            <tbody>
-            <!-- {% for data in data_list %} -->
-                <tr>
-                    <!-- <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td> -->
-                    
-                    <!-- {% if data.customer_first_name %} -->
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    <!-- {% elif data.first_name %} -->
-                        <td>{{ data.first_name }} {{ data.last_name }}</td>
-                        <td>{{ data.email_id }}</td>
-                        <td>-</td>
-                        <td>-</td>
-                    <!-- {% elif data.opportunity_name %} -->
-                        <td>{{ data.opportunity_name }}</td>
-                        <td>-</td>
-                        <td>{{ data.probability }}</td>
-                        <td>{{ data.assigned_to }}</td>
-                    <!-- {% elif data.title %} -->
-                        <td>{{ data.title }}</td>
-                        <td>-</td>
-                        <td>{{ data.valid_until }}</td>
-                        <td>{{ data.approval_status }}</td>
-                    <!-- {% endif %} -->
-                </tr>
-            <!-- {% endfor %} -->
-            </tbody>
-        </table>
-        
-        </section>
+            <!-- Submit button -->
+            <button type="submit">Submit</button>
+        </form>
+    </section>
 </div>
 {% endblock %}

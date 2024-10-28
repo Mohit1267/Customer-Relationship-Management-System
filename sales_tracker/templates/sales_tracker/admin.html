@@ -16,34 +16,91 @@
 
    
   <nav class="navbar-horizontal ">
-      <div class="small-nav">
-    
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-    
-            <div class = "inside-filter-container">
-          <form method="GET" action="{% url 'data' %}">
+    <div class="small-nav">
+  
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+        
+    </div>
+    <button style="display: inline;" type="button" class="button profile-button">
+      <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:60px; height: 60px; margin-left: -7px; margin-top: -4px;"  alt="">
+    </button>
+    </nav>
+
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+      
+      <button id="filter-btn" class="filter-button">Filter</button>
+
+  </div>
+  
+  <div id="filter-section" class="filter-section" style="display: none;">
+  
+      <form method="GET" action="{% url 'lead_data' %}">
+          <div class="inside-filter-container">
               <label for="time_frame">Select Time Frame:</label>
-              <select name="time_frame" id="time_frame" >
-                  <option value="all" disabled selected hidden>Select Time Frame</option> 
-                  <option value="today" {% if time_frame == "today" %}selected{% endif %}>Day</option>
-                  <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Week</option>
-                  <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Month</option>
-                  <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Year</option>
+              <select name="time_frame" id="time_frame">
+                  <option value="all" disabled selected hidden>Select Time Frame</option>
+                  <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
+                  <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
+                  <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
+                  <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
+                  <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
               </select>
-            </div>
-
-
-      <div class="buttons"><button type="submit" class="button1">Apply Filter</button>
-          <button type="reset" class="button1">Clear</button></div>
-          
-      </div>
-      <button style="display: inline;" type="button" class="button profile-button">
-        <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:60px; height: 60px; margin-left: -7px; margin-top: -4px;"  alt="">
-      </button>
-      </nav>
+          </div>
+  
+          <div class="state-filter-container">
+              <label for="state-filter">State:</label>
+              <select name="state" id="state-filter">
+                  <option value="all" disabled selected hidden>Select State</option>
+                  <option value="AP">Andhra Pradesh</option>
+                  <option value="AR">Arunachal Pradesh</option>
+                  <option value="AS">Assam</option>
+                  <option value="BR">Bihar</option>
+                  <option value="CG">Chhattisgarh</option>
+                  <option value="GA">Goa</option>
+                  <option value="GJ">Gujarat</option>
+                  <option value="HR">Haryana</option>
+                  <option value="HP">Himachal Pradesh</option>
+                  <option value="JH">Jharkhand</option>
+                  <option value="KA">Karnataka</option>
+                  <option value="KL">Kerala</option>
+                  <option value="MP">Madhya Pradesh</option>
+                  <option value="MH">Maharashtra</option>
+                  <option value="MN">Manipur</option>
+                  <option value="ML">Meghalaya</option>
+                  <option value="MZ">Mizoram</option>
+                  <option value="NL">Nagaland</option>
+                  <option value="OD">Odisha</option>
+                  <option value="PB">Punjab</option>
+                  <option value="SK">Sikkim</option>
+                  <option value="TN">Tamil Nadu</option>
+                  <option value="TG">Telangana</option>
+                  <option value="TR">Tripura</option>
+                  <option value="UP">Uttar Pradesh</option>
+                  <option value="UT">Uttarakhand</option>
+                  <option value="WB">West Bengal</option>
+              </select>
+          </div>
+  
+          <div class="zone-filter-container">
+              <label for="zone-filter">Zone:</label>
+              <select name="zone" id="zone-filter">
+                  <option value="all" disabled selected hidden>Select Zone</option>
+                  <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
+                  <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
+                  <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
+                  <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
+              </select>
+          </div>
+  
+          <div class="buttons">
+              <button type="submit" class="button4">Apply Filter</button>
+              <button type="button" class="button2" onclick="clearFilters()">Clear</button>
+          </div>
+      </form>
+  </div>
       <div class="graphBox">
       <div>{{ attendence_graph|safe }}</div>
       </div>
@@ -107,6 +164,26 @@
 </div>
 
 
+<script>
+  const filterBtn = document.getElementById('filter-btn');
+const filterSection = document.getElementById('filter-section');
+
+
+filterBtn.onclick = function() {
+  if (filterSection.style.display === 'none' || filterSection.style.display === '') {
+      filterSection.style.display = 'block';
+  } else {
+      filterSection.style.display = 'none';
+  }
+}
+
+
+function clearFilters() {
+  document.getElementById('time_frame').selectedIndex = 0;
+  document.getElementById('state-filter').selectedIndex = 0;
+  document.getElementById('zone-filter').selectedIndex = 0;
+}
+</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

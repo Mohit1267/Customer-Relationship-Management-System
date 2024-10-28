@@ -39,11 +39,103 @@ body {
     display: flex;
 }
 
+.filter-search-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 600px;
+    margin-left: 20px;
+    /* position: fixed; */
+    /* gap: 10px; */
+    /* padding: 10px; */
+}
+
+.filter-section {
+    display: none; /* Hidden by default */
+    /* margin-top: 20px; */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+/* Filter Button */
+.filter-button {
+    padding: 5px 20px; 
+    color: black; 
+    border: 1px solid black; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+    background-color: #eff3f7;
+}
+
+.filter-button:hover {
+    background-color: rgb(78, 81, 82);
+}
+
+/* Filter Section - initially hidden */
+
+
+/* General styling for the filter form */
+.inside-filter-container, .state-filter-container, .zone-filter-container {
+    margin-bottom: 15px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.button4[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button[type="submit"] {
+    background-color: #ffffff;
+    color: white;
+}
+
+.button2[type="button"] {
+    background-color: #f88d00;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button2:hover {
+    opacity: 0.9;
+}
+
+.button4:hover {
+    opacity: 0.9;
+}
+
 .inside-filter-container {
+    /* margin-left: 80px; */
     display: flex;
     align-items: center;
     gap: 5px;
-    margin-left: 700px;
+    
 }
 
 .inside-filter-container label {
@@ -57,21 +149,8 @@ body {
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #eff3f7;
+    
 }
-
-.filter-bar {
-    display: flex;
-    align-items: center;
-}
-
-.filter-select {
-    width: 150px;
-    margin-left: 1100p
-}
-
-/* .buttons{
-    margin-left: 10px;
-} */
 
 .button1{
     padding: 5px 10px; 
@@ -117,7 +196,7 @@ button:hover {
     align-items: center;
     width: 100%;
     /* max-width: 900px; */
-    margin-bottom: 80px;
+    margin-left: 150px;
     z-index: -1;
 }
 
