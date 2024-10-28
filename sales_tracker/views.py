@@ -1440,9 +1440,14 @@ def Dsrview(request):
     return render(request, "sales_tracker/dsrview.html")
 
 
-def DSR(request):
+from django.shortcuts import render, redirect
 
-    return render(request, "sales_tracker/dsr.html")
+def DSR(request):
+    if request.method == 'POST':
+        # Process form data here
+        return redirect('your_view_name')  # Redirect to the same page
+    return render(request, 'sales_tracker/dsr.html')
+
 
 
 
@@ -1677,16 +1682,23 @@ def DSRimport(request):
 from django.shortcuts import render, redirect
 from .forms import TaskForm
 
+from django.shortcuts import render, redirect
+from .models import Task
+from .forms import TaskForm  # Import TaskForm if defined in forms.py
+
 def createTask(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('task_list')  # Redirect to a task list page or any success page after saving
+            task = form.save()
+            # Redirect to the same page or a success page
+            return redirect('create_task')  # Use the appropriate URL name
     else:
         form = TaskForm()
 
-    return render(request, 'sales_tracker/createTask.html', {'form': form})
+    return render(request, "sales_tracker/createTask.html"
+                  , {'form': form})
+
 
 
 

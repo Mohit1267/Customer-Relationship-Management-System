@@ -337,6 +337,8 @@ class Document(models.Model):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
     
 
+from django.db import models
+
 class Task(models.Model):
     TASK_PRIORITY_CHOICES = [
         ('low', 'Low'),
@@ -357,8 +359,9 @@ class Task(models.Model):
     priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
     description = models.TextField()
     status = models.CharField(max_length=12, choices=TASK_STATUS_CHOICES, default='open')
-    related_to = models.CharField(max_length=100, blank=True, null=True)  # Can reference other models later
-    contacts = models.ManyToManyField(ContactData, related_name='tasks')
+    related_to = models.CharField(max_length=100, blank=True, null=True)  
+    contacts = models.ManyToManyField('ContactData', related_name='tasks')
 
     def __str__(self):
         return self.subject
+

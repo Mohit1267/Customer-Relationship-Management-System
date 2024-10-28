@@ -13,83 +13,61 @@
 
     <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
         
-
         
         <form class="d-flex" style="flex-grow: 1;">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         
-        <button id="filter-btn" class="filter-button">Filter</button>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
         
     </div>
     
-    <div id="filter-section" class="filter-section" style="display: none;">
-    
-        <form method="GET" action="{% url 'lead_data' %}">
-            <div class="inside-filter-container">
-                <label for="time_frame">Select Time Frame:</label>
-                <select name="time_frame" id="time_frame">
-                    <option value="all" disabled selected hidden>Select Time Frame</option>
-                    <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
-                    <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
-                    <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
-                    <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
-                    <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
+    <div class="filter-container">
+        <!-- <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button> -->
+        <div id="filterForm" class="filter-form">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" maxlength="10" placeholder="Enter 10-digit Phone Number">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="form-group">
+                <label for="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle">
+            </div>
+            <div class="form-group">
+                <label for="assignedTo">Assigned To:</label>
+                <select id="assignedTo" name="assignedTo">
+                    <option value="">-- Select User --</option>
+                    <option value="user1">User 1</option>
+                    <option value="user2">User 2</option>
+                    <option value="user3">User 3</option>
                 </select>
             </div>
-    
-            <div class="state-filter-container">
-                <label for="state-filter">State:</label>
-                <select name="state" id="state-filter">
-                    <option value="all" disabled selected hidden>Select State</option>
-                    <option value="AP">Andhra Pradesh</option>
-                    <option value="AR">Arunachal Pradesh</option>
-                    <option value="AS">Assam</option>
-                    <option value="BR">Bihar</option>
-                    <option value="CG">Chhattisgarh</option>
-                    <option value="GA">Goa</option>
-                    <option value="GJ">Gujarat</option>
-                    <option value="HR">Haryana</option>
-                    <option value="HP">Himachal Pradesh</option>
-                    <option value="JH">Jharkhand</option>
-                    <option value="KA">Karnataka</option>
-                    <option value="KL">Kerala</option>
-                    <option value="MP">Madhya Pradesh</option>
-                    <option value="MH">Maharashtra</option>
-                    <option value="MN">Manipur</option>
-                    <option value="ML">Meghalaya</option>
-                    <option value="MZ">Mizoram</option>
-                    <option value="NL">Nagaland</option>
-                    <option value="OD">Odisha</option>
-                    <option value="PB">Punjab</option>
-                    <option value="SK">Sikkim</option>
-                    <option value="TN">Tamil Nadu</option>
-                    <option value="TG">Telangana</option>
-                    <option value="TR">Tripura</option>
-                    <option value="UP">Uttar Pradesh</option>
-                    <option value="UT">Uttarakhand</option>
-                    <option value="WB">West Bengal</option>
-                </select>
+            
+            <div class="form-actions">
+                <button type="submit">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
             </div>
-    
-            <div class="zone-filter-container">
-                <label for="zone-filter">Zone:</label>
-                <select name="zone" id="zone-filter">
-                    <option value="all" disabled selected hidden>Select Zone</option>
-                    <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
-                    <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
-                    <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
-                    <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
-                </select>
-            </div>
-    
-            <div class="buttons">
-                <button type="submit" class="button">Apply Filter</button>
-                <button type="button" class="button" onclick="clearFilters()">Clear</button>
-            </div>
-        </form>
+        </div>
     </div>
+    
     <table>
         <thead>
             <tr>
@@ -137,23 +115,41 @@
     </section>
 
     <script>
-        const filterBtn = document.getElementById('filter-btn');
-const filterSection = document.getElementById('filter-section');
+ function toggleFilter() {
+      var filterForm = document.getElementById("filterForm");
+      if (filterForm.style.display === "none") {
+          filterForm.style.display = "grid";
+      } else {
+          filterForm.style.display = "none";
+      }
+  }
+  
+  function clearForm() {
+      document.getElementById("subject").value = "";
+      document.getElementById("contactName").value = "";
+      document.getElementById("status").value = "";
+      document.getElementById("relatedTo").value = "";
+      document.getElementById("assignedTo").value = "";
+  }
 
+  function performSearch() {
+// Collect form data
+var subject = document.getElementById("subject").value;
+var contactName = document.getElementById("contactName").value;
+var status = document.getElementById("status").value;
+var relatedTo = document.getElementById("relatedTo").value;
+var assignedTo = document.getElementById("assignedTo").value;
 
-filterBtn.onclick = function() {
-    if (filterSection.style.display === 'none' || filterSection.style.display === '') {
-        filterSection.style.display = 'block';
-    } else {
-        filterSection.style.display = 'none';
-    }
-}
+// Simulate search (this is where you'd add real search functionality, e.g., an API call)
+var results = "Search results for: \n" +
+              "Subject: " + subject + "\n" +
+              "Contact Name: " + contactName + "\n" +
+              "Status: " + status + "\n" +
+              "Related To: " + relatedTo + "\n" +
+              "Assigned To: " + assignedTo;
 
-
-function clearFilters() {
-    document.getElementById('time_frame').selectedIndex = 0;
-    document.getElementById('state-filter').selectedIndex = 0;
-    document.getElementById('zone-filter').selectedIndex = 0;
+// Display search results (you can modify this to display real search results)
+document.getElementById("searchResults").innerText = results;
 }
       </script>
 {% endblock %}
