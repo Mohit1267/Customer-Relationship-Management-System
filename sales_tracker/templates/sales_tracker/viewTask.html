@@ -11,43 +11,66 @@
 
 <section class="main_container">
 
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+
     <div class="filter-container">
-        <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
         <div id="filterForm" class="filter-form">
             <div class="form-group">
                 <label for="subject">Subject:</label>
                 <input type="text" id="subject" name="subject">
             </div>
             <div class="form-group">
-                <label for="contactName">Contact Name:</label>
-                <input type="text" id="contactName" name="contactName">
+                <label for="contact">Contact:</label>
+                <input type="text" id="contact" name="contact">
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority">
+                    <option value="">-- Select Priority --</option>
+                    <option value="user1">Low</option>
+                    <option value="user2">Medium</option>
+                    <option value="user3">High</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="status">Status:</label>
                 <select id="status" name="status">
-                    <option value=""> -- Empty -- </option>
-                    <option value="open">Not Started</option>
-                    <option value="closed">In Progress</option>
-                    <option value="open">Completed</option>
-                    <option value="closed">Pending Input</option>
-                    <option value="closed">Deferred</option>
-
+                    <option value="">-- Select Status --</option>
+                    <option value="user1">Open</option>
+                    <option value="user2">In Progress</option>
+                    <option value="user3">Completed</option>
+                    <option value="user3">Cancelled</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="relatedTo">Related To:</label>
-                <input type="text" id="relatedTo" name="relatedTo">
+                <label for="contacts">Contacts:</label>
+                <input type="text" id="contacts" name="contacts">
             </div>
             <div class="form-group">
                 <label for="assignedTo">Assigned To:</label>
-                <input type="text" id="assignedTo" name="assignedTo">
+                <select id="assignedTo" name="assignedTo">
+                    <option value="">-- Select User --</option>
+                    <option value="user1">User 1</option>
+                    <option value="user2">User 2</option>
+                    <option value="user3">User 3</option>
+                </select>
             </div>
+            
             <div class="form-actions">
+                <button type="button" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
-                <button type="submit">Search</button>
             </div>
         </div>
     </div>
+
+    
+    
     <table>
         <thead>
             <tr>
@@ -92,7 +115,64 @@
     
     </section>
 
+
     <script>
+        function toggleFilter() {
+            var filterForm = document.getElementById("filterForm");
+            filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
+        }
+    
+        function clearForm() {
+            document.getElementById("subject").value = "";
+            document.getElementById("contact").value = "";
+            document.getElementById("priority").value = "";
+            document.getElementById("status").value = "";
+            document.getElementById("contacts").value = "";
+            document.getElementById("assignedTo").value = "";
+        }
+    
+        function performSearch() {
+            // Get filter values
+            var subject = document.getElementById("subject").value.toLowerCase();
+            var contact = document.getElementById("contact").value.toLowerCase();
+            var priority = document.getElementById("priority").value.toLowerCase();
+            var status = document.getElementById("status").value.toLowerCase();
+            var contacts = document.getElementById("contacts").value.toLowerCase();
+            var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+    
+            // Log values for debugging
+            console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
+    
+            // Get all rows in the table
+            var rows = document.querySelectorAll("table tbody tr");
+    
+            rows.forEach(function(row) {
+                var rowSubject = row.cells[0].innerText.toLowerCase();
+                var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
+                var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
+                var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
+                var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
+                var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
+    
+                // Check if the row matches the filters
+                var match = (!subject || rowSubject.includes(subject)) &&
+                            (!contact || rowContact.includes(contact)) &&
+                            (!priority || rowPriority.includes(priority)) &&
+                            (!status || rowStatus.includes(status)) &&
+                            (!contacts || rowContacts.includes(contacts)) &&
+                            (!assignedTo || rowAssignedTo.includes(assignedTo));
+    
+                // Log matching status for each row
+                console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
+    
+                // Show or hide the row based on match
+                row.style.display = match ? "" : "none";
+            });
+        }
+    </script>
+    
+
+    <!-- <script>
         function toggleFilter() {
           var filterForm = document.getElementById("filterForm");
           if (filterForm.style.display === "block") {
@@ -129,7 +209,7 @@
     // Display search results (you can modify this to display real search results)
     document.getElementById("searchResults").innerText = results;
 }
-      </script>
+      </script> -->
 {% endblock %}
 
 {% block javascript %}{% endblock %}

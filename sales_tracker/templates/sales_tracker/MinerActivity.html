@@ -10,32 +10,36 @@
 <div class="miner-content">
 
    
-    <nav class="navbar-horizontal ">
-        <div class="small-nav">
-          
-          <!-- Search Bar Form -->
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+
+            
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
             <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-      
-          <!-- Filter Bar (added between search and profile) -->
-              <div class = "inside-filter-container">
-            <form method="GET" action="{% url 'data' %}">
+        </form>
+        
+        <button id="filter-btn" class="filter-button">Filter</button>
+
+    </div>
+    
+    <div id="filter-section" class="filter-section" style="display: none;">
+    
+        <form method="GET" action="{% url 'lead_data' %}">
+            <div class="inside-filter-container">
                 <label for="time_frame">Select Time Frame:</label>
-                <select name="time_frame" id="time_frame" >
-                    <option value="all" disabled selected hidden>Select Time Frame</option> <!-- Adjusted -->
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
                     <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                     <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
                     <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
                     <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
                     <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
                 </select>
-              </div>
-  
-              <div class="state-filter-container">
+            </div>
+    
+            <div class="state-filter-container">
                 <label for="state-filter">State:</label>
-                <select name="state" id="state-filter" >
+                <select name="state" id="state-filter">
                     <option value="all" disabled selected hidden>Select State</option>
                     <option value="AP">Andhra Pradesh</option>
                     <option value="AR">Arunachal Pradesh</option>
@@ -64,34 +68,26 @@
                     <option value="UP">Uttar Pradesh</option>
                     <option value="UT">Uttarakhand</option>
                     <option value="WB">West Bengal</option>
-      
-                  </select>
-              </div>
-              
-              
-              <!-- Zone Filter -->
-              <div class="zone-filter-container">
-                  <label for="zone-filter">Zone:</label>
-                  <select name="zone" id="zone-filter" >
-                      <option value="all" disabled selected hidden>Select Zone</option>
-                      <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
-                      <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
-                      <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
-                      <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
-                  </select>
-              </div>
-  
-  
-        <div class="buttons"><button type="submit" class="button">Apply Filter</button>
-            <button type="reset" class="button">Clear</button></div>
-              
-  
-          </form>
-        </div>
-        <!-- <button style="display: inline;" type="button" class="button profile-button">
-          <img src="https://i.ibb.co/VTZ5MXm/profileicon.png" style="width:25px; height: 25px;"   alt="">
-        </button> -->
-        </nav>
+                </select>
+            </div>
+    
+            <div class="zone-filter-container">
+                <label for="zone-filter">Zone:</label>
+                <select name="zone" id="zone-filter">
+                    <option value="all" disabled selected hidden>Select Zone</option>
+                    <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
+                    <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
+                    <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
+                    <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
+                </select>
+            </div>
+    
+            <div class="buttons">
+                <button type="submit" class="button">Apply Filter</button>
+                <button type="button" class="button" onclick="clearFilters()">Clear</button>
+            </div>
+        </form>
+    </div>
 
        
             <img class="attpiechart" src="{% static 'Mining_Count.png' %}" alt="Attendance Chart">
@@ -120,4 +116,59 @@
               </tbody>
           </table>
 </div>  
+
+<script>
+    function toggleFilter() {
+            var filterForm = document.getElementById("filterForm");
+            filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
+        }
+    
+        function clearForm() {
+            document.getElementById("subject").value = "";
+            document.getElementById("contact").value = "";
+            document.getElementById("priority").value = "";
+            document.getElementById("status").value = "";
+            document.getElementById("contacts").value = "";
+            document.getElementById("assignedTo").value = "";
+        }
+    
+        function performSearch() {
+            // Get filter values
+            var subject = document.getElementById("subject").value.toLowerCase();
+            var contact = document.getElementById("contact").value.toLowerCase();
+            var priority = document.getElementById("priority").value.toLowerCase();
+            var status = document.getElementById("status").value.toLowerCase();
+            var contacts = document.getElementById("contacts").value.toLowerCase();
+            var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+    
+            // Log values for debugging
+            console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
+    
+            // Get all rows in the table
+            var rows = document.querySelectorAll("table tbody tr");
+    
+            rows.forEach(function(row) {
+                var rowSubject = row.cells[0].innerText.toLowerCase();
+                var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
+                var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
+                var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
+                var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
+                var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
+    
+                // Check if the row matches the filters
+                var match = (!subject || rowSubject.includes(subject)) &&
+                            (!contact || rowContact.includes(contact)) &&
+                            (!priority || rowPriority.includes(priority)) &&
+                            (!status || rowStatus.includes(status)) &&
+                            (!contacts || rowContacts.includes(contacts)) &&
+                            (!assignedTo || rowAssignedTo.includes(assignedTo));
+    
+                // Log matching status for each row
+                console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
+    
+                // Show or hide the row based on match
+                row.style.display = match ? "" : "none";
+            });
+        }
+  </script>
 {% endblock %}

@@ -1,4 +1,4 @@
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling, Task
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
@@ -72,59 +72,32 @@ class PasswordForm(forms.ModelForm):
 class SortForm(forms.Form):
     select = forms.ChoiceField(choices=MY_CHOICES, label='Select an option')
 
+from django import forms
+from .models import Task
 
-class TaskForm(forms.Form):
-    # Priority choices
-    PRIORITY_CHOICES = [
-        ('Low', 'Low'),
-        ('Medium', 'Medium'),
-        ('High', 'High'),
-    ]
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['subject', 'start_date', 'due_date', 'priority', 'description', 'status', 'related_to', 'contacts']
+        
+        # Custom widgets for form fields
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter task subject'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'due_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Enter task description'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to (optional)'}),
+            'contacts': forms.SelectMultiple(attrs={'class': 'form-control'}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        # Customizing the labels or adding help texts if needed
+        self.fields['subject'].label = "Task Subject"
+        self.fields['contacts'].help_text = "Hold Ctrl to select multiple contacts"
 
-    # Status choices
-    STATUS_CHOICES = [
-        ('Pending', 'Pending'),
-        ('In Progress', 'In Progress'),
-        ('Completed', 'Completed'),
-    ]
-
-    # Defining form fields
-    subject = forms.CharField(
-        max_length=200,
-        label='Subject',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter task subject'})
-    )
-    start_date = forms.DateField(
-        label='Start Date',
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
-    )
-    due_date = forms.DateField(
-        label='Due Date',
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
-    )
-    priority = forms.ChoiceField(
-        choices=PRIORITY_CHOICES,
-        label='Priority',
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-    description = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter task description'}),
-        label='Description'
-    )
-    status = forms.ChoiceField(
-        choices=STATUS_CHOICES,
-        label='Status',
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-    related_to = forms.CharField(
-        max_length=100,
-        label='Related To',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter related entity'})
-    )
-    contacts = forms.EmailField(
-        label='Contacts',
-        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter email contact'})
-    )
 
 
 class AccountForm(forms.Form):
@@ -234,6 +207,7 @@ class DocumentForm(forms.ModelForm):
             'assigned_to': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
         }
 
+from django.core.exceptions import ValidationError
 
 class agentmeeting(forms.ModelForm):
     start_date = forms.DateField(
@@ -316,10 +290,25 @@ class agentmeeting(forms.ModelForm):
         label='note',
         required=True
     )
-    contact = forms.EmailField(
+    contact = forms.CharField(
     label='Contact',
     required=True
-)
+    )
+    email = forms.EmailField(
+        max_length=255,
+        label='Email',
+        required=True
+    )
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        # Basic email validation example
+        if not email.endswith('@example.com'):
+            raise ValidationError('Please use an email address ending with @example.com')
+        
+        return email
+
     class Meta:
         model = Schedule_Meeting  # Replace with your actual model name
         fields = [
@@ -339,10 +328,8 @@ class agentmeeting(forms.ModelForm):
 
 
 
-
-
-
 class agentcalling(forms.ModelForm):
+
     start_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
         label='Start Date',
@@ -428,6 +415,11 @@ class agentcalling(forms.ModelForm):
         label='Contact',
         required=True
     )
+    email = forms.EmailField(
+        max_length=255,
+        label='Email',
+        required=True
+    )
     class Meta:
         model = Schedule_Calling  # Replace with your actual model name
         fields = [
@@ -443,25 +435,118 @@ class agentcalling(forms.ModelForm):
             'notification',
             'notes',
             'contact',
+            'email'
         ]
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        # Basic email validation example
+        if not email.endswith('@example.com'):
+            raise ValidationError('Please use an email address ending with @example.com')
+        
+        return email
 
 
+import re  # Make sure to import the re module
+from django import forms
+from .models import DailySalesReport  # Assuming you have a DailySalesReport model
 
-# from django import forms
-# from .models import Task
+class DailySalesReportForm(forms.ModelForm):
+    class Meta:
+        model = DailySalesReport  # Specify your model
+        fields = [
+            'name',
+            'customer_type',
+            'call_type',
+            'date',
+            'time',
+            'item_number',
+            'item_name',
+            'item_description',
+            'unit_cost',
+            'quantity',
+            'amount',
+            'tax_rate',
+            'tax',
+            'total',
+            'notes',  # Include notes in the fields
+        ]
 
-# class TaskForm(forms.ModelForm):
-#     # Fields definition
-#     contact = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter Contact Name'}))
-#     subject = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter Subject'}))
-#     attachment = forms.FileField(required=False)  # Optional attachment
-#     note = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter Notes'}), required=False)
-#     related_to = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'placeholder': 'Enter Related To'}))
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if not re.match("^[A-Za-z ]+$", name):
+            raise forms.ValidationError("Name can only contain alphabets and spaces.")
+        return name
 
-#     class Meta:
-#         model = Task  # Use your actual model name
-#         fields = ['contact', 'subject', 'attachment', 'note', 'related_to']
-# =======
-            
+    def clean_customer_type(self):
+        customer_type = self.cleaned_data.get('customer_type')
+        if not re.match("^[A-Za-z ]+$", customer_type):
+            raise forms.ValidationError("Customer Type can only contain alphabets and spaces.")
+        return customer_type
 
+    def clean_call_type(self):
+        call_type = self.cleaned_data.get('call_type')
+        if not re.match("^[A-Za-z ]+$", call_type):
+            raise forms.ValidationError("Call Type can only contain alphabets and spaces.")
+        return call_type
+
+    def clean_item_number(self):
+        item_number = self.cleaned_data.get('item_number')
+        if not re.match("^\d+$", item_number):  # Ensure only numbers
+            raise forms.ValidationError("Item Number can only contain digits.")
+        return item_number
+
+    def clean_item_name(self):
+        item_name = self.cleaned_data.get('item_name')
+        if not re.match("^[A-Za-z0-9 ]+$", item_name):  # Allow alphabets and numbers
+            raise forms.ValidationError("Item Name can only contain alphabets and numbers.")
+        return item_name
+
+    def clean_item_description(self):
+        item_description = self.cleaned_data.get('item_description')
+        if not re.match("^[A-Za-z0-9 ]+$", item_description):  # Allow alphabets and numbers
+            raise forms.ValidationError("Item Description can only contain alphabets and numbers.")
+        return item_description
+
+    def clean_unit_cost(self):
+        unit_cost = self.cleaned_data.get('unit_cost')
+        if unit_cost is None or not isinstance(unit_cost, (int, float)) or unit_cost < 0:
+            raise forms.ValidationError("Unit Cost must be a positive number.")
+        return unit_cost
+
+    def clean_quantity(self):
+        quantity = self.cleaned_data.get('quantity')
+        if quantity is None or not isinstance(quantity, (int, float)) or quantity < 0:
+            raise forms.ValidationError("Quantity must be a positive number.")
+        return quantity
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if amount is None or not isinstance(amount, (int, float)) or amount < 0:
+            raise forms.ValidationError("Amount must be a positive number.")
+        return amount
+
+    def clean_tax_rate(self):
+        tax_rate = self.cleaned_data.get('tax_rate')
+        if tax_rate is None or not isinstance(tax_rate, (int, float)) or tax_rate < 0:
+            raise forms.ValidationError("Tax Rate must be a positive number.")
+        return tax_rate
+
+    def clean_tax(self):
+        tax = self.cleaned_data.get('tax')
+        if tax is None or not isinstance(tax, (int, float)) or tax < 0:
+            raise forms.ValidationError("Tax must be a positive number.")
+        return tax
+
+    def clean_total(self):
+        total = self.cleaned_data.get('total')
+        if total is None or not isinstance(total, (int, float)) or total < 0:
+            raise forms.ValidationError("Total must be a positive number.")
+        return total
+
+    def clean_notes(self):
+        notes = self.cleaned_data.get('notes')
+        if notes is not None and not re.match("^[A-Za-z0-9 ]*$", notes):  # Allow alphabets and numbers
+            raise forms.ValidationError("Notes can only contain alphabets, numbers, and spaces.")
+        return notes

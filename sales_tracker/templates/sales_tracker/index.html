@@ -1,15 +1,11 @@
 {% extends "innerbase.html" %}
-
 {% load static %}
-
 
 {% block css_link %}
 <link rel="stylesheet" href="{% static 'sales_tracker/index3.css' %}">
 <script src="chart.js"></script>
 
 {% endblock %}
-
-
 {% block title %}DashBoard{% endblock %}
 
 
@@ -97,7 +93,6 @@
     </div>
     
    
-
     <script>
         document.getElementById('filterSelect').addEventListener('change', function() {
             const selectedValue = this.value;
@@ -129,7 +124,5 @@
     </script>
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  
 
 {% endblock %}

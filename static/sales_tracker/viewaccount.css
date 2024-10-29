@@ -5,20 +5,50 @@ body {
     padding: 0;
 }
 .main_container {
-    margin: 20px auto;
-    padding: 20px;
+    /* margin: 20px auto; */
+    /* padding: 20px; */
     /* max-width: 1200px; */
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    margin-top: 74px;
+    /* margin-top: 74px; */
     width: 100%;
     overflow-y: auto;
     overflow-x: auto;
 }
+.filter-button{
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.filter-button:hover{
+    border-color: white;
+    color: white;
+    background-color: black;
+    opacity: 0.9;
+}
+
+
+.filter-search-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* margin-top: 80px; */
+    margin-left: 20px;
+    margin-bottom: 40px;
+    /* position: fixed; */
+    /* gap: 10px; */
+    /* padding: 10px; */
+}
 
 .filter-container {
     margin: 20px;
+}
+.d-flex{
+    width: 400px;
 }
 
 .filter-toggle-btn {
@@ -89,6 +119,48 @@ body {
     color: white;
 }
 
+/* Button Container Styling */
+.buttons {
+    display: flex;
+    gap: 10px;
+    grid-column: span 3; /* Span all columns */
+    justify-content: center; /* Center align buttons */
+    margin-top: 10px;
+}
+
+.button, .button2, .button4 {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Apply Filter Button */
+.button4 {
+    background-color: #28a745;
+    color: white;
+}
+
+.button4:hover {
+    opacity: 0.9;
+}
+
+/* Clear Button */
+.button2 {
+    background-color: #f88d00;
+    color: white;
+}
+
+.button2:hover {
+    opacity: 0.9;
+}
+
+/* Additional Hover Effects */
+.button:hover, .button2:hover, .button4:hover {
+    opacity: 0.9;
+}
+
 
 
 .containers {
@@ -119,6 +191,141 @@ table {
     width: 100%; /* Make table fill the container width */
     border-collapse: collapse;
     margin: 0; /* Remove margin to avoid extra spacing */
+    font-size: 16px;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    white-space: nowrap; /* Prevent wrapping of text */
+}
+
+thead {
+    background-color: #1E2A38;
+    color: #fff;
+}
+
+tbody tr {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e9e9e9;
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+    th, td {
+        padding: 10px 8px; /* Reduce padding for smaller screens */
+    }
+
+    table {
+        font-size: 14px; /* Decrease font size */
+    }
+
+    h1 {
+        font-size: 22px; /* Adjust heading size */
+    }
+}
+
+@media (max-width: 768px) {
+    th, td {
+        padding: 8px 5px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    .headingDiv h1 {
+        font-size: 20px;
+    }
+
+    /* Make the table container scrollable horizontally */
+    .tableBox {
+        overflow-x: scroll;
+    }
+
+    table {
+        width: auto; /* Allow table to take the required width for scrolling */
+    }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        padding: 6px 4px; /* Reduce padding further */
+    }
+
+    table {
+        font-size: 11px; /* Smaller font size for better fit */
+    }
+
+    .headingDiv h1 {
+        font-size: 18px; /* Smaller heading size */
+    }
+
+    /* Make table columns stack for small screens */
+    table, thead, tbody, th, td, tr {
+        display: block; /* Stack elements */
+    }
+
+    /* Adjust individual cell styling */
+    th, td {
+        text-align: right; /* Right align text */
+        padding-left: 50%; /* Add some left padding */
+        position: relative;
+    }
+
+    th::before, td::before {
+        content: attr(data-label); /* Use data-label attribute for column names */
+        position: absolute;
+        left: 0;
+        width: 45%; /* Label width */
+        padding-left: 10px;
+        font-weight: bold;
+        white-space: nowrap;
+        text-align: left;
+    }
+
+    /* Hide the table header */
+    thead {
+        display: none;
+    }
+}
+
+
+.containers {
+    margin: 0;
+    padding: 0; /* Remove default padding to align content properly */
+    background-color: #e0eaf6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Set container width to 100% to align content */
+}
+
+.headingDiv {
+    text-align: center;
+    margin: 0;
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.tableBox {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%; /* Make table fill the container width */
+    border-collapse: collapse;
     font-size: 16px;
     text-align: left;
 }

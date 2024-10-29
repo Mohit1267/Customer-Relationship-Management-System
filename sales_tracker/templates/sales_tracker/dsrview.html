@@ -7,13 +7,64 @@
 
 {% block content %}
 <div class="containers">
-    
-    <div class="headingDiv">
-        <h1>Daily Sales Report</h1>
-    </div>
 
     <section class="main_container">
+        <div class="small-container">
+    
 
+            <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+                <form class="d-flex" style="flex-grow: 1;">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+            </div>
+        
+            <div class="filter-container">
+                <div id="filterForm" class="filter-form">
+                    <div class="form-group">
+                        <label for="opprtunityName">Name:</label>
+                        <input type="text" id="opprtunityName" name="opprtunityName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Item Number:</label>
+                        <input type="tel" id="lastName" name="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="itemName">Item Name:</label>
+                        <input type="text" id="itemName" name="itemName">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="tel" id="amount" name="amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="total">Total:</label>
+                        <input type="tel" id="total" name="total">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input type="tel" id="quantity" name="quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="assignedTo">Assigned To:</label>
+                        <select id="assignedTo" name="assignedTo">
+                            <option value="">-- Select User --</option>
+                            <option value="user1">User 1</option>
+                            <option value="user2">User 2</option>
+                            <option value="user3">User 3</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" onclick="performSearch()">Apply Filter</button>
+                        <button type="button" onclick="clearForm()">Clear</button>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
 
         <table>
             <thead>
@@ -59,6 +110,54 @@
         </table>
         
         </section>
+        
+<script>
+function toggleFilter() {
+    var filterForm = document.getElementById("filterForm");
+    if (filterForm.style.display === "none") {
+        filterForm.style.display = "grid";
+    } else {
+        filterForm.style.display = "none";
+    }
+}
+
+function clearForm() {
+    document.getElementById("opprtunityName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("address").value = "";
+    document.getElementById("jobTitle").value = "";
+    document.getElementById("assignedTo").selectedIndex = 0;
+}
+
+function performSearch() {
+    var opportunityName = document.getElementById("opprtunityName").value;
+    var lastName = document.getElementById("lastName").value;
+    var email = document.getElementById("email").value;
+    var phone = document.getElementById("phone").value;
+    var address = document.getElementById("address").value;
+    var jobTitle = document.getElementById("jobTitle").value;
+    var assignedTo = document.getElementById("assignedTo").value;
+
+    var results = "Search results for: \n" +
+                  "Opportunity Name: " + opportunityName + "\n" +
+                  "Last Name: " + lastName + "\n" +
+                  "Email: " + email + "\n" +
+                  "Phone: " + phone + "\n" +
+                  "Address: " + address + "\n" +
+                  "Job Title: " + jobTitle + "\n" +
+                  "Assigned To: " + assignedTo;
+
+    // Display results in the console (or replace this with actual search/filtering code)
+    console.log(results);
+
+    // Alternatively, if you want to display results on the page
+    document.getElementById("searchResults").innerText = results;
+}
+
+  </script>
+
 </div>
 {% endblock %}
 

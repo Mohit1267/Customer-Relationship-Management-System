@@ -2,7 +2,7 @@
 
 {% load static %}
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/temp.css' %}">
 {% endblock %}
 
 {% block title %}Data{% endblock %}
@@ -11,43 +11,63 @@
 
 <section class="main_container">
 
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        
+        
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+        
+    </div>
+    
     <div class="filter-container">
-        <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
+        <!-- <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button> -->
         <div id="filterForm" class="filter-form">
             <div class="form-group">
-                <label for="subject">Name:</label>
-                <input type="text" id="subject" name="subject">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName">
             </div>
             <div class="form-group">
-                <label for="contactName">Contact Name:</label>
-                <input type="text" id="contactName" name="contactName">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName">
             </div>
             <div class="form-group">
-                <label for="status">Status:</label>
-                <select id="status" name="status">
-                    <option value=""> -- Empty -- </option>
-                    <option value="open">Not Started</option>
-                    <option value="closed">In Progress</option>
-                    <option value="open">Completed</option>
-                    <option value="closed">Pending Input</option>
-                    <option value="closed">Deferred</option>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" maxlength="10" placeholder="Enter 10-digit Phone Number">
+            </div>
 
-                </select>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address">
             </div>
             <div class="form-group">
-                <label for="relatedTo">Related To:</label>
-                <input type="text" id="relatedTo" name="relatedTo">
+                <label for="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle">
             </div>
             <div class="form-group">
                 <label for="assignedTo">Assigned To:</label>
-                <input type="text" id="assignedTo" name="assignedTo">
+                <select id="assignedTo" name="assignedTo">
+                    <option value="">-- Select User --</option>
+                    <option value="user1">User 1</option>
+                    <option value="user2">User 2</option>
+                    <option value="user3">User 3</option>
+                </select>
             </div>
+            
             <div class="form-actions">
+                <button type="submit">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
-                <button type="submit">Search</button>
             </div>
         </div>
     </div>
+    
     <table>
         <thead>
             <tr>
@@ -95,41 +115,41 @@
     </section>
 
     <script>
-        function toggleFilter() {
-          var filterForm = document.getElementById("filterForm");
-          if (filterForm.style.display === "block") {
-              filterForm.style.display = "none";
-          } else {
-              filterForm.style.display = "block";
-          }
+ function toggleFilter() {
+      var filterForm = document.getElementById("filterForm");
+      if (filterForm.style.display === "none") {
+          filterForm.style.display = "grid";
+      } else {
+          filterForm.style.display = "none";
       }
-      
-      function clearForm() {
-          document.getElementById("subject").value = "";
-          document.getElementById("contactName").value = "";
-          document.getElementById("status").value = "";
-          document.getElementById("relatedTo").value = "";
-          document.getElementById("assignedTo").value = "";
-      }
+  }
+  
+  function clearForm() {
+      document.getElementById("subject").value = "";
+      document.getElementById("contactName").value = "";
+      document.getElementById("status").value = "";
+      document.getElementById("relatedTo").value = "";
+      document.getElementById("assignedTo").value = "";
+  }
 
-      function performSearch() {
-    // Collect form data
-    var subject = document.getElementById("subject").value;
-    var contactName = document.getElementById("contactName").value;
-    var status = document.getElementById("status").value;
-    var relatedTo = document.getElementById("relatedTo").value;
-    var assignedTo = document.getElementById("assignedTo").value;
+  function performSearch() {
+// Collect form data
+var subject = document.getElementById("subject").value;
+var contactName = document.getElementById("contactName").value;
+var status = document.getElementById("status").value;
+var relatedTo = document.getElementById("relatedTo").value;
+var assignedTo = document.getElementById("assignedTo").value;
 
-    // Simulate search (this is where you'd add real search functionality, e.g., an API call)
-    var results = "Search results for: \n" +
-                  "Subject: " + subject + "\n" +
-                  "Contact Name: " + contactName + "\n" +
-                  "Status: " + status + "\n" +
-                  "Related To: " + relatedTo + "\n" +
-                  "Assigned To: " + assignedTo;
+// Simulate search (this is where you'd add real search functionality, e.g., an API call)
+var results = "Search results for: \n" +
+              "Subject: " + subject + "\n" +
+              "Contact Name: " + contactName + "\n" +
+              "Status: " + status + "\n" +
+              "Related To: " + relatedTo + "\n" +
+              "Assigned To: " + assignedTo;
 
-    // Display search results (you can modify this to display real search results)
-    document.getElementById("searchResults").innerText = results;
+// Display search results (you can modify this to display real search results)
+document.getElementById("searchResults").innerText = results;
 }
       </script>
 {% endblock %}

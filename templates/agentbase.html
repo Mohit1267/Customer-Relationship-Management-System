@@ -85,6 +85,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'leadImport'%}">Import</a></li>
               </ul>
             </li>
 
@@ -102,6 +106,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{% url 'viewcontact' %}">View Contacts</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'contactImport'%}">Import</a></li>
               </ul>
             </li>
 
@@ -119,7 +127,11 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="quotes_data">View Quote</a></li>
+                <li><a class="dropdown-item" href="{% url 'quotes_data' %}">View Quote</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'quoteimport'%}">Import</a></li>
               </ul>
             </li>
 
@@ -156,6 +168,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'opportunityimport'%}">Import</a></li>
               </ul>
             </li>
             
@@ -174,6 +190,10 @@
                 <hr class="dropdown-divider">
               </li>
               <li><a class="dropdown-item" href="{% url 'viewaccount' %}">View Account</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{%url 'accountimport'%}">Import</a></li>
             </ul>
            </li>
           
@@ -193,6 +213,10 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{% url 'dsrview' %}">View DSR</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{%url 'DSRimport'%}">Import</a></li>
               </ul>
             </li>
 
@@ -205,11 +229,11 @@
                 Task
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Create Task</a></li>
+                <li><a class="dropdown-item" href="{% url 'createTask' %}">Create Task</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">View Task</a></li>
+                <li><a class="dropdown-item" href="{% url 'viewTask' %}">View Task</a></li>
               </ul>
             </li>
         </div>
@@ -218,35 +242,7 @@
 
 
   {% block content %}{% endblock %}
-  <!-- <div class="offcanvas offcanvas-end"  " id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="profile1 offcanvas-header">
-      <h5 class="" id="offcanvasExampleLabel"><b>Profile</b></h5>
-     </div>
-
-
-    <div class="offcanvas-body"  id="offcanvasExample">
-      <div class="row p-2">
-        <a href="{% url 'detail_profile' %}" class=" right_profile">View Profile</a>
-      </div>
-      <div class="row p-2">
-        <a href="#" class=" right_profile" ">Edit Profile</a>
-        </div>
-        <hr>
-        <div class=" row p-2">
-          <a href="#" class=" right_profile"">Employees</a>
-        </div>
-        <div class=" row p-2">
-            <a href="#" class=" right_profile"">Community Forum</a>
-        </div>
-        <div class=" row p-2">
-              <a href="#" class=" right_profile"">About</a>
-        </div>
-        <hr>
-        <div class=" row p-2">
-                <a href="{% url 'logout'%}" class="right_profile ">Logout</a>
-      </div>
-      </div>
-  </div> -->
+ 
 
 <!-- profile section-->
     <script>

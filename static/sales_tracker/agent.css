@@ -16,7 +16,6 @@ body {
 .navbar-horizontal {
     background-color: #eff3f7 !important;
     width: calc(100% - 250px);
-    /* width: 100%; */
     background-color: #f8f9fa;
     padding: 10px 20px;
     /* border-radius: 20px 20px 20px 20px; */
@@ -26,24 +25,109 @@ body {
     z-index: 1000;
     display: flex;
     justify-content: space-between;
-    /* border-radius: 10%; */
-    /* border: 1px solid gray; */
-    overflow: hidden;
-    /* flex: 1 1 200px; */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    
+
 }
 
 .small-nav {
-    grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 5px;
+}
 
+.filter-search-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 80px;
+    margin-left: 20px;
+    /* position: fixed; */
+    /* gap: 10px; */
+    /* padding: 10px; */
+}
+
+.filter-section {
+    display: none; /* Hidden by default */
+    /* margin-top: 20px; */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+/* Filter Button */
+.filter-button {
+    padding: 5px 20px; 
+    color: black; 
+    border: 1px solid black; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+    background-color: #eff3f7;
+}
+
+.filter-button:hover {
+    background-color: rgb(78, 81, 82);
+}
+
+/* Filter Section - initially hidden */
+
+
+/* General styling for the filter form */
+.inside-filter-container, .state-filter-container, .zone-filter-container {
+    margin-bottom: 15px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.button4[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button[type="submit"] {
+    background-color: #ffffff;
+    color: white;
+}
+
+.button2[type="button"] {
+    background-color: #f88d00;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button2:hover {
+    opacity: 0.9;
+}
+
+.button4:hover {
+    opacity: 0.9;
 }
 
 .inside-filter-container {
-    margin-left: 80px;
+    /* margin-left: 80px; */
     display: flex;
     align-items: center;
     gap: 5px;
