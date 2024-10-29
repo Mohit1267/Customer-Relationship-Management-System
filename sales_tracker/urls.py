@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path("", login_required(views.Dashboards), name="Dashboards"),
+    # path("<int:user_id>/", login_required(views.Dashboards), name="Dashboards"),
     # path("adminn", login_required(views.Admin.as_view()), name="adminn"),
     path('attendance/', (views.Attendence), name='attendance'),
     path('maps',(views.maps.as_view()),name = 'maps'),
@@ -79,6 +80,11 @@ urlpatterns = [
     # path("view_contact", login_required(views.ViewScheduledMeeting), name='view_contact'),
     path('send-email/<int:meeting_id>/', views.send_meeting_email, name='send_meeting_email'),
     # path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
+    # Employee screen share URL
+    path('employee/screen-share/', views.employee_screen_share, name='employee_screen_share'),
+    
+    # Admin screen view URL
+    path('screen-view/', views.admin_screen_view, name='admin_screen_view'),
     
 
 ]

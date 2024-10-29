@@ -336,8 +336,11 @@ def manual_login(request):
                             updown_time.downtime = downtime
 
                     updown_time.save()
-
+                    user_id = request.user.id  # Assuming user is authenticated and request.user is available
                     return redirect("Dashboards")
+                    # return redirect("Dashboards", user_id=user_id)
+
+                    # return redirect("Dashboards")
 
                 else:
                     error_message = 'Your access is denied, Please contact Admin for access'

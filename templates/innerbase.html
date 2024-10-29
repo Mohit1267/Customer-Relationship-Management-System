@@ -66,7 +66,7 @@
               </li>
 
                   <li class="nav-item dashboard-icon">
-                      <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
+                    <a class="nav-link spacing" href="{% url 'Dashboards' %}" role="button" aria-expanded="false">
                           <div style="display: flex; align-items: center; gap: 10px;">
                               <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo"
                                   style="height: 45px; margin-left: -10px;">
@@ -112,7 +112,7 @@
                   </li>
 
                   <li class="nav-item dashboard-icon">
-                      <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
+                    <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
                           <div style="display: flex; align-items: center; gap: 10px;">
                               <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance logo">
                               <span>Attendance</span>
@@ -199,11 +199,21 @@
 
   function handleVoiceCommand(command) {
     const logoutPattern = /logout|log out|sign out/i;
-      const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
+      // const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining data [a-zA-Z\.\/]*)/i;
+      // const createMiningPattern = /([a-zA-Z\.]*create mining?|create mining [a-zA-Z\.\/]*)/i;
+      // const miningViewPattern = /(?=.*show me mining data)(?=.*go to mining data)(?=.*mining data)/i;
+      // const createMiningPattern = /(?=.*show me create mining)(?=.*go to create mining page)(?=.*create mining)/i;
+      const createMiningPattern = /show me create mining|go to create mining page|create mining/i;
+      const miningViewPattern = /show me mining data|go to mining data|mining data/i;
+      const dashboard = /show me dashboard|go to dashboard|dashboard/i;
       if (logoutPattern.test(command)) {
           window.location.href = "{% url 'logout' %}";}
       else if (miningViewPattern.test(command)) {
           window.location.href = "{% url 'data' %}";
+      } else if (createMiningPattern.test(command)) {
+        window.location.href = "{% url 'mining' %}";
+      } else if (dashboard.test(command)) {
+        window.location.href = "{% url 'Dashboards' %}";
       } else {
           // Extract time frame and state using regex
           const timeFrame = extractTimeFrame(command);
@@ -473,7 +483,38 @@ if (item.getAttribute('href') === currentPath) {
 <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
 
 
+<!-- <script>
+  async function startScreenShare(employeeId) {
+      const ws = new WebSocket(`ws://${window.location.host}/ws/screen_share/${employeeId}/`);
+      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      const [track] = stream.getVideoTracks();
+      const peerConnection = new RTCPeerConnection();
 
+      peerConnection.onicecandidate = (event) => {
+          if (event.candidate) {
+              ws.send(JSON.stringify({ ice: event.candidate }));
+          }
+      };
+
+      ws.onmessage = async (event) => {
+          const data = JSON.parse(event.data);
+          if (data.answer) {
+              await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+          } else if (data.ice) {
+              await peerConnection.addIceCandidate(new RTCIceCandidate(data.ice));
+          }
+      };
+
+      peerConnection.addTrack(track, stream);
+      const offer = await peerConnection.createOffer();
+      await peerConnection.setLocalDescription(offer);
+      ws.send(JSON.stringify({ offer: offer }));
+  }
+
+  // Automatically start screen sharing for the employee
+  const employeeId = "{{ user.id }}"; // Dynamically use logged-in user's ID
+  startScreenShare(employeeId);
+</script> -->
 
 </body>
 

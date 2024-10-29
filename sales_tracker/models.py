@@ -3,6 +3,7 @@ from users.models import RegisterUser,Profile
 from django.conf import settings
 
 
+from django.utils import timezone
 
 
 
@@ -336,3 +337,30 @@ class Document(models.Model):
     
     def __str__(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
+    
+
+class Task(models.Model):
+    TASK_PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    TASK_STATUS_CHOICES = [
+        ('open', 'Open'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    subject = models.CharField(max_length=100)
+    start_date = models.DateField()
+    due_date = models.DateField()
+    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
+    description = models.TextField()
+    status = models.CharField(max_length=12, choices=TASK_STATUS_CHOICES, default='open')
+    related_to = models.CharField(max_length=100, blank=True, null=True)  
+    contacts = models.ManyToManyField('ContactData', related_name='tasks')
+
+    def _str_(self):
+        return self.subject

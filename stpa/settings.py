@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'users',
     'sales_tracker',
     'Unique_voice',
@@ -243,6 +244,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'localhost:8000', '104.197.128.246']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'users',
     'sales_tracker',
     'django.contrib.admin',
@@ -296,53 +298,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'stpa.wsgi.application'
-
-
-
-# AUTHENTICATION_BACKENDS = ['users.authentication.EmailBackend', 'django.contrib.auth.backends.ModelBackend']
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'shanaya2',
-#         'HOST' : '34.100.214.94',
-#         'PORT': '3306',
-#     }
-# }
-
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',}
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'Siddhi@2002',
-#         'PASSWORD':'Pj@123456',
-
-#         'HOST' : 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'Siddhi@2002',
-#         'HOST' : 'localhost',
-#         'PORT': '3306',
-#     }
-# }
 
 
 DATABASES = {
@@ -443,3 +398,13 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': 900.0,  # 15 minutes
     },
 }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
+
+
+ASGI_APPLICATION = 'stpa.asgi.application'
