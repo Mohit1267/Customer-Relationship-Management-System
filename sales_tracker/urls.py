@@ -89,6 +89,7 @@ urlpatterns = [
     path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
     path("temp", login_required((views.temp)), name="temp"),
     path("miningimport", login_required((views.miningimport)), name="miningimport"),
+    path("viewNotes", login_required((views.viewNotes)), name="viewNotes"),
 
 
 

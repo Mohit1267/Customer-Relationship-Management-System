@@ -237,6 +237,39 @@
                 <li><a class="dropdown-item" href="{% url 'viewTask' %}">View Task</a></li>
               </ul>
             </li>
+
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
+ 
+                <img src="https://i.ibb.co/3Mwn1xZ/images-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+                Document
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'createDocument' %}">Create Document</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'viewDocument' %}">View Document</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+
+ 
+                <img src="https://i.ibb.co/mNyXGjt/images-1-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+                Notes
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'createNotes' %}">Create Notes</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'viewNotes' %}">View Notes</a></li>
+              </ul>
+            </li>
         </div>
 
   </nav>

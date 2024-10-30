@@ -25,7 +25,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser, Location
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting, Schedule_Calling
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, DocumentForm, TaskForm,agentcalling
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, DocumentForm, TaskForm,agentcalling, NoteForm, InvoiceForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -1943,13 +1943,13 @@ from .forms import TaskForm
 
 def createNotes(request):
     if request.method == 'POST':
-        form = TaskForm(request.POST, request.FILES)  # Handling file upload
+        form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()  # Save the form data to the database
-            return redirect('task_list')  # Redirect to a success page (replace 'task_list' with your own URL)
+            form.save()
+            return redirect('note_list')  # Replace 'note_list' with your desired redirect URL
     else:
-        form = TaskForm()
-
+        form = NoteForm()
+    
     return render(request, 'sales_tracker/createNotes.html', {'form': form})
 
 def liveStreaming(request):
@@ -2021,3 +2021,31 @@ def miningimport(request):
     return render(request, "sales_tracker/miningimport.html")
 
 
+def viewNotes(request):
+      return render(request, "sales_tracker/viewNotes.html")
+
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView
+# from .models import Opportunity
+from .forms import OpportunityForm
+
+# Class-based view with direct URL for success_url
+class createInvoices(CreateView):
+    model = createInvoices
+    form_class = invoiceForm
+    template_name = 'path/to/your_template.html'  # Replace with the actual path to your template
+    success_url = '/opportunities/'  # Use the URL directly instead of reverse_lazy
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+# Function-based view as an alternative
+def create_opportunity(request):
+    if request.method == 'POST':
+        form = invoiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/opportunities/')  # Use the URL directly for redirection
+    else:
+        form = OpportunityForm()
+    return render(request, 'path/to/your_template.html', {'form': form})

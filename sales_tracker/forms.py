@@ -1,4 +1,4 @@
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling, Task
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling, Task, agentNotes
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
@@ -519,3 +519,34 @@ class DailySalesReportForm(forms.ModelForm):
         if notes is not None and not re.match("^[A-Za-z0-9 ]*$", notes):  # Allow alphabets and numbers
             raise forms.ValidationError("Notes can only contain alphabets, numbers, and spaces.")
         return notes
+
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = agentNotes
+        fields = ['subject', 'contact', 'attachment', 'note', 'related_to']
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter subject'}),
+            'contact': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter contact name'}),
+            'attachment': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'note': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter your note'}),
+            'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to'}),
+        }
+
+class InvoiceForm(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = [
+            'title', 'customer_name', 'due_date', 'assigned_to', 'description',
+            'invoice_number', 'quotation_number', 'invoice_date', 'status',
+            'account', 'contact', 'billing_address', 'shipping_address',
+            'currency', 'line_items', 'total', 'discount', 'subtotal', 
+            'shipping', 'adjustment', 'tax', 'grand_total'
+        ]
+        widgets = {
+            'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'invoice_date': forms.DateInput(attrs={'type': 'date'}),
+            'description': forms.Textarea(attrs={'rows': 3}),
+            'billing_address': forms.Textarea(attrs={'rows': 2}),
+            'shipping_address': forms.Textarea(attrs={'rows': 2}),
+        }
