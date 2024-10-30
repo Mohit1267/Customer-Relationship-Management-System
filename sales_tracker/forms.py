@@ -551,3 +551,109 @@ class DailySalesReportForm(forms.ModelForm):
         if notes is not None and not re.match("^[A-Za-z0-9 ]*$", notes):  # Allow alphabets and numbers
             raise forms.ValidationError("Notes can only contain alphabets, numbers, and spaces.")
         return notes
+    
+
+
+from django import forms
+from ckeditor.fields import RichTextField
+
+class ComposeEmailForm(forms.Form):
+    # 'template' is now a regular CharField and 'related_to' is a ChoiceField with specified options
+    template = forms.CharField(
+        max_length=255,
+        required=False,
+        label="Email Template",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    related_to = forms.ChoiceField(
+        choices=[
+             (' ', ' '),
+            ('account', 'Account'),
+            ('opportunity', 'Opportunity'),
+            ('case', 'Case'),
+            ('lead', 'Lead'),
+            ('contact', 'Contact'),
+            ('bug', 'Bug'),
+            ('project', 'Project'),
+            ('target', 'Target'),
+            ('project_task', 'Project Task'),
+            ('contract', 'Contract'),
+            ('invoice', 'Invoice'),
+            ('quote', 'Quote'),
+            ('product', 'Product'),
+        ],
+        required=False,
+        label="Related To",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    from_address = forms.EmailField(
+        required=True,
+        label="From",
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+
+    to_address = forms.EmailField(
+        required=True,
+        label="To",
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+
+    cc_address = forms.CharField(
+        required=False,
+        label="CC",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    bcc_address = forms.CharField(
+        required=False,
+        label="BCC",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    subject = forms.CharField(
+        max_length=255,
+        required=True,
+        label="Subject",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    body = forms.CharField(
+        required=True,
+        label="Body",
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6})
+    )
+
+    send_plain_text = forms.BooleanField(
+        required=False,
+        label="Send in Plain Text",
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+
+from django import forms
+
+class ContactForm(forms.Form):
+    first_name = forms.CharField(label='First Name', max_length=100, required=True)
+    last_name = forms.CharField(label='Last Name', max_length=100, required=True)
+    job_title = forms.CharField(label='Job Title', max_length=100, required=False)
+    office_phone = forms.CharField(label='Office Phone', max_length=15, required=False)
+    department = forms.CharField(label='Department', max_length=100, required=False)
+    mobile = forms.CharField(label='Mobile', max_length=15, required=False)
+    account_name = forms.CharField(label='Account Name', max_length=100, required=False)
+    fax = forms.CharField(label='Fax', max_length=15, required=False)
+    primary_address_street = forms.CharField(label='Street', max_length=255, required=False)
+    primary_address_postal_code = forms.CharField(label='Postal Code', max_length=20, required=False)
+    primary_address_city = forms.CharField(label='City', max_length=100, required=False)
+    primary_address_state = forms.CharField(label='State', max_length=100, required=False)
+    primary_address_country = forms.CharField(label='Country', max_length=100, required=False)
+    other_address_street = forms.CharField(label='Street', max_length=255, required=False)
+    other_address_postal_code = forms.CharField(label='Postal Code', max_length=20, required=False)
+    other_address_city = forms.CharField(label='City', max_length=100, required=False)
+    other_address_state = forms.CharField(label='State', max_length=100, required=False)
+    other_address_country = forms.CharField(label='Country', max_length=100, required=False)
+    email_address = forms.EmailField(label='Email Address', required=True)
+    description = forms.CharField(label='Description', widget=forms.Textarea, required=False)
+    assigned_to = forms.CharField(label='Assigned To', max_length=100, required=False)
+
+    # You can add custom validation methods or additional features as needed

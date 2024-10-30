@@ -393,3 +393,34 @@ class DailySalesReport(models.Model):
         verbose_name_plural = "Daily Sales Reports"
         ordering = ['-date']  # Orders reports by date, newest first
 
+
+
+# from django.db import models
+# from django.contrib.auth.models import User
+
+# class EmailTemplate(models.Model):
+#     """Model to store email templates."""
+#     name = models.CharField(max_length=255, unique=True)
+#     content = models.TextField()
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return self.name
+
+# class ComposedEmail(models.Model):
+#     """Model to store composed email details."""
+#     template = models.ForeignKey(EmailTemplate, on_delete=models.SET_NULL, null=True, blank=True)
+#     related_to = models.CharField(max_length=255, blank=True, null=True)
+#     from_address = models.EmailField()
+#     to_address = models.EmailField()
+#     cc_address = models.TextField(blank=True, null=True)  # Can store multiple emails separated by commas
+#     bcc_address = models.TextField(blank=True, null=True)  # Can store multiple emails separated by commas
+#     subject = models.CharField(max_length=255)
+#     body = models.TextField()
+#     send_plain_text = models.BooleanField(default=False)
+#     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
