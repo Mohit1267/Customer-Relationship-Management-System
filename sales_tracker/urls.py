@@ -97,6 +97,9 @@ urlpatterns = [
     path('send-email/<int:meeting_id>/', views.send_meeting_email, name='send_meeting_email'),
     # path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
 
+    path("agentemail", login_required((views.compose_email)), name="agentemail"),
+    path("viewemail", login_required((views.viewEmail)), name="viewemail"),
+     path("agenttarget", login_required((views.Agenttarget)), name="agenttarget"),
 
 
 ]
