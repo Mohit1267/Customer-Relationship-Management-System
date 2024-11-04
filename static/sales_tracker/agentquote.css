@@ -9,11 +9,11 @@ body {
 }
 
 
-.container-fluid {
+/* .container-fluid {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 950px;
-}
+} */
 
 
 /* .heading_links { 
@@ -117,7 +117,7 @@ body {
 .form-group textarea {
     width: 100%;
     border: none;
-    border-bottom: 2px solid #0a0a0a;
+    border-bottom: 1px solid #0a0a0a;
     border-radius: 0;
     padding: 0px 0;
     background: transparent;

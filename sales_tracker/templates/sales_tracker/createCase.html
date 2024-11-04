@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{% static 'sales_tracker/createCase.css' %}">
 {% endblock %}
 
-{% block title %}New Contract{% endblock %}
+{% block title %}New Case{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -32,44 +32,44 @@
         <div class="row">
             <!-- Left column fields -->
             <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.case_number|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.priority|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.state|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.status|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.type|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.account_name|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.subject|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.description|as_crispy_field }}
                 </div>
             </div>
 
             <!-- Right column fields -->
             <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.resolution|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.assigned_to|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.date_created|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.date_modified|as_crispy_field }}
                 </div>
             </div>
