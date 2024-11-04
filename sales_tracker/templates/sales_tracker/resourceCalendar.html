@@ -1,0 +1,167 @@
+{% extends "agentbase.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/resourceCalendar.css' %}">
+{% endblock %}
+
+{% block title %}Resource Calendar{% endblock %}
+
+{% block content %}
+
+<div class="container1">
+    <h1>Resource Calendar</h1>
+    <div class="search-section">
+        <div class="search-box">
+            <label for="search-projects">SEARCH PROJECTS</label>
+            <select id="search-projects">
+                <option>All Projects</option>
+                <option>Create new plan for the annual audit</option>
+            </select>
+        </div>
+        <div class="search-box">
+            <label for="search-users">SEARCH USERS</label>
+            <select id="search-users">
+                <option>All Users</option>
+                <option>None</option>
+            </select>
+            <span class="highlighted">No resources have been assigned to a project.</span>
+        </div>
+        <div class="search-box">
+            <label for="select-contacts">SELECT CONTACTS</label>
+            <select id="select-contacts">
+                <option>All Contacts</option>
+                <option>None</option>
+            </select>
+            <span class="highlighted">No resources have been assigned to a project.</span>
+        </div>
+        <div class="search-box">
+            <label for="type">TYPE</label>
+            <select id="type">
+                <option>Weekly</option>
+                <option>Monthly</option>
+            </select>
+        </div>
+        <div class="search-box">
+            <label for="start-date">START DATE</label>
+            <input type="date" id="start-date" value="2024-10-21">
+        </div>
+        <div class="search-button">
+            <button>Search</button>
+        </div>
+    </div>
+    <div class="container-calendar">
+
+        <div class="calendar-container">
+            <div class="calendar-nav">
+                <span id="prev-month" class="highlighted">&lt; Previous Month</span>
+                <span id="calendar-title">Resource Calendar - <span id="month-year"></span></span>
+                <span id="next-month" class="highlighted">Next Month &gt;</span>
+            </div>
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <!-- Week headers will be populated dynamically -->
+                    </tr>
+                    <tr>
+                        <th>Day</th>
+                        <!-- Day headers will be populated dynamically -->
+                    </tr>
+                </thead>
+                <tbody id="calendar-body">
+                    <!-- Days of the month will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    let currentDate = new Date();
+
+    function renderCalendar(date) {
+        const monthYear = document.getElementById('month-year');
+        const calendarBody = document.getElementById('calendar-body');
+        const tableHead = document.querySelector('.calendar-table thead');
+        const year = date.getFullYear();
+        const month = date.getMonth();
+
+        monthYear.textContent = `${monthNames[month]} ${year}`;
+        calendarBody.innerHTML = ''; // Clear the previous calendar
+        tableHead.rows[0].innerHTML = '<th>Week</th>'; // Clear the week header row
+        tableHead.rows[1].innerHTML = '<th>Day</th>'; // Clear the day header row
+
+        // Get the first and last day of the month
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startDayOfWeek = firstDay.getDay();
+
+        let weekNumber = getWeekNumber(firstDay);
+        let day = 1;
+
+        while (day <= daysInMonth) {
+            let weekRow = document.createElement('tr');
+            let weekHeader = document.createElement('th');
+            weekHeader.className = 'week-header';
+            weekHeader.textContent = weekNumber;
+            weekRow.appendChild(weekHeader);
+
+            for (let i = 0; i < 7; i++) {
+                let cell = document.createElement('td');
+                if (day <= daysInMonth && (day > 1 || i >= startDayOfWeek)) {
+                    cell.textContent = day;
+                    day++;
+                }
+                weekRow.appendChild(cell);
+            }
+            calendarBody.appendChild(weekRow);
+
+            // Add week number header
+            let weekHeaderCell = document.createElement('th');
+            weekHeaderCell.className = 'week-header';
+            weekHeaderCell.colSpan = 7;
+            weekHeaderCell.textContent = weekNumber;
+            tableHead.rows[0].appendChild(weekHeaderCell);
+
+            // Add day headers
+            if (weekNumber === getWeekNumber(firstDay)) {
+                const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+                days.forEach(day => {
+                    let dayCell = document.createElement('td');
+                    dayCell.textContent = day;
+                    tableHead.rows[1].appendChild(dayCell);
+                });
+            }
+
+            weekNumber++;
+        }
+    }
+
+    function getWeekNumber(d) {
+        const onejan = new Date(d.getFullYear(), 0, 1);
+        const dayOfYear = ((d - onejan + 86400000) / 86400000);
+        return Math.ceil((dayOfYear + onejan.getDay() + 1) / 7);
+    }
+
+    document.getElementById('prev-month').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar(currentDate);
+    });
+
+    document.getElementById('next-month').addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar(currentDate);
+    });
+
+    // Initial render
+    renderCalendar(currentDate);
+</script>
+
+{% endblock %}

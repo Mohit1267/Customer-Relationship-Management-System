@@ -1,0 +1,128 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; 
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.moving_title {
+    margin-bottom: 20px;
+    padding: 15px;
+    font-size: 35px;
+    font-weight: bold;
+    background: linear-gradient(to right, #2C3E50, #5e87b0);
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    text-align: center; 
+    background-clip: text;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    font-weight: normal;
+}
+
+.col-md-6 {
+    margin-top: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #0a0a0a;
+    border-radius: 0;
+    padding: 0px 0;
+    background: transparent;
+    color: black;
+    box-shadow: none;
+    transition: border-bottom-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+   
+    outline: none;
+}
+
+.buttons {
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    margin-top: 30px; 
+}
+
+.button1 {
+    background: linear-gradient(135deg, #28a745, #218838);
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: inline-block;
+    z-index: 10;
+    margin: 0 10px;
+    margin-right: -80px;
+    letter-spacing: 2px;
+}
+
+.button1:hover {
+    background: linear-gradient(135deg, #218838, #28a745);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.button1:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.button2 {
+    background: linear-gradient(135deg, #e52323, #e23a3a);
+    border: none;
+    color: white;
+    padding: 15px 30px; 
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 0 10px;
+    margin-left: 50px;
+    letter-spacing: 3px;
+}
+
+.button2:hover {
+    background: linear-gradient(135deg, #ed3a40, #f60101);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.button2:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+@media (max-width: 768px) {
+    .col-md-6 {
+        margin-bottom: 20px; 
+    }
+}

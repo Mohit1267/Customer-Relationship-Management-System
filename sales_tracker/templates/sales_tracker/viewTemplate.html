@@ -1,0 +1,80 @@
+{% extends "agentbase.html" %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewTemplate.css' %}">
+{% endblock %}
+
+{% block title %}View Template{% endblock %}
+
+{% block content %}
+<section class="main_container">
+
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+
+    <div class="filter-container">
+        <div id="filterForm" class="filter-form" style="display: none;">
+            <div class="form-group">
+                <label for="templateName">Template Name:</label>
+                <input type="text" id="templateName" name="templateName" placeholder="Enter Template Name">
+            </div>
+           
+            <div class="form-group">
+                <label for="assignedTo">Assigned To:</label>
+                <input type="text" id="assignedTo" name="assignedTo" placeholder="Enter Assigned User">
+            </div>
+           
+            <div class="form-actions">
+                <button type="submit">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Template Name</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Project Manager</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in data_list %}
+            <tr>
+                <td><a href="{% url 'detaildata' data.id %}">{{ data.template_name }}</a></td>
+                <td>{{ data.status }}</td>
+                <td>{{ data.priority }}</td>
+                <td>{{ data.project_manager }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No data available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</section>
+
+<script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "grid" : "none";
+    }
+
+    function clearForm() {
+        document.getElementById("templateName").value = "";
+        document.getElementById("assignedTo").value = "";
+    }
+</script>
+
+{% endblock %}
+{% block javascript %}{% endblock %}

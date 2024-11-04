@@ -306,17 +306,18 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{% url 'viewemail' %}">View Target</a></li>
+            <li><a class="dropdown-item" href="{% url 'viewtarget' %}">View Target</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{% url 'viewemail' %}">Import</a></li>
+            <li><a class="dropdown-item" href="{% url 'targetimport' %}">Import</a></li>
           </ul>
         </li>
 
         <li class="nav-item dropdown ">
           <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
+
 
             <img src="https://i.ibb.co/mXJykLY/Screenshot-2024-11-04-113812-removebg-preview.png" alt="TaskLogo"
               style="margin-right: 5px;" width="40px" height="60px">
@@ -335,6 +336,115 @@
           </ul>
         </li>
 
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/71y0Kr8/Target-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+              Targets-List
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentTemplate' %}">Create Targets-List</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewtargetsList' %}">View Targets-List</a></li>
+          </ul>
+        </li>
+
+        
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/X3pr3vn/Project-Icon-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Projects
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentProjects' %}">Create Projects</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewprojectList' %}">View Project-List</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'projectimport' %}">Import</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'resourceCalendar' %}">Resource Calendar</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewprojectTask' %}">View Project-Task</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Projects-Templates
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentTemplate' %}">Create Templates</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewTemplate' %}">View Templates</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'Importtemplate' %}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Contract
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createContract' %}">Create Contract</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewContract' %}">View Contract</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'Importtemplate' %}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Case
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createCase' %}">Create Case</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewCase' %}">View Case</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'Importtemplate' %}">Import</a></li>
+          </ul>
+        </li>
       </div>
 
             

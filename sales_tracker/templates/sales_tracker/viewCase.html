@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
 {% endblock %}
 
-{% block title %}Data{% endblock %}
+{% block title %}Cases{% endblock %}
 
 {% block content %}
 
@@ -26,8 +26,8 @@
                 <input type="text" id="subject" name="subject">
             </div>
             <div class="form-group">
-                <label for="contact">Contact:</label>
-                <input type="text" id="contact" name="contact">
+                <label for="accountName">Account Name:</label>
+                <input type="text" id="accountName" name="accountName">
             </div>
             <div class="form-group">
                 <label for="priority">Priority:</label>
@@ -49,10 +49,6 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="contacts">Contacts:</label>
-                <input type="text" id="contacts" name="contacts">
-            </div>
-            <div class="form-group">
                 <label for="assignedTo">Assigned To:</label>
                 <select id="assignedTo" name="assignedTo">
                     <option value="">-- Select User --</option>
@@ -60,6 +56,10 @@
                     <option value="user2">User 2</option>
                     <option value="user3">User 3</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="dateCreated">Date Created:</label>
+                <input type="date" id="dateCreated" name="dateCreated">
             </div>
             
             <div class="form-actions">
@@ -72,25 +72,23 @@
     <table>
         <thead>
             <tr>
-                <th>Contract Title</th>
+                <th>Subject</th>
+                <th>Account Name</th>
+                <th>Priority</th>
                 <th>Status</th>
-                <th>Contract Manager</th>
-                <th>Account</th>
-                <th>Contract Value</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Assigned To</th>
+                <th>Date Created</th>
             </tr>
         </thead>
         <tbody>
         {% for data in data_list %}
             <tr>
-                <td><a href="{% url 'detaildata' data %}">{{ data.contract_title }}</a></td>
+                <td>{{ data.subject }}</td>
+                <td>{{ data.account_name }}</td>
+                <td>{{ data.priority }}</td>
                 <td>{{ data.status }}</td>
-                <td>{{ data.contract_manager }}</td>
-                <td>{{ data.account }}</td>
-                <td>{{ data.contract_value }}</td>
-                <td>{{ data.start_date }}</td>
-                <td>{{ data.end_date }}</td>
+                <td>{{ data.assigned_to }}</td>
+                <td>{{ data.date_created }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -106,41 +104,40 @@
 
     function clearForm() {
         document.getElementById("subject").value = "";
-        document.getElementById("contact").value = "";
+        document.getElementById("accountName").value = "";
         document.getElementById("priority").value = "";
         document.getElementById("status").value = "";
-        document.getElementById("contacts").value = "";
         document.getElementById("assignedTo").value = "";
+        document.getElementById("dateCreated").value = "";
     }
 
     function performSearch() {
         // Get filter values
         var subject = document.getElementById("subject").value.toLowerCase();
-        var contact = document.getElementById("contact").value.toLowerCase();
+        var accountName = document.getElementById("accountName").value.toLowerCase();
         var priority = document.getElementById("priority").value.toLowerCase();
         var status = document.getElementById("status").value.toLowerCase();
-        var contacts = document.getElementById("contacts").value.toLowerCase();
         var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+        var dateCreated = document.getElementById("dateCreated").value;
 
         // Get all rows in the table
         var rows = document.querySelectorAll("table tbody tr");
 
         rows.forEach(function(row) {
             var rowSubject = row.cells[0].innerText.toLowerCase();
-            var rowStatus = row.cells[1].innerText.toLowerCase();
-            var rowManager = row.cells[2].innerText.toLowerCase();
-            var rowAccount = row.cells[3].innerText.toLowerCase();
-            var rowValue = row.cells[4].innerText.toLowerCase();
-            var rowStartDate = row.cells[5].innerText.toLowerCase();
-            var rowEndDate = row.cells[6].innerText.toLowerCase();
+            var rowAccountName = row.cells[1].innerText.toLowerCase();
+            var rowPriority = row.cells[2].innerText.toLowerCase();
+            var rowStatus = row.cells[3].innerText.toLowerCase();
+            var rowAssignedTo = row.cells[4].innerText.toLowerCase();
+            var rowDateCreated = row.cells[5].innerText;
 
             // Check if the row matches the filters
             var match = (!subject || rowSubject.includes(subject)) &&
-                        (!contact || rowManager.includes(contact)) &&
-                        (!priority || rowStatus.includes(priority)) &&
+                        (!accountName || rowAccountName.includes(accountName)) &&
+                        (!priority || rowPriority.includes(priority)) &&
                         (!status || rowStatus.includes(status)) &&
-                        (!contacts || rowAccount.includes(contacts)) &&
-                        (!assignedTo || rowManager.includes(assignedTo));
+                        (!assignedTo || rowAssignedTo.includes(assignedTo)) &&
+                        (!dateCreated || rowDateCreated === dateCreated);
 
             // Show or hide the row based on match
             row.style.display = match ? "" : "none";

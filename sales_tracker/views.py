@@ -2089,7 +2089,7 @@ def viewEmail(request):
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import ContactForm
+from .forms import TargetsForm
 
 def Agenttarget(request):
     """
@@ -2098,7 +2098,7 @@ def Agenttarget(request):
     On GET requests, it displays the empty form for the user to fill out.
     """
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = TargetsForm(request.POST)
         if form.is_valid():
             # Process the form data, e.g., save to the database or send notification
             first_name = form.cleaned_data.get('first_name')
@@ -2130,10 +2130,182 @@ def Agenttarget(request):
         else:
             messages.error(request, 'There was an error submitting the contact information. Please check your input.')
     else:
-        form = ContactForm()  # Initialize an empty form for a GET request
+        form = TargetsForm()  # Initialize an empty form for a GET request
 
     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+
 
 def viewInvoices(request):
     return render(request, 'sales_tracker/viewInvoices.html')
 
+
+
+def viewTarget(request):
+    return render(request, "sales_tracker/viewtarget.html")
+
+def Targetimport(request):
+    return render(request, "sales_tracker/targetimport.html")
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import TargetsListForm # Make sure to import the form correctly
+
+def TargetList(request):
+    """
+    This view handles the target form submission.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = TargetsListForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            name = form.cleaned_data.get('name')
+            total_entries = form.cleaned_data.get('total_entries')
+            type = form.cleaned_data.get('type')
+            domain_name = form.cleaned_data.get('domain_name')
+            description = form.cleaned_data.get('description')
+
+            # Save or process form data here
+
+            messages.success(request, 'Target information submitted successfully!')
+            return redirect('targetsList')  # Redirect to the same page or another view
+        else:
+            messages.error(request, 'There was an error submitting the target information. Please check your input.')
+    else:
+        form = TargetsListForm()  # Initialize an empty form for a GET request
+
+    return render(request, 'sales_tracker/targetsList.html', {'form': form})
+
+def viewTargetList(request):
+    return render(request, "sales_tracker/viewtargetsList.html")
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import AgentProjectsForm  # Ensure this form exists and is correctly imported
+
+def agentProjects(request):
+    """
+    Handles the agent project form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = AgentProjectsForm(request.POST)
+        if form.is_valid():
+            # Process and save the form data
+            name = form.cleaned_data.get('name')
+            status = form.cleaned_data.get('status')
+            draft = form.cleaned_data.get('draft')
+            start_date = form.cleaned_data.get('start_date')
+            priority = form.cleaned_data.get('priority')
+            end_date = form.cleaned_data.get('end_date')
+            consider_working_days = form.cleaned_data.get('consider_working_days')
+            project_manager = form.cleaned_data.get('project_manager')
+            project_template = form.cleaned_data.get('project_template')
+
+            # Save the form data to the database
+            form.save()
+
+            messages.success(request, 'Agent project information submitted successfully!')
+            return redirect('agentProjects')  # Adjust to your desired redirect page
+        else:
+            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+    else:
+        form = AgentProjectsForm()  # Initialize an empty form on a GET request
+
+    return render(request, 'sales_tracker/agentProjects.html', {'form': form})
+
+
+def viewProjectList(request):
+    return render(request, "sales_tracker/viewprojectList.html")
+
+def projectimport(request):
+    return render(request, "sales_tracker/projectimport.html")
+
+def Resourcecalendar(request):
+    return render(request, "sales_tracker/resourceCalendar.html")
+
+def ProjectTask(request):
+    return render(request, "sales_tracker/viewprojectTask.html")
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import AgentTemplate 
+
+def agentTemplate(request):
+    """
+    Handles the agent project form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = AgentTemplate(request.POST)
+        if form.is_valid():
+ 
+            template_name = form.cleaned_data.get('template_name')
+            consider_working_days = form.cleaned_data.get('consider_working_days')
+            project_manager = form.cleaned_data.get('project_manager')
+            status = form.cleaned_data.get('status')
+            priority = form.cleaned_data.get('priority')
+
+            form.save()
+
+            messages.success(request, 'Agent project information submitted successfully!')
+            return redirect('agentTemplate') 
+        else:
+            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+    else:
+        form = AgentTemplate() 
+
+    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+
+def ViewTemplate(request):
+    return render(request, "sales_tracker/viewTemplate.html")
+
+def Templateimport(request):
+    return render(request, "sales_tracker/Importtemplate.html")
+
+
+# views.py
+from django.shortcuts import render, redirect
+from .forms import ContractForm
+
+def createContract(request):
+    if request.method == 'POST':
+        form = ContractForm(request.POST)
+        if form.is_valid():
+            # Process the form data (for example, save it to the database or perform calculations)
+            # You can access form data using form.cleaned_data['field_name']
+            
+            # Redirect to a success page or render a confirmation message
+            return redirect('success_url')  # Replace 'success_url' with the actual URL name for redirection
+    else:
+        form = ContractForm()
+    
+    return render(request, 'sales_tracker/createContract.html', {'form': form})
+
+def viewContract(request):
+    return render(request, "sales_tracker/viewContract.html")
+
+
+from django.shortcuts import render, redirect
+from .forms import CaseForm
+
+def createCase(request):
+    if request.method == "POST":
+        form = CaseForm(request.POST)
+        if form.is_valid():
+            # Process form data here (e.g., save to database or log)
+            return redirect('createCase')  # Replace with your desired redirect
+    else:
+        form = CaseForm()
+    
+    return render(request, 'sales_tracker/createCase.html', {'form': form})
+
+def viewCases(request):
+    return render(request, "sales_tracker/viewCase.html")
