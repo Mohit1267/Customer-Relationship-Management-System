@@ -424,3 +424,62 @@ class DailySalesReport(models.Model):
 
 #     def __str__(self):
 #         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
+
+
+# models.py
+from django.db import models
+
+class agentProjects(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+    ]
+    PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    draft = models.BooleanField(default=False)
+    start_date = models.DateField()
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
+    end_date = models.DateField()
+    consider_working_days = models.BooleanField(default=False)
+    project_manager = models.CharField(max_length=100)
+    project_template = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+from django.db import models
+
+class AgentTemplate(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('in_review', 'In Review'),
+        ('underway', 'Underway'),
+        ('on_hold', 'On Hold'),
+        ('completed', 'Completed'),
+]
+
+    PRIORITY_CHOICES = [
+        ('high', 'High'),
+        ('medium', 'Medium'),
+        ('low', 'Low'),
+        # Add other priority options here as needed
+    ]
+
+    template_name = models.CharField(max_length=255)
+    consider_working_days = models.BooleanField(default=False)
+    project_manager = models.CharField(max_length=255)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='medium')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.template_name

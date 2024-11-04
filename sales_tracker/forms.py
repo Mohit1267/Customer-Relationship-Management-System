@@ -633,7 +633,7 @@ class ComposeEmailForm(forms.Form):
 
 from django import forms
 
-class ContactForm(forms.Form):
+class TargetsForm(forms.Form):
     first_name = forms.CharField(label='First Name', max_length=100, required=True)
     last_name = forms.CharField(label='Last Name', max_length=100, required=True)
     job_title = forms.CharField(label='Job Title', max_length=100, required=False)
@@ -657,3 +657,102 @@ class ContactForm(forms.Form):
     assigned_to = forms.CharField(label='Assigned To', max_length=100, required=False)
 
     # You can add custom validation methods or additional features as needed
+
+
+from django import forms
+
+class TargetsListForm(forms.Form):
+    name = forms.CharField(
+        label="Name",
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name'})
+    )
+    total_entries = forms.IntegerField(
+        label="Total Entries",
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter total entries'})
+    )
+    type = forms.ChoiceField(
+        label="Type",
+        choices=[
+        ('default', 'Default'),
+        ('seed', 'Seed'),
+        ('suppression_list_by_domain', 'Suppression List - by Domain'),
+        ('suppression_list_by_email', 'Suppression List - by Email'),
+        ('suppression_list_by_id', 'Suppression List - by ID'),
+        ('test', 'Test')
+    ],
+    widget=forms.Select(attrs={'class': 'form-control'})
+)
+
+    domain_name = forms.CharField(
+        label="Domain Name",
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter domain name'})
+    )
+    description = forms.CharField(
+        label="Description",
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter description'})
+    )
+
+
+from django import forms
+from .models import agentProjects
+
+class AgentProjectsForm(forms.ModelForm):
+    class Meta:
+        model = agentProjects
+        fields = [
+            'name', 'status', 'draft', 'start_date', 'priority', 
+            'end_date', 'consider_working_days', 'project_manager', 
+            'project_template'
+        ]
+        
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(AgentProjectsForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = "Name*"
+        self.fields['status'].label = "Status"
+        self.fields['draft'].label = "Draft"
+        self.fields['start_date'].label = "Start Date*"
+        self.fields['priority'].label = "Priority"
+        self.fields['end_date'].label = "End Date*"
+        self.fields['consider_working_days'].label = "Consider Working Days"
+        self.fields['project_manager'].label = "Project Manager"
+        self.fields['project_template'].label = "Project Template"
+
+from django import forms
+from .models import AgentTemplate  # Ensure this model exists and is correctly imported
+
+class AgentTemplate(forms.ModelForm):
+    class Meta:
+        model = AgentTemplate  # Replace with the actual model name if different
+        fields = [
+            'template_name',
+            'consider_working_days',
+            'project_manager',
+            'status',
+            'priority'
+        ]
+        
+        widgets = {
+            'template_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter template name'}),
+            'consider_working_days': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'project_manager': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter project manager name'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add custom labels if necessary
+        self.fields['template_name'].label = "Template Name"
+        self.fields['consider_working_days'].label = "Consider Working Days"
+        self.fields['project_manager'].label = "Project Manager"
+        self.fields['status'].label = "Status"
+        self.fields['priority'].label = "Priority"
