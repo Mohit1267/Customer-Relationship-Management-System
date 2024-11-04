@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block css_link %}
-    <link rel="stylesheet" href="{% static 'sales_tracker/opportunity.css' %}">
+    <link rel="stylesheet" href="{% static 'sales_tracker/createInvoices.css' %}">
 {% endblock %}
 
 {% block title %}New Invoice{% endblock %}
@@ -106,12 +106,7 @@
                 <div class="form-group">
                     {{ form.line_items|as_crispy_field }}
                 </div>
-            </div>
-        </div>
 
-        <!-- Totals Section -->
-        <div class="row">
-            <div class="col-12 pt-5 pb-5 px-4">
                 <div class="form-group">
                     {{ form.total|as_crispy_field }}
                 </div>
@@ -135,6 +130,13 @@
                 </div>
             </div>
         </div>
+
+        <!-- Totals Section -->
+        <!-- <div class="row">
+            <div class="col-12 pt-5 pb-5 px-4">
+                
+            </div>
+        </div> -->
     </form>
 </div>
 {% endblock %}
