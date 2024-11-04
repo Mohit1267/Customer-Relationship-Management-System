@@ -51,33 +51,35 @@
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email">
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="state">State:</label>
-                <input type="text" id="state" name="state">
-            </div>
-            <div class="form-group">
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city">
-            </div>
-            <div class="form-group">
-                <label for="zone">Zone:</label>
-                <input type="text" id="zone" name="zone">
-            </div>
                 <div class="form-group">
-                    <label for="assignedTo">Assigned To:</label>
-                    <select id="assignedTo" name="assignedTo">
-                        <option value="">-- Select User --</option>
-                        <option value="user1">User 1</option>
-                        <option value="user2">User 2</option>
-                        <option value="user3">User 3</option>
-                    </select>
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state">
                 </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city">
+                </div>
+                <div class="form-group">
+                    <label for="zone">Zone:</label>
+                    <input type="text" id="zone" name="zone">
+                </div>
+                    <div class="form-group">
+                        <label for="assignedTo">Assigned To:</label>
+                        <select id="assignedTo" name="assignedTo">
+                            <option value="">-- Select User --</option>
+                            <option value="user1">User 1</option>
+                            <option value="user2">User 2</option>
+                            <option value="user3">User 3</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="performSearch()">Apply Filter</button>
+                        <button type="button" onclick="clearForm()">Clear</button>
+                    </div>
+            </div>
+            
                 
-                <div class="form-actions">
-                    <button type="button" onclick="performSearch()">Apply Filter</button>
-                    <button type="button" onclick="clearForm()">Clear</button>
-                </div>
+                
             </div>
         </div>
     </div>

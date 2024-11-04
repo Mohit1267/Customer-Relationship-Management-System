@@ -25,7 +25,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
 from users.models import Profile, RegisterUser, Location
 from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting, Schedule_Calling
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, DocumentForm, TaskForm,agentcalling
+from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, DocumentForm, TaskForm,agentcalling, NoteForm, InvoiceForm
 from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
 from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
 from .requirements import timer
@@ -1943,13 +1943,13 @@ from .forms import TaskForm
 
 def createNotes(request):
     if request.method == 'POST':
-        form = TaskForm(request.POST, request.FILES)  # Handling file upload
+        form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()  # Save the form data to the database
-            return redirect('task_list')  # Redirect to a success page (replace 'task_list' with your own URL)
+            form.save()
+            return redirect('note_list')  # Replace 'note_list' with your desired redirect URL
     else:
-        form = TaskForm()
-
+        form = NoteForm()
+    
     return render(request, 'sales_tracker/createNotes.html', {'form': form})
 
 def liveStreaming(request):
@@ -2021,6 +2021,28 @@ def miningimport(request):
     return render(request, "sales_tracker/miningimport.html")
 
 
+
+def viewNotes(request):
+      return render(request, "sales_tracker/viewNotes.html")
+
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView
+# from .models import Opportunity
+from .forms import OpportunityForm
+
+from django.shortcuts import render, redirect
+from .forms import InvoiceForm
+
+def createInvoices(request):
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+            # Here you could handle the form data manually if needed
+            # For now, we'll just redirect as if it was saved
+            return redirect('invoice_list')  # Adjust redirect target as needed
+    else:
+        form = InvoiceForm()
+    return render(request, 'sales_tracker/createInvoices.html', {'form': form})
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -2111,6 +2133,11 @@ def Agenttarget(request):
         form = TargetsForm()  # Initialize an empty form for a GET request
 
     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+
+
+def viewInvoices(request):
+    return render(request, 'sales_tracker/viewInvoices.html')
+
 
 
 def viewTarget(request):
@@ -2242,3 +2269,43 @@ def ViewTemplate(request):
 
 def Templateimport(request):
     return render(request, "sales_tracker/Importtemplate.html")
+
+
+# views.py
+from django.shortcuts import render, redirect
+from .forms import ContractForm
+
+def createContract(request):
+    if request.method == 'POST':
+        form = ContractForm(request.POST)
+        if form.is_valid():
+            # Process the form data (for example, save it to the database or perform calculations)
+            # You can access form data using form.cleaned_data['field_name']
+            
+            # Redirect to a success page or render a confirmation message
+            return redirect('success_url')  # Replace 'success_url' with the actual URL name for redirection
+    else:
+        form = ContractForm()
+    
+    return render(request, 'sales_tracker/createContract.html', {'form': form})
+
+def viewContract(request):
+    return render(request, "sales_tracker/viewContract.html")
+
+
+from django.shortcuts import render, redirect
+from .forms import CaseForm
+
+def createCase(request):
+    if request.method == "POST":
+        form = CaseForm(request.POST)
+        if form.is_valid():
+            # Process form data here (e.g., save to database or log)
+            return redirect('createCase')  # Replace with your desired redirect
+    else:
+        form = CaseForm()
+    
+    return render(request, 'sales_tracker/createCase.html', {'form': form})
+
+def viewCases(request):
+    return render(request, "sales_tracker/viewCase.html")

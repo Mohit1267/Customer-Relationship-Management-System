@@ -395,18 +395,84 @@ class DailySalesReport(models.Model):
 
 
 
-# from django.db import models
-# from django.contrib.auth.models import User
 
-# class EmailTemplate(models.Model):
-#     """Model to store email templates."""
-#     name = models.CharField(max_length=255, unique=True)
-#     content = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+class agentNotes(models.Model):
+    subject = models.CharField(max_length=255)
+    contact = models.CharField(max_length=255)
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
+    note = models.TextField()
+    related_to = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.subject
+    
+'''
+class createInvoices(models.Model):
+ 
+    title = models.CharField(max_length=255)
+    customer_name = models.CharField(max_length=255)
+    due_date = models.DateField()
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    description = models.TextField(blank=True)
+
+
+    invoice_number = models.CharField(max_length=100, blank=True)
+    quotation_number = models.CharField(max_length=100, blank=True)
+    invoice_date = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=100, choices=[('Open', 'Open'), ('Closed', 'Closed'), ('Pending', 'Pending')], default='Open')
+
+    account = models.CharField(max_length=255, blank=True)
+    contact = models.CharField(max_length=255, blank=True)
+    billing_address = models.TextField(blank=True)
+    shipping_address = models.TextField(blank=True)
+
+
+    currency = models.CharField(max_length=10, choices=[('USD', 'USD'), ('EUR', 'EUR'), ('GBP', 'GBP')], default='USD')
+    line_items = models.TextField(blank=True)  # For simplicity, you can use JSON or a dedicated model for line items
+
+  
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    shipping = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    adjustment = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    tax = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    grand_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.title'''
+
+# class createInvoice(models.Model):
+#     title = models.CharField(max_length=255)
+#     customer_name = models.CharField(max_length=255)
+#     due_date = models.DateField()
+#     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+#     description = models.TextField(blank=True, null=True)
+    
+#     invoice_number = models.CharField(max_length=100, blank=True, null=True)
+#     quotation_number = models.CharField(max_length=100, blank=True, null=True)
+#     invoice_date = models.DateField(blank=True, null=True)
+#     status = models.CharField(max_length=50, choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], default='open')
+    
+#     account = models.CharField(max_length=255)
+#     contact = models.CharField(max_length=255)
+#     billing_address = models.TextField(blank=True, null=True)
+#     shipping_address = models.TextField(blank=True, null=True)
+    
+#     currency = models.CharField(max_length=10, default='USD')
+#     line_items = models.TextField(blank=True, null=True)
+    
+#     total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     discount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     subtotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     shipping = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     adjustment = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     tax = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     grand_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
 #     def __str__(self):
-#         return self.name
+#         return self.title
+
 
 # class ComposedEmail(models.Model):
 #     """Model to store composed email details."""
@@ -483,3 +549,4 @@ class AgentTemplate(models.Model):
 
     def __str__(self):
         return self.template_name
+

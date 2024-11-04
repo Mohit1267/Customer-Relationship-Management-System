@@ -1,4 +1,4 @@
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling, Task
+from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling, Task, agentNotes
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
@@ -551,6 +551,51 @@ class DailySalesReportForm(forms.ModelForm):
         if notes is not None and not re.match("^[A-Za-z0-9 ]*$", notes):  # Allow alphabets and numbers
             raise forms.ValidationError("Notes can only contain alphabets, numbers, and spaces.")
         return notes
+
+
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = agentNotes
+        fields = ['subject', 'contact', 'attachment', 'note', 'related_to']
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter subject'}),
+            'contact': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter contact name'}),
+            'attachment': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'note': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter your note'}),
+            'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to'}),
+        }
+
+from django import forms
+
+class InvoiceForm(forms.Form):
+    title = forms.CharField(max_length=255)
+    customer_name = forms.CharField(max_length=255)
+    due_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    assigned_to = forms.CharField(max_length=255)  # Placeholder for user field
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
+    
+    invoice_number = forms.CharField(max_length=100, required=False)
+    quotation_number = forms.CharField(max_length=100, required=False)
+    invoice_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    status = forms.ChoiceField(choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], initial='open')
+    
+    account = forms.CharField(max_length=255)
+    contact = forms.CharField(max_length=255)
+    billing_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    shipping_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    
+    currency = forms.CharField(max_length=10, initial='USD')
+    line_items = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    
+    total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    discount = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    subtotal = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    shipping = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    adjustment = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+
     
 
 
@@ -656,6 +701,25 @@ class TargetsForm(forms.Form):
     description = forms.CharField(label='Description', widget=forms.Textarea, required=False)
     assigned_to = forms.CharField(label='Assigned To', max_length=100, required=False)
 
+# class InvoiceForm(forms.ModelForm):
+#     class Meta:
+#         # model = createInvoice
+#         fields = [
+#             'title', 'customer_name', 'due_date', 'assigned_to', 'description',
+#             'invoice_number', 'quotation_number', 'invoice_date', 'status',
+#             'account', 'contact', 'billing_address', 'shipping_address',
+#             'currency', 'line_items', 'total', 'discount', 'subtotal', 
+#             'shipping', 'adjustment', 'tax', 'grand_total'
+#         ]
+#         widgets = {
+#             'due_date': forms.DateInput(attrs={'type': 'date'}),
+#             'invoice_date': forms.DateInput(attrs={'type': 'date'}),
+#             'description': forms.Textarea(attrs={'rows': 3}),
+#             'billing_address': forms.Textarea(attrs={'rows': 2}),
+#             'shipping_address': forms.Textarea(attrs={'rows': 2}),
+#         }
+
+
     # You can add custom validation methods or additional features as needed
 
 
@@ -756,3 +820,71 @@ class AgentTemplate(forms.ModelForm):
         self.fields['project_manager'].label = "Project Manager"
         self.fields['status'].label = "Status"
         self.fields['priority'].label = "Priority"
+
+
+# forms.py
+from django import forms
+
+class ContractForm(forms.Form):
+    # Basic information section
+    contract_title = forms.CharField(label="Contract Title", max_length=100, required=True)
+    contract_value = forms.DecimalField(label="Contract Value", max_digits=10, decimal_places=2, required=True)
+    start_date = forms.DateField(label="Start Date", widget=forms.DateInput(attrs={'type': 'date'}), required=True)
+    end_date = forms.DateField(label="End Date", widget=forms.DateInput(attrs={'type': 'date'}), required=True)
+    renewal_reminder_date = forms.DateField(label="Renewal Reminder Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    customer_schedule_date = forms.DateField(label="Customer Schedule Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    company_schedule_date = forms.DateField(label="Company Schedule Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    description = forms.CharField(label="Description", widget=forms.Textarea, required=False)
+    
+    # Additional information section
+    status = forms.ChoiceField(label="Status", choices=[('enabled', 'Enabled'), ('disabled', 'Disabled')], required=True)
+    contact_manager = forms.CharField(label="Contact Manager", max_length=100, required=True)
+    account = forms.CharField(label="Account", max_length=100, required=True)
+    contact = forms.CharField(label="Contact", max_length=100, required=True)
+    opportunity = forms.CharField(label="Opportunity", max_length=100, required=False)
+    contact_type = forms.ChoiceField(label="Contact Type", choices=[('type1', 'Type 1'), ('type2', 'Type 2')], required=True)
+    
+    # Financial details section
+    currency = forms.ChoiceField(label="Currency", choices=[('usd', 'USD'), ('eur', 'EUR')], required=True)
+    total = forms.DecimalField(label="Total", max_digits=10, decimal_places=2, required=False)
+    discount = forms.DecimalField(label="Discount", max_digits=10, decimal_places=2, required=False)
+    subtotal = forms.DecimalField(label="Subtotal", max_digits=10, decimal_places=2, required=False)
+    shipping = forms.DecimalField(label="Shipping", max_digits=10, decimal_places=2, required=False)
+    shipping_tax = forms.DecimalField(label="Shipping Tax", max_digits=10, decimal_places=2, required=False)
+    tax = forms.DecimalField(label="Tax", max_digits=10, decimal_places=2, required=False)
+    grand_total = forms.DecimalField(label="Grand Total", max_digits=10, decimal_places=2, required=False)
+
+    from django import forms
+
+class CaseForm(forms.Form):
+    CASE_STATES = [
+        ('open', 'Open'),
+        ('closed', 'Closed'),
+    ]
+    
+    STATUS_OPTIONS = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('resolved', 'Resolved'),
+    ]
+    
+    PRIORITY_OPTIONS = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    case_number = forms.CharField(label="CASE NUMBER", required=True, max_length=50)
+    priority = forms.ChoiceField(label="PRIORITY", choices=PRIORITY_OPTIONS, required=True)
+    state = forms.ChoiceField(label="STATE", choices=CASE_STATES, required=True)
+    status = forms.ChoiceField(label="STATUS", choices=STATUS_OPTIONS, required=True)
+    type = forms.CharField(label="TYPE", required=True, max_length=50)
+    account_name = forms.CharField(label="ACCOUNT NAME", required=True, max_length=100)
+    subject = forms.CharField(label="SUBJECT", required=True, max_length=100)
+    description = forms.CharField(label="DESCRIPTION", required=False, widget=forms.Textarea)
+    resolution = forms.CharField(label="RESOLUTION", required=False, widget=forms.Textarea)
+    assigned_to = forms.CharField(label="ASSIGNED TO", required=False, max_length=100)
+    date_created = forms.DateField(label="DATE CREATED", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    date_modified = forms.DateField(label="DATE MODIFIED", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+
+
