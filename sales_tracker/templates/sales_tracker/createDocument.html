@@ -12,10 +12,9 @@
 {% block content %}
 
 <div class="container-fluid">
-    <form method="POST" enctype="multipart/form-data"> <!-- enctype for file uploads -->
+    <form method="POST" enctype="multipart/form-data"> 
         {% csrf_token %}
     
-        <!-- Title Section -->
         <div class="row mt-2 mb-2">
             <div class="col-12 text-center moving_title" style="color: white;">
                 Create New Document
@@ -23,110 +22,95 @@
         </div>
     
         <hr>
-    
-        <!-- Button Section -->
+
         <div class="row mb-2">
             <div class="col-12 d-flex justify-content-end">
                 <button type="submit" class="button1 mx-2">Submit</button>
                 <button type="button" class="button2">Cancel</button>
             </div>
         </div>
-    
-        <!-- Form Fields Section -->
+
         <div class="row">
-            <!-- Left Column -->
+
             <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
                 
-                <!-- File Name -->
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {% if form.file_name %}
                         {{ form.file_name|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Document Name -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.document_name %}
                         {{ form.document_name|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Document Type -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.document_type %}
                         {{ form.document_type|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Publish Date -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.publish_date %}
                         {{ form.publish_date|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Category -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.category %}
                         {{ form.category|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Description -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.description %}
                         {{ form.description|as_crispy_field }}
                     {% endif %}
                 </div>
-            </div>
-    
-            <!-- Right Column -->
-            <div class="col-md-6 pt-5 px-4" style="color:rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
                 
-                <!-- Status -->
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {% if form.status %}
                         {{ form.status|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Revision -->
-                <div class="form-group">
+
+            </div>
+
+            <div class="col-md-6 pt-5 px-4" style="color:rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
+
+                <div class="form-group mb-5">
                     {% if form.revision %}
                         {{ form.revision|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Template -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.template %}
                         {{ form.template|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Expiration Date -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.expiration_date %}
                         {{ form.expiration_date|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Subcategory -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.subcategory %}
                         {{ form.subcategory|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Related Document -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.related_document %}
                         {{ form.related_document|as_crispy_field }}
                     {% endif %}
                 </div>
-                
-                <!-- Assigned To -->
-                <div class="form-group">
+
+                <div class="form-group mb-5">
                     {% if form.assigned_to %}
                         {{ form.assigned_to|as_crispy_field }}
                     {% endif %}

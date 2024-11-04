@@ -175,10 +175,44 @@
             <li>
               <hr class="dropdown-divider">
             </li>
+
+
+            
+
             <li><a class="dropdown-item" href="{%url 'opportunityimport'%}">Import</a></li>
           </ul>
         </li>
 
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <img src="https://i.ibb.co/3Mwn1xZ/images-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+            Document
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createDocument' %}">Create Document</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewDocument' %}">View Document</a></li>
+          </ul>
+        </li>
+
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <img src="https://i.ibb.co/mNyXGjt/images-1-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+            Notes
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createNotes' %}">Create Notes</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewNotes' %}">View Notes</a></li>
+          </ul>
+        </li>
 
         <li class="nav-item dropdown dashboard-icon">
           <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
@@ -245,9 +279,9 @@
         <li class="nav-item dropdown ">
           <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-<!-- 
-            <img src="https://i.ibb.co/q5z1kbN/Screenshot-2024-10-29" alt="TaskLogo"
-              style="margin-right: 5px;"> -->
+
+            <img src="https://i.ibb.co/7kTTn1Z/Whats-App-Image-2024-10-29-at-15-48-03-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
             Emails
           </a>
           <ul class="dropdown-menu">
@@ -263,8 +297,8 @@
           <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
 
-            <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo"
-              style="margin-right: 5px;">
+            <img src="https://i.ibb.co/vmpM1wy/Whats-App-Image-2024-10-29-at-15-49-28-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;" width="40px" height="60px">
             Targets
           </a>
           <ul class="dropdown-menu">
@@ -284,12 +318,34 @@
           <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
 
-            <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo"
-              style="margin-right: 5px;">
-             Targets-List
+
+            <img src="https://i.ibb.co/mXJykLY/Screenshot-2024-11-04-113812-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;" width="40px" height="60px">
+            Invoices
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'targetsList' %}">Create Targets-List</a></li>
+            <li><a class="dropdown-item" href="{% url 'createInvoices' %}">Create Invoices</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewInvoices' %}">View Invoices</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewemail' %}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/71y0Kr8/Target-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+              Targets-List
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentTemplate' %}">Create Targets-List</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -302,7 +358,7 @@
           <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
 
-            <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo"
+            <img src="https://i.ibb.co/X3pr3vn/Project-Icon-removebg-preview.png" alt="TaskLogo"
               style="margin-right: 5px;">
              Projects
           </a>
@@ -331,7 +387,7 @@
           <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
 
-            <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo"
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
               style="margin-right: 5px;">
              Projects-Templates
           </a>
@@ -351,24 +407,6 @@
         <li class="nav-item dropdown ">
           <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-
-            <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo"
-              style="margin-right: 5px;">
-             Campaigns
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'agentProjects' %}">Create Campaigns</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="{% url 'viewprojectList' %}">View Campaigns</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'projectimport' %}">Create Email<br>Template</a>
-            </li>
-            
             <!-- <li>
               <hr class="dropdown-divider">
             </li>
@@ -389,7 +427,51 @@
         </li> -->
 
 
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Contract
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createContract' %}">Create Contract</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewContract' %}">View Contract</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'Importtemplate' %}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Case
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createCase' %}">Create Case</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewCase' %}">View Case</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'Importtemplate' %}">Import</a></li>
+          </ul>
+        </li>
       </div>
+
+            
+
+
+        
+      </div>
+
 
   </nav>
 

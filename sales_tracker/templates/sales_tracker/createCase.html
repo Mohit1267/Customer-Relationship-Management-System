@@ -4,10 +4,10 @@
 {% load static %}
 
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/agentDSR.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/createCase.css' %}">
 {% endblock %}
 
-{% block title %}Daily Sales Report{% endblock %}
+{% block title %}New Case{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -16,7 +16,7 @@
 
         <div class="row mt-2 mb-2">
             <div class="col-12 text-center moving_title" style="color: white;">
-                Create DSR
+                Create New Contract
             </div>
         </div>
 
@@ -30,55 +30,47 @@
         </div>
 
         <div class="row">
-           
+            <!-- Left column fields -->
             <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
                 <div class="form-group mb-5">
-                    {{ form.name|as_crispy_field }}
+                    {{ form.case_number|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.customer_type|as_crispy_field }}
+                    {{ form.priority|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.call_type|as_crispy_field }}
+                    {{ form.state|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.date|as_crispy_field }}
+                    {{ form.status|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.time|as_crispy_field }}
+                    {{ form.type|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.item_number|as_crispy_field }}
+                    {{ form.account_name|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.item_name|as_crispy_field }}
+                    {{ form.subject|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.item_description|as_crispy_field }}
+                    {{ form.description|as_crispy_field }}
                 </div>
             </div>
 
+            <!-- Right column fields -->
             <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
                 <div class="form-group mb-5">
-                    {{ form.unit_cost|as_crispy_field }}
+                    {{ form.resolution|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.quantity|as_crispy_field }}
+                    {{ form.assigned_to|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.amount|as_crispy_field }}
+                    {{ form.date_created|as_crispy_field }}
                 </div>
                 <div class="form-group mb-5">
-                    {{ form.tax_rate|as_crispy_field }}
-                </div>
-                <div class="form-group mb-5">
-                    {{ form.tax|as_crispy_field }}
-                </div>
-                <div class="form-group mb-5">
-                    {{ form.total|as_crispy_field }}
-                </div>
-                <div class="form-group mb-5">
-                    {{ form.notes|as_crispy_field }}
+                    {{ form.date_modified|as_crispy_field }}
                 </div>
             </div>
         </div>

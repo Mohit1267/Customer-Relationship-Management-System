@@ -7,11 +7,11 @@ body {
     min-height: 100vh;
 }
 
-.container-fluid {
+/* .container-fluid {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 950px;
-}
+} */
 
 .moving_title {
     all: unset;

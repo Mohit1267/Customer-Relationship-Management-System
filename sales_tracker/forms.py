@@ -1,12 +1,15 @@
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document, Schedule_Meeting,Schedule_Calling, Task
-from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit
-from django import forms
-from .models import Schedule_Calling
-from datetime import timedelta
-from crispy_forms.layout import Layout, Submit, Row, Column
+from datetime import datetime, timedelta
 
+from django import forms
+from django.core.exceptions import ValidationError
+from ckeditor.fields import RichTextField
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
+from .models import (
+    MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
+    Schedule_Meeting, Schedule_Calling, Task, agentNotes, NewPasswords,
+    DailySalesReport, agentProjects, AgentTemplate
+)
 
 
 
@@ -60,9 +63,6 @@ MY_CHOICES = (
 )
 
 
-from django import forms
-from .models import NewPasswords
-
 class PasswordForm(forms.ModelForm):
     class Meta:
         model = NewPasswords
@@ -79,8 +79,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['subject', 'start_date', 'due_date', 'priority', 'description', 'status', 'related_to', 'contacts']
-        
-        # Custom widgets for form fields
+
         widgets = {
             'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter task subject'}),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
@@ -94,7 +93,6 @@ class TaskForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
-        # Customizing the labels or adding help texts if needed
         self.fields['subject'].label = "Task Subject"
         self.fields['contacts'].help_text = "Hold Ctrl to select multiple contacts"
 
@@ -177,7 +175,7 @@ class Accountform(forms.Form):
 
 
 class DocumentForm(forms.ModelForm):
-    # Custom widgets can be defined here if needed
+ 
     publish_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
         required=False
@@ -196,18 +194,18 @@ class DocumentForm(forms.ModelForm):
         widgets = {
             'file_name': forms.TextInput(attrs={'class': 'form-control'}),
             'document_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'document_type': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
-            'category': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+            'document_type': forms.Select(attrs={'class': 'form-control'}),  
+            'category': forms.Select(attrs={'class': 'form-control'}), 
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'status': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+            'status': forms.Select(attrs={'class': 'form-control'}),  
             'revision': forms.TextInput(attrs={'class': 'form-control'}),
             'template': forms.TextInput(attrs={'class': 'form-control'}),
-            'subcategory': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+            'subcategory': forms.Select(attrs={'class': 'form-control'}), 
             'related_document': forms.TextInput(attrs={'class': 'form-control'}),
-            'assigned_to': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
+            'assigned_to': forms.Select(attrs={'class': 'form-control'}),  
         }
 
-from django.core.exceptions import ValidationError
+
 
 class agentmeeting(forms.ModelForm):
     start_date = forms.DateField(
@@ -302,15 +300,14 @@ class agentmeeting(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        
-        # Basic email validation example
+
         if not email.endswith('@example.com'):
             raise ValidationError('Please use an email address ending with @example.com')
         
         return email
 
     class Meta:
-        model = Schedule_Meeting  # Replace with your actual model name
+        model = Schedule_Meeting
         fields = [
            'start_date',
             'end_date',
@@ -422,7 +419,7 @@ class agentcalling(forms.ModelForm):
         required=True
     )
     class Meta:
-        model = Schedule_Calling  # Replace with your actual model name
+        model = Schedule_Calling
         fields = [
            'start_date',
             'end_date',
@@ -441,124 +438,134 @@ class agentcalling(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        
-        # Basic email validation example
+
         if not email.endswith('@example.com'):
             raise ValidationError('Please use an email address ending with @example.com')
         
         return email
 
 
-import re  # Make sure to import the re module
-from django import forms
-from .models import DailySalesReport  # Assuming you have a DailySalesReport model
 
-class DailySalesReportForm(forms.ModelForm):
+class DSRForm(forms.ModelForm):
     class Meta:
-        model = DailySalesReport  # Specify your model
+        model = DailySalesReport
         fields = [
-            'name',
-            'customer_type',
-            'call_type',
-            'date',
-            'time',
-            'item_number',
-            'item_name',
-            'item_description',
-            'unit_cost',
-            'quantity',
-            'amount',
-            'tax_rate',
-            'tax',
-            'total',
-            'notes',  # Include notes in the fields
+            'name', 'customer_type', 'call_type', 'date', 'time',
+            'item_number', 'item_name', 'item_description', 'unit_cost',
+            'quantity', 'amount', 'tax_rate', 'tax', 'total', 'notes'
         ]
 
-    def clean_name(self):
-        name = self.cleaned_data.get('name')
-        if not re.match("^[A-Za-z ]+$", name):
-            raise forms.ValidationError("Name can only contain alphabets and spaces.")
-        return name
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your name'}),
+        required=True
+    )
+    customer_type = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter customer type'}),
+        required=True
+    )
+    call_type = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter call type'}),
+        required=True
+    )
+    date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=True
+    )
+    time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        required=True
+    )
+    unit_cost = forms.DecimalField(
+        max_digits=10, decimal_places=2,
+        min_value=0,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter unit cost'}),
+        required=True
+    )
+    quantity = forms.IntegerField(
+        min_value=0,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter quantity'}),
+        required=True
+    )
+    amount = forms.DecimalField(
+        max_digits=10, decimal_places=2,
+        min_value=0,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter amount'}),
+        required=True
+    )
+    tax_rate = forms.DecimalField(
+        max_digits=5, decimal_places=2,
+        min_value=0,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter tax rate'}),
+        required=True
+    )
+    tax = forms.DecimalField(
+        max_digits=10, decimal_places=2,
+        min_value=0,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter tax'}),
+        required=True
+    )
+    total = forms.DecimalField(
+        max_digits=10, decimal_places=2,
+        min_value=0,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter total'}),
+        required=True
+    )
+    notes = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Enter any additional notes', 'rows': 3}),
+        required=False
+    )
 
-    def clean_customer_type(self):
-        customer_type = self.cleaned_data.get('customer_type')
-        if not re.match("^[A-Za-z ]+$", customer_type):
-            raise forms.ValidationError("Customer Type can only contain alphabets and spaces.")
-        return customer_type
 
-    def clean_call_type(self):
-        call_type = self.cleaned_data.get('call_type')
-        if not re.match("^[A-Za-z ]+$", call_type):
-            raise forms.ValidationError("Call Type can only contain alphabets and spaces.")
-        return call_type
 
-    def clean_item_number(self):
-        item_number = self.cleaned_data.get('item_number')
-        if not re.match("^\d+$", item_number):  # Ensure only numbers
-            raise forms.ValidationError("Item Number can only contain digits.")
-        return item_number
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = agentNotes
+        fields = ['subject', 'contact', 'attachment', 'note', 'related_to']
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter subject'}),
+            'contact': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter contact name'}),
+            'attachment': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'note': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter your note'}),
+            'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to'}),
+        }
 
-    def clean_item_name(self):
-        item_name = self.cleaned_data.get('item_name')
-        if not re.match("^[A-Za-z0-9 ]+$", item_name):  # Allow alphabets and numbers
-            raise forms.ValidationError("Item Name can only contain alphabets and numbers.")
-        return item_name
 
-    def clean_item_description(self):
-        item_description = self.cleaned_data.get('item_description')
-        if not re.match("^[A-Za-z0-9 ]+$", item_description):  # Allow alphabets and numbers
-            raise forms.ValidationError("Item Description can only contain alphabets and numbers.")
-        return item_description
 
-    def clean_unit_cost(self):
-        unit_cost = self.cleaned_data.get('unit_cost')
-        if unit_cost is None or not isinstance(unit_cost, (int, float)) or unit_cost < 0:
-            raise forms.ValidationError("Unit Cost must be a positive number.")
-        return unit_cost
-
-    def clean_quantity(self):
-        quantity = self.cleaned_data.get('quantity')
-        if quantity is None or not isinstance(quantity, (int, float)) or quantity < 0:
-            raise forms.ValidationError("Quantity must be a positive number.")
-        return quantity
-
-    def clean_amount(self):
-        amount = self.cleaned_data.get('amount')
-        if amount is None or not isinstance(amount, (int, float)) or amount < 0:
-            raise forms.ValidationError("Amount must be a positive number.")
-        return amount
-
-    def clean_tax_rate(self):
-        tax_rate = self.cleaned_data.get('tax_rate')
-        if tax_rate is None or not isinstance(tax_rate, (int, float)) or tax_rate < 0:
-            raise forms.ValidationError("Tax Rate must be a positive number.")
-        return tax_rate
-
-    def clean_tax(self):
-        tax = self.cleaned_data.get('tax')
-        if tax is None or not isinstance(tax, (int, float)) or tax < 0:
-            raise forms.ValidationError("Tax must be a positive number.")
-        return tax
-
-    def clean_total(self):
-        total = self.cleaned_data.get('total')
-        if total is None or not isinstance(total, (int, float)) or total < 0:
-            raise forms.ValidationError("Total must be a positive number.")
-        return total
-
-    def clean_notes(self):
-        notes = self.cleaned_data.get('notes')
-        if notes is not None and not re.match("^[A-Za-z0-9 ]*$", notes):  # Allow alphabets and numbers
-            raise forms.ValidationError("Notes can only contain alphabets, numbers, and spaces.")
-        return notes
+class InvoiceForm(forms.Form):
+    title = forms.CharField(max_length=255)
+    customer_name = forms.CharField(max_length=255)
+    due_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    assigned_to = forms.CharField(max_length=255)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
     
+    invoice_number = forms.CharField(max_length=100, required=False)
+    quotation_number = forms.CharField(max_length=100, required=False)
+    invoice_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    status = forms.ChoiceField(choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], initial='open')
+    
+    account = forms.CharField(max_length=255)
+    contact = forms.CharField(max_length=255)
+    billing_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    shipping_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    
+    currency = forms.CharField(max_length=10, initial='USD')
+    line_items = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    
+    total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    discount = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    subtotal = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    shipping = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    adjustment = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
 
 
-from django import forms
-from ckeditor.fields import RichTextField
 
 class ComposeEmailForm(forms.Form):
-    # 'template' is now a regular CharField and 'related_to' is a ChoiceField with specified options
+
     template = forms.CharField(
         max_length=255,
         required=False,
@@ -631,7 +638,7 @@ class ComposeEmailForm(forms.Form):
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
     )
 
-from django import forms
+
 
 class TargetsForm(forms.Form):
     first_name = forms.CharField(label='First Name', max_length=100, required=True)
@@ -656,10 +663,26 @@ class TargetsForm(forms.Form):
     description = forms.CharField(label='Description', widget=forms.Textarea, required=False)
     assigned_to = forms.CharField(label='Assigned To', max_length=100, required=False)
 
-    # You can add custom validation methods or additional features as needed
+# class InvoiceForm(forms.ModelForm):
+#     class Meta:
+#         # model = createInvoice
+#         fields = [
+#             'title', 'customer_name', 'due_date', 'assigned_to', 'description',
+#             'invoice_number', 'quotation_number', 'invoice_date', 'status',
+#             'account', 'contact', 'billing_address', 'shipping_address',
+#             'currency', 'line_items', 'total', 'discount', 'subtotal', 
+#             'shipping', 'adjustment', 'tax', 'grand_total'
+#         ]
+#         widgets = {
+#             'due_date': forms.DateInput(attrs={'type': 'date'}),
+#             'invoice_date': forms.DateInput(attrs={'type': 'date'}),
+#             'description': forms.Textarea(attrs={'rows': 3}),
+#             'billing_address': forms.Textarea(attrs={'rows': 2}),
+#             'shipping_address': forms.Textarea(attrs={'rows': 2}),
+#         }
 
 
-from django import forms
+
 
 class TargetsListForm(forms.Form):
     name = forms.CharField(
@@ -697,9 +720,6 @@ class TargetsListForm(forms.Form):
     )
 
 
-from django import forms
-from .models import agentProjects
-
 class AgentProjectsForm(forms.ModelForm):
     class Meta:
         model = agentProjects
@@ -726,12 +746,11 @@ class AgentProjectsForm(forms.ModelForm):
         self.fields['project_manager'].label = "Project Manager"
         self.fields['project_template'].label = "Project Template"
 
-from django import forms
-from .models import AgentTemplate  # Ensure this model exists and is correctly imported
+
 
 class AgentTemplate(forms.ModelForm):
     class Meta:
-        model = AgentTemplate  # Replace with the actual model name if different
+        model = AgentTemplate
         fields = [
             'template_name',
             'consider_working_days',
@@ -750,9 +769,73 @@ class AgentTemplate(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Add custom labels if necessary
+
         self.fields['template_name'].label = "Template Name"
         self.fields['consider_working_days'].label = "Consider Working Days"
         self.fields['project_manager'].label = "Project Manager"
         self.fields['status'].label = "Status"
         self.fields['priority'].label = "Priority"
+
+
+
+class ContractForm(forms.Form):
+
+    contract_title = forms.CharField(label="Contract Title", max_length=100, required=True)
+    contract_value = forms.DecimalField(label="Contract Value", max_digits=10, decimal_places=2, required=True)
+    start_date = forms.DateField(label="Start Date", widget=forms.DateInput(attrs={'type': 'date'}), required=True)
+    end_date = forms.DateField(label="End Date", widget=forms.DateInput(attrs={'type': 'date'}), required=True)
+    renewal_reminder_date = forms.DateField(label="Renewal Reminder Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    customer_schedule_date = forms.DateField(label="Customer Schedule Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    company_schedule_date = forms.DateField(label="Company Schedule Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    description = forms.CharField(label="Description", widget=forms.Textarea, required=False)
+
+    status = forms.ChoiceField(label="Status", choices=[('enabled', 'Enabled'), ('disabled', 'Disabled')], required=True)
+    contact_manager = forms.CharField(label="Contact Manager", max_length=100, required=True)
+    account = forms.CharField(label="Account", max_length=100, required=True)
+    contact = forms.CharField(label="Contact", max_length=100, required=True)
+    opportunity = forms.CharField(label="Opportunity", max_length=100, required=False)
+    contact_type = forms.ChoiceField(label="Contact Type", choices=[('type1', 'Type 1'), ('type2', 'Type 2')], required=True)
+ 
+    currency = forms.ChoiceField(label="Currency", choices=[('usd', 'USD'), ('eur', 'EUR')], required=True)
+    total = forms.DecimalField(label="Total", max_digits=10, decimal_places=2, required=False)
+    discount = forms.DecimalField(label="Discount", max_digits=10, decimal_places=2, required=False)
+    subtotal = forms.DecimalField(label="Subtotal", max_digits=10, decimal_places=2, required=False)
+    shipping = forms.DecimalField(label="Shipping", max_digits=10, decimal_places=2, required=False)
+    shipping_tax = forms.DecimalField(label="Shipping Tax", max_digits=10, decimal_places=2, required=False)
+    tax = forms.DecimalField(label="Tax", max_digits=10, decimal_places=2, required=False)
+    grand_total = forms.DecimalField(label="Grand Total", max_digits=10, decimal_places=2, required=False)
+
+    
+
+class CaseForm(forms.Form):
+    CASE_STATES = [
+        ('open', 'Open'),
+        ('closed', 'Closed'),
+    ]
+    
+    STATUS_OPTIONS = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('resolved', 'Resolved'),
+    ]
+    
+    PRIORITY_OPTIONS = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    case_number = forms.CharField(label="CASE NUMBER", required=True, max_length=50)
+    priority = forms.ChoiceField(label="PRIORITY", choices=PRIORITY_OPTIONS, required=True)
+    state = forms.ChoiceField(label="STATE", choices=CASE_STATES, required=True)
+    status = forms.ChoiceField(label="STATUS", choices=STATUS_OPTIONS, required=True)
+    type = forms.CharField(label="TYPE", required=True, max_length=50)
+    account_name = forms.CharField(label="ACCOUNT NAME", required=True, max_length=100)
+    subject = forms.CharField(label="SUBJECT", required=True, max_length=100)
+    description = forms.CharField(label="DESCRIPTION", required=False, widget=forms.Textarea)
+    resolution = forms.CharField(label="RESOLUTION", required=False, widget=forms.Textarea)
+    assigned_to = forms.CharField(label="ASSIGNED TO", required=False, max_length=100)
+    date_created = forms.DateField(label="DATE CREATED", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    date_modified = forms.DateField(label="DATE MODIFIED", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+
+
