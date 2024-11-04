@@ -7,34 +7,32 @@
     <link rel="stylesheet" href="{% static 'sales_tracker/opportunity.css' %}">
 {% endblock %}
 
-{% block title %}New Opportunity{% endblock %}
+{% block title %}New Invoice{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
     <form method="POST">
         {% csrf_token %}
 
-        <!-- Title Section --> 
-        <div class="row mt-2 mb-2"> 
-            <div class="col-12 text-center moving_title" style="color: white;"> 
-                Create Opportunity
-            </div> 
-        </div> 
+        <!-- Title Section -->
+        <div class="row mt-2 mb-2">
+            <div class="col-12 text-center moving_title" style="color: white;">
+                Create Invoice
+            </div>
+        </div>
+        <hr>
 
-        <hr> 
+        <!-- Button Section -->
+        <div class="row mb-2">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="button1 mx-2">Submit</button>
+                <button type="button" class="button2">Cancel</button>
+            </div>
+        </div>
 
-        <!-- Button Section --> 
-        <div class="row mb-2"> 
-            <div class="col-12 d-flex justify-content-end"> 
-                <button type="submit" class="button1 mx-2">Submit</button> 
-                <button type="button" class="button2">Cancel</button> 
-            </div> 
-        </div> 
-
-        <!-- Main Form Sections -->
+        <!-- Title & Customer Details Section -->
         <div class="row">
-            <!-- Left Column -->
-            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+            <div class="col-md-6 pt-5 pb-5 px-4">
                 <div class="form-group">
                     {{ form.title|as_crispy_field }}
                 </div>
@@ -42,24 +40,28 @@
                     {{ form.customer_name|as_crispy_field }}
                 </div>
                 <div class="form-group">
-                    {{ form.due_date|as_crispy_field }}
+                    {{ form.assigned_to|as_crispy_field }}
                 </div>
                 <div class="form-group">
-                    {{ form.assigned_to|as_crispy_field }}
+                    {{ form.due_date|as_crispy_field }}
                 </div>
                 <div class="form-group">
                     {{ form.description|as_crispy_field }}
                 </div>
             </div>
+        </div>
 
-            <!-- Right Column -->
-            <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+        <!-- Invoice Details Section -->
+        <div class="row">
+            <div class="col-md-6 pt-5 pb-5 px-4">
                 <div class="form-group">
                     {{ form.invoice_number|as_crispy_field }}
                 </div>
                 <div class="form-group">
                     {{ form.quotation_number|as_crispy_field }}
                 </div>
+            </div>
+            <div class="col-md-6 pt-5 px-4">
                 <div class="form-group">
                     {{ form.invoice_date|as_crispy_field }}
                 </div>
@@ -69,21 +71,26 @@
             </div>
         </div>
 
-        <!-- Account Section -->
+        <!-- Account & Contact Section -->
         <div class="row">
-            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+            <div class="col-md-6 pt-5 pb-5 px-4">
                 <div class="form-group">
                     {{ form.account|as_crispy_field }}
                 </div>
                 <div class="form-group">
                     {{ form.contact|as_crispy_field }}
                 </div>
+            </div>
+        </div>
+
+        <!-- Address Section -->
+        <div class="row">
+            <div class="col-md-6 pt-5 pb-5 px-4">
                 <div class="form-group">
                     {{ form.billing_address|as_crispy_field }}
                 </div>
             </div>
-
-            <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+            <div class="col-md-6 pt-5 px-4">
                 <div class="form-group">
                     {{ form.shipping_address|as_crispy_field }}
                 </div>
@@ -92,7 +99,7 @@
 
         <!-- Currency and Items Section -->
         <div class="row">
-            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+            <div class="col-md-6 pt-5 pb-5 px-4">
                 <div class="form-group">
                     {{ form.currency|as_crispy_field }}
                 </div>
@@ -104,7 +111,7 @@
 
         <!-- Totals Section -->
         <div class="row">
-            <div class="col-12 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+            <div class="col-12 pt-5 pb-5 px-4">
                 <div class="form-group">
                     {{ form.total|as_crispy_field }}
                 </div>

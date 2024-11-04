@@ -2021,6 +2021,7 @@ def miningimport(request):
     return render(request, "sales_tracker/miningimport.html")
 
 
+
 def viewNotes(request):
       return render(request, "sales_tracker/viewNotes.html")
 
@@ -2029,23 +2030,110 @@ from django.views.generic import CreateView
 # from .models import Opportunity
 from .forms import OpportunityForm
 
-# Class-based view with direct URL for success_url
-class createInvoices(CreateView):
-    model = createInvoices
-    form_class = invoiceForm
-    template_name = 'path/to/your_template.html'  # Replace with the actual path to your template
-    success_url = '/opportunities/'  # Use the URL directly instead of reverse_lazy
+from django.shortcuts import render, redirect
+from .forms import InvoiceForm
 
-    def form_valid(self, form):
-        return super().form_valid(form)
-
-# Function-based view as an alternative
-def create_opportunity(request):
+def createInvoices(request):
     if request.method == 'POST':
-        form = invoiceForm(request.POST)
+        form = InvoiceForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('/opportunities/')  # Use the URL directly for redirection
+            # Here you could handle the form data manually if needed
+            # For now, we'll just redirect as if it was saved
+            return redirect('invoice_list')  # Adjust redirect target as needed
     else:
-        form = OpportunityForm()
-    return render(request, 'path/to/your_template.html', {'form': form})
+        form = InvoiceForm()
+    return render(request, 'sales_tracker/createInvoices.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ComposeEmailForm  # Import your ComposeEmailForm class
+import datetime
+
+def compose_email(request):
+    """
+    This view handles the email composition form.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = ComposeEmailForm(request.POST)
+        if form.is_valid():
+            # Process the form data (e.g., save to the database or send an email)
+            # Placeholder for processing logic, e.g., saving or sending the email
+            email_template = form.cleaned_data.get('template')
+            related_to = form.cleaned_data.get('related_to')
+            from_address = form.cleaned_data.get('from')
+            to_address = form.cleaned_data.get('to')
+            cc_address = form.cleaned_data.get('cc')
+            bcc_address = form.cleaned_data.get('bcc')
+            subject = form.cleaned_data.get('subject')
+            body = form.cleaned_data.get('body')
+            send_plain_text = form.cleaned_data.get('send_plain_text')
+
+            # Here you could save the email details to a model or send it directly
+
+            messages.success(request, 'Email composed successfully!')
+            return redirect('agentemail')  # Redirect to the same page or another view
+        else:
+            messages.error(request, 'There was an error composing the email. Please check your input.')
+    else:
+        form = ComposeEmailForm()  # Initialize an empty form for a GET request
+
+    return render(request, 'sales_tracker/agentemail.html', {'form': form})
+
+
+
+def viewEmail(request):
+    return render(request, "sales_tracker/viewemail.html")
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ContactForm
+
+def Agenttarget(request):
+    """
+    This view handles the contact form submission.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Process the form data, e.g., save to the database or send notification
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            job_title = form.cleaned_data.get('job_title')
+            office_phone = form.cleaned_data.get('office_phone')
+            department = form.cleaned_data.get('department')
+            mobile = form.cleaned_data.get('mobile')
+            account_name = form.cleaned_data.get('account_name')
+            fax = form.cleaned_data.get('fax')
+            primary_address_street = form.cleaned_data.get('primary_address_street')
+            primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
+            primary_address_city = form.cleaned_data.get('primary_address_city')
+            primary_address_state = form.cleaned_data.get('primary_address_state')
+            primary_address_country = form.cleaned_data.get('primary_address_country')
+            other_address_street = form.cleaned_data.get('other_address_street')
+            other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
+            other_address_city = form.cleaned_data.get('other_address_city')
+            other_address_state = form.cleaned_data.get('other_address_state')
+            other_address_country = form.cleaned_data.get('other_address_country')
+            email_address = form.cleaned_data.get('email_address')
+            description = form.cleaned_data.get('description')
+            assigned_to = form.cleaned_data.get('assigned_to')
+
+            # Save or process form data here
+
+            messages.success(request, 'Contact information submitted successfully!')
+            return redirect('agenttarget')  # Redirect to the same page or another view
+        else:
+            messages.error(request, 'There was an error submitting the contact information. Please check your input.')
+    else:
+        form = ContactForm()  # Initialize an empty form for a GET request
+
+    return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+
+def viewInvoices(request):
+    return render(request, 'sales_tracker/viewInvoices.html')
+

@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; 
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.moving_title {
+    margin-bottom: 20px;
+    padding: 15px;
+    font-size: 35px;
+    font-weight: bold;
+    background: linear-gradient(to right, #2C3E50, #5e87b0);
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    text-align: center; 
+    background-clip: text;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    font-weight: normal;
+}
+
+.col-md-6 {
+    margin-top: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #0a0a0a;
+    border-radius: 0;
+    padding: 0px 0;
+    background: transparent;
+    color: black;
+    box-shadow: none;
+    transition: border-bottom-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+   
+    outline: none;
+}
+
+.button-label {
+    display: none; /* Hide the label by default */
+    margin-left: 8px; /* Add some space between the icon and the label */
+}
+
+.btn:hover .button-label {
+    display: inline; /* Show the label on hover */
+}
+
+.btn {
+    position: relative; /* Required for proper positioning of the button */
+}
+
+.btn:hover i {
+    opacity: 1; /* Ensure icon is still visible */
+}
+
+/* Optional: make the icon a bit larger to improve visibility */
+.btn i {
+    font-size: 1.2em; /* Adjust size of the icons */
+}
+
+
+@media (max-width: 768px) {
+    .col-md-6 {
+        margin-bottom: 20px; 
+    }
+}

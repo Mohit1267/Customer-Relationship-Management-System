@@ -207,6 +207,7 @@ class DocumentForm(forms.ModelForm):
             'assigned_to': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a choice field
         }
 
+from django.core.exceptions import ValidationError
 
 class agentmeeting(forms.ModelForm):
     start_date = forms.DateField(
@@ -292,7 +293,22 @@ class agentmeeting(forms.ModelForm):
     contact = forms.CharField(
     label='Contact',
     required=True
-)
+    )
+    email = forms.EmailField(
+        max_length=255,
+        label='Email',
+        required=True
+    )
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        # Basic email validation example
+        if not email.endswith('@example.com'):
+            raise ValidationError('Please use an email address ending with @example.com')
+        
+        return email
+
     class Meta:
         model = Schedule_Meeting  # Replace with your actual model name
         fields = [
@@ -308,6 +324,7 @@ class agentmeeting(forms.ModelForm):
             'notification',
             'notes',
             'contact',  
+            'email'
         ]
 
 
@@ -399,6 +416,11 @@ class agentcalling(forms.ModelForm):
         label='Contact',
         required=True
     )
+    email = forms.EmailField(
+        max_length=255,
+        label='Email',
+        required=True
+    )
     class Meta:
         model = Schedule_Calling  # Replace with your actual model name
         fields = [
@@ -414,7 +436,17 @@ class agentcalling(forms.ModelForm):
             'notification',
             'notes',
             'contact',
+            'email'
         ]
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        # Basic email validation example
+        if not email.endswith('@example.com'):
+            raise ValidationError('Please use an email address ending with @example.com')
+        
+        return email
 
 
 import re  # Make sure to import the re module
@@ -521,6 +553,7 @@ class DailySalesReportForm(forms.ModelForm):
         return notes
 
 
+
 class NoteForm(forms.ModelForm):
     class Meta:
         model = agentNotes
@@ -533,20 +566,156 @@ class NoteForm(forms.ModelForm):
             'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to'}),
         }
 
-class InvoiceForm(forms.ModelForm):
-    class Meta:
-        model = Invoice
-        fields = [
-            'title', 'customer_name', 'due_date', 'assigned_to', 'description',
-            'invoice_number', 'quotation_number', 'invoice_date', 'status',
-            'account', 'contact', 'billing_address', 'shipping_address',
-            'currency', 'line_items', 'total', 'discount', 'subtotal', 
-            'shipping', 'adjustment', 'tax', 'grand_total'
-        ]
-        widgets = {
-            'due_date': forms.DateInput(attrs={'type': 'date'}),
-            'invoice_date': forms.DateInput(attrs={'type': 'date'}),
-            'description': forms.Textarea(attrs={'rows': 3}),
-            'billing_address': forms.Textarea(attrs={'rows': 2}),
-            'shipping_address': forms.Textarea(attrs={'rows': 2}),
-        }
+from django import forms
+
+class InvoiceForm(forms.Form):
+    title = forms.CharField(max_length=255)
+    customer_name = forms.CharField(max_length=255)
+    due_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    assigned_to = forms.CharField(max_length=255)  # Placeholder for user field
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
+    
+    invoice_number = forms.CharField(max_length=100, required=False)
+    quotation_number = forms.CharField(max_length=100, required=False)
+    invoice_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    status = forms.ChoiceField(choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], initial='open')
+    
+    account = forms.CharField(max_length=255)
+    contact = forms.CharField(max_length=255)
+    billing_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    shipping_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    
+    currency = forms.CharField(max_length=10, initial='USD')
+    line_items = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    
+    total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    discount = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    subtotal = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    shipping = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    adjustment = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+
+    
+
+
+from django import forms
+from ckeditor.fields import RichTextField
+
+class ComposeEmailForm(forms.Form):
+    # 'template' is now a regular CharField and 'related_to' is a ChoiceField with specified options
+    template = forms.CharField(
+        max_length=255,
+        required=False,
+        label="Email Template",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    related_to = forms.ChoiceField(
+        choices=[
+             (' ', ' '),
+            ('account', 'Account'),
+            ('opportunity', 'Opportunity'),
+            ('case', 'Case'),
+            ('lead', 'Lead'),
+            ('contact', 'Contact'),
+            ('bug', 'Bug'),
+            ('project', 'Project'),
+            ('target', 'Target'),
+            ('project_task', 'Project Task'),
+            ('contract', 'Contract'),
+            ('invoice', 'Invoice'),
+            ('quote', 'Quote'),
+            ('product', 'Product'),
+        ],
+        required=False,
+        label="Related To",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    from_address = forms.EmailField(
+        required=True,
+        label="From",
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+
+    to_address = forms.EmailField(
+        required=True,
+        label="To",
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+
+    cc_address = forms.CharField(
+        required=False,
+        label="CC",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    bcc_address = forms.CharField(
+        required=False,
+        label="BCC",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    subject = forms.CharField(
+        max_length=255,
+        required=True,
+        label="Subject",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    body = forms.CharField(
+        required=True,
+        label="Body",
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6})
+    )
+
+    send_plain_text = forms.BooleanField(
+        required=False,
+        label="Send in Plain Text",
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+
+from django import forms
+
+class ContactForm(forms.Form):
+    first_name = forms.CharField(label='First Name', max_length=100, required=True)
+    last_name = forms.CharField(label='Last Name', max_length=100, required=True)
+    job_title = forms.CharField(label='Job Title', max_length=100, required=False)
+    office_phone = forms.CharField(label='Office Phone', max_length=15, required=False)
+    department = forms.CharField(label='Department', max_length=100, required=False)
+    mobile = forms.CharField(label='Mobile', max_length=15, required=False)
+    account_name = forms.CharField(label='Account Name', max_length=100, required=False)
+    fax = forms.CharField(label='Fax', max_length=15, required=False)
+    primary_address_street = forms.CharField(label='Street', max_length=255, required=False)
+    primary_address_postal_code = forms.CharField(label='Postal Code', max_length=20, required=False)
+    primary_address_city = forms.CharField(label='City', max_length=100, required=False)
+    primary_address_state = forms.CharField(label='State', max_length=100, required=False)
+    primary_address_country = forms.CharField(label='Country', max_length=100, required=False)
+    other_address_street = forms.CharField(label='Street', max_length=255, required=False)
+    other_address_postal_code = forms.CharField(label='Postal Code', max_length=20, required=False)
+    other_address_city = forms.CharField(label='City', max_length=100, required=False)
+    other_address_state = forms.CharField(label='State', max_length=100, required=False)
+    other_address_country = forms.CharField(label='Country', max_length=100, required=False)
+    email_address = forms.EmailField(label='Email Address', required=True)
+    description = forms.CharField(label='Description', widget=forms.Textarea, required=False)
+    assigned_to = forms.CharField(label='Assigned To', max_length=100, required=False)
+
+# class InvoiceForm(forms.ModelForm):
+#     class Meta:
+#         # model = createInvoice
+#         fields = [
+#             'title', 'customer_name', 'due_date', 'assigned_to', 'description',
+#             'invoice_number', 'quotation_number', 'invoice_date', 'status',
+#             'account', 'contact', 'billing_address', 'shipping_address',
+#             'currency', 'line_items', 'total', 'discount', 'subtotal', 
+#             'shipping', 'adjustment', 'tax', 'grand_total'
+#         ]
+#         widgets = {
+#             'due_date': forms.DateInput(attrs={'type': 'date'}),
+#             'invoice_date': forms.DateInput(attrs={'type': 'date'}),
+#             'description': forms.Textarea(attrs={'rows': 3}),
+#             'billing_address': forms.Textarea(attrs={'rows': 2}),
+#             'shipping_address': forms.Textarea(attrs={'rows': 2}),
+#         }
+

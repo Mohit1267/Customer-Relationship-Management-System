@@ -90,14 +90,19 @@ urlpatterns = [
     path("temp", login_required((views.temp)), name="temp"),
     path("miningimport", login_required((views.miningimport)), name="miningimport"),
     path("viewNotes", login_required((views.viewNotes)), name="viewNotes"),
+    path('send-email/<int:meeting_id>/', views.send_meeting_email, name='send_meeting_email'),
 
 
 
 
     # path("view_contact", login_required(views.ViewScheduledMeeting), name='view_contact'),
-    path('send-email/<int:meeting_id>/', views.send_meeting_email, name='send_meeting_email'),
+    
     # path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
-
+    path("createInvoices", login_required((views.createInvoices)), name="createInvoices"),
+    path("viewInvoices", login_required((views.viewInvoices)), name="viewInvoices"),
+    path("agentemail", login_required((views.compose_email)), name="agentemail"),
+    path("viewemail", login_required((views.viewEmail)), name="viewemail"),
+    path("agenttarget", login_required((views.Agenttarget)), name="agenttarget"),
 
 
 ]

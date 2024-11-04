@@ -395,6 +395,7 @@ class DailySalesReport(models.Model):
 
 
 
+
 class agentNotes(models.Model):
     subject = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
@@ -441,33 +442,34 @@ class createInvoices(models.Model):
     def __str__(self):
         return self.title'''
 
-class Invoice(models.Model):
-    title = models.CharField(max_length=255)
-    customer_name = models.CharField(max_length=255)
-    due_date = models.DateField()
-    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    description = models.TextField(blank=True, null=True)
+# class createInvoice(models.Model):
+#     title = models.CharField(max_length=255)
+#     customer_name = models.CharField(max_length=255)
+#     due_date = models.DateField()
+#     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+#     description = models.TextField(blank=True, null=True)
     
-    invoice_number = models.CharField(max_length=100, blank=True, null=True)
-    quotation_number = models.CharField(max_length=100, blank=True, null=True)
-    invoice_date = models.DateField(blank=True, null=True)
-    status = models.CharField(max_length=50, choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], default='open')
+#     invoice_number = models.CharField(max_length=100, blank=True, null=True)
+#     quotation_number = models.CharField(max_length=100, blank=True, null=True)
+#     invoice_date = models.DateField(blank=True, null=True)
+#     status = models.CharField(max_length=50, choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], default='open')
     
-    account = models.CharField(max_length=255)
-    contact = models.CharField(max_length=255)
-    billing_address = models.TextField(blank=True, null=True)
-    shipping_address = models.TextField(blank=True, null=True)
+#     account = models.CharField(max_length=255)
+#     contact = models.CharField(max_length=255)
+#     billing_address = models.TextField(blank=True, null=True)
+#     shipping_address = models.TextField(blank=True, null=True)
     
-    currency = models.CharField(max_length=10, default='USD')
-    line_items = models.TextField(blank=True, null=True)
+#     currency = models.CharField(max_length=10, default='USD')
+#     line_items = models.TextField(blank=True, null=True)
     
-    total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    discount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    shipping = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    adjustment = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    tax = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    grand_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     discount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     subtotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     shipping = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     adjustment = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     tax = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     grand_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
+
