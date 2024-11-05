@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils import timezone
-from datetime import date, datetime, timedelta
+from datetime import  datetime, timedelta
 from django.utils import timezone
 from django.http import JsonResponse
 from django.db.models import Count, OuterRef, Subquery
@@ -38,7 +38,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from .forms import agentmeeting
 from django.http import JsonResponse
-from datetime import date
+#from datetime import date
+from datetime import datetime
 
 
 def get_timer_value(request):
@@ -129,7 +130,7 @@ def Dashboards(request):
             "long": longitude,
             "user": RegisterUser.objects.get(email=request.user.email),
         }
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         context["Tocall"] = MiningData.objects.filter(assigned_to=context["user"].id, date=now_date)
         context["daily"] = dailyleads(request)
@@ -1995,7 +1996,17 @@ def temp(request):
 def send_meeting_email(request, meeting_id):
     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
     subject = "Meeting Reminder"
-    message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n\nBest regards,\nAapai Technology."
+    # Meeting details
+    start_time = datetime.now() + timedelta(days=1)
+    duration = 30
+    #host_email = 'pushakrpandey200@gmail.com'
+    #recipient_list = attendees_list + [host_email]
+
+            # Create the Google Meet link
+    meet_link = create_meeting_event(start_time, duration)
+
+    
+    message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting{meet_link}.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n\nBest regards,\nAapai Technology."
     recipient_list = [meeting.contact]
 
     try:
@@ -2009,3 +2020,180 @@ def miningimport(request):
     return render(request, "sales_tracker/miningimport.html")
 
 
+
+
+
+
+
+
+
+
+from django.shortcuts import render
+from .models import LeadsData
+
+def leads_view(request):
+    weekly_leads = LeadsData.objects.get_weekly_leads()
+    monthly_leads = LeadsData.objects.get_monthly_leads()
+    six_month_leads = LeadsData.objects.get_six_month_leads()
+    annual_leads = LeadsData.objects.get_annual_leads()
+
+    context = {
+        'weekly_leads': weekly_leads,
+        'monthly_leads': monthly_leads,
+        'six_month_leads': six_month_leads,
+        'annual_leads': annual_leads,
+    }
+
+    return render(request, 'sales_tracker/leadsdata.html', context)
+
+
+
+
+
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+def send_gmeet_invitation(email, subject, message, meet_link):
+    # Customize your email content
+    email_message = f"{message}\n\nJoin the Google Meet at: {meet_link}"
+    
+    send_mail(
+        subject,
+        email_message,
+        settings.EMAIL_HOST_USER,
+        [email],
+        fail_silently=False,
+    )
+
+
+
+
+
+
+'''
+
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from datetime import datetime
+from .google_calendar_service import create_meeting_event
+
+def send_meeting_invitation(request):
+    # Set up the meeting details
+    start_time = datetime.now() + timedelta(days=1)  # Schedule for tomorrow
+    duration = 30  # Duration in minutes
+    attendees = ['gannu2032001@gmail.com','sahithya@aarnavtechnologies.com']  # List of attendee emails
+
+    # Generate the Google Meet link
+    meet_link = create_meeting_event(start_time, duration, attendees)
+    
+    # Prepare email content
+    email_subject = 'Your Google Meet Invitation'
+    email_message = f"Please join the meeting at this link: {meet_link}"
+    from_email = 'pushakrpandey200@gmail.com'
+    recipient_list = attendees
+
+    # Send the email
+    send_mail(
+        email_subject,
+        email_message,
+        from_email,
+        recipient_list,
+        fail_silently=False,
+    )
+
+    return HttpResponse("Meeting invitation sent successfully!")'''
+
+
+'''
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from datetime import datetime, timedelta
+from .google_calendar_service import create_meeting_event
+
+def send_meeting_invitation(request):
+    # Meeting details
+    start_time = datetime.now() + timedelta(days=1)
+    duration = 30
+    attendees = []
+    host_email = 'pushakrpandey200@gmail.com'  # Set the host email
+    recipient_list = attendees + [host_email]
+
+
+    # Create the Google Meet link with host as the organizer
+    meet_link = create_meeting_event(start_time, duration, attendees)
+
+    # Email details
+    email_subject = 'Your Google Meet Invitation'
+    email_message = (
+        f"Hello,\n\nYou have been invited to a Google Meet meeting.\n"
+        f"Organizer: {host_email}\n"
+        f"Please join the meeting at this link: {meet_link}\n\n"
+        "Best regards,\nUniqueBaba CRM Team"
+    )
+    from_email = host_email
+    recipient_list = attendees
+
+    # Send email
+    send_mail(
+        email_subject,
+        email_message,
+        from_email,
+        recipient_list,
+        fail_silently=False,
+    )
+
+    return HttpResponse("Meeting invitation sent successfully!")'''
+
+'''
+
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from datetime import datetime, timedelta
+from .google_calendar_service import create_meeting_event
+from .forms import agentmeeting
+from .models import Schedule_Meeting  # Assuming you have a Meeting model
+
+def send_meeting_invitation(request):
+    if request.method == "POST":
+        meeting_id = request.POST.get("meeting_id")
+        meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)  # Retrieve meeting details by ID
+        
+        # Initialize form and get attendees
+        form = agentmeeting(request.POST)
+        if form.is_valid():
+            attendees = form.cleaned_data['contact']
+            attendees_list = attendees.split(',')
+
+            # Meeting details
+            start_time = datetime.now() + timedelta(days=1)
+            duration = 30
+            host_email = 'pushakrpandey200@gmail.com'
+            recipient_list = attendees_list + [host_email]
+
+            # Create the Google Meet link
+            meet_link = create_meeting_event(start_time, duration, attendees_list)
+
+            # Email details
+            email_subject = 'Your Google Meet Invitation'
+            email_message = (
+                f"Hello,\n\nYou have been invited to a Google Meet meeting.\n"
+                f"Organizer: {host_email}\n"
+                f"Please join the meeting at this link: {meet_link}\n\n"
+                "Best regards,\nUniqueBaba CRM Team"
+            )
+
+            # Send email
+            send_mail(
+                email_subject,
+                email_message,
+                host_email,
+                recipient_list,
+                fail_silently=False,
+            )
+
+            return HttpResponse("Meeting invitation sent successfully!")
+        else:
+        form = agentmeeting()  # Render form for GET request
+    return render(request, 'sales_tracker/agentmeeting.html', {'form': form})'''
