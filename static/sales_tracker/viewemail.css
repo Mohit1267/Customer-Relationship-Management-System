@@ -118,3 +118,15 @@
 .form-actions button[type="button"]:hover {
     background-color: #9b220d;
 }
+
+.inside-filter-container select,
+.inside-filter-container input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #333;
+}

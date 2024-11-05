@@ -119,6 +119,18 @@ body {
     color: white;
 }
 
+.inside-filter-container select,
+.inside-filter-container input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #333;
+}
+
 /* Button Container Styling */
 .buttons {
     display: flex;
