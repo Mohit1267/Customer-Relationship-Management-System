@@ -1,4 +1,3 @@
-/* Main Container Styling */
 .main_container {
     padding: 20px;
     background-color: #f9f9f9;
@@ -9,7 +8,6 @@
     overflow-x: auto;
 }
 
-/* Filter Search Container Styling */
 .filter-search-container {
     display: flex;
     align-items: center;
@@ -19,7 +17,6 @@
     gap: 10px;
 }
 
-/* Filter Button Styling */
 .filter-button {
     padding: 10px 20px;
     font-size: 1rem;
@@ -36,9 +33,8 @@
     background-color: rgb(78, 81, 82);
 }
 
-/* Filter Container and Form Styling */
 .filter-container {
-    display: none; /* Hidden by default */
+    display: none;
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
@@ -47,14 +43,12 @@
     border: 1px solid rgb(97, 94, 94);
 }
 
-/* Filter Form Styling */
 .filter-form {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three fields per row */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 20px;
 }
 
-/* Form Group and Input Styling */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -80,12 +74,11 @@
 
 .filter-form textarea {
     resize: vertical;
-    height: 40px; /* Match text input height */
+    height: 40px; 
 }
 
-/* Form Action Buttons */
 .form-actions {
-    grid-column: span 3; /* Aligns buttons across all columns */
+    grid-column: span 3; 
     display: flex;
     /* justify-content: center; */
     gap: 10px;
@@ -100,7 +93,6 @@
     font-size: 1rem;
 }
 
-/* Button Styles */
 .form-actions button[type="submit"] {
     background-color: #28a745;
     color: white;

@@ -82,9 +82,9 @@ h1 {
 }
 
 table {
-    width: 100%; /* Make table fill the container width */
+    width: 100%; 
     border-collapse: collapse;
-    margin: 0; /* Remove margin to avoid extra spacing */
+    margin: 0; 
     font-size: 16px;
     text-align: left;
 }
@@ -92,7 +92,7 @@ table {
 th, td {
     padding: 12px 15px;
     border: 1px solid #ddd;
-    white-space: nowrap; /* Prevent wrapping of text */
+    white-space: nowrap; 
 }
 
 thead {
@@ -112,18 +112,17 @@ tbody tr:hover {
     background-color: #e9e9e9;
 }
 
-/* Responsive Styling */
 @media (max-width: 1024px) {
     th, td {
-        padding: 10px 8px; /* Reduce padding for smaller screens */
+        padding: 10px 8px;
     }
 
     table {
-        font-size: 14px; /* Decrease font size */
+        font-size: 14px;
     }
 
     h1 {
-        font-size: 22px; /* Adjust heading size */
+        font-size: 22px;
     }
 }
 
@@ -140,53 +139,49 @@ tbody tr:hover {
         font-size: 20px;
     }
 
-    /* Make the table container scrollable horizontally */
     .tableBox {
         overflow-x: scroll;
     }
 
     table {
-        width: auto; /* Allow table to take the required width for scrolling */
+        width: auto;
     }
 }
 
 @media (max-width: 480px) {
     th, td {
-        padding: 6px 4px; /* Reduce padding further */
+        padding: 6px 4px; 
     }
 
     table {
-        font-size: 11px; /* Smaller font size for better fit */
+        font-size: 11px; 
     }
 
     .headingDiv h1 {
-        font-size: 18px; /* Smaller heading size */
+        font-size: 18px; 
     }
 
-    /* Make table columns stack for small screens */
     table, thead, tbody, th, td, tr {
-        display: block; /* Stack elements */
+        display: block;
     }
 
-    /* Adjust individual cell styling */
     th, td {
-        text-align: right; /* Right align text */
-        padding-left: 50%; /* Add some left padding */
+        text-align: right; 
+        padding-left: 50%;
         position: relative;
     }
 
     th::before, td::before {
-        content: attr(data-label); /* Use data-label attribute for column names */
+        content: attr(data-label); 
         position: absolute;
         left: 0;
-        width: 45%; /* Label width */
+        width: 45%; 
         padding-left: 10px;
         font-weight: bold;
         white-space: nowrap;
         text-align: left;
     }
 
-    /* Hide the table header */
     thead {
         display: none;
     }

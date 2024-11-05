@@ -30,7 +30,6 @@
 <body>
 
   <script src="charts.js"></script>
-  <!-- navbar to the right side -->
 
   <nav class="navbar  navbar-expand-lg">
 
@@ -51,11 +50,9 @@
         <ul class="nav-links flex-column">
 
           <li class="nav-item dropdown">
-
             <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
               <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard logo"
                 style=" margin-left: -10px; height: 40px;">
-
               Dashboard
             </a>
           </li>
@@ -64,9 +61,7 @@
           <li class="nav-item dropdown dashboard-icon">
             <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-
               <img src="https://i.ibb.co/jTpW1Hk/datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
-
               Mining
             </a>
             <ul class="dropdown-menu ">
@@ -77,9 +72,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-
               <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
-
               Leads
             </a>
             <ul class="dropdown-menu">
@@ -95,12 +88,11 @@
             </ul>
           </li>
 
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-
               <img src="https://i.ibb.co/8cQkyWh/contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
-
               Contacts
             </a>
             <ul class="dropdown-menu">
@@ -120,9 +112,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-
               <img src="https://i.ibb.co/c3sNstd/quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
-
               Quotes
             </a>
             <ul class="dropdown-menu">
@@ -138,12 +128,11 @@
             </ul>
           </li>
 
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-
               <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
-
               Calendar
             </a>
             <ul class="dropdown-menu">
@@ -478,8 +467,6 @@
 
   {% block content %}{% endblock %}
 
-
-  <!-- profile section-->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const profileButton = document.querySelector('.profile1');

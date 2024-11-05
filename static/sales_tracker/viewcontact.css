@@ -40,11 +40,10 @@
     background-color: rgb(78, 81, 82);
 }
 
-/* Filter Section Layout - Three Columns */
 .filter-section {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
-    gap: 20px; /* Space between fields */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; 
     padding: 20px;
     background-color: #f9f9f9;
     border: 1px solid #e0e0e0;
@@ -52,7 +51,6 @@
     margin-top: 10px;
 }
 
-/* General Styling for Form Fields */
 .inside-filter-container {
     display: flex;
     flex-direction: column;
@@ -73,12 +71,11 @@
     width: 100%;
 }
 
-/* Button Container Styling */
 .buttons {
     display: flex;
     gap: 10px;
-    grid-column: span 3; /* Span all columns */
-    justify-content: center; /* Center align buttons */
+    grid-column: span 3; 
+    justify-content: center; 
     margin-top: 10px;
 }
 
@@ -90,7 +87,6 @@
     font-size: 1rem;
 }
 
-/* Apply Filter Button */
 .button4 {
     background-color: #28a745;
     color: white;
@@ -100,7 +96,6 @@
     opacity: 0.9;
 }
 
-/* Clear Button */
 .button2 {
     background-color: #f88d00;
     color: white;
@@ -110,7 +105,6 @@
     opacity: 0.9;
 }
 
-/* Additional Hover Effects */
 .button:hover, .button2:hover, .button4:hover {
     opacity: 0.9;
 }
