@@ -108,11 +108,16 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shanaya',
         'USER': 'root',
-        'PASSWORD':'shanaya2',
-        'HOST' : '34.100.214.94',
+        'PASSWORD': 'shanaya2',
+        'HOST': '34.100.214.94',
         'PORT': '3306',
+        # Ensure there are no SSL options specified
+        'OPTIONS': {
+            'ssl': {'disabled': True}  # This line is optional, but you can add it for clarity
+        }
     }
-}
+}   
+
 
 
 
@@ -300,16 +305,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'stpa.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shanaya',
-        'USER': 'root',
-        'PASSWORD':'shanaya2',
-        'HOST' : '34.100.214.94',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shanaya',
+#         'USER': 'root',
+#         'PASSWORD':'shanaya2',
+#         'HOST' : '34.100.214.94',
+#         'PORT': '3306',
+#     }
+# }
 
 
 

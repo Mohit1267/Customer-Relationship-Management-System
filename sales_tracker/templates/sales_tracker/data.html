@@ -28,10 +28,10 @@
     
     <div id="filter-section" class="filter-section" style="display: none;">
     
-        <form method="GET" action="{% url 'lead_data' %}">
+        <form method="GET" action="{% url 'data' %}">
             <div class="inside-filter-container">
                 <label for="time_frame">Select Time Frame:</label>
-                <select name="time_frame" id="time_frame">
+                <select name="time_frame" id="time_frame" onchange="this.form.submit()"> 
                     <option value="all" disabled selected hidden>Select Time Frame</option>
                     <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                     <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>

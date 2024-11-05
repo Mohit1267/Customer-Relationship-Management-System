@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import RegisterUser,Profile
 from django.conf import settings
-
+import datetime
 
 from django.utils import timezone
 
@@ -142,7 +142,7 @@ class QuotesData(models.Model):
 
     lead_source = models.CharField(max_length= 50)
     account = models.CharField(max_length= 50)
-    contact = models.CharField(max_length= 50)
+    contact = models.CharField(max_length= 50,null = True)
     billing_address = models.TextField()
     shipping_address = models.TextField()
 
@@ -212,7 +212,8 @@ class Account(models.Model):
     employees = models.IntegerField(blank=True, null=True)
 
     # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime.datetime.now)  # Temporary for migration
+
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -279,7 +280,7 @@ class Schedule_Calling(models.Model):
     related_to = models.CharField(max_length=255)
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
-    contact= models.IntegerField()
+    contact= models.IntegerField(null = True)
     notes = models.CharField(max_length=255, null = True)
     reason = models.CharField(max_length=255, null = True)
 
@@ -356,10 +357,10 @@ class Task(models.Model):
     ]
 
     subject = models.CharField(max_length=100)
-    start_date = models.DateField()
-    due_date = models.DateField()
-    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
-    description = models.TextField()
+    start_date = models.DateField(null = True)
+    due_date = models.DateField(null = True)
+    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES,null = True)
+    description = models.TextField(null= True)
     status = models.CharField(max_length=12, choices=TASK_STATUS_CHOICES, default='open')
     related_to = models.CharField(max_length=100, blank=True, null=True)  
     contacts = models.ManyToManyField('ContactData', related_name='tasks')
