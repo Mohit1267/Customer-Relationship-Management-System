@@ -12,8 +12,6 @@
     overflow-x: auto;
 }
 
-
-
 .filter-container {
     margin: 20px;
 }
@@ -72,7 +70,6 @@
     background-color: #dc3545;
     color: white;
 }
-
 
 .navbar-horizontal {
     background-color: #eff3f7 !important;

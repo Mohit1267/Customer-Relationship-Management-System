@@ -11,7 +11,7 @@
 {% block content %}
 
 <section class="main_container">
-    <!-- Search and Filter Section -->
+   
     <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
         <form class="d-flex" style="flex-grow: 1;">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
@@ -20,7 +20,6 @@
         <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
     </div>
 
-    <!-- Filter Form -->
     <div class="filter-container">
         <div id="filterForm" class="filter-form">
             <div class="form-group">
@@ -40,13 +39,12 @@
                 <input type="text" id="attachment" name="attachment">
             </div>
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
         </div>
     </div>
 
-    <!-- Documents Table -->
     <table>
         <thead>
             <tr>
@@ -87,7 +85,6 @@
     </table>
 </section>
 
-<!-- JavaScript for Filter and Search -->
 <script>
     function toggleFilter() {
         var filterForm = document.getElementById("filterForm");

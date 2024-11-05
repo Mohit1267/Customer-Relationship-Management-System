@@ -63,7 +63,7 @@
             </div>
             
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
         </div>
@@ -112,7 +112,7 @@
     }
 
     function performSearch() {
-        // Get filter values
+      
         var subject = document.getElementById("subject").value.toLowerCase();
         var accountName = document.getElementById("accountName").value.toLowerCase();
         var priority = document.getElementById("priority").value.toLowerCase();
@@ -120,7 +120,6 @@
         var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
         var dateCreated = document.getElementById("dateCreated").value;
 
-        // Get all rows in the table
         var rows = document.querySelectorAll("table tbody tr");
 
         rows.forEach(function(row) {
@@ -131,7 +130,6 @@
             var rowAssignedTo = row.cells[4].innerText.toLowerCase();
             var rowDateCreated = row.cells[5].innerText;
 
-            // Check if the row matches the filters
             var match = (!subject || rowSubject.includes(subject)) &&
                         (!accountName || rowAccountName.includes(accountName)) &&
                         (!priority || rowPriority.includes(priority)) &&
@@ -139,7 +137,6 @@
                         (!assignedTo || rowAssignedTo.includes(assignedTo)) &&
                         (!dateCreated || rowDateCreated === dateCreated);
 
-            // Show or hide the row based on match
             row.style.display = match ? "" : "none";
         });
     }

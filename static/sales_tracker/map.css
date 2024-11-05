@@ -1,47 +1,42 @@
-/* Style for the map container */
 #map {
-    height: 500px;            /* Fixed height for the map container */
-    width: 100%;              /* Full width of the parent container */
-    margin: 20px auto;        /* Center the map horizontally */
-    border: 2px solid #ccc;   /* Add a border around the map */
-    border-radius: 10px;      /* Slightly rounded corners */
+    height: 500px;          
+    width: 100%;             
+    margin: 20px auto;        
+    border: 2px solid #ccc;
+    border-radius: 10px;    
     position: fixed;
 }
 
-/* Button styling for any custom buttons you might add */
 .button {
-    padding: 10px 20px;       /* Add some padding for the button */
-    background-color: #4CAF50; /* Green background */
-    color: white;             /* White text */
-    border: none;             /* Remove default border */
-    border-radius: 5px;       /* Rounded corners for the button */
-    cursor: pointer;          /* Pointer cursor on hover */
-    font-size: 16px;          /* Slightly larger text */
-    transition: background-color 0.3s ease;  /* Smooth hover effect */
+    padding: 10px 20px;    
+    background-color: #4CAF50; 
+    color: white;        
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    transition: background-color 0.3s ease; 
 }
 
-/* Hover effect for buttons */
 .button:hover {
-    background-color: #45a049; /* Slightly darker green on hover */
+    background-color: #45a049; 
 }
 
-/* Container for centering and layout adjustments */
 .map-container {
     display: flex;
-    justify-content: center;  /* Center content horizontally */
-    align-items: center;      /* Center content vertically */
-    flex-direction: column;   /* Stack items vertically */
+    justify-content: center; 
+    align-items: center;    
+    flex-direction: column; 
 }
 
-/* Responsive adjustments */
 @media screen and (max-width: 768px) {
     #map {
-        height: 400px;        /* Reduce height for smaller screens */
+        height: 400px; 
     }
 }
 
 @media screen and (max-width: 480px) {
     #map {
-        height: 300px;        /* Further reduce height for very small screens */
+        height: 300px; 
     }
 }

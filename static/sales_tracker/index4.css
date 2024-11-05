@@ -45,19 +45,19 @@
 
 .welcome {
     
-    font-size: 25px;          /* Adjust the font size as needed */
-    font-weight: bolder;        /* Optional: make the text bold */
-    text-align: center;    /* Center the text inside the paragraph */
+    font-size: 25px;          
+    font-weight: bolder;       
+    text-align: center;   
     color: white;
 }
 
 .flex-container {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between; /* Distribute space evenly between the cards */
+    justify-content: space-between; 
     justify-content: center;
-    align-items: center; /* Align the cards vertically centered */
-    flex-wrap: wrap; /* Allow wrapping if the screen is too small */
+    align-items: center;
+    flex-wrap: wrap; 
     /* background-color: #262626; */
 }
 
@@ -65,17 +65,17 @@
     /* border-color: #262626; */
     /* background-color: #262626;  */
     width: 100%;
-    padding: 10px; /* Add some padding around the container */
+    padding: 10px;
      
      
 }
 
 .card {
-    flex: 1; /* Allow cards to grow evenly */
-    margin: 10px; /* Add some space between the cards */
-    min-width: 200px; /* Ensure cards have a minimum width */
-    max-width: 250px; /* Set a maximum width for consistency */
-    padding: 0px; /* Add some padding around the container */
+    flex: 1; 
+    margin: 10px; 
+    min-width: 200px;
+    max-width: 250px; 
+    padding: 0px;
     border: none;
     outline: none;
     box-shadow: none;
@@ -85,8 +85,8 @@
  }
 
     .card-body {
-        padding: 10px; /* Space inside the cards */
-        text-align: center; /* Center the text inside the cards */
+        padding: 10px; 
+        text-align: center; 
         background: linear-gradient(90deg, rgba(173, 216, 230, 1) 0%, rgba(255, 255, 255, 1) 100%);
         width: 100%;
         
@@ -100,13 +100,13 @@
 }    
 
 .card-text, .card-title {
-    color:white; /* Replace with your desired color */
+    color:white; 
   }
 
 .container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Space between items */    
+    gap: 20px;   
 }
 
 .card canvas {
@@ -114,9 +114,6 @@
     display: block;
 }
 
-
-
-/* Media Queries for Responsiveness */
 @media (min-width: 768px) {
     .heading {
         font-size: 50px;

@@ -30,15 +30,13 @@
     /* color: rgb(54, 53, 53); */ 
  
 } 
- 
-/* Wrapping container to hold both navbar and content */ 
+
 .wrapper { 
     display: flex; 
     height: 100vh; 
     width: 100%; 
 } 
- 
-/* Styling for the fixed navbar */ 
+
 .navbar { 
     margin-left: 0px; 
     width: 200px;
@@ -51,9 +49,7 @@
     /* top: 0; 
     left: 0; */ 
 } 
- 
- 
- 
+
 .navbar-container { 
     /* align-items: center; */ 
     /* justify-content: center; */ 
@@ -62,7 +58,8 @@
     flex-direction: column; 
     justify-content: flex-start; 
     position: fixed; 
-} 
+}
+
 /* .navbar-container{ 
     text-align: center; 
     margin-left: 5px; 
@@ -71,9 +68,7 @@
     color: #fff; 
     text-decoration: none; 
 } */ 
- 
- 
-/* Content styling */ 
+
 .content { 
     margin-left: 200px; 
     padding: 20px; 
@@ -97,15 +92,13 @@
     font-family: Arial, sans-serif; 
     background-color: #f7f7f7; 
 } */ 
- 
- /* Center everything on the page */ 
+
 body { 
     margin: 0; 
     font-family: Arial, sans-serif; 
     background-color: #f7f7f7; 
 } 
  
-/* Style the heading */ 
 h1 { 
     margin-left: 500px; 
     font-size: 2rem; 
@@ -113,8 +106,7 @@ h1 {
     text-align: center; 
     color: white !important; 
 } 
- 
-/* Container for the cards */ 
+
 .card-container  
 { 
     display: flex; 
@@ -127,8 +119,7 @@ h1 {
     box-sizing: border-box; 
     /* margin-right: 800px; */ 
 } 
- 
-/* Style for individual cards */ 
+
 .card { 
     background: #1E2A38  !important; 
     border-radius: 10px; 
@@ -145,16 +136,14 @@ h1 {
     justify-content: center; 
     box-sizing: border-box; 
 } 
- 
-/* Style the card content */ 
+
 .card p { 
     color: white; 
     margin: 0; 
     font-weight: bold; 
     font-size: 1.2rem; 
 } 
- 
-/* Adjust margins on smaller screens */ 
+
 @media (max-width: 600px) { 
     .card-container { 
         flex-direction: column; 
@@ -166,8 +155,7 @@ h1 {
         width: 80%; 
     } 
 } 
- 
-/* Styling for the chart container */ 
+
 .chart-container { 
     display: flex; 
     justify-content: center; 
@@ -177,8 +165,7 @@ h1 {
     max-width: 800px; 
     box-sizing: border-box; 
     border-radius: 10px; 
-    padding: 20px; 
- 
+    padding: 20px;  
     /* margin-right: auto; */ 
     /* margin-left: 500px; */ 
     /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */ 
@@ -186,8 +173,7 @@ h1 {
  
    
 } 
- 
-/* Styling for the chart image */ 
+
 .chart-container img { 
     /* margin-bottom: 100px; 
     margin-right: 600px; */ 
@@ -195,8 +181,8 @@ h1 {
     height: 500px; 
     border-radius: 10px; 
 } 
- 
-/* Adjustments for smaller screens */ 
+
+
 @media (max-width: 600px) { 
     .chart-container { 
         padding: 10px; 

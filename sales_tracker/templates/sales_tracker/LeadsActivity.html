@@ -152,7 +152,7 @@
         }
     
         function performSearch() {
-            // Get filter values
+           
             var subject = document.getElementById("subject").value.toLowerCase();
             var contact = document.getElementById("contact").value.toLowerCase();
             var priority = document.getElementById("priority").value.toLowerCase();
@@ -160,10 +160,8 @@
             var contacts = document.getElementById("contacts").value.toLowerCase();
             var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
     
-            // Log values for debugging
             console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
-    
-            // Get all rows in the table
+  
             var rows = document.querySelectorAll("table tbody tr");
     
             rows.forEach(function(row) {
@@ -173,19 +171,16 @@
                 var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
                 var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
                 var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
-    
-                // Check if the row matches the filters
+
                 var match = (!subject || rowSubject.includes(subject)) &&
                             (!contact || rowContact.includes(contact)) &&
                             (!priority || rowPriority.includes(priority)) &&
                             (!status || rowStatus.includes(status)) &&
                             (!contacts || rowContacts.includes(contacts)) &&
                             (!assignedTo || rowAssignedTo.includes(assignedTo));
-    
-                // Log matching status for each row
+
                 console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
     
-                // Show or hide the row based on match
                 row.style.display = match ? "" : "none";
             });
         }

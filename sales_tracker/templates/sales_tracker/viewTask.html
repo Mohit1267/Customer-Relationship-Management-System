@@ -63,7 +63,7 @@
             </div>
             
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
         </div>
@@ -114,7 +114,7 @@
     }
 
     function performSearch() {
-        // Get filter values
+        
         var subject = document.getElementById("subject").value.toLowerCase();
         var contact = document.getElementById("contact").value.toLowerCase();
         var priority = document.getElementById("priority").value.toLowerCase();
@@ -122,7 +122,6 @@
         var contacts = document.getElementById("contacts").value.toLowerCase();
         var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
 
-        // Get all rows in the table
         var rows = document.querySelectorAll("table tbody tr");
 
         rows.forEach(function(row) {
@@ -134,7 +133,6 @@
             var rowStartDate = row.cells[5].innerText.toLowerCase();
             var rowEndDate = row.cells[6].innerText.toLowerCase();
 
-            // Check if the row matches the filters
             var match = (!subject || rowSubject.includes(subject)) &&
                         (!contact || rowManager.includes(contact)) &&
                         (!priority || rowStatus.includes(priority)) &&
@@ -142,7 +140,6 @@
                         (!contacts || rowAccount.includes(contacts)) &&
                         (!assignedTo || rowManager.includes(assignedTo));
 
-            // Show or hide the row based on match
             row.style.display = match ? "" : "none";
         });
     }

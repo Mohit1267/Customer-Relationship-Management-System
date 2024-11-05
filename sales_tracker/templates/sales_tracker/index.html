@@ -26,10 +26,9 @@
     </div>
 
     <div class="filter-dash d-flex align-items-center">
-        <!-- Add a heading on the left -->
+   
         <h5 class="me-3">Filter by Category:</h5>
 
-        <!-- Filter Bar -->
         <select class="form-select filter-dashb me-2" aria-label="Filter" id="filterSelect">
             <option value="" disabled selected hidden>Filter by</option>
             <option value="Mining">Mining</option>
@@ -69,9 +68,6 @@
 
     </div>
 
-
-        
-        <!-- Container for Mining Graph -->
         <div class="flex-container graph-container">
             <div class="graph" data-category="Mining" >
                 {{ graph_html|safe }}
