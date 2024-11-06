@@ -795,8 +795,11 @@ class ContractForm(forms.Form):
     contact = forms.CharField(label="Contact", max_length=100, required=True)
     opportunity = forms.CharField(label="Opportunity", max_length=100, required=False)
     contact_type = forms.ChoiceField(label="Contact Type", choices=[('type1', 'Type 1'), ('type2', 'Type 2')], required=True)
- 
-    currency = forms.ChoiceField(label="Currency", choices=[('usd', 'USD'), ('eur', 'EUR')], required=True)
+
+    
+    # Financial details section
+    currency = forms.ChoiceField(label="Currency", choices=[('usd', 'USD'), ('inr', 'INR'), ('eur', 'EUR')], required=True)
+
     total = forms.DecimalField(label="Total", max_digits=10, decimal_places=2, required=False)
     discount = forms.DecimalField(label="Discount", max_digits=10, decimal_places=2, required=False)
     subtotal = forms.DecimalField(label="Subtotal", max_digits=10, decimal_places=2, required=False)
