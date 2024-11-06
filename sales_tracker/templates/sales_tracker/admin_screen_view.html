@@ -1,0 +1,62 @@
+{% extends "adminbase.html" %}
+{% load static %}
+{% block title %}Calling Agent Dashboard{% endblock %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/admin_analysis.css' %}">
+{% endblock %}
+
+{% block content %} 
+
+<!-- Dropdown to select employee and button to view their screen -->
+<select id="employee-select">
+    {% for employee in employees %}
+    <option value="{{ employee.id }}">{{ employee.username }}</option>
+    {% endfor %}
+</select>
+<button id="viewScreenButton">View Screen</button>
+
+<!-- Video element to display the employee's screen -->
+<video id="employee-video" autoplay playsinline controls></video>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const viewScreenButton = document.getElementById("viewScreenButton");
+
+        viewScreenButton.addEventListener("click", function() {
+            const employeeId = document.getElementById("employee-select").value;
+            if (employeeId) {
+                viewEmployeeScreen(employeeId);
+            } else {
+                alert("Please select an employee to view.");
+            }
+        });
+
+        function viewEmployeeScreen(employeeId) {
+            // JavaScript code to initialize WebSocket
+
+            const ws = new WebSocket(`ws://${window.location.host}/ws/screen_share/${employeeId}/`);
+
+
+            const peerConnection = new RTCPeerConnection();
+
+            ws.onmessage = async (event) => {
+                const data = JSON.parse(event.data);
+                if (data.offer) {
+                    await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+                    const answer = await peerConnection.createAnswer();
+                    await peerConnection.setLocalDescription(answer);
+                    ws.send(JSON.stringify({ answer: answer }));
+                } else if (data.ice) {
+                    await peerConnection.addIceCandidate(new RTCIceCandidate(data.ice));
+                }
+            };  
+
+            peerConnection.ontrack = (event) => {
+                const videoElement = document.getElementById("employee-video");
+                videoElement.srcObject = event.streams[0];
+            };
+        }
+    });
+</script>
+
+{% endblock %}

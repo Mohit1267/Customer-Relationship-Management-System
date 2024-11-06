@@ -63,16 +63,47 @@
               </a>
             </li>
 
-            <li class="nav-item dashboard-icon">
-              <a class="nav-link spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo"
-                    style="height: 45px; margin-left: -10px;">
-                  <span>Dashboard</span>
-                </div>
-              </a>
-            </li>
+                  <li class="nav-item dashboard-icon">
+                    <a class="nav-link spacing" href="{% url 'Dashboards' %}" role="button" aria-expanded="false">
+                          <div style="display: flex; align-items: center; gap: 10px;">
+                              <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard Logo"
+                                  style="height: 45px; margin-left: -10px;">
+                              <span>Dashboard</span>
+                          </div>
+                      </a>
+                  </li>
 
+
+
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo"
+                              style="margin-right: 5px;">
+                          Calendar
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Schedule Meeting</a></li>
+                          <li>
+                              <hr class="dropdown-divider">
+                          </li>
+                          <li><a class="dropdown-item" href="#">Schedule call</a></li>
+                          <li>
+                              <hr class="dropdown-divider">
+                          </li>
+                      </ul>
+                  </li>
+
+                  <li class="nav-item dashboard-icon">
+                    <a class="nav-link spacing" href="{% url 'attendance'%}" role="button" aria-expanded="false">
+                          <div style="display: flex; align-items: center; gap: 10px;">
+                              <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance logo">
+                              <span>Attendance</span>
+                          </div>
+                      </a>
+                  </li>
+
+                 
 
             <li class="nav-item dropdown dashboard-icon">
               <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
@@ -90,6 +121,7 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li><a class="dropdown-item" href="{% url 'miningimport' %}">Import</a></li>
+
               </ul>
             </li>
 
@@ -165,116 +197,127 @@
   <script>
 
     function startRecognition() {
-      if (!('webkitSpeechRecognition' in window)) {
-        alert("Sorry, your browser doesn't support speech recognition.");
-        return;
-      }
-
-      var recognition = new webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
-
-      recognition.onstart = function () {
-        console.log('Voice recognition started.');
-      };
-
-      recognition.onresult = function (event) {
-        var transcript = event.results[0][0].transcript.trim().toLowerCase();
-        console.log('You said: ' + transcript);
-        handleVoiceCommand(transcript);
-      };
-
-      recognition.onerror = function (event) {
-        console.error('Recognition error: ', event.error);
-      };
-
-      recognition.onend = function () {
-        console.log('Voice recognition ended.');
-        startRecognition();
-      };
-
-      recognition.start();
+        if (!('webkitSpeechRecognition' in window)) {
+            alert("Sorry, your browser doesn't support speech recognition.");
+            return;
+        }
+  
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+  
+        recognition.onstart = function() {
+            console.log('Voice recognition started.');
+        };
+  
+        recognition.onresult = function(event) {
+            var transcript = event.results[0][0].transcript.trim().toLowerCase();
+            console.log('You said: ' + transcript);
+            handleVoiceCommand(transcript);
+        };
+  
+        recognition.onerror = function(event) {
+            console.error('Recognition error: ', event.error);
+        };
+  
+        recognition.onend = function() {
+            console.log('Voice recognition ended.');
+            // Restart recognition if needed
+            startRecognition();
+        };
+  
+        recognition.start();
     }
-
+  
     function handleVoiceCommand(command) {
       const logoutPattern = /logout|log out|sign out/i;
-      const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining [a-zA-Z\.\/]*)/i;
-      if (logoutPattern.test(command)) {
-        window.location.href = "{% url 'logout' %}";
-      }
-      else if (miningViewPattern.test(command)) {
-        window.location.href = "{% url 'data' %}";
-      } else {
-
-        const timeFrame = extractTimeFrame(command);
-        const state = extractState(command);
-
-        if (timeFrame || state) {
-          if (timeFrame) {
-            document.getElementById('time_frame').value = timeFrame;
-
-            document.getElementById('time_frame').dispatchEvent(new Event('change'));
-          }
-          if (state) {
-            document.getElementById('state-filter').value = state;
-
-            document.getElementById('state-filter').dispatchEvent(new Event('change'));
-          }
+        // const miningViewPattern = /([a-zA-Z\.]*mining(view)?|mining data [a-zA-Z\.\/]*)/i;
+        // const createMiningPattern = /([a-zA-Z\.]*create mining?|create mining [a-zA-Z\.\/]*)/i;
+        // const miningViewPattern = /(?=.*show me mining data)(?=.*go to mining data)(?=.*mining data)/i;
+        // const createMiningPattern = /(?=.*show me create mining)(?=.*go to create mining page)(?=.*create mining)/i;
+        const createMiningPattern = /show me create mining|go to create mining page|create mining/i;
+        const miningViewPattern = /show me mining data|go to mining data|mining data/i;
+        const dashboard = /show me dashboard|go to dashboard|dashboard/i;
+        if (logoutPattern.test(command)) {
+            window.location.href = "{% url 'logout' %}";}
+        else if (miningViewPattern.test(command)) {
+            window.location.href = "{% url 'data' %}";
+        } else if (createMiningPattern.test(command)) {
+          window.location.href = "{% url 'mining' %}";
+        } else if (dashboard.test(command)) {
+          window.location.href = "{% url 'Dashboards' %}";
         } else {
-          alert("Command not recognized.");
+            // Extract time frame and state using regex
+            const timeFrame = extractTimeFrame(command);
+            const state = extractState(command);
+  
+            if (timeFrame || state) {
+                if (timeFrame) {
+                    document.getElementById('time_frame').value = timeFrame;
+                    // Manually trigger the change event to submit the form
+                    document.getElementById('time_frame').dispatchEvent(new Event('change'));
+                } 
+                if (state) {
+                    document.getElementById('state-filter').value = state;
+                    // Manually trigger the change event to submit the form
+                    document.getElementById('state-filter').dispatchEvent(new Event('change'));
+                }
+            } else {
+                alert("Command not recognized.");
+            }
         }
-      }
     }
-
+  
     function extractTimeFrame(command) {
-      const timeFramePattern = /(yearly|quarterly|monthly|weekly|today)/i;
-      const match = command.match(timeFramePattern);
-      return match ? match[0].toLowerCase() : null;
+        const timeFramePattern = /(yearly|quarterly|monthly|weekly|today)/i;
+        const match = command.match(timeFramePattern);
+        return match ? match[0].toLowerCase() : null;
     }
-
+  
     function extractState(command) {
-      const states = {
-        "andhra pradesh": "AP",
-        "arunachal pradesh": "AR",
-        "assam": "AS",
-        "bihar": "BR",
-        "chhattisgarh": "CG",
-        "goa": "GA",
-        "gujarat": "GJ",
-        "haryana": "HR",
-        "himachal pradesh": "HP",
-        "jharkhand": "JH",
-        "karnataka": "KA",
-        "kerala": "KL",
-        "madhya pradesh": "MP",
-        "maharashtra": "MH",
-        "manipur": "MN",
-        "meghalaya": "ML",
-        "mizoram": "MZ",
-        "nagaland": "NL",
-        "odisha": "OD",
-        "punjab": "PB",
-        "sikkim": "SK",
-        "tamil nadu": "TN",
-        "telangana": "TG",
-        "tripura": "TR",
-        "uttar pradesh": "UP",
-        "uttarakhand": "UT",
-        "west bengal": "WB"
-      };
-
-      for (let state in states) {
-        const statePattern = new RegExp(state.toLowerCase(), "i");
-        if (statePattern.test(command)) {
-          return states[state];
+        const states = {
+            "andhra pradesh": "AP",
+            "arunachal pradesh": "AR",
+            "assam": "AS",
+            "bihar": "BR",
+            "chhattisgarh": "CG",
+            "goa": "GA",
+            "gujarat": "GJ",
+            "haryana": "HR",
+            "himachal pradesh": "HP",
+            "jharkhand": "JH",
+            "karnataka": "KA",
+            "kerala": "KL",
+            "madhya pradesh": "MP",
+            "maharashtra": "MH",
+            "manipur": "MN",
+            "meghalaya": "ML",
+            "mizoram": "MZ",
+            "nagaland": "NL",
+            "odisha": "OD",
+            "punjab": "PB",
+            "sikkim": "SK",
+            "tamil nadu": "TN",
+            "telangana": "TG",
+            "tripura": "TR",
+            "uttar pradesh": "UP",
+            "uttarakhand": "UT",
+            "west bengal": "WB"
+        };
+  
+        for (let state in states) {
+            const statePattern = new RegExp(state.toLowerCase(), "i");
+            if (statePattern.test(command)) {
+                return states[state];
+            }
         }
-      }
-      return null;
+        return null;
     }
-
-    window.onload = function () {
-      startRecognition();
+  
+    // Start voice recognition when the page loads
+    window.onload = function() {
+        startRecognition();
     };
   </script>
 
@@ -453,7 +496,38 @@
   <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
 
 
+<!-- <script>
+  async function startScreenShare(employeeId) {
+      const ws = new WebSocket(`ws://${window.location.host}/ws/screen_share/${employeeId}/`);
+      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      const [track] = stream.getVideoTracks();
+      const peerConnection = new RTCPeerConnection();
 
+      peerConnection.onicecandidate = (event) => {
+          if (event.candidate) {
+              ws.send(JSON.stringify({ ice: event.candidate }));
+          }
+      };
+
+      ws.onmessage = async (event) => {
+          const data = JSON.parse(event.data);
+          if (data.answer) {
+              await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+          } else if (data.ice) {
+              await peerConnection.addIceCandidate(new RTCIceCandidate(data.ice));
+          }
+      };
+
+      peerConnection.addTrack(track, stream);
+      const offer = await peerConnection.createOffer();
+      await peerConnection.setLocalDescription(offer);
+      ws.send(JSON.stringify({ offer: offer }));
+  }
+
+  // Automatically start screen sharing for the employee
+  const employeeId = "{{ user.id }}"; // Dynamically use logged-in user's ID
+  startScreenShare(employeeId);
+</script> -->
 
 </body>
 
