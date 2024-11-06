@@ -31,7 +31,7 @@ from .forms import (
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
-    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm
+    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm, ManualTimeForm
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
@@ -2136,3 +2136,15 @@ def createCase(request):
 
 def viewCases(request):
     return render(request, "sales_tracker/viewCase.html")
+
+def createManualTime(request):
+    return render(request, "sales_tracker/createManualTime.html")
+
+def createManualTime(request):
+    form = ManualTimeForm()
+    return render(request, 'sales_tracker/createManualTime.html', {'form': form})
+
+
+
+def viewManualTime(request):
+    return render(request, "sales_tracker/viewManualTime.html")

@@ -81,7 +81,14 @@
               <a class="nav-link spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
                 <img src="https://i.ibb.co/j33vnyT/realtimelogo.png" alt="realtimelogo Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; ">
                 <span style="white-space: nowrap;">Real Time</span>
-              </a>          
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'liveStreaming' %}">Live Stream</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'temp' %}">Location Tracker</a></li>
+              </ul>
             </li>
 
 
@@ -98,9 +105,13 @@
                 <img src="https://i.ibb.co/8cMsRZk/manualtimelogo.png" alt="manualtimelogo"  style="margin-left: -6px ; margin-right: 5px;  max-width: 35px;">
                 <span style="white-space: nowrap;">Manual Time</span>
               </a>
-             
-            
-          </ul>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'createManualTime' %}">Create Manual Time</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'viewManualTime' %}">View Manual Time</a></li>
+              </ul>
         </div>
   </div>
 </nav>

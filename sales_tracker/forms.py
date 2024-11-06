@@ -842,3 +842,66 @@ class CaseForm(forms.Form):
     date_modified = forms.DateField(label="DATE MODIFIED", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
 
 
+# forms.py
+
+from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, Submit
+
+from django import forms
+from django.core.validators import FileExtensionValidator
+
+from django import forms
+from django.core.validators import FileExtensionValidator
+
+class ManualTimeForm(forms.Form):
+    date = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Select date',
+            'type': 'date'
+        })
+    )
+    start_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Start time',
+            'type': 'time'
+        })
+    )
+    end_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'End time',
+            'type': 'time'
+        })
+    )
+    time_attribution = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Time attribution'
+        })
+    )
+    summary = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Summary',
+            'rows': 4
+        })
+    )
+    attachment = forms.FileField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-control'
+        }),
+        validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])]
+    )
+    
+    def clean_end_time(self):
+        start_time = self.cleaned_data.get('start_time')
+        end_time = self.cleaned_data.get('end_time')
+        if start_time and end_time and end_time <= start_time:
+            raise forms.ValidationError("End time must be after start time.")
+        return end_time
+
+

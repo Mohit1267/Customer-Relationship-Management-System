@@ -1,0 +1,70 @@
+{% extends "adminbase.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/createTask.css' %}">
+{% endblock %}
+
+{% block title %}Manual Time{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <form method="POST" enctype="multipart/form-data"> 
+        {% csrf_token %}
+    
+        <div class="row mt-2 mb-2">
+            <div class="col-12 text-center moving_title" style="color: white;">
+                Create Manual Time
+            </div>
+        </div>
+    
+        <hr>
+
+        <div class="row mb-2">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="button1 mx-2">Submit</button>
+                <button type="button" class="button2">Cancel</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+                
+                <div class="form-group mb-5">
+                    {{ form.date|as_crispy_field }}
+                </div>
+                <div class="form-group mb-5">
+                    {{ form.start_time|as_crispy_field }}
+                </div>
+                <div class="form-group mb-5">
+                    {{ form.end_time|as_crispy_field }}
+                </div>
+                <div class="form-group mb-5">
+                    {{ form.time_attribution|as_crispy_field }}
+                </div>
+                <div class="form-group mb-5">
+                    {{ form.summary|as_crispy_field }}
+                </div>
+            </div>
+
+            <div class="col-md-6 pt-5 px-4" style="color:rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
+                
+                <div class="form-group mb-5">
+                    {{ form.attachment|as_crispy_field }}
+                </div>
+
+                <div class="form-text text-muted">
+                    Click or drag file to this area to upload. Support for a single or bulk upload.
+                    Strictly prohibited from uploading company data or other banned files. Only .png, .jpg, or .jpeg formats are accepted.
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block javascript %}{% endblock %}
