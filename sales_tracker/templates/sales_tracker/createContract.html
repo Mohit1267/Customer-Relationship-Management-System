@@ -32,30 +32,30 @@
         </div>
 
         <div class="row">
-            <!-- Left column fields -->
+           
             <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.contract_title|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.contract_value|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.start_date|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.end_date|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.renewal_reminder_date|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.customer_schedule_date|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.company_schedule_date|as_crispy_field }}
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-5">
                     {{ form.description|as_crispy_field }}
                 </div>
                 <div class="form-group">
@@ -64,6 +64,15 @@
                 <div class="form-group">
                     {{ form.contact_manager|as_crispy_field }}
                 </div>
+            </div>
+
+            
+                
+            
+
+            <!-- Right column fields -->
+            <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
+                <div class="form-group">
                 <div class="form-group">
                     {{ form.account|as_crispy_field }}
                 </div>
@@ -73,11 +82,6 @@
                 <div class="form-group">
                     {{ form.opportunity|as_crispy_field }}
                 </div>
-            </div>
-
-            <!-- Right column fields -->
-            <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
-                <div class="form-group">
                     {{ form.contact_type|as_crispy_field }}
                 </div>
                 <div class="form-group">
@@ -104,6 +108,7 @@
                 <div class="form-group">
                     {{ form.grand_total|as_crispy_field }}
                 </div>
+                
             </div>
         </div>
     </form>

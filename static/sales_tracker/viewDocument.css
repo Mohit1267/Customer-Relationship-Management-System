@@ -12,8 +12,6 @@
     overflow-x: auto;
 }
 
-
-
 .filter-container {
     margin: 20px;
 }
@@ -72,6 +70,7 @@
     background-color: #dc3545;
     color: white;
 }
+
 
 .inside-filter-container select,
 .inside-filter-container input[type="text"] {

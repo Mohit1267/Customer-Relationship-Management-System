@@ -42,10 +42,22 @@
                 <label for="assignedTo">Assigned To:</label>
                 <input type="text" id="assignedTo" name="assignedTo">
             </div>
-            <div class="form-actions">
-                <button type="button" onclick="clearForm()">Clear</button>
-                <button type="submit">Search</button>
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
             </div>
+            <div class="form-actions">
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+
         </div>
     </div>
     <table>
@@ -111,14 +123,13 @@
       }
 
       function performSearch() {
-    // Collect form data
+
     var subject = document.getElementById("subject").value;
     var contactName = document.getElementById("contactName").value;
     var status = document.getElementById("status").value;
     var relatedTo = document.getElementById("relatedTo").value;
     var assignedTo = document.getElementById("assignedTo").value;
 
-    // Simulate search (this is where you'd add real search functionality, e.g., an API call)
     var results = "Search results for: \n" +
                   "Subject: " + subject + "\n" +
                   "Contact Name: " + contactName + "\n" +
@@ -126,7 +137,6 @@
                   "Related To: " + relatedTo + "\n" +
                   "Assigned To: " + assignedTo;
 
-    // Display search results (you can modify this to display real search results)
     document.getElementById("searchResults").innerText = results;
 }
       </script>

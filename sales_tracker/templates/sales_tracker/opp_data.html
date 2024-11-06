@@ -54,9 +54,19 @@
                     <option value="user3">User 3</option>
                 </select>
             </div>
-            
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
         </div>
@@ -131,10 +141,8 @@ function performSearch() {
                   "Job Title: " + jobTitle + "\n" +
                   "Assigned To: " + assignedTo;
 
-    // Display results in the console (or replace this with actual search/filtering code)
     console.log(results);
 
-    // Alternatively, if you want to display results on the page
     document.getElementById("searchResults").innerText = results;
 }
 

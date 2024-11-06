@@ -79,7 +79,17 @@
             <label for="relatedTo">Related To:</label>
             <input type="text" id="relatedTo" name="relatedTo">
         </div>
-
+        <div class="inside-filter-container">
+            <label for="time_frame">Select Time Frame:</label>
+            <select name="time_frame" id="time_frame">
+                <option value="all" disabled selected hidden>Select Time Frame</option>
+                <option value="today">Today</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="yearly">Yearly</option>
+            </select>
+        </div>
         <div class="form-actions">
             <button type="submit">Apply Filter</button>
             <button type="button" onclick="clearForm()">Clear</button>
@@ -112,14 +122,13 @@
     }
 
     function performSearch() {
-        // Collect form data
+   
         var subject = document.getElementById("subject").value;
         var contactName = document.getElementById("contactName").value;
         var status = document.getElementById("status").value;
         var relatedTo = document.getElementById("relatedTo").value;
         var assignedTo = document.getElementById("assignedTo").value;
 
-        // Simulate search (this is where you'd add real search functionality, e.g., an API call)
         var results = "Search results for: \n" +
             "Subject: " + subject + "\n" +
             "Contact Name: " + contactName + "\n" +
@@ -127,7 +136,6 @@
             "Related To: " + relatedTo + "\n" +
             "Assigned To: " + assignedTo;
 
-        // Display search results (you can modify this to display real search results)
         document.getElementById("searchResults").innerText = results;
     }
 </script>
@@ -144,7 +152,7 @@
     }
     
     function clearForm() {
-        // Clears all input fields within filter forms
+        
         document.querySelectorAll(".filter-form input").forEach(field => field.value = "");
     }
     </script>

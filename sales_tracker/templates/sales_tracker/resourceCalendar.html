@@ -64,15 +64,15 @@
                 <thead>
                     <tr>
                         <th>Week</th>
-                        <!-- Week headers will be populated dynamically -->
+                       
                     </tr>
                     <tr>
                         <th>Day</th>
-                        <!-- Day headers will be populated dynamically -->
+                       
                     </tr>
                 </thead>
                 <tbody id="calendar-body">
-                    <!-- Days of the month will be populated here -->
+                 
                 </tbody>
             </table>
         </div>
@@ -93,11 +93,10 @@
         const month = date.getMonth();
 
         monthYear.textContent = `${monthNames[month]} ${year}`;
-        calendarBody.innerHTML = ''; // Clear the previous calendar
-        tableHead.rows[0].innerHTML = '<th>Week</th>'; // Clear the week header row
-        tableHead.rows[1].innerHTML = '<th>Day</th>'; // Clear the day header row
+        calendarBody.innerHTML = ''; 
+        tableHead.rows[0].innerHTML = '<th>Week</th>';
+        tableHead.rows[1].innerHTML = '<th>Day</th>';
 
-        // Get the first and last day of the month
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const daysInMonth = lastDay.getDate();
@@ -123,14 +122,12 @@
             }
             calendarBody.appendChild(weekRow);
 
-            // Add week number header
             let weekHeaderCell = document.createElement('th');
             weekHeaderCell.className = 'week-header';
             weekHeaderCell.colSpan = 7;
             weekHeaderCell.textContent = weekNumber;
             tableHead.rows[0].appendChild(weekHeaderCell);
 
-            // Add day headers
             if (weekNumber === getWeekNumber(firstDay)) {
                 const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
                 days.forEach(day => {
@@ -160,7 +157,6 @@
         renderCalendar(currentDate);
     });
 
-    // Initial render
     renderCalendar(currentDate);
 </script>
 
