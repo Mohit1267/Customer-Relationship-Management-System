@@ -81,56 +81,30 @@
     </div>
 
     <table>
+
         <thead>
             <tr>
+                <th>Number</th>
                 <th>Title</th>
+                <th>Status</th>
                 <th>Contact</th>
                 <th>Account</th>
-                <th>Invoice Number</th>
-                <th>Customer Name</th>
-                <th>Assigned To</th>
-                <th>Due Date</th>
-                
-                <th>Quotation Number</th>
-                <th>Invoice Date</th>
-                <th>Status</th>
-                
-                
-                <th>Billing Address</th>
-                <th>Shipping Address</th>
-                <th>Currency</th>
-                <th>Total</th>
-                <th>Discount</th>
-                <th>Subtotal</th>
-                <th>Shipping</th>
-                <th>Adjustment</th>
-                <th>Tax</th>
                 <th>Grand Total</th>
+                <th>Due Date</th>
             </tr>
         </thead>
+
         <tbody>
             {% for invoice in invoice_list %}
             <tr>
                 <td><a href="{% url 'detail_invoice' invoice.id %}">{{ invoice.title }}</a></td>
-                <td>{{ invoice.customer_name }}</td>
-                <td>{{ invoice.assigned_to }}</td>
-                <td>{{ invoice.due_date }}</td>
-                <td>{{ invoice.invoice_number }}</td>
-                <td>{{ invoice.quotation_number }}</td>
-                <td>{{ invoice.invoice_date }}</td>
+                <td>{{ invoice.number }}</td>
+                <td>{{ invoice.title }}</td>
                 <td>{{ invoice.status }}</td>
-                <td>{{ invoice.account }}</td>
                 <td>{{ invoice.contact }}</td>
-                <td>{{ invoice.billing_address }}</td>
-                <td>{{ invoice.shipping_address }}</td>
-                <td>{{ invoice.currency }}</td>
-                <td>{{ invoice.total }}</td>
-                <td>{{ invoice.discount }}</td>
-                <td>{{ invoice.subtotal }}</td>
-                <td>{{ invoice.shipping }}</td>
-                <td>{{ invoice.adjustment }}</td>
-                <td>{{ invoice.tax }}</td>
+                <td>{{ invoice.account }}</td>
                 <td>{{ invoice.grand_total }}</td>
+                <td>{{ invoice.due_date }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -140,7 +114,7 @@
 <script>
     function toggleFilter() {
         var filterForm = document.getElementById("filterForm");
-        filterForm.style.display = filterForm.style.display === "block" ? "none" : "block";
+        filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "grid" : "none";
     }
 </script>
 {% endblock %}

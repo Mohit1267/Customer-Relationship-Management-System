@@ -88,7 +88,7 @@ body {
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 5px;
-    background-color: rgba(249, 249, 249, 0.8);
+    background-color: rgba(255, 255, 255, 0.808);
     /* display: grid; */
     grid-template-columns: repeat(3, 1fr); 
     grid-gap: 20px; 
@@ -351,6 +351,7 @@ body {
     box-sizing: border-box;
     overflow: visible;
     margin: 1rem;
+    z-index: -100;
 
 }
 
