@@ -4,10 +4,9 @@ body, html {
     font-family: Arial, sans-serif;
     box-sizing: border-box;
     height: 100%;
-    overflow-y: auto; /* Ensure body scrolls if needed */
+    overflow-y: auto; 
 }
 
-/* Scrollable container */
 .container {
     display: flex;
     flex-direction: column; 
@@ -57,7 +56,6 @@ body, html {
     max-width: 600px;
 }
 
-/* Styling for the Graphs */
 .graph, .time-graph {
     width: 100%;
     height: auto;
@@ -70,20 +68,19 @@ body, html {
     color: #333;
 }
 
-/* Ensure the entire container is scrollable */
 html, body {
     height: 100%;
     margin: 0;
-    overflow: hidden; /* Make the body content fit the view and scroll within the container */
+    overflow: hidden;
 }
 
 @media (max-width: 768px) {
     .container {
-        padding: 10px; /* Reduce padding on smaller screens */
-        max-width: 100%; /* Allow full width on smaller screens */
+        padding: 10px; 
+        max-width: 100%;
     }
 
     .graph-container {
-        width: 95%; /* Make graphs almost full width on smaller screens */
+        width: 95%;
     }
 }

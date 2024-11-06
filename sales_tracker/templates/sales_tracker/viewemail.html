@@ -1,0 +1,149 @@
+{% extends "agentbase.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewemail.css' %}">
+{% endblock %}
+
+{% block title %}View Email{% endblock %}
+
+{% block content %}
+<div class="main_container">
+    
+    <div class="filter-search-container">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+
+
+    <div class="filter-container">
+
+        <div class="filter-buttons" style="margin-bottom: 15px;">
+            <button id="quick-filter-btn" class="filter-button" onclick="toggleQuickFilter()">Quick Filter</button>
+            <button id="advanced-filter-btn" class="filter-button" onclick="toggleAdvancedFilter()">Advanced
+                Filter</button>
+        </div>
+
+        <div id="quickFilterForm" class="filter-form" style="display: none;">
+            <h4>Quick Filter</h4>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="firstName" name="firstName">
+            </div>
+            <div class="form-group">
+                <label for="my items">My Items:</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-actions">
+                <button type="submit">Apply Quick Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+
+           <div id="advancedFilterForm" class="filter-form" style="display: none;">
+        <div class="form-group">
+            <label for="imapKeywords">IMAP Keywords:</label>
+            <input type="text" id="imapKeywords" name="imapKeywords">
+        </div>
+        <div class="form-group">
+            <label for="from">From:</label>
+            <input type="text" id="from" name="from">
+        </div>
+        <div class="form-group">
+            <label for="to">To:</label>
+            <input type="text" id="to" name="to">
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject">
+        </div>
+        <div class="form-group">
+            <label for="body">Body:</label>
+            <textarea id="body" name="body"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="assignedTo">Assigned To:</label>
+            <input type="text" id="assignedTo" name="assignedTo">
+        </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category">
+        </div>
+        <div class="form-group">
+            <label for="relatedTo">Related To:</label>
+            <input type="text" id="relatedTo" name="relatedTo">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">Apply Filter</button>
+            <button type="button" onclick="clearForm()">Clear</button>
+            <button type="button" onclick="saveFilter()">Save Filter</button>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+    function toggleFilter() {
+        var filterContainer = document.querySelector(".filter-container");
+        if (filterContainer.style.display === "none" || !filterContainer.style.display) {
+            filterContainer.style.display = "block";
+        } else {
+            filterContainer.style.display = "none";
+        }
+    }
+
+
+    function clearForm() {
+        document.getElementById("subject").value = "";
+        document.getElementById("contactName").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("relatedTo").value = "";
+        document.getElementById("assignedTo").value = "";
+    }
+
+    function performSearch() {
+   
+        var subject = document.getElementById("subject").value;
+        var contactName = document.getElementById("contactName").value;
+        var status = document.getElementById("status").value;
+        var relatedTo = document.getElementById("relatedTo").value;
+        var assignedTo = document.getElementById("assignedTo").value;
+
+        var results = "Search results for: \n" +
+            "Subject: " + subject + "\n" +
+            "Contact Name: " + contactName + "\n" +
+            "Status: " + status + "\n" +
+            "Related To: " + relatedTo + "\n" +
+            "Assigned To: " + assignedTo;
+
+        document.getElementById("searchResults").innerText = results;
+    }
+</script>
+
+<script>
+    function toggleQuickFilter() {
+        document.getElementById("quickFilterForm").style.display = "block";
+        document.getElementById("advancedFilterForm").style.display = "none";
+    }
+    
+    function toggleAdvancedFilter() {
+        document.getElementById("advancedFilterForm").style.display = "block";
+        document.getElementById("quickFilterForm").style.display = "none";
+    }
+    
+    function clearForm() {
+        
+        document.querySelectorAll(".filter-form input").forEach(field => field.value = "");
+    }
+    </script>
+{% endblock %}

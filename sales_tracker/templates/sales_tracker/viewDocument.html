@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
 {% endblock %}
 
-{% block title %}Data{% endblock %}
+{% block title %}Documents{% endblock %}
 
 {% block content %}
 
@@ -42,10 +42,12 @@
                 <label for="assignedTo">Assigned To:</label>
                 <input type="text" id="assignedTo" name="assignedTo">
             </div>
+
             <div class="form-actions">
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
-                <button type="submit">Search</button>
             </div>
+
         </div>
     </div>
     <table>
@@ -111,14 +113,13 @@
       }
 
       function performSearch() {
-    // Collect form data
+
     var subject = document.getElementById("subject").value;
     var contactName = document.getElementById("contactName").value;
     var status = document.getElementById("status").value;
     var relatedTo = document.getElementById("relatedTo").value;
     var assignedTo = document.getElementById("assignedTo").value;
 
-    // Simulate search (this is where you'd add real search functionality, e.g., an API call)
     var results = "Search results for: \n" +
                   "Subject: " + subject + "\n" +
                   "Contact Name: " + contactName + "\n" +
@@ -126,7 +127,6 @@
                   "Related To: " + relatedTo + "\n" +
                   "Assigned To: " + assignedTo;
 
-    // Display search results (you can modify this to display real search results)
     document.getElementById("searchResults").innerText = results;
 }
       </script>

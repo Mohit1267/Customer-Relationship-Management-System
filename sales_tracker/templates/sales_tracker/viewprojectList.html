@@ -1,0 +1,121 @@
+{% extends "agentbase.html" %}
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewprojectList.css' %}">
+{% endblock %}
+
+{% block title %}View Project-List{% endblock %}
+
+{% block content %}
+
+<section class="main_container">
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+
+    <div class="filter-container">
+        <div id="filterForm" class="filter-form">
+     
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter Project Name">
+            </div>
+            <div class="form-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate">
+            </div>
+            <div class="form-group">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate">
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="draft">Draft</option>
+                    <option value="in_review">In Review</option>
+                    <option value="underway">Underway</option>
+                    <option value="onhold">On Hold</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority">
+                    <option value="">-- Select Priority --</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Job Title</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in data_list %}
+            <tr>
+                <td><a href="{% url 'detaildata' data %}">{{ data.name }}</a></td>
+                {% if data.customer_first_name %}
+                <td>{{ data.customer_job_title }}</td>
+                <td>{{ data.customer_email }}</td>
+                <td>{{ data.customer_mobile_number }}</td>
+                <td>{{ data.date_created }}</td>
+                {% elif data.first_name %}
+                <td>{{ data.job_title }}</td>
+                <td>{{ data.email_id }}</td>
+                <td>{{ data.phone_number }}</td>
+                <td>{{ data.date_created }}</td>
+                {% elif data.opportunity_name %}
+                <td>{{ data.opportunity_job_title }}</td>
+                <td>{{ data.opportunity_email }}</td>
+                <td>{{ data.opportunity_phone }}</td>
+                <td>{{ data.date_created }}</td>
+                {% elif data.title %}
+                <td>{{ data.title_job }}</td>
+                <td>{{ data.title_email }}</td>
+                <td>{{ data.title_phone }}</td>
+                <td>{{ data.date_created }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "grid" : "none";
+    }
+
+    function clearForm() {
+        document.getElementById("name").value = "";
+        document.getElementById("startDate").value = "";
+        document.getElementById("endDate").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("priority").value = "";
+    }
+</script>
+
+{% endblock %}
+
+{% block javascript %}{% endblock %}

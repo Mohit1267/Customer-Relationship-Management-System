@@ -1,4 +1,3 @@
-/* Center everything on the page */ 
 body {
     display: flex;
     justify-content: center;
@@ -9,7 +8,6 @@ body {
     background-color: #f7f7f7;
  }
 
-/* Style the heading */
 h1 {
     font-size: 2rem;
     margin-bottom: 20px;
@@ -17,7 +15,6 @@ h1 {
     color: #333;
 }
 
-/* Style the image */
 img {
     max-width: 100%;
     height: auto;
@@ -27,7 +24,6 @@ img {
     margin-right: auto;
 }
 
-/* Container for the cards */
 .card-container {
     display: flex;
     justify-content: space-around;
@@ -36,7 +32,6 @@ img {
     margin-top: 20px;
 }
 
-/* Style for individual cards */
 .card {
     background-color: #fff;
     border-radius: 10px;
@@ -49,14 +44,12 @@ img {
     font-size: 1rem;
 }
 
-/* Style the card content */
 .card p {
     margin: 0;
     font-weight: bold;
     font-size: 1.2rem;
 }
 
-/* Adjust margins on smaller screens */
 @media (max-width: 600px) {
     .card-container {
         flex-direction: column;

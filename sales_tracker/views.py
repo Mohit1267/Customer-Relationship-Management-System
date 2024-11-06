@@ -1,44 +1,46 @@
-# from typing import Any
-# from django.db.models.query import QuerySet
 import json
-from django.core.mail import send_mail
-from django.conf import settings
-from django.http import HttpResponse
-from django.utils import timezone
+import random
+import re
 from datetime import date, datetime, timedelta
-from django.utils import timezone
-from django.http import JsonResponse
-from django.db.models import Count, OuterRef, Subquery
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import connection
 from typing import Any
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.mail import send_mail
 from django.db import connection
-from django.db.models import Count
-from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.db.models import Count, OuterRef, Subquery
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView, DetailView
-from django.shortcuts import redirect
-from django.shortcuts import render, get_object_or_404
-# import pymysql
-from django.contrib.auth import get_user_model
-from users.models import Profile, RegisterUser, Location
-from .models import MiningData, ContactData, LeadsData, OpportunityData, QuotesData , CallingAgent,Schedule_Meeting, Schedule_Calling
-from .forms import MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting, DocumentForm, TaskForm,agentcalling
-from .analysis import generate_bar_chart, TotalDays,generate_bar_chart2
-from .admin_analysis import Att_perct,Late_perct ,Mining_Count ,Leads_Count,EachMinerTarget,Time_worked,Productivity,admin_attendance_graph, dailymining, monthlymining, quarterlymining,yearlymining, yearlyleads,quarterlyleads,monthlyleads,dailyleads
-from .requirements import timer
-from django.http import HttpResponseForbidden
-import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
-from users.models import AttendanceRecord
-import random
-from django.core.exceptions import ObjectDoesNotExist
-from django.utils.decorators import method_decorator
-from .forms import agentmeeting
-from django.http import JsonResponse
-from datetime import date
+from users.models import Profile, RegisterUser, Location, AttendanceRecord
+from .models import (
+    MiningData, ContactData, LeadsData, OpportunityData, QuotesData,
+    CallingAgent, Schedule_Meeting, Schedule_Calling, DailySalesReport,
+    Account, NewPasswords, Task
+)
+from .forms import (
+    MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
+    DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
+    AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
+    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm
+)
+from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
+from .admin_analysis import (
+    Att_perct, Late_perct, Mining_Count, Leads_Count, EachMinerTarget,
+    Time_worked, Productivity, admin_attendance_graph, dailymining, monthlymining,
+    quarterlymining, yearlymining, yearlyleads, quarterlyleads, monthlyleads,
+    dailyleads
+)
+from .requirements import timer
 
 
 def get_timer_value(request):
@@ -84,7 +86,7 @@ def Dashboards(request):
         utc_login_time = user.last_login
         elapsed_time = timer(utc_login_time)
         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         users = request.user
         u = RegisterUser.objects.get(email=users)
@@ -114,7 +116,7 @@ def Dashboards(request):
     elif request.user.profile.branch == 'agent':
         context = {}
         if request.method == 'POST':
-            data = json.loads(request.body)  # Load the JSON data
+            data = json.loads(request.body) 
             latitude = data.get('latitude')
             longitude = data.get('longitude')
             request.session['latitude'] = latitude
@@ -132,7 +134,7 @@ def Dashboards(request):
             "long": longitude,
             "user": RegisterUser.objects.get(email=request.user.email),
         }
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         context["Tocall"] = MiningData.objects.filter(assigned_to=context["user"].id, date=now_date)
         context["daily"] = dailyleads(request)
@@ -142,7 +144,7 @@ def Dashboards(request):
         return render(request, 'sales_tracker/agent.html', context)
     elif(request.user.profile.branch == 'sales'):
         context = {}
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         users = request.user
         u = RegisterUser.objects.get(email=users)
@@ -184,7 +186,7 @@ def agent_required(view_func):
     return _wrapped_view
 
 def assign_miningCt():
-    # Get the user with the least assignments
+   
     least_occurring_assigned_to_id = (
         MiningData.objects
         .filter(assigned_to__profile__branch='agent')
@@ -194,25 +196,20 @@ def assign_miningCt():
         .first()
     )
 
-    # If there are no records yet, assign randomly to one of the agents
     if not least_occurring_assigned_to_id:
-        # Get all users with the 'agent' branch
+     
         agent_users = RegisterUser.objects.filter(profile__branch='agent')
         if agent_users.exists():
-            # Randomly select one agent
+           
             return random.choice(agent_users)
         else:
-            # Handle case where there are no agents
+          
             raise ObjectDoesNotExist("No agents found to assign.")
 
-    # Otherwise, assign to the least occurring agent
     assigned_to_id = least_occurring_assigned_to_id['assigned_to']
     return RegisterUser.objects.get(id=assigned_to_id)
 
 
-import re
-import datetime  # Ensure datetime is imported
-from django.shortcuts import render, redirect
 
 
 def mining_view(request):
@@ -220,7 +217,7 @@ def mining_view(request):
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     today_mining = MiningData.objects.filter(date=now_date)
     today_mining_count = today_mining.count()
@@ -244,7 +241,6 @@ def mining_view(request):
         source_of_data_mining = form.data.get("source_of_data_mining")
         company_emp_size = form.data.get("company_emp_size")
 
-        # Validate organisation_name (allow only alphabets and numbers)
         if not re.match("^[A-Za-z0-9 ]+$", organisation_name):
             form.add_error('organisation_name', "Organisation name can only contain alphabets and numbers.")
             return render(request, "sales_tracker/mining.html", {
@@ -253,7 +249,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate customer_first_name (allow only alphabets)
         if not re.match("^[A-Za-z ]+$", customer_first_name):
             form.add_error('customer_first_name', "First name can only contain alphabets.")
             return render(request, "sales_tracker/mining.html", {
@@ -262,7 +257,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate customer_last_name (allow only alphabets)
         if not re.match("^[A-Za-z ]+$", customer_last_name):
             form.add_error('customer_last_name', "Last name can only contain alphabets.")
             return render(request, "sales_tracker/mining.html", {
@@ -271,7 +265,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate customer_contact_number (must be exactly 10 digits)
         if not re.match(r"^\d{10}$", customer_contact_number):
             form.add_error('customer_contact_number', "Contact number must be exactly 10 digits.")
             return render(request, "sales_tracker/mining.html", {
@@ -280,7 +273,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate customer_mobile_number (must be exactly 10 digits)
         if not re.match(r"^\d{10}$", customer_mobile_number):
             form.add_error('customer_mobile_number', "Mobile number must be exactly 10 digits.")
             return render(request, "sales_tracker/mining.html", {
@@ -289,7 +281,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate company_revenue (must be a number)
         if not company_revenue.isdigit():
             form.add_error('company_revenue', "Company revenue must be a numeric value.")
             return render(request, "sales_tracker/mining.html", {
@@ -298,7 +289,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate customer_offering (allow only alphabets and numbers)
         if not re.match("^[A-Za-z0-9 ]+$", customer_offering):
             form.add_error('customer_offering', "Customer offering can only contain alphabets and numbers.")
             return render(request, "sales_tracker/mining.html", {
@@ -307,7 +297,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate competition_of_AT (allow only alphabets and numbers)
         if not re.match("^[A-Za-z0-9 ]+$", competition_of_AT):
             form.add_error('competition_of_AT', "Competition of AT can only contain alphabets and numbers.")
             return render(request, "sales_tracker/mining.html", {
@@ -316,7 +305,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate stock_market_registered (allow only alphabets and numbers)
         if not re.match("^[A-Za-z0-9 ]+$", stock_market_registered):
             form.add_error('stock_market_registered', "Stock market registered can only contain alphabets and numbers.")
             return render(request, "sales_tracker/mining.html", {
@@ -325,7 +313,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate IT spending budget (must be a number)
         if not it_spending_budget.isdigit():
             form.add_error('IT_spending_budget', "IT spending budget must be a numeric value.")
             return render(request, "sales_tracker/mining.html", {
@@ -334,7 +321,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate source_of_data_mining (allow only alphabets and numbers)
         if not re.match("^[A-Za-z0-9 ]+$", source_of_data_mining):
             form.add_error('source_of_data_mining', "Source of data mining can only contain alphabets and numbers.")
             return render(request, "sales_tracker/mining.html", {
@@ -343,7 +329,6 @@ def mining_view(request):
                 "mining_count": today_mining_count
             })
 
-        # Validate company_emp_size (must be a positive number)
         if not company_emp_size.isdigit() or int(company_emp_size) <= 0:
             form.add_error('company_emp_size', "Employee size must be a positive numeric value.")
             return render(request, "sales_tracker/mining.html", {
@@ -357,7 +342,7 @@ def mining_view(request):
             print("hello world")
         except MiningData.DoesNotExist:
             assignTo = assign_miningCt()
-            now_date_time = datetime.datetime.now()
+            now_date_time = datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
             mining_details = MiningData(
@@ -445,7 +430,7 @@ class DetailDataView(DetailView):
         utc_login_time = user.last_login
         elapsed_time = timer(utc_login_time)
         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         today_mining = MiningData.objects.filter(date = now_date)
         today_mining_count = today_mining.count()
@@ -461,7 +446,7 @@ class CallView(TemplateView):
         utc_login_time = user.last_login
         elapsed_time = timer(utc_login_time)
         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         today_mining = MiningData.objects.filter(date = now_date)
         today_mining_count = today_mining.count()
@@ -471,9 +456,6 @@ class CallView(TemplateView):
 class VideoCallView(TemplateView):
     template_name = "sales_tracker/videocall.html"
 
-
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required
@@ -543,7 +525,7 @@ def Create_contact_view(request):
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     today_mining = MiningData.objects.filter(date = now_date)
     today_mining_count = today_mining.count()
@@ -553,7 +535,7 @@ def Create_contact_view(request):
             ContactData.objects.get(email_id = form.data.get("email_id"))
         except:
             # assigned_agent = assign_contact_to_agent()
-            now_date_time = datetime.datetime.now()
+            now_date_time = datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
             # claid = request.POST.get("calling_agent")
@@ -587,7 +569,7 @@ def Create_contact_view(request):
 
 
 def assign_leadCt():
-    # Get the user with the least assignments
+    
     least_occurring_assigned_to_id = (
         LeadsData.objects
         .filter(assigned_to__profile__branch='sales')
@@ -597,18 +579,16 @@ def assign_leadCt():
         .first()
     )
 
-    # If there are no records yet, assign randomly to one of the sales agents
     if not least_occurring_assigned_to_id:
-        # Get all users with the 'sales' branch
+     
         sales_users = RegisterUser.objects.filter(profile__branch='sales')
         if sales_users.exists():
-            # Randomly select one sales agent
+    
             return random.choice(sales_users)
         else:
-            # Handle case where there are no sales agents
+        
             raise ObjectDoesNotExist("No sales agents found to assign.")
 
-    # Otherwise, assign to the least occurring sales agent
     assigned_to_id = least_occurring_assigned_to_id['assigned_to']
     return RegisterUser.objects.get(id=assigned_to_id)
 
@@ -618,7 +598,7 @@ def Create_lead_view(request):
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     today_mining = MiningData.objects.filter(date = now_date)
     today_mining_count = today_mining.count()
@@ -628,7 +608,7 @@ def Create_lead_view(request):
             LeadsData.objects.get(contact_link = ContactData.objects.get(pk = form.data.get("contact_link")))
         except:
             assign_lead = assign_leadCt()
-            now_date_time = datetime.datetime.now()
+            now_date_time = datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
             contact_details = LeadsData(
@@ -665,14 +645,14 @@ def Create_opportunity_view(request):
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     today_mining = MiningData.objects.filter(date = now_date)
     today_mining_count = today_mining.count()
     if request.method == "POST":
         form = OpportunityForm(request.POST)
         
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         username = request.user.username
         contact_details = OpportunityData(
@@ -705,14 +685,14 @@ def Create_quote_view(request):
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     today_mining = MiningData.objects.filter(date = now_date)
     today_mining_count = today_mining.count()
     if request.method == "POST":
         form = QuoteForm(request.POST)
         
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         username = request.user.username
         quote_details = QuotesData(
@@ -752,13 +732,12 @@ def Create_quote_view(request):
 
 
 
-from django.views import View
-from .forms import SortForm
+
 
 class MiningsView(View):
     def get(self, request):
         form = SortForm()
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
         datas = MiningData.objects.filter(date = now_date)
         return render(request, "sales_tracker/view_data.html", {"form":form, "datas": datas})
@@ -823,7 +802,7 @@ class BaseListView(ListView):
     def get_queryset(self):
         base_query = super().get_queryset()
         time_frame = self.request.GET.get('time_frame', 'today')  # Get the time frame from GET parameters
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         state = self.request.GET.get('state', None)
         zone = self.request.GET.get('zone', None)
 
@@ -838,12 +817,12 @@ class BaseListView(ListView):
             base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "quarterly":
             quarter = (now_date_time.month - 1) // 3 + 1
-            start_date = datetime.datetime(now_date_time.year, (quarter - 1) * 3 + 1, 1)
+            start_date = datetime(now_date_time.year, (quarter - 1) * 3 + 1, 1)
             end_date = (start_date + datetime.timedelta(days=92)).replace(day=1)  # Roughly add 3 months
             base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "yearly":
-            start_date = datetime.datetime(now_date_time.year, 1, 1)  # Start of the year
-            end_date = datetime.datetime(now_date_time.year + 1, 1, 1)  # Start of next year
+            start_date = datetime(now_date_time.year, 1, 1)  # Start of the year
+            end_date = datetime(now_date_time.year + 1, 1, 1)  # Start of next year
             base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         else:  # Default to today
             today = now_date_time.date()
@@ -863,7 +842,7 @@ class BaseListView(ListView):
         context["timer"] = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
         
         # Count today's leads
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         today = now_date_time.date()
         todays_lead = LeadsData.objects.filter(date=today)
         today_lead_count = todays_lead.count()
@@ -896,14 +875,6 @@ class QuotesView(BaseListView):
 #     model = DsrData
 #     count_context_name = 'agentDsr_count'
 
-
-
-
-
-
-
-
-
 # def Tocall(request):
 #     context = {}
 #     user = request.user
@@ -929,7 +900,7 @@ class Tocall(TemplateView):
         utc_login_time = user.last_login
         elapsed_time = timer(utc_login_time)
         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-        now_date_time = datetime.datetime.now()
+        now_date_time = datetime.now()
         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}" 
         orgs = ContactData.objects.filter(date=now_date) 
         orgs_list = [orgsN.organization for orgsN in orgs]
@@ -942,15 +913,13 @@ def Tocall_detail(request, pk):
     context = {}
     context['pk'] = pk
     user = request.user
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     print("hwllo")
     mining_data = get_object_or_404(MiningData, organisation_name=pk)
-    # Retrieve the related ContactData entries
 
     contact_data_list = ContactData.objects.filter(organization=mining_data,date=now_date)
     
-    # Prepare the data to be sent to the template       
     context = {
         'mining_data': mining_data,
         'contact_data_list': contact_data_list
@@ -987,8 +956,7 @@ def get_calling_agents(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM CallingAgent")
         rows = cursor.fetchall()
-        
-        # Optionally, you can format the data as needed
+
         data = [
             {
                 'id': row[0],
@@ -1006,7 +974,7 @@ def get_calling_agents(request):
 
 
 def Attendence(request):    
-    # generate_bar_chart()
+    
     context = {}
     user = request.user
     days = TotalDays(request)
@@ -1091,7 +1059,6 @@ class AdminAnalysis(TemplateView):
         return context
 
 
-import json
 class maps(View):
     template_name = "sales_tracker/maps.html"
 
@@ -1108,22 +1075,17 @@ class maps(View):
         latitude = data.get('latitude')
         longitude = data.get('longitude')
 
-        # Save latitude and longitude to session
         request.session['latitude'] = latitude
         request.session['longitude'] = longitude
 
-        # Save to the database
         profile = Profile.objects.get(user=request.user)
         now = timezone.now()
         today = now.date()
 
-        # Fetch the last location entry for the profile
         last_location = Location.objects.filter(profile=profile).order_by('-date', '-time').first()
 
-        # Define a time threshold for significant time difference (e.g., 5 minutes)
         time_threshold = timedelta(minutes=5)
 
-        # Create a new entry if the location is different or the date is different
         if not last_location or (last_location.latitude != latitude or last_location.longitude != longitude) or (now - datetime.combine(last_location.date, last_location.time) > time_threshold):
             Location.objects.create(profile=profile, latitude=latitude, longitude=longitude, date=today, time=now.time())
 
@@ -1134,18 +1096,13 @@ def ViewQuote(request):
 
 
 
-import re
-from django.shortcuts import render, redirect
-from .forms import ContactForm
-from .models import ContactData, MiningData, CallingAgent
-import datetime
 
 def Agentcontact(request):
     user = request.user
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
 
     if request.method == "POST":
@@ -1159,27 +1116,22 @@ def Agentcontact(request):
         address = form.data.get("address")
         organization = form.data.get("organization")
 
-        # Validate first_name (allow only alphabets)
         if not re.match("^[A-Za-z]+$", first_name):
             form.add_error('first_name', "First name can only contain alphabets.")
             return render(request, "sales_tracker/agentcontact.html", {"form": form, "timer": formated_timer, "calling_agents": CallingAgent.objects.all()})
 
-        # Validate last_name (allow only alphabets)
         if not re.match("^[A-Za-z]+$", last_name):
             form.add_error('last_name', "Last name can only contain alphabets.")
             return render(request, "sales_tracker/agentcontact.html", {"form": form, "timer": formated_timer, "calling_agents": CallingAgent.objects.all()})
 
-        # Validate contact_number (must be exactly 10 digits)
         if not re.match(r"^\d{10}$", contact_number):
             form.add_error('contact_number', "Contact number must be exactly 10 digits.")
             return render(request, "sales_tracker/agentcontact.html", {"form": form, "timer": formated_timer, "calling_agents": CallingAgent.objects.all()})
 
-        # Validate job_title (allow only alphabets and numbers)
         if not re.match("^[A-Za-z0-9 ]+$", job_title):
             form.add_error('job_title', "Job title can only contain alphabets and numbers.")
             return render(request, "sales_tracker/agentcontact.html", {"form": form, "timer": formated_timer, "calling_agents": CallingAgent.objects.all()})
 
-        # If all validations pass, proceed to save the data
         try:
             ContactData.objects.get(email_id=email_id)
         except ContactData.DoesNotExist:
@@ -1210,19 +1162,14 @@ def Agentcontact(request):
 
 
 
-import re
-from django.shortcuts import render, redirect
-from .forms import QuoteForm
-from .models import QuotesData, OpportunityData
-from django.contrib.auth import get_user_model
-import datetime
+
 
 def Agentquote(request):
     user = request.user
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
 
     if request.method == "POST":
@@ -1239,23 +1186,18 @@ def Agentquote(request):
         shipping_tax = form.data.get("shipping_tax")
         tax = form.data.get("tax")
 
-        # Validate title (allow only alphabets and numbers)
         if not re.match("^[A-Za-z ]+$", title):
            form.add_error('title', "Title can only contain alphabets.")
-        
-        # Validate lead_source (allow only alphabets and numbers)
+
         if not re.match("^[A-Za-z0-9 ]+$", lead_source):
             form.add_error('lead_source', "Lead source can only contain alphabets and numbers.")
-        
-        # Validate account (allow only alphabets and numbers)
+
         if not re.match("^[A-Za-z0-9 ]+$", account):
             form.add_error('account', "Account can only contain alphabets and numbers.")
 
-        # Validate contact (must be exactly 10 digits)
         if not re.match(r"^\d{10}$", contact):
             form.add_error('contact', "Contact number must be exactly 10 digits.")
-        
-     # Validate total, sub_total, and grandtotal (allow only numbers or empty)
+
         if total and not re.match("^[0-9]+$", total):
             form.add_error('total', "Total can only contain numbers.")
         if sub_total and not re.match("^[0-9]+$", sub_total):
@@ -1263,8 +1205,6 @@ def Agentquote(request):
         if grandtotal and not re.match("^[0-9]+$", grandtotal):
             form.add_error('grandtotal', "Grand Total can only contain numbers.")
 
-        
-        # Validate discount, shipping_tax, and tax (allow numbers and special characters)
         if not re.match("^[\d\s.,-]+$", discount):
             form.add_error('discount', "Discount can only contain numbers and special characters.")
         if not re.match("^[\d\s.,-]+$", shipping_tax):
@@ -1272,11 +1212,9 @@ def Agentquote(request):
         if not re.match("^[\d\s.,-]+$", tax):
             form.add_error('tax', "Tax can only contain numbers and special characters.")
 
-        # If there are validation errors, re-render the form with errors
         if form.errors:
             return render(request, "sales_tracker/agentquote.html", {"form": form, "timer": formated_timer})
 
-        # If all validations pass, proceed to save the quote data
         quote_details = QuotesData(
             title=title,
             valid_until=form.data.get("valid_until"),
@@ -1309,12 +1247,6 @@ def Agentquote(request):
 
     return render(request, "sales_tracker/agentquote.html", {"form": form, "timer": formated_timer})
 
-import re
-import datetime
-from django.shortcuts import render, redirect
-from .forms import OpportunityForm
-from .models import OpportunityData, LeadsData
-from django.contrib.auth import get_user_model
 
 def Agentopportunity(request):
     user = request.user
@@ -1322,45 +1254,38 @@ def Agentopportunity(request):
     elapsed_time = timer(utc_login_time)
     formatted_timer = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
     
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
 
     if request.method == "POST":
         form = OpportunityForm(request.POST)
 
-        # Validate opportunity_name (allow only alphabets and numbers)
         opportunity_name = form.data.get("opportunity_name")
         if not re.match("^[A-Za-z0-9 ]+$", opportunity_name):
             form.add_error('opportunity_name', "Opportunity name can only contain alphabets and numbers.")
 
-        # Validate amount (must be a positive number)
         amount = form.data.get("amount")
-        if not re.match(r"^(0|[1-9]\d*)(\.\d+)?$", amount):  # Matches positive integers and decimals
+        if not re.match(r"^(0|[1-9]\d*)(\.\d+)?$", amount): 
             form.add_error('amount', "Amount must be a positive number.")
 
-        # Validate probability (must be a positive number between 0 and 100)
         probability = form.data.get("probability")
-        if not re.match(r"^(0|[1-9]\d?|100)(\.\d+)?$", probability):  # Matches numbers 0-100
+        if not re.match(r"^(0|[1-9]\d?|100)(\.\d+)?$", probability):
             form.add_error('probability', "Probability must be a positive number between 0 and 100.")
 
-        # Validate next_step (allow only alphabets and numbers)
         next_step = form.data.get("next_step")
         if not re.match("^[A-Za-z0-9 ]+$", next_step):
             form.add_error('next_step', "Next step can only contain alphabets and numbers.")
 
-        # Validate lead_source (allow only alphabets and numbers)
         lead_source = form.data.get("lead_source")
         if not re.match("^[A-Za-z0-9 ]+$", lead_source):
             form.add_error('lead_source', "Lead source can only contain alphabets and numbers.")
 
-        # Validate expected_close_date (must be a valid date)
         expected_close_date_str = form.data.get("expected_close_date")
         try:
-            expected_close_date = datetime.datetime.strptime(expected_close_date_str, "%Y-%m-%d").date()
+            expected_close_date = datetime.strptime(expected_close_date_str, "%Y-%m-%d").date()
         except ValueError:
             form.add_error('expected_close_date', "Expected close date must be in YYYY-MM-DD format.")
 
-        # If there are validation errors, re-render the form with errors
         if form.errors:
             return render(request, "sales_tracker/agentopportunity.html", {"form": form, "timer": formatted_timer})
 
@@ -1372,7 +1297,7 @@ def Agentopportunity(request):
             probability=probability,
             next_step=next_step,
             description=form.data.get("description"),
-            expected_close_date=expected_close_date,  # Save the valid date
+            expected_close_date=expected_close_date, 
             lead_source=lead_source,
             lead=LeadsData.objects.get(pk=form.data.get("lead")),
             date=now_date,
@@ -1388,18 +1313,13 @@ def Agentopportunity(request):
     return render(request, "sales_tracker/agentopportunity.html", {"form": form, "timer": formatted_timer})
 
 
-import re
-from django.shortcuts import render, redirect
-from .forms import LeadForm
-from .models import LeadsData, ContactData
-import datetime
 
 def Agentlead(request):
     user = request.user
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
 
     if request.method == "POST":
@@ -1416,27 +1336,22 @@ def Agentlead(request):
         nextdate = form.data.get("nextdate")
         remarks = form.data.get("remarks")
 
-        # Validate first_name (allow only alphabets)
         if not re.match("^[A-Za-z]+$", first_name):
             form.add_error('first_name', "First name can only contain alphabets.")
             return render(request, "sales_tracker/agentlead.html", {"form": form, "timer": formated_timer})
 
-        # Validate last_name (allow only alphabets)
         if not re.match("^[A-Za-z]+$", last_name):
             form.add_error('last_name', "Last name can only contain alphabets.")
             return render(request, "sales_tracker/agentlead.html", {"form": form, "timer": formated_timer})
 
-        # Validate contact_number (must be exactly 10 digits)
         if not re.match(r"^\d{10}$", contact_number):
             form.add_error('contact_number', "Contact number must be exactly 10 digits.")
             return render(request, "sales_tracker/agentlead.html", {"form": form, "timer": formated_timer})
 
-        # Validate job_title (allow only alphabets and numbers)
         if not re.match("^[A-Za-z0-9 ]+$", job_title):
             form.add_error('job_title', "Job title can only contain alphabets and numbers.")
             return render(request, "sales_tracker/agentlead.html", {"form": form, "timer": formated_timer})
 
-        # If all validations pass, proceed to save the data
         try:
             LeadsData.objects.get(contact_link=ContactData.objects.get(pk=contact_link))
         except LeadsData.DoesNotExist:
@@ -1472,7 +1387,7 @@ def Agentmining(request):
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-    now_date_time = datetime.datetime.now()
+    now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     today_mining = MiningData.objects.filter(date = now_date)
     today_mining_count = today_mining.count()
@@ -1483,7 +1398,7 @@ def Agentmining(request):
             print("hello world")
         except:
             assignTo = assign_miningCt()
-            now_date_time = datetime.datetime.now()
+            now_date_time = datetime.now()
             now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
             username = request.user.username
             mining_details = MiningData(
@@ -1524,35 +1439,33 @@ def Admindevice(request):
       return render(request, "sales_tracker/deviceAdmin.html")
 
 
-import re
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import DailySalesReportForm  # Make sure to create this form in forms.py
-from .models import DailySalesReport  # Assuming you have a DailySalesReport model
+
 
 def AgentDSR(request):
-
-
+    """
+    Handles the Daily Sales Report (DSR) form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
     if request.method == 'POST':
-        form = DailySalesReportForm(request.POST)
+        form = DSRForm(request.POST)
         if form.is_valid():
-            # Validate fields as per your requirements
+          
             name = form.cleaned_data['name']
             if not re.match("^[A-Za-z ]+$", name):
                 messages.error(request, "Name can only contain alphabets and spaces.")
-                return render(request, 'sales_tracker/agent_report.html', {'form': form})
+                return render(request, 'sales_tracker/daily_sales_report.html', {'form': form})
 
             customer_type = form.cleaned_data['customer_type']
             if not re.match("^[A-Za-z ]+$", customer_type):
                 messages.error(request, "Customer Type can only contain alphabets and spaces.")
-                return render(request, 'sales_tracker/agent_report.html', {'form': form})
+                return render(request, 'sales_tracker/daily_sales_report.html', {'form': form})
 
             call_type = form.cleaned_data['call_type']
             if not re.match("^[A-Za-z ]+$", call_type):
                 messages.error(request, "Call Type can only contain alphabets and spaces.")
-                return render(request, 'sales_tracker/agent_report.html', {'form': form})
+                return render(request, 'sales_tracker/daily_sales_report.html', {'form': form})
 
-            # Ensure numeric fields are positive
             unit_cost = form.cleaned_data['unit_cost']
             quantity = form.cleaned_data['quantity']
             amount = form.cleaned_data['amount']
@@ -1562,9 +1475,8 @@ def AgentDSR(request):
 
             if unit_cost < 0 or quantity < 0 or amount < 0 or tax_rate < 0 or tax < 0 or total < 0:
                 messages.error(request, "All numeric fields must be positive numbers.")
-                return render(request, 'sales_tracker/agent_report.html', {'form': form})
+                return render(request, 'sales_tracker/daily_sales_report.html', {'form': form})
 
-            # Create and save the DailySalesReport instance
             report = DailySalesReport(
                 name=name,
                 customer_type=customer_type,
@@ -1584,16 +1496,14 @@ def AgentDSR(request):
             )
             report.save()
 
-            messages.success(request, "Daily Sales Report submitted successfully!")
-            return redirect('some_view_name')  # Replace 'some_view_name' with the view you want to redirect to
+            messages.success(request, 'Daily Sales Report submitted successfully!')
+            return redirect('agentDsr')
         else:
-            messages.error(request, "There was an error in your submission. Please check the form.")
+            messages.error(request, 'There was an error submitting the form. Please check your input.')
     else:
-        form = DailySalesReportForm()
+        form = DSRForm()
 
-    return render(request, "sales_tracker/agentDsr.html")
-
-
+    return render(request, 'sales_tracker/agentDsr.html', {'form': form})
 
 # def deviceAdmin(request):
     # context = {
@@ -1660,36 +1570,23 @@ from django.shortcuts import render, redirect
 
 def DSR(request):
     if request.method == 'POST':
-        # Process form data here
-        return redirect('your_view_name')  # Redirect to the same page
+     
+        return redirect('your_view_name')  
     return render(request, 'sales_tracker/dsr.html')
-
-
-
-
-from django.shortcuts import render, redirect
-
-from django.contrib import messages
-from .forms import AccountForm
-from .models import Account 
-
-from .forms import PasswordForm
-from .models import NewPasswords
-from django.core.exceptions import ValidationError
 
 
 def validate_password_view(request):
     if request.method == 'POST':
         form = PasswordForm(request.POST)
         if form.is_valid():
-            # Get the entered password from the form
+            
             entered_minor_password = form.cleaned_data['Minor_password']
             entered_sales_password = form.cleaned_data['Sales_password']
             entered_admin_password = form.cleaned_data['Admin_password']
 
 
 
-            return redirect('createTask')  # 'createTask' should be the name of the URL pattern
+            return redirect('createTask') 
     else:
         form = TaskForm()
 
@@ -1698,11 +1595,6 @@ def validate_password_view(request):
 def viewTask(request):
     return render(request, "sales_tracker/viewTask.html")
 
-import re
-from django.shortcuts import render, redirect
-from .forms import AccountForm  # Assuming you have AccountForm in forms.py
-from .models import Account  # Assuming you have Account model in models.py
-from django.contrib import messages
 
 def Agentaccount(request):
     if request.method == 'POST':
@@ -1710,12 +1602,10 @@ def Agentaccount(request):
         if form.is_valid():
             name = form.cleaned_data['Name']
 
-            # Validate Name (allow only alphabets and spaces)
             if not re.match("^[A-Za-z ]+$", name):
                 messages.error(request, "Name can only contain alphabets and spaces.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Billing fields (allow only alphabets, numbers, and special characters like , and .)
             billing_street = form.cleaned_data['Billing_Street']
             if not re.match("^[A-Za-z0-9 ,\.]+$", billing_street):
                 messages.error(request, "Billing Street can only contain alphabets, numbers, commas, and periods.")
@@ -1736,13 +1626,11 @@ def Agentaccount(request):
                 messages.error(request, "Billing Country can only contain alphabets, numbers, commas, and periods.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Billing Postal Code (allow only numbers)
             billing_postal_code = form.cleaned_data['Billing_Postal_Code']
             if not re.match("^\d+$", billing_postal_code):
                 messages.error(request, "Billing Postal Code can only contain numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Shipping fields (allow only alphabets, numbers, and special characters like , and .)
             shipping_street = form.cleaned_data['Shipping_Street']
             if not re.match("^[A-Za-z0-9 ,\.]+$", shipping_street):
                 messages.error(request, "Shipping Street can only contain alphabets, numbers, commas, and periods.")
@@ -1763,61 +1651,51 @@ def Agentaccount(request):
                 messages.error(request, "Shipping Country can only contain alphabets, numbers, commas, and periods.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Shipping Postal Code (allow only numbers)
             shipping_postal_code = form.cleaned_data['Shipping_Postal_Code']
             if not re.match("^\d+$", shipping_postal_code):
                 messages.error(request, "Shipping Postal Code can only contain numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Description (allow only alphabets and numbers)
             description = form.cleaned_data['Description']
             if not re.match("^[A-Za-z0-9 ]+$", description):
                 messages.error(request, "Description can only contain alphabets and numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Assigned To (allow only alphabets and numbers)
             assigned_to = form.cleaned_data['Assigned_To']
             if not re.match("^[A-Za-z0-9 ]+$", assigned_to):
                 messages.error(request, "Assigned To can only contain alphabets and numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Type (allow only alphabets and numbers)
             account_type = form.cleaned_data['Type']
             if not re.match("^[A-Za-z0-9 ]+$", account_type):
                 messages.error(request, "Type can only contain alphabets and numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Member Of (allow only alphabets and numbers)
             member_of = form.cleaned_data['Member_Of']
             if not re.match("^[A-Za-z0-9 ]+$", member_of):
                 messages.error(request, "Member Of can only contain alphabets and numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Campaign (allow only alphabets and numbers)
             campaign = form.cleaned_data['Campaign']
             if not re.match("^[A-Za-z0-9 ]+$", campaign):
                 messages.error(request, "Campaign can only contain alphabets and numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Industry (allow only alphabets and numbers)
             industry = form.cleaned_data['Industry']
             if not re.match("^[A-Za-z0-9 ]+$", industry):
                 messages.error(request, "Industry can only contain alphabets and numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Employees (must be a non-negative integer)
             employees = form.cleaned_data['Employees']
             if not isinstance(employees, int) or employees < 0:  
                 messages.error(request, "Employees must be a non-negative integer.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Validate Annual Revenue (must be a positive number)
             annual_revenue = form.cleaned_data['Annual_Revenue']
             if annual_revenue is None or annual_revenue <= 0:
                 messages.error(request, "Annual Revenue must be a positive number.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # Create the Account object and save it to the database
             account = Account(
                 Name=name,
                 Website=form.cleaned_data['Website'],
@@ -1841,10 +1719,10 @@ def Agentaccount(request):
                 Industry=industry,
                 Employees=employees,
             )
-            account.save()  # Save the account instance
+            account.save()  
 
             messages.success(request, "Account created successfully!")
-            return redirect('agentaccount')  # Redirect to the account list page after successful submission
+            return redirect('agentaccount') 
         else:
             messages.error(request, "There was an error creating the account. Please check the form.")
     else:
@@ -1865,7 +1743,7 @@ class AgentMeeting(View):
     def post(self, request):
         form = agentmeeting(request.POST)
         if form.is_valid():
-            # Save the form data to the database
+           
             print("FOrm is valid")
             form.save()
 
@@ -1927,7 +1805,7 @@ class AgentCalling(View):
     def post(self, request):
         form = agentcalling(request.POST)
         if form.is_valid():
-            # Save the form data to the database
+         
             print("FOrm is valid")
             form.save()
 
@@ -1940,19 +1818,15 @@ def ViewScheduledMeeting(request):
     return render(request, 'sales_tracker/view_meeting.html', {'scheduled_meetings': scheduled_meetings})
 
 
-
-from django.shortcuts import render, redirect
-from .forms import TaskForm
-
 def createNotes(request):
     if request.method == 'POST':
-        form = TaskForm(request.POST, request.FILES)  # Handling file upload
+        form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()  # Save the form data to the database
-            return redirect('task_list')  # Redirect to a success page (replace 'task_list' with your own URL)
+            form.save()
+            return redirect('note_list')  
     else:
-        form = TaskForm()
-
+        form = NoteForm()
+    
     return render(request, 'sales_tracker/createNotes.html', {'form': form})
 
 def liveStreaming(request):
@@ -1980,20 +1854,13 @@ def DSRimport(request):
     return render(request, "sales_tracker/DSRimport.html")
 
 
-from django.shortcuts import render, redirect
-from .forms import TaskForm
-
-from django.shortcuts import render, redirect
-from .models import Task
-from .forms import TaskForm  # Import TaskForm if defined in forms.py
-
 def createTask(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save()
-            # Redirect to the same page or a success page
-            return redirect('create_task')  # Use the appropriate URL name
+      
+            return redirect('create_task') 
     else:
         form = TaskForm()
 
@@ -2045,3 +1912,250 @@ def admin_screen_view(request):
 def miningimport(request):
     return render(request, "sales_tracker/miningimport.html")
 
+def viewNotes(request):
+      return render(request, "sales_tracker/viewNotes.html")
+
+
+
+def createInvoices(request):
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+           
+            return redirect('invoice_list')  
+    else:
+        form = InvoiceForm()
+    return render(request, 'sales_tracker/createInvoices.html', {'form': form})
+
+
+def compose_email(request):
+    """
+    This view handles the email composition form.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = ComposeEmailForm(request.POST)
+        if form.is_valid():
+         
+            email_template = form.cleaned_data.get('template')
+            related_to = form.cleaned_data.get('related_to')
+            from_address = form.cleaned_data.get('from')
+            to_address = form.cleaned_data.get('to')
+            cc_address = form.cleaned_data.get('cc')
+            bcc_address = form.cleaned_data.get('bcc')
+            subject = form.cleaned_data.get('subject')
+            body = form.cleaned_data.get('body')
+            send_plain_text = form.cleaned_data.get('send_plain_text')
+
+            messages.success(request, 'Email composed successfully!')
+            return redirect('agentemail')
+        else:
+            messages.error(request, 'There was an error composing the email. Please check your input.')
+    else:
+        form = ComposeEmailForm()  
+
+    return render(request, 'sales_tracker/agentemail.html', {'form': form})
+
+
+
+def viewEmail(request):
+    return render(request, "sales_tracker/viewemail.html")
+
+
+
+
+def Agenttarget(request):
+    """
+    This view handles the contact form submission.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = TargetsForm(request.POST)
+        if form.is_valid():
+        
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            job_title = form.cleaned_data.get('job_title')
+            office_phone = form.cleaned_data.get('office_phone')
+            department = form.cleaned_data.get('department')
+            mobile = form.cleaned_data.get('mobile')
+            account_name = form.cleaned_data.get('account_name')
+            fax = form.cleaned_data.get('fax')
+            primary_address_street = form.cleaned_data.get('primary_address_street')
+            primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
+            primary_address_city = form.cleaned_data.get('primary_address_city')
+            primary_address_state = form.cleaned_data.get('primary_address_state')
+            primary_address_country = form.cleaned_data.get('primary_address_country')
+            other_address_street = form.cleaned_data.get('other_address_street')
+            other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
+            other_address_city = form.cleaned_data.get('other_address_city')
+            other_address_state = form.cleaned_data.get('other_address_state')
+            other_address_country = form.cleaned_data.get('other_address_country')
+            email_address = form.cleaned_data.get('email_address')
+            description = form.cleaned_data.get('description')
+            assigned_to = form.cleaned_data.get('assigned_to')
+
+            messages.success(request, 'Contact information submitted successfully!')
+            return redirect('agenttarget') 
+        else:
+            messages.error(request, 'There was an error submitting the contact information. Please check your input.')
+    else:
+        form = TargetsForm()
+
+    return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+
+
+def viewInvoices(request):
+    return render(request, 'sales_tracker/viewInvoices.html')
+
+
+
+def viewTarget(request):
+    return render(request, "sales_tracker/viewtarget.html")
+
+def Targetimport(request):
+    return render(request, "sales_tracker/targetimport.html")
+
+
+def TargetList(request):
+    """
+    This view handles the target form submission.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = TargetsListForm(request.POST)
+        if form.is_valid():
+           
+            name = form.cleaned_data.get('name')
+            total_entries = form.cleaned_data.get('total_entries')
+            type = form.cleaned_data.get('type')
+            domain_name = form.cleaned_data.get('domain_name')
+            description = form.cleaned_data.get('description')
+
+            messages.success(request, 'Target information submitted successfully!')
+            return redirect('targetsList')  
+        else:
+            messages.error(request, 'There was an error submitting the target information. Please check your input.')
+    else:
+        form = TargetsListForm() 
+
+    return render(request, 'sales_tracker/targetsList.html', {'form': form})
+
+def viewTargetList(request):
+    return render(request, "sales_tracker/viewtargetsList.html")
+
+
+
+def agentProjects(request):
+    """
+    Handles the agent project form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = AgentProjectsForm(request.POST)
+        if form.is_valid():
+          
+            name = form.cleaned_data.get('name')
+            status = form.cleaned_data.get('status')
+            draft = form.cleaned_data.get('draft')
+            start_date = form.cleaned_data.get('start_date')
+            priority = form.cleaned_data.get('priority')
+            end_date = form.cleaned_data.get('end_date')
+            consider_working_days = form.cleaned_data.get('consider_working_days')
+            project_manager = form.cleaned_data.get('project_manager')
+            project_template = form.cleaned_data.get('project_template')
+
+            form.save()
+
+            messages.success(request, 'Agent project information submitted successfully!')
+            return redirect('agentProjects')  
+        else:
+            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+    else:
+        form = AgentProjectsForm() 
+
+    return render(request, 'sales_tracker/agentProjects.html', {'form': form})
+
+
+def viewProjectList(request):
+    return render(request, "sales_tracker/viewprojectList.html")
+
+def projectimport(request):
+    return render(request, "sales_tracker/projectimport.html")
+
+def Resourcecalendar(request):
+    return render(request, "sales_tracker/resourceCalendar.html")
+
+def ProjectTask(request):
+    return render(request, "sales_tracker/viewprojectTask.html")
+
+
+def agentTemplate(request):
+    """
+    Handles the agent project form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = AgentTemplate(request.POST)
+        if form.is_valid():
+ 
+            template_name = form.cleaned_data.get('template_name')
+            consider_working_days = form.cleaned_data.get('consider_working_days')
+            project_manager = form.cleaned_data.get('project_manager')
+            status = form.cleaned_data.get('status')
+            priority = form.cleaned_data.get('priority')
+
+            form.save()
+
+            messages.success(request, 'Agent project information submitted successfully!')
+            return redirect('agentTemplate') 
+        else:
+            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+    else:
+        form = AgentTemplate() 
+
+    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+
+def ViewTemplate(request):
+    return render(request, "sales_tracker/viewTemplate.html")
+
+def Templateimport(request):
+    return render(request, "sales_tracker/Importtemplate.html")
+
+
+
+
+def createContract(request):
+    if request.method == 'POST':
+        form = ContractForm(request.POST)
+        if form.is_valid():
+
+            return redirect('success_url') 
+        
+    else:
+        form = ContractForm()
+    
+    return render(request, 'sales_tracker/createContract.html', {'form': form})
+
+def viewContract(request):
+    return render(request, "sales_tracker/viewContract.html")
+
+
+def createCase(request):
+    if request.method == "POST":
+        form = CaseForm(request.POST)
+        if form.is_valid():
+          
+            return redirect('createCase')
+    else:
+        form = CaseForm()
+    
+    return render(request, 'sales_tracker/createCase.html', {'form': form})
+
+def viewCases(request):
+    return render(request, "sales_tracker/viewCase.html")

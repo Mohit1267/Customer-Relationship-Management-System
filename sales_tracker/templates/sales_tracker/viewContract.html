@@ -1,0 +1,149 @@
+{% extends "agentbase.html" %}
+
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
+{% endblock %}
+
+{% block title %}Contracts{% endblock %}
+
+{% block content %}
+
+<section class="main_container">
+
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+
+    <div class="filter-container">
+        <div id="filterForm" class="filter-form">
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject">
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact:</label>
+                <input type="text" id="contact" name="contact">
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority">
+                    <option value="">-- Select Priority --</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="contacts">Contacts:</label>
+                <input type="text" id="contacts" name="contacts">
+            </div>
+            <div class="form-group">
+                <label for="assignedTo">Assigned To:</label>
+                <select id="assignedTo" name="assignedTo">
+                    <option value="">-- Select User --</option>
+                    <option value="user1">User 1</option>
+                    <option value="user2">User 2</option>
+                    <option value="user3">User 3</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Contract Title</th>
+                <th>Status</th>
+                <th>Contract Manager</th>
+                <th>Account</th>
+                <th>Contract Value</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in data_list %}
+            <tr>
+                <td><a href="{% url 'detaildata' data %}">{{ data.contract_title }}</a></td>
+                <td>{{ data.status }}</td>
+                <td>{{ data.contract_manager }}</td>
+                <td>{{ data.account }}</td>
+                <td>{{ data.contract_value }}</td>
+                <td>{{ data.start_date }}</td>
+                <td>{{ data.end_date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+</section>
+
+<script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
+    }
+
+    function clearForm() {
+        document.getElementById("subject").value = "";
+        document.getElementById("contact").value = "";
+        document.getElementById("priority").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("contacts").value = "";
+        document.getElementById("assignedTo").value = "";
+    }
+
+    function performSearch() {
+     
+        var subject = document.getElementById("subject").value.toLowerCase();
+        var contact = document.getElementById("contact").value.toLowerCase();
+        var priority = document.getElementById("priority").value.toLowerCase();
+        var status = document.getElementById("status").value.toLowerCase();
+        var contacts = document.getElementById("contacts").value.toLowerCase();
+        var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+
+        var rows = document.querySelectorAll("table tbody tr");
+
+        rows.forEach(function(row) {
+            var rowSubject = row.cells[0].innerText.toLowerCase();
+            var rowStatus = row.cells[1].innerText.toLowerCase();
+            var rowManager = row.cells[2].innerText.toLowerCase();
+            var rowAccount = row.cells[3].innerText.toLowerCase();
+            var rowValue = row.cells[4].innerText.toLowerCase();
+            var rowStartDate = row.cells[5].innerText.toLowerCase();
+            var rowEndDate = row.cells[6].innerText.toLowerCase();
+
+            var match = (!subject || rowSubject.includes(subject)) &&
+                        (!contact || rowManager.includes(contact)) &&
+                        (!priority || rowStatus.includes(priority)) &&
+                        (!status || rowStatus.includes(status)) &&
+                        (!contacts || rowAccount.includes(contacts)) &&
+                        (!assignedTo || rowManager.includes(assignedTo));
+
+            row.style.display = match ? "" : "none";
+        });
+    }
+</script>
+{% endblock %}
+
+{% block javascript %}{% endblock %}

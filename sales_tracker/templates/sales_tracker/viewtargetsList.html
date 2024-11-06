@@ -1,0 +1,103 @@
+{% extends "agentbase.html" %}
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewtargetsList.css' %}">
+{% endblock %}
+
+{% block title %}View Targets-List{% endblock %}
+
+{% block content %}
+<section class="main_container">
+
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+
+    <div class="filter-container">
+        <div id="filterForm" class="filter-form">
+            <div class="form-group">
+                <label for="anyPhone">Any Phone:</label>
+                <input type="text" id="anyPhone" name="anyPhone" maxlength="10" placeholder="Enter Phone Number">
+            </div>
+           
+            <div class="form-group">
+                <label for="type">Type:</label>
+                <div class="custom-dropdown">
+                    <input type="text" id="typeSearch" placeholder="Search Type..." onkeyup="filterDropdown()">
+                    <div id="typeDropdown" class="dropdown-content">
+                        <!-- <a href="#">Default</a>
+                        <a href="#">Seed</a>
+                        <a href="#">Suppression List - by Domain</a>
+                        <a href="#">Suppression List - by Email</a>
+                        <a href="#">Suppression List - by ID</a>
+                        <a href="#">Test</a> -->
+                    </div>
+                </div>
+            </div>
+           
+            <div class="form-actions">
+                <button type="submit">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Target List</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>User</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in data_list %}
+            <tr>
+                <td><a href="{% url 'detaildata' data %}">{{ data.target_list_name }}</a></td>
+                <td>{{ data.type }}</td>
+                <td>{{ data.description }}</td>
+                <td>{{ data.user }}</td>
+                <td>{{ data.date_created }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    
+</section>
+
+<script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "grid" : "none";
+    }
+
+    function clearForm() {
+        document.getElementById("anyPhone").value = "";
+        document.getElementById("typeSearch").value = "";
+        document.getElementById("typeDropdown").style.display = "block";
+    }
+
+    function filterDropdown() {
+        var input, filter, div, a, i;
+        input = document.getElementById("typeSearch");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("typeDropdown");
+        a = div.getElementsByTagName("a");
+        
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            a[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
+    }
+</script>
+
+{% endblock %}
+{% block javascript %}{% endblock %}

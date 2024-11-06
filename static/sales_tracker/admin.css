@@ -51,7 +51,7 @@ body {
 }
 
 .filter-section {
-    display: none; /* Hidden by default */
+    display: none; 
     /* margin-top: 20px; */
     padding: 20px;
     background-color: #f9f9f9;
@@ -74,10 +74,6 @@ body {
     background-color: rgb(78, 81, 82);
 }
 
-/* Filter Section - initially hidden */
-
-
-/* General styling for the filter form */
 .inside-filter-container, .state-filter-container, .zone-filter-container {
     margin-bottom: 15px;
 }
@@ -164,7 +160,8 @@ body {
     padding: 5px 10px; 
     color: black; 
     background-color: #eff3f7;
-    /* border: 1px solid black;  *//* border-radius: 5px;  */
+    /* border: 1px solid black;  */
+    /* border-radius: 5px;  */
     cursor: pointer; 
     transition: background-color 0.3s;
     border: none;

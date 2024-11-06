@@ -1,9 +1,12 @@
 from django.db import models
-from users.models import RegisterUser,Profile
 from django.conf import settings
 import datetime
 
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
+from users.models import RegisterUser, Profile
+
 
 
 
@@ -14,14 +17,11 @@ class CallingAgent(models.Model):
     calling_agent_contact = models.CharField(max_length=15)
 
     class Meta:
-        managed = False  # Prevent Django from managing the table (no migrations)
+        managed = False
         db_table = 'CallingAgent' 
     def __str__(self):
         return f"{self.calling_agent_id}"
 
-#have to change this database 
-
-# Create your models here.
 
 class MiningData(models.Model):
     organisation_name = models.CharField( max_length=50, primary_key=True)
@@ -156,41 +156,27 @@ class QuotesData(models.Model):
     date = models.DateField(default="2000-10-10")
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
 
-    from django.db import models
 
 class Location(models.Model):
-    # Define the fields for the Location model
+   
     name = models.CharField(max_length=100)
     latitude = models.FloatField()
     longitude = models.FloatField()
-from django.db import models
-from django.contrib.auth.models import User
 
-
-
-from django.db import models
 
 class Account(models.Model):
-    # Basic Fields
+    
     name = models.CharField(max_length=100)
     website = models.URLField(blank=True, null=True)
-    email_address = models.EmailField()
-    
-    # Billing Information
+    email_address = models.EmailField()   
     billing_address = models.CharField(max_length=255)
     billing_street = models.CharField(max_length=255)
     billing_postal_code = models.CharField(max_length=20)
     billing_city = models.CharField(max_length=100)
     billing_state = models.CharField(max_length=100)
     billing_country = models.CharField(max_length=100)
-    
-    # Description
     description = models.TextField(blank=True, null=True)
-    
-    # Assigned To
     assigned_to = models.CharField(max_length=100, blank=True, null=True)
-    
-    # Shipping Information
     shipping_address = models.CharField(max_length=255, blank=True, null=True)
     shipping_street = models.CharField(max_length=255, blank=True, null=True)
     shipping_postal_code = models.CharField(max_length=20, blank=True, null=True)
@@ -198,7 +184,7 @@ class Account(models.Model):
     shipping_state = models.CharField(max_length=100, blank=True, null=True)
     shipping_country = models.CharField(max_length=100, blank=True, null=True)
     
-    # Account Detail
+
     type = models.CharField(max_length=50,choices=(
         ('option1', 'Option 1'),
         ('option2', 'Option 2'),
@@ -210,7 +196,6 @@ class Account(models.Model):
     campaign = models.CharField(max_length=100, blank=True, null=True)
     industry = models.CharField(max_length=100, blank=True, null=True)
     employees = models.IntegerField(blank=True, null=True)
-
     # Timestamps
     created_at = models.DateTimeField(default=datetime.datetime.now)  # Temporary for migration
 
@@ -219,8 +204,7 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
-from django.db import models
-from django.core.validators import RegexValidator
+
 
 password_regex = RegexValidator(
      regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
@@ -293,7 +277,6 @@ class Document(models.Model):
         ('pdf', 'PDF'),
         ('doc', 'Word Document'),
         ('xls', 'Excel Spreadsheet'),
-        # Add other file types here
     )
 
     STATUSES = (
@@ -306,13 +289,11 @@ class Document(models.Model):
         ('legal', 'Legal'),
         ('finance', 'Finance'),
         ('technical', 'Technical'),
-        # Add other categories here
     )
     
     SUBCATEGORIES = (
         ('subcat1', 'Subcategory 1'),
         ('subcat2', 'Subcategory 2'),
-        # Add other subcategories here
     )
 
     file_name = models.CharField(max_length=255)
@@ -327,7 +308,7 @@ class Document(models.Model):
     expiration_date = models.DateField(null=True, blank=True)
     subcategory = models.CharField(max_length=50, choices=SUBCATEGORIES)
     related_document = models.CharField(max_length=255, null=True, blank=True)
-    assigned_to = models.ForeignKey(RegisterUser, on_delete=models.SET_NULL, null=True)  # Assuming User model for assignee
+    assigned_to = models.ForeignKey(RegisterUser, on_delete=models.SET_NULL, null=True)
 
     def _str_(self):
         return self.document_name
@@ -338,10 +319,7 @@ class Document(models.Model):
     
     def __str__(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
-    
 
-
-from django.db import models
 class Task(models.Model):
     TASK_PRIORITY_CHOICES = [
         ('low', 'Low'),
@@ -382,7 +360,7 @@ class DailySalesReport(models.Model):
     tax_rate = models.DecimalField(max_digits=5, decimal_places=2)
     tax = models.DecimalField(max_digits=10, decimal_places=2)
     total = models.DecimalField(max_digits=10, decimal_places=2)
-    notes = models.TextField(blank=True)  # Optional field
+    notes = models.TextField(blank=True)  
 
     def __str__(self):
         return f"{self.name} - {self.date} - {self.item_name}"
@@ -390,4 +368,158 @@ class DailySalesReport(models.Model):
     class Meta:
         verbose_name = "Daily Sales Report"
         verbose_name_plural = "Daily Sales Reports"
-        ordering = ['-date']  # Orders reports by date, newest first
+        ordering = ['-date']  
+
+
+
+
+class agentNotes(models.Model):
+    subject = models.CharField(max_length=255)
+    contact = models.CharField(max_length=255)
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
+    note = models.TextField()
+    related_to = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.subject
+    
+'''
+class createInvoices(models.Model):
+ 
+    title = models.CharField(max_length=255)
+    customer_name = models.CharField(max_length=255)
+    due_date = models.DateField()
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    description = models.TextField(blank=True)
+
+
+    invoice_number = models.CharField(max_length=100, blank=True)
+    quotation_number = models.CharField(max_length=100, blank=True)
+    invoice_date = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=100, choices=[('Open', 'Open'), ('Closed', 'Closed'), ('Pending', 'Pending')], default='Open')
+
+    account = models.CharField(max_length=255, blank=True)
+    contact = models.CharField(max_length=255, blank=True)
+    billing_address = models.TextField(blank=True)
+    shipping_address = models.TextField(blank=True)
+
+
+    currency = models.CharField(max_length=10, choices=[('USD', 'USD'), ('EUR', 'EUR'), ('GBP', 'GBP')], default='USD')
+    line_items = models.TextField(blank=True)  # For simplicity, you can use JSON or a dedicated model for line items
+
+  
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    shipping = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    adjustment = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    tax = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    grand_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.title'''
+
+
+
+class agentProjects(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+    ]
+    PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    draft = models.BooleanField(default=False)
+    start_date = models.DateField()
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
+    end_date = models.DateField()
+    consider_working_days = models.BooleanField(default=False)
+    project_manager = models.CharField(max_length=100)
+    project_template = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+    
+
+class AgentTemplate(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('in_review', 'In Review'),
+        ('underway', 'Underway'),
+        ('on_hold', 'On Hold'),
+        ('completed', 'Completed'),
+]
+
+    PRIORITY_CHOICES = [
+        ('high', 'High'),
+        ('medium', 'Medium'),
+        ('low', 'Low'),
+    ]
+
+    template_name = models.CharField(max_length=255)
+    consider_working_days = models.BooleanField(default=False)
+    project_manager = models.CharField(max_length=255)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='medium')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.template_name
+
+
+
+# class createInvoice(models.Model):
+#     title = models.CharField(max_length=255)
+#     customer_name = models.CharField(max_length=255)
+#     due_date = models.DateField()
+#     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+#     description = models.TextField(blank=True, null=True)
+    
+#     invoice_number = models.CharField(max_length=100, blank=True, null=True)
+#     quotation_number = models.CharField(max_length=100, blank=True, null=True)
+#     invoice_date = models.DateField(blank=True, null=True)
+#     status = models.CharField(max_length=50, choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], default='open')
+    
+#     account = models.CharField(max_length=255)
+#     contact = models.CharField(max_length=255)
+#     billing_address = models.TextField(blank=True, null=True)
+#     shipping_address = models.TextField(blank=True, null=True)
+    
+#     currency = models.CharField(max_length=10, default='USD')
+#     line_items = models.TextField(blank=True, null=True)
+    
+#     total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     discount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     subtotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     shipping = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     adjustment = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     tax = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     grand_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+#     def __str__(self):
+#         return self.title
+
+
+# class ComposedEmail(models.Model):
+#     """Model to store composed email details."""
+#     template = models.ForeignKey(EmailTemplate, on_delete=models.SET_NULL, null=True, blank=True)
+#     related_to = models.CharField(max_length=255, blank=True, null=True)
+#     from_address = models.EmailField()
+#     to_address = models.EmailField()
+#     cc_address = models.TextField(blank=True, null=True)  # Can store multiple emails separated by commas
+#     bcc_address = models.TextField(blank=True, null=True)  # Can store multiple emails separated by commas
+#     subject = models.CharField(max_length=255)
+#     body = models.TextField()
+#     send_plain_text = models.BooleanField(default=False)
+#     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"

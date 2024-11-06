@@ -25,14 +25,12 @@
   <body>
 
     <script src="charts.js"></script>
-    <!-- navbar to the right side -->
 
-    
-   
     <nav class="navbar  navbar-expand-lg">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container">  
         <!-- <a class="navbar-brand" href="/">Logo</a> -->
-        <a  href="{% url 'Dashboards' user_id=request.user.id %}">
+      
+        <a  href="{% url 'Dashboards' %}">
        <img class="navbar-brand" src="https://i.ibb.co/7C9zk3M/Logo.png" alt="Brand Image" style="height: 65px;">
         </a>
       </div>       
@@ -52,8 +50,6 @@
 
                <a class="nav-link  spacing" href=" " role="button" aria-expanded="false"  >
                 <img src="https://i.ibb.co/jvPNH2f/devicelogo.png" alt="Device Logo"  >
-  
-
                 Device
               </a>
                 <ul class="dropdown-menu">
@@ -65,6 +61,7 @@
                 </ul>
             </li>
 
+
             <li class="nav-item ">
               <a class="nav-link spacing" href="{% url 'reports' %}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
                 <img src="https://i.ibb.co/2yVYr9s/reportslogo.png" alt="Reports Logo" style="height: 42px ; margin-right: 5px;">
@@ -72,42 +69,35 @@
               </a>
             </li>
 
+
             <li class="nav-item ">
               <a class="nav-link spacing" href="{%url 'AdminAnalysis'%}" role="button" aria-expanded="false" style="display: flex; align-items: center;">
-                
                 <img src="https://i.ibb.co/87ymdrx/Analyticslogo.png" alt="Analytics Logo" style=" margin-right: 5px;">
-
                 Analytics
               </a>
-            
             </li>
+
 
             <li class="nav-item ">
               <a class="nav-link spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
-
                 <img src="https://i.ibb.co/j33vnyT/realtimelogo.png" alt="realtimelogo Logo" style=" margin-left: -6px  ; margin-right: 5px;  max-width: 35px; ">
                 <span style="white-space: nowrap;">Real Time</span>
-
-               <!-- Real time -->
-              </a>
-          
+              </a>          
             </li>
+
 
             <li class="nav-item ">
               <a class="nav-link spacing" href="{% url 'attendance' %}" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
-
                 <img src="https://i.ibb.co/8M1y11k/attendancelogo.png" alt="Attendance Logo" style=" margin-right: 5px;">
-
                 Attendance
               </a>
             </li>
 
+
             <li class="nav-item ">
               <a class="nav-link  spacing" href="#" role="button"  aria-expanded="false" style="display: flex; align-items: center;">
-
                 <img src="https://i.ibb.co/8cMsRZk/manualtimelogo.png" alt="manualtimelogo"  style="margin-left: -6px ; margin-right: 5px;  max-width: 35px;">
                 <span style="white-space: nowrap;">Manual Time</span>
-                <!-- Manual Time -->
               </a>
              
             
@@ -160,20 +150,18 @@
     
   
   <script>
-    // Convert Django template variables to integers and calculate total seconds.
+
     let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 + 
                        parseInt("{{ timer.min }}", 10) * 60 + 
                        parseInt("{{ timer.sec }}", 10);
 
     const countDownEle = document.getElementById("count_down");
 
-    // Function to convert seconds to HH:MM:SS format.
     function convertSecondsToHms(seconds) {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         const sec = Math.floor(seconds % 60);
 
-        // Add leading zeros for hours, minutes, and seconds.
         const formattedHours = hours.toString().padStart(2, "0");
         const formattedMinutes = minutes.toString().padStart(2, "0");
         const formattedSeconds = sec.toString().padStart(2, "0");
@@ -181,35 +169,26 @@
         return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
-    // Function to update the countdown display.
     function updateCountDown() {
         if (totalSeconds <= 0) {
             countDownEle.innerHTML = "00:00:00";
-            clearInterval(timerInterval); // Stop the interval when the countdown reaches zero.
+            clearInterval(timerInterval); 
             return;
         }
         
         let formattedTimer = convertSecondsToHms(totalSeconds);
         countDownEle.innerHTML = formattedTimer;
-        totalSeconds++; // Decrement the seconds.
+        totalSeconds++; 
     }
 
-    // Debugging: Print initial value of totalSeconds to console
     console.log(`Initial totalSeconds: ${totalSeconds}`);
 
-    // Update the countdown every second.
     const timerInterval = setInterval(updateCountDown, 1000);
 
-    // Debugging: Check if the setInterval is working
     console.log(`Timer started with interval: ${timerInterval}`);
 </script>
 
-
-
-
-
     {% block javascript %}{% endblock %}
-
     <script>
       function viewEmployeeScreen(employeeId) {
           const ws = new WebSocket(`ws://${window.location.host}/ws/screen_share/${employeeId}/`);
@@ -251,6 +230,7 @@
   <!-- Video element to display the employee's screen -->
   <video id="employee-video" autoplay playsinline controls></video>
 <!-- Include necessary external scripts -->
+
 <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 <script src="{% static 'js/datatables/datatables.js' %}"></script>
 <script src="{% static 'js/datatables/datatables.min.js' %}"></script>

@@ -33,19 +33,19 @@
                 <label for="priority">Priority:</label>
                 <select id="priority" name="priority">
                     <option value="">-- Select Priority --</option>
-                    <option value="user1">Low</option>
-                    <option value="user2">Medium</option>
-                    <option value="user3">High</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="status">Status:</label>
                 <select id="status" name="status">
                     <option value="">-- Select Status --</option>
-                    <option value="user1">Open</option>
-                    <option value="user2">In Progress</option>
-                    <option value="user3">Completed</option>
-                    <option value="user3">Cancelled</option>
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
                 </select>
             </div>
             <div class="form-group">
@@ -63,153 +63,87 @@
             </div>
             
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
         </div>
     </div>
-
-    
     
     <table>
         <thead>
             <tr>
-                <th>Subject</th>
-                <th>Start Date</th>
-                <th>Due Date</th>
+                <th>Contract Title</th>
                 <th>Status</th>
-                <th>Contacts</th>
+                <th>Contract Manager</th>
+                <th>Account</th>
+                <th>Contract Value</th>
+                <th>Start Date</th>
+                <th>End Date</th>
             </tr>
         </thead>
         <tbody>
         {% for data in data_list %}
             <tr>
-                <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
-                
-                {% if data.customer_first_name %}
-                    <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
-                    <td>{{ data.customer_email }}</td>
-                    <td>{{data.customer_mobile_number}}</td>
-                    <td>{{data.city}}</td>
-                    <td>{{data.state}}</td>
-                {% elif data.first_name %}
-                    <td>{{ data.first_name }} {{ data.last_name }}</td>
-                    <td>{{ data.email_id }}</td>
-                    <td>-</td>
-                    <td>-</td>
-                {% elif data.opportunity_name %}
-                    <td>{{ data.opportunity_name }}</td>
-                    <td>-</td>
-                    <td>{{ data.probability }}</td>
-                    <td>{{ data.assigned_to }}</td>
-                {% elif data.title %}
-                    <td>{{ data.title }}</td>
-                    <td>-</td>
-                    <td>{{ data.valid_until }}</td>
-                    <td>{{ data.approval_status }}</td>
-                {% endif %}
+                <td><a href="{% url 'detaildata' data %}">{{ data.contract_title }}</a></td>
+                <td>{{ data.status }}</td>
+                <td>{{ data.contract_manager }}</td>
+                <td>{{ data.account }}</td>
+                <td>{{ data.contract_value }}</td>
+                <td>{{ data.start_date }}</td>
+                <td>{{ data.end_date }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
     
-    </section>
+</section>
 
+<script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
+    }
 
-    <script>
-        function toggleFilter() {
-            var filterForm = document.getElementById("filterForm");
-            filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
-        }
-    
-        function clearForm() {
-            document.getElementById("subject").value = "";
-            document.getElementById("contact").value = "";
-            document.getElementById("priority").value = "";
-            document.getElementById("status").value = "";
-            document.getElementById("contacts").value = "";
-            document.getElementById("assignedTo").value = "";
-        }
-    
-        function performSearch() {
-            // Get filter values
-            var subject = document.getElementById("subject").value.toLowerCase();
-            var contact = document.getElementById("contact").value.toLowerCase();
-            var priority = document.getElementById("priority").value.toLowerCase();
-            var status = document.getElementById("status").value.toLowerCase();
-            var contacts = document.getElementById("contacts").value.toLowerCase();
-            var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
-    
-            // Log values for debugging
-            console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
-    
-            // Get all rows in the table
-            var rows = document.querySelectorAll("table tbody tr");
-    
-            rows.forEach(function(row) {
-                var rowSubject = row.cells[0].innerText.toLowerCase();
-                var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
-                var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
-                var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
-                var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
-                var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
-    
-                // Check if the row matches the filters
-                var match = (!subject || rowSubject.includes(subject)) &&
-                            (!contact || rowContact.includes(contact)) &&
-                            (!priority || rowPriority.includes(priority)) &&
-                            (!status || rowStatus.includes(status)) &&
-                            (!contacts || rowContacts.includes(contacts)) &&
-                            (!assignedTo || rowAssignedTo.includes(assignedTo));
-    
-                // Log matching status for each row
-                console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
-    
-                // Show or hide the row based on match
-                row.style.display = match ? "" : "none";
-            });
-        }
-    </script>
-    
+    function clearForm() {
+        document.getElementById("subject").value = "";
+        document.getElementById("contact").value = "";
+        document.getElementById("priority").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("contacts").value = "";
+        document.getElementById("assignedTo").value = "";
+    }
 
-    <!-- <script>
-        function toggleFilter() {
-          var filterForm = document.getElementById("filterForm");
-          if (filterForm.style.display === "block") {
-              filterForm.style.display = "none";
-          } else {
-              filterForm.style.display = "block";
-          }
-      }
-      
-      function clearForm() {
-          document.getElementById("subject").value = "";
-          document.getElementById("contactName").value = "";
-          document.getElementById("status").value = "";
-          document.getElementById("relatedTo").value = "";
-          document.getElementById("assignedTo").value = "";
-      }
+    function performSearch() {
+        
+        var subject = document.getElementById("subject").value.toLowerCase();
+        var contact = document.getElementById("contact").value.toLowerCase();
+        var priority = document.getElementById("priority").value.toLowerCase();
+        var status = document.getElementById("status").value.toLowerCase();
+        var contacts = document.getElementById("contacts").value.toLowerCase();
+        var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
 
-      function performSearch() {
-    // Collect form data
-    var subject = document.getElementById("subject").value;
-    var contactName = document.getElementById("contactName").value;
-    var status = document.getElementById("status").value;
-    var relatedTo = document.getElementById("relatedTo").value;
-    var assignedTo = document.getElementById("assignedTo").value;
+        var rows = document.querySelectorAll("table tbody tr");
 
-    // Simulate search (this is where you'd add real search functionality, e.g., an API call)
-    var results = "Search results for: \n" +
-                  "Subject: " + subject + "\n" +
-                  "Contact Name: " + contactName + "\n" +
-                  "Status: " + status + "\n" +
-                  "Related To: " + relatedTo + "\n" +
-                  "Assigned To: " + assignedTo;
+        rows.forEach(function(row) {
+            var rowSubject = row.cells[0].innerText.toLowerCase();
+            var rowStatus = row.cells[1].innerText.toLowerCase();
+            var rowManager = row.cells[2].innerText.toLowerCase();
+            var rowAccount = row.cells[3].innerText.toLowerCase();
+            var rowValue = row.cells[4].innerText.toLowerCase();
+            var rowStartDate = row.cells[5].innerText.toLowerCase();
+            var rowEndDate = row.cells[6].innerText.toLowerCase();
 
-    // Display search results (you can modify this to display real search results)
-    document.getElementById("searchResults").innerText = results;
-}
-      </script> -->
+            var match = (!subject || rowSubject.includes(subject)) &&
+                        (!contact || rowManager.includes(contact)) &&
+                        (!priority || rowStatus.includes(priority)) &&
+                        (!status || rowStatus.includes(status)) &&
+                        (!contacts || rowAccount.includes(contacts)) &&
+                        (!assignedTo || rowManager.includes(assignedTo));
+
+            row.style.display = match ? "" : "none";
+        });
+    }
+</script>
 {% endblock %}
 
 {% block javascript %}{% endblock %}
