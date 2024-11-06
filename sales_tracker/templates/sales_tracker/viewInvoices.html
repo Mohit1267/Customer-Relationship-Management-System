@@ -10,26 +10,92 @@
 
 <section class="main_container">
 
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+
+
     <div class="filter-container">
-        <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
         <div id="filterForm" class="filter-form">
-          
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title">
+            </div>
+            
+            <div class="form-group">
+                <label for="contact">Contact:</label>
+                <input type="text" id="contact" name="contact">
+            </div>
+    
+            <div class="form-group">
+                <label for="account">Account:</label>
+                <input type="text" id="account" name="account">
+            </div>
+            
+            <div class="form-group">
+                <label for="invoiceNumber">Invoice Number:</label>
+                <input type="text" id="invoiceNumber" name="invoiceNumber">
+            </div>
+            
+            <div class="form-group">
+                <label for="grandTotal">Grand Total:</label>
+                <input type="text" id="grandTotal" name="grandTotal">
+            </div>
+    
+            <div class="form-group">
+                <label for="dueDate">Due Date:</label>
+                <input type="date" id="dueDate" name="dueDate">
+            </div>
+    
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <input type="text" id="status" name="status">
+            </div>
+    
+            <div class="form-group">
+                <label for="assignedTo">Assigned to:</label>
+                <input type="text" id="assignedTo" name="assignedTo">
+            </div>
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
         </div>
+    
+            
     </div>
 
     <table>
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Contact</th>
+                <th>Account</th>
+                <th>Invoice Number</th>
                 <th>Customer Name</th>
                 <th>Assigned To</th>
                 <th>Due Date</th>
-                <th>Invoice Number</th>
+                
                 <th>Quotation Number</th>
                 <th>Invoice Date</th>
                 <th>Status</th>
-                <th>Account</th>
-                <th>Contact</th>
+                
+                
                 <th>Billing Address</th>
                 <th>Shipping Address</th>
                 <th>Currency</th>
