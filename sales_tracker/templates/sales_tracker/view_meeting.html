@@ -74,7 +74,7 @@
                     <td>
                         <form action="{% url 'send_meeting_email' meeting.id %}" method="post">
                             {% csrf_token %}
-                            <button type="submit">Send Email</button>
+                            <button type="submit" {% if meeting.end_date < now %}disabled{% endif %}>Send Email</button>
                         </form>
                     </td>
                    

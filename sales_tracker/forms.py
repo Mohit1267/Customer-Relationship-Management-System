@@ -321,7 +321,6 @@ class agentmeeting(forms.ModelForm):
             'notification',
             'notes',
             'contact',  
-            'email'
         ]
 
 

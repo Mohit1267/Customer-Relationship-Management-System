@@ -1,8 +1,12 @@
 from django.db import models
 from django.conf import settings
+import datetime
+
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from users.models import RegisterUser, Profile
+
 
 
 
@@ -138,7 +142,7 @@ class QuotesData(models.Model):
 
     lead_source = models.CharField(max_length= 50)
     account = models.CharField(max_length= 50)
-    contact = models.CharField(max_length= 50)
+    contact = models.CharField(max_length= 50,null = True)
     billing_address = models.TextField()
     shipping_address = models.TextField()
 
@@ -192,9 +196,9 @@ class Account(models.Model):
     campaign = models.CharField(max_length=100, blank=True, null=True)
     industry = models.CharField(max_length=100, blank=True, null=True)
     employees = models.IntegerField(blank=True, null=True)
+    # Timestamps
+    created_at = models.DateTimeField(default=datetime.datetime.now)  # Temporary for migration
 
-
-    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -242,6 +246,7 @@ class Schedule_Meeting(models.Model):
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
     notes = models.CharField(max_length=255, null = True)
+    contact= models.EmailField(null = True)
     temp = models.CharField(max_length=233, null = True,  blank = True)
 
 
@@ -259,7 +264,7 @@ class Schedule_Calling(models.Model):
     related_to = models.CharField(max_length=255)
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
-    contact= models.IntegerField()
+    contact= models.IntegerField(null = True)
     notes = models.CharField(max_length=255, null = True)
     reason = models.CharField(max_length=255, null = True)
 
@@ -314,7 +319,6 @@ class Document(models.Model):
     
     def __str__(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
-    
 
 class Task(models.Model):
     TASK_PRIORITY_CHOICES = [
@@ -331,17 +335,15 @@ class Task(models.Model):
     ]
 
     subject = models.CharField(max_length=100)
-    start_date = models.DateField()
-    due_date = models.DateField()
-    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
-    description = models.TextField()
+    start_date = models.DateField(null = True)
+    due_date = models.DateField(null = True)
+    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES,null = True)
+    description = models.TextField(null= True)
     status = models.CharField(max_length=12, choices=TASK_STATUS_CHOICES, default='open')
     related_to = models.CharField(max_length=100, blank=True, null=True)  
     contacts = models.ManyToManyField('ContactData', related_name='tasks')
-
-    def __str__(self):
+    def _str_(self):
         return self.subject
-
 
 class DailySalesReport(models.Model):
     name = models.CharField(max_length=100)

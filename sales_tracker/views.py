@@ -55,7 +55,10 @@ def get_timer_value(request):
 
 
 
+# def Dashboards(request,user_id):
 def Dashboards(request):
+    # user = RegisterUser.objects.get(id=user_id)
+    # context = {"user": user}
     if (request.user.profile.branch == 'admin'):
         context = {}
         attendances = AttendanceRecord.objects.all()
@@ -1874,7 +1877,7 @@ def temp(request):
 def send_meeting_email(request, meeting_id):
     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
     subject = "Meeting Reminder"
-    message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n\nBest regards,\nAapai Technology."
+    message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n{meeting.notification}\n\nBest regards,\nAARNAV Technologies"
     recipient_list = [meeting.contact]
 
     try:
@@ -1883,11 +1886,31 @@ def send_meeting_email(request, meeting_id):
     except Exception as e:
         return HttpResponse(f"Failed to send email: {e}")
 
+@login_required
+def employee_screen_share(request):
+    # Ensure only data miners or calling agents can access this view
+    if request.user.profile.branch in ['data_miner', 'calling_agent']:
+        return render(request, 'sales_tracker/employee_screen_share.html')
+    else:
+        return render(request, 'sales_tracker/unauthorized.html')
+
+# Admin view to watch the employee's screen
+# views.py
+# views.py
+@login_required
+def admin_screen_view(request):
+    if request.user.profile.branch == 'admin':
+        # List employees to be viewed
+        employees = RegisterUser.objects.filter(profile__branch__in=['miner', 'agent'])
+        print(employees,"this is employees")
+        context = {'employees': employees}
+        return render(request, 'sales_tracker/admin_screen_view.html', context)
+    else:
+        return render(request, 'sales_tracker/unauthorized.html')
+
 
 def miningimport(request):
     return render(request, "sales_tracker/miningimport.html")
-
-
 
 def viewNotes(request):
       return render(request, "sales_tracker/viewNotes.html")
