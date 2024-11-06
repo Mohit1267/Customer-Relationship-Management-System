@@ -1,0 +1,149 @@
+{% extends "agentbase.html" %}
+
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
+{% endblock %}
+
+{% block title %}Cases{% endblock %}
+
+{% block content %}
+
+<section class="main_container">
+
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+
+    <div class="filter-container">
+        <div id="filterForm" class="filter-form">
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject">
+            </div>
+            <div class="form-group">
+                <label for="accountName">Account Name:</label>
+                <input type="text" id="accountName" name="accountName">
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority">
+                    <option value="">-- Select Priority --</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="assignedTo">Assigned To:</label>
+                <select id="assignedTo" name="assignedTo">
+                    <option value="">-- Select User --</option>
+                    <option value="user1">User 1</option>
+                    <option value="user2">User 2</option>
+                    <option value="user3">User 3</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dateCreated">Date Created:</label>
+                <input type="date" id="dateCreated" name="dateCreated">
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Account Name</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in data_list %}
+            <tr>
+                <td>{{ data.subject }}</td>
+                <td>{{ data.account_name }}</td>
+                <td>{{ data.priority }}</td>
+                <td>{{ data.status }}</td>
+                <td>{{ data.assigned_to }}</td>
+                <td>{{ data.date_created }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+</section>
+
+<script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
+    }
+
+    function clearForm() {
+        document.getElementById("subject").value = "";
+        document.getElementById("accountName").value = "";
+        document.getElementById("priority").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("assignedTo").value = "";
+        document.getElementById("dateCreated").value = "";
+    }
+
+    function performSearch() {
+        // Get filter values
+        var subject = document.getElementById("subject").value.toLowerCase();
+        var accountName = document.getElementById("accountName").value.toLowerCase();
+        var priority = document.getElementById("priority").value.toLowerCase();
+        var status = document.getElementById("status").value.toLowerCase();
+        var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+        var dateCreated = document.getElementById("dateCreated").value;
+
+        // Get all rows in the table
+        var rows = document.querySelectorAll("table tbody tr");
+
+        rows.forEach(function(row) {
+            var rowSubject = row.cells[0].innerText.toLowerCase();
+            var rowAccountName = row.cells[1].innerText.toLowerCase();
+            var rowPriority = row.cells[2].innerText.toLowerCase();
+            var rowStatus = row.cells[3].innerText.toLowerCase();
+            var rowAssignedTo = row.cells[4].innerText.toLowerCase();
+            var rowDateCreated = row.cells[5].innerText;
+
+            // Check if the row matches the filters
+            var match = (!subject || rowSubject.includes(subject)) &&
+                        (!accountName || rowAccountName.includes(accountName)) &&
+                        (!priority || rowPriority.includes(priority)) &&
+                        (!status || rowStatus.includes(status)) &&
+                        (!assignedTo || rowAssignedTo.includes(assignedTo)) &&
+                        (!dateCreated || rowDateCreated === dateCreated);
+
+            // Show or hide the row based on match
+            row.style.display = match ? "" : "none";
+        });
+    }
+</script>
+{% endblock %}
+
+{% block javascript %}{% endblock %}

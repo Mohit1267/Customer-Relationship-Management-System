@@ -1,0 +1,47 @@
+{% extends "agentbase.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/targetImport.css' %}">
+{% endblock %}
+
+{% block title %}Target Import{% endblock %}
+
+{% block content %}
+<div class="import-container">
+    <h2>Step 1: Upload Import File</h2>
+    
+    <p>Select a file on your computer that contains the data you would like to import, or download the template to get a head start on creating the import file.</p>
+
+    <hr>
+
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <h4>Select File</h4>
+        <input type="file" id="importFile" name="template_file" required>
+
+        <p>This can only be alphanumeric characters plus - , " , '</p>
+
+        <hr>
+
+        <p class="question">What would you like to do with the imported data?</p>
+
+        <div style="margin-top: 10px;">
+            <div class="option">
+                <input type="radio" id="newRecords" name="action_choice" value="create_only" required>
+                <label for="newRecords">Create new records only</label>
+            </div>
+        
+            <div class="option">
+                <input type="radio" id="newAndUpdateRecords" name="action_choice" value="create_update" required>
+                <label for="newAndUpdateRecords">Create new records and update existing records</label>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+{% endblock %}

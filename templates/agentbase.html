@@ -32,7 +32,7 @@
   <script src="charts.js"></script>
   <!-- navbar to the right side -->
 
-   <nav class="navbar  navbar-expand-lg">
+  <nav class="navbar  navbar-expand-lg">
 
     <div class="navbar-brand-container">
       <a href="{% url 'Dashboards'%}">
@@ -44,363 +44,598 @@
       <b>Profile</b>
       </a> -->
     </div>
-  
-      <div class="navbar-container" >
- 
-        <div class="" id="navbarNavDropdown">
-          <ul class="nav-links flex-column">
 
-            <li class="nav-item dropdown">
+    <div class="navbar-container">
 
-              <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button"  aria-expanded="false">
-                <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard logo"  style=" margin-left: -10px; height: 40px;">
+      <div class="" id="navbarNavDropdown">
+        <ul class="nav-links flex-column">
 
-               Dashboard
-              </a>
-            </li>
+          <li class="nav-item dropdown">
 
-            
-            <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-         
-               <img src="https://i.ibb.co/jTpW1Hk/datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
+            <a class="nav-link  spacing" href="{% url 'Dashboards'%}" role="button" aria-expanded="false">
+              <img src="https://i.ibb.co/CPKGN54/Dashboardlogo.png" alt="Dashboard logo"
+                style=" margin-left: -10px; height: 40px;">
 
-               Mining
-             </a>
-             <ul class="dropdown-menu ">
-               <li><a class="dropdown-item" href="{% url 'agentmining' %}">View Mining</a></li>
-             </ul>
-           </li>
-         
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-
-                <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
-
-                Leads
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'agentlead' %}">Create Leads</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'leadImport'%}">Import</a></li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-
-                <img src="https://i.ibb.co/8cQkyWh/contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
-
-                Contacts
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'agentcontact' %}">Create Contacts</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'viewcontact' %}">View Contacts</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'contactImport'%}">Import</a></li>
-              </ul>
-            </li>
+              Dashboard
+            </a>
+          </li>
 
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
+          <li class="nav-item dropdown dashboard-icon">
+            <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
 
-                <img src="https://i.ibb.co/c3sNstd/quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
+              <img src="https://i.ibb.co/jTpW1Hk/datamininglogo.png" alt="Mining Logo" style=" margin-right: 5px; ">
 
-                Quotes
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'agentquote' %}">Create Quote</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'quotes_data' %}">View Quote</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'quoteimport'%}">Import</a></li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-
-                <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
-
-                Calendar
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'agentmeeting' %}">Schedule Meeting</a></li>
-                  <hr class="dropdown-divider">
-
-                </li>
-                <li><a class="dropdown-item" href="{% url 'agentcalling' %}">Schedule call</a></li>
-
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
-
-
-                <img src="https://i.ibb.co/xF1RTTQ/opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
-
-                Opportunity
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'agentopportunity' %}">Create Opportunity</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'opportunityimport'%}">Import</a></li>
-              </ul>
-            </li>
-            
-             
-            <li class="nav-item dropdown dashboard-icon">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-         
-               <img src="https://i.ibb.co/0Cj2QwN/accountlogo.png"  alt="Account Logo" style=" margin-right: 5px; height: 35px; ">
-
-               Accounts
-             </a>
-             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'agentaccount' %}">Create Account</a>
-              </li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="{% url 'viewaccount' %}">View Account</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="{%url 'accountimport'%}">Import</a></li>
+              Mining
+            </a>
+            <ul class="dropdown-menu ">
+              <li><a class="dropdown-item" href="{% url 'agentmining' %}">View Mining</a></li>
             </ul>
-           </li>
-          
+          </li>
 
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
 
- 
-                <img src="https://i.ibb.co/r5n97Vx/DSR-icon.png" alt="DSRLogo" style="margin-right: 5px;">
-                DSR
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'agentDsr' %}">Create DSR</a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'dsrview' %}">View DSR</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{%url 'DSRimport'%}">Import</a></li>
-              </ul>
+              <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Lead Logo" style=" margin-right: 5px;">
+
+              Leads
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'agentlead' %}">Create Leads</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{%url 'lead_data'%}">View leads</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{%url 'leadImport'%}">Import</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+
+              <img src="https://i.ibb.co/8cQkyWh/contactlogo.png" alt="Contact Logo" style=" margin-right: 5px;">
+
+              Contacts
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'agentcontact' %}">Create Contacts</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'viewcontact' %}">View Contacts</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{%url 'contactImport'%}">Import</a></li>
+            </ul>
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+
+              <img src="https://i.ibb.co/c3sNstd/quotelogo.png" alt="Quote Logo" style=" margin-right: 5px;">
+
+              Quotes
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'agentquote' %}">Create Quote</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'quotes_data' %}">View Quote</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{%url 'quoteimport'%}">Import</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+
+              <img src="https://i.ibb.co/2jvm1vC/calendarlogo.png" alt="Calendar Logo" style="margin-right: 5px;">
+
+              Calendar
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'agentmeeting' %}">Schedule Meeting</a></li>
+              <hr class="dropdown-divider">
+
+          </li>
+          <li><a class="dropdown-item" href="{% url 'agentcalling' %}">Schedule call</a></li>
+
+        </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+
+
+            <img src="https://i.ibb.co/xF1RTTQ/opportunitylogo.png" alt="opportunity Logo" style="margin-right: 5px;">
+
+            Opportunity
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentopportunity' %}">Create Opportunity</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'opportunity_data' %}">View Opportunity</a></li>
+            <li>
+              <hr class="dropdown-divider">
             </li>
 
-            <li class="nav-item dropdown ">
-              <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
 
- 
-                <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
-                Task
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'createTask' %}">Create Task</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'viewTask' %}">View Task</a></li>
-              </ul>
+            
+
+            <li><a class="dropdown-item" href="{%url 'opportunityimport'%}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <img src="https://i.ibb.co/3Mwn1xZ/images-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+            Document
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createDocument' %}">Create Document</a></li>
+            <li>
+              <hr class="dropdown-divider">
             </li>
-        </div>
+            <li><a class="dropdown-item" href="{% url 'viewDocument' %}">View Document</a></li>
+          </ul>
+        </li>
+
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <img src="https://i.ibb.co/mNyXGjt/images-1-removebg-preview.png" alt="TaskLogo" style="margin-right: 5px;">
+            Notes
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createNotes' %}">Create Notes</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewNotes' %}">View Notes</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown dashboard-icon">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/0Cj2QwN/accountlogo.png" alt="Account Logo"
+              style=" margin-right: 5px; height: 35px; ">
+
+            Accounts
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentaccount' %}">Create Account</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewaccount' %}">View Account</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{%url 'accountimport'%}">Import</a></li>
+          </ul>
+        </li>
+
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/r5n97Vx/DSR-icon.png" alt="DSRLogo" style="margin-right: 5px;">
+            DSR
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentDsr' %}">Create DSR</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'dsrview' %}">View DSR</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{%url 'DSRimport'%}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/WgZXgPt/to-do-list-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+            Task
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createTask' %}">Create Task</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewTask' %}">View Task</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/7kTTn1Z/Whats-App-Image-2024-10-29-at-15-48-03-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+            Emails
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentemail' %}">Compose</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewemail' %}">View Email</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/vmpM1wy/Whats-App-Image-2024-10-29-at-15-49-28-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;" width="40px" height="60px">
+            Targets
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agenttarget' %}">Create Target</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewtarget' %}">View Target</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'targetimport' %}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+
+            <img src="https://i.ibb.co/mXJykLY/Screenshot-2024-11-04-113812-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;" width="40px" height="60px">
+            Invoices
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createInvoices' %}">Create Invoices</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewInvoices' %}">View Invoices</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewemail' %}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/71y0Kr8/Target-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+              Targets-List
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentTemplate' %}">Create Targets-List</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewtargetsList' %}">View Targets-List</a></li>
+          </ul>
+        </li>
+
+        
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/X3pr3vn/Project-Icon-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Projects
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentProjects' %}">Create Projects</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewprojectList' %}">View Project-List</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'projectimport' %}">Import</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'resourceCalendar' %}">Resource Calendar</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewprojectTask' %}">View Project-Task</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Projects-Templates
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agentTemplate' %}">Create Templates</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewTemplate' %}">View Templates</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'Importtemplate' %}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <!-- <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'resourceCalendar' %}">View Email Template</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewprojectTask' %}">View Diagnostics</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewprojectTask' %}">Create Person Form</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewprojectTask' %}">Import Campaigns</a></li>
+          </ul>
+        </li> -->
+
+
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Contract
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createContract' %}">Create Contract</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewContract' %}">View Contract</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'Importtemplate' %}">Import</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle spacing" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+
+            <img src="https://i.ibb.co/FJGxw4R/Project-Template-removebg-preview.png" alt="TaskLogo"
+              style="margin-right: 5px;">
+             Case
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'createCase' %}">Create Case</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'viewCase' %}">View Case</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'Importtemplate' %}">Import</a></li>
+          </ul>
+        </li>
+      </div>
+
+            
+
+
+        
+      </div>
+
 
   </nav>
 
 
   {% block content %}{% endblock %}
- 
 
-<!-- profile section-->
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const profileButton = document.querySelector('.profile1');
-  const offcanvas = document.getElementById('offcanvasExample');
 
-  
-  profileButton.addEventListener('click', function (e) {
-    e.stopPropagation();
-    offcanvas.classList.toggle('show');
-  });
+  <!-- profile section-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const profileButton = document.querySelector('.profile1');
+      const offcanvas = document.getElementById('offcanvasExample');
 
-  
-  document.addEventListener('click', function (e) {
-    if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
-      offcanvas.classList.remove('show');
+
+      profileButton.addEventListener('click', function (e) {
+        e.stopPropagation();
+        offcanvas.classList.toggle('show');
+      });
+
+
+      document.addEventListener('click', function (e) {
+        if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+          offcanvas.classList.remove('show');
+        }
+      });
+
+
+      document.querySelector('.btn-close').addEventListener('click', function () {
+        offcanvas.classList.remove('show');
+      });
+    });
+
+  </script>
+
+  <script>
+
+    function toggleNavbar() {
+      const navbar = document.querySelector('.nav-links');
+      navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
     }
-  });
+  </script>
 
-  
-  document.querySelector('.btn-close').addEventListener('click', function () {
-    offcanvas.classList.remove('show');
-  });
-});
+  <script>
+    function toggleNavbar() {
+      const navbarContainer = document.querySelector('.navbar-container');
+      const navbar = document.querySelector('.navbar');
+      const hamburger = document.querySelector('.hamburger');
 
-    </script>
 
-    <script>
-      
-      function toggleNavbar() {
-        const navbar = document.querySelector('.nav-links');
-        navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
+      navbar.classList.toggle('collapsed');
+
+
+
+
+      if (navbarContainer.style.display === 'block') {
+        navbarContainer.style.display = 'none';
+      } else {
+        navbarContainer.style.display = 'block';
       }
-    </script>
+    }
+  </script>
 
-     <script>
-      function toggleNavbar() {
-        const navbarContainer = document.querySelector('.navbar-container');
-        const navbar = document.querySelector('.navbar');
-        const hamburger = document.querySelector('.hamburger');
 
-        
-        navbar.classList.toggle('collapsed');
+  <script>
 
-       
-
-        
-        if (navbarContainer.style.display === 'block') {
-          navbarContainer.style.display = 'none';
-        } else {
-          navbarContainer.style.display = 'block';
+    var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+    var weeklyChart = new Chart(ctxWeekly, {
+      type: 'doughnut',
+      data: {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{
+          label: 'Weekly Data',
+          data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
+          backgroundColor: ['#4CAF50', '#e0e0e0'],
+          borderColor: ['#33CC33', '#e0e0e0'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: {
+            labels: {
+              color: '#FFFFFF',
+              font: {
+                size: 14,
+              }
+            }
+          }
         }
       }
-    </script>
- 
+    });
 
-    <script>
 
-      var ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
-      var weeklyChart = new Chart(ctxWeekly, {
-        type: 'doughnut',
-        data: {
-          labels: ['Completed', 'Remaining'],
-          datasets: [{
-            label: 'Weekly Data',
-            data: [parseInt('{{ mining_count }}', 10), 40 - parseInt('{{ mining_count }}', 10)],
-            backgroundColor: ['#4CAF50', '#e0e0e0'],
-            borderColor: ['#33CC33', '#e0e0e0'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          cutout: '70%',
-          plugins: {
-            legend: {
-              labels: {
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                }
+    var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+    var monthlyChart = new Chart(ctxMonthly, {
+      type: 'doughnut',
+      data: {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{
+          label: 'Monthly Data',
+          data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
+          backgroundColor: ['#4CAF50', '#e0e0e0'],
+          borderColor: ['#4CAF50', '#e0e0e0'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: {
+            labels: {
+              color: '#FFFFFF',
+              font: {
+                size: 14,
               }
             }
           }
         }
-      });
+      }
+    });
 
-     
-      var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
-      var monthlyChart = new Chart(ctxMonthly, {
-        type: 'doughnut',
-        data: {
-          labels: ['Completed', 'Remaining'],
-          datasets: [{
-            label: 'Monthly Data',
-            data: [parseInt('{{ mining_count }}', 10), 100 - parseInt('{{ mining_count }}', 10)],
-            backgroundColor: ['#4CAF50', '#e0e0e0'],
-            borderColor: ['#4CAF50', '#e0e0e0'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          cutout: '70%',
-          plugins: {
-            legend: {
-              labels: {
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                }
+    var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
+    var quarterlyChart = new Chart(ctxQuarterly, {
+      type: 'doughnut',
+      data: {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{
+          label: 'Quarterly Data',
+          data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
+          backgroundColor: ['#4CAF50', '#e0e0e0'],
+          borderColor: ['#4CAF50', '#e0e0e0'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: {
+            labels: {
+              color: '#FFFFFF',
+              font: {
+                size: 14,
               }
             }
           }
         }
-      });
+      }
+    });
 
-      var ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
-      var quarterlyChart = new Chart(ctxQuarterly, {
-        type: 'doughnut',
-        data: {
-          labels: ['Completed', 'Remaining'],
-          datasets: [{
-            label: 'Quarterly Data',
-            data: [parseInt('{{ mining_count }}', 10), 300 - parseInt('{{ mining_count }}', 10)],
-            backgroundColor: ['#4CAF50', '#e0e0e0'],
-            borderColor: ['#4CAF50', '#e0e0e0'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          cutout: '70%',
-          plugins: {
-            legend: {
-              labels: {
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                }
-              }
-            }
-          }
-        }
-      });
+  </script>
 
-    </script>
+  </script>
 
-    </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="% static  IBscript.js"></script>
+  {% block javascript %}{% endblock %}
 
-    <script src="% static  IBscript.js"></script>
-    {% block javascript %}{% endblock %}
-
-    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-    <script src="{% static 'js/datatables/datatables.js' %}"></script>
-    <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+  <script src="{% static 'js/datatables/datatables.js' %}"></script>
+  <script src="{% static 'js/datatables/datatables.min.js' %}"></script>
 
 </body>
+
 </html>

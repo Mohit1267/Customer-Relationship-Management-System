@@ -11,265 +11,142 @@
 
 <section class="main_container">
 
-    <!-- <div class="filter-container">
-        <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
-        <div id="filterForm" class="filter-form">
-            <div class="form-group">
-                <label for="time_frame">Select Time Frame:</label>
-                <select name="time_frame" id="time_frame">
-                    <option value="all" disabled selected hidden>Select Time Frame</option> 
-                    <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
-                    <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
-                    <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
-                    <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
-                    <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
-                </select>
-            </div>
-    
-            <div class="form-group">
-                <label for="state-filter">State:</label>
-                <select name="state" id="state-filter">
-                    <option value="all" disabled selected hidden>Select State</option>
-                    <option value="AP">Andhra Pradesh</option>
-                    <option value="AR">Arunachal Pradesh</option>
-                    <option value="AS">Assam</option>
-                    <option value="BR">Bihar</option>
-                    <option value="CG">Chhattisgarh</option>
-                    <option value="GA">Goa</option>
-                    <option value="GJ">Gujarat</option>
-                    <option value="HR">Haryana</option>
-                    <option value="HP">Himachal Pradesh</option>
-                    <option value="JH">Jharkhand</option>
-                    <option value="KA">Karnataka</option>
-                    <option value="KL">Kerala</option>
-                    <option value="MP">Madhya Pradesh</option>
-                    <option value="MH">Maharashtra</option>
-                    <option value="MN">Manipur</option>
-                    <option value="ML">Meghalaya</option>
-                    <option value="MZ">Mizoram</option>
-                    <option value="NL">Nagaland</option>
-                    <option value="OD">Odisha</option>
-                    <option value="PB">Punjab</option>
-                    <option value="SK">Sikkim</option>
-                    <option value="TN">Tamil Nadu</option>
-                    <option value="TG">Telangana</option>
-                    <option value="TR">Tripura</option>
-                    <option value="UP">Uttar Pradesh</option>
-                    <option value="UT">Uttarakhand</option>
-                    <option value="WB">West Bengal</option>
-                </select>
-            </div>
-    
-            <div class="form-group">
-                <label for="zone-filter">Zone:</label>
-                <select name="zone" id="zone-filter">
-                    <option value="all" disabled selected hidden>Select Zone</option>
-                    <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
-                    <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
-                    <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
-                    <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
-                </select>
-            </div>
-
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
-                <button class="btn btn-outline-success" type="submit" style="height: 35px;">Search</button>
-            </form>
-         </div>
-
-    </div> -->
-    
-
-
     <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
-
-            
         <form class="d-flex" style="flex-grow: 1;">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        
-        <button id="filter-btn" class="filter-button">Filter</button>
-
-    </div>
-    
-    <div id="filter-section" class="filter-section" style="display: none;">
-    
-        <form method="GET" action="{% url 'lead_data' %}">
-            <div class="inside-filter-container">
-                <label for="time_frame">Select Time Frame:</label>
-                <select name="time_frame" id="time_frame">
-                    <option value="all" disabled selected hidden>Select Time Frame</option>
-                    <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
-                    <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
-                    <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
-                    <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
-                    <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
-                </select>
-            </div>
-    
-            <div class="state-filter-container">
-                <label for="state-filter">State:</label>
-                <select name="state" id="state-filter">
-                    <option value="all" disabled selected hidden>Select State</option>
-                    <option value="AP">Andhra Pradesh</option>
-                    <option value="AR">Arunachal Pradesh</option>
-                    <option value="AS">Assam</option>
-                    <option value="BR">Bihar</option>
-                    <option value="CG">Chhattisgarh</option>
-                    <option value="GA">Goa</option>
-                    <option value="GJ">Gujarat</option>
-                    <option value="HR">Haryana</option>
-                    <option value="HP">Himachal Pradesh</option>
-                    <option value="JH">Jharkhand</option>
-                    <option value="KA">Karnataka</option>
-                    <option value="KL">Kerala</option>
-                    <option value="MP">Madhya Pradesh</option>
-                    <option value="MH">Maharashtra</option>
-                    <option value="MN">Manipur</option>
-                    <option value="ML">Meghalaya</option>
-                    <option value="MZ">Mizoram</option>
-                    <option value="NL">Nagaland</option>
-                    <option value="OD">Odisha</option>
-                    <option value="PB">Punjab</option>
-                    <option value="SK">Sikkim</option>
-                    <option value="TN">Tamil Nadu</option>
-                    <option value="TG">Telangana</option>
-                    <option value="TR">Tripura</option>
-                    <option value="UP">Uttar Pradesh</option>
-                    <option value="UT">Uttarakhand</option>
-                    <option value="WB">West Bengal</option>
-                </select>
-            </div>
-    
-            <div class="zone-filter-container">
-                <label for="zone-filter">Zone:</label>
-                <select name="zone" id="zone-filter">
-                    <option value="all" disabled selected hidden>Select Zone</option>
-                    <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
-                    <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
-                    <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
-                    <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
-                </select>
-            </div>
-    
-            <div class="buttons">
-                <button type="submit" class="button">Apply Filter</button>
-                <button type="button" class="button" onclick="clearFilters()">Clear</button>
-            </div>
-        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
     </div>
 
-
-    
+    <div class="filter-container">
+        <div id="filterForm" class="filter-form">
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject">
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact:</label>
+                <input type="text" id="contact" name="contact">
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority">
+                    <option value="">-- Select Priority --</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="contacts">Contacts:</label>
+                <input type="text" id="contacts" name="contacts">
+            </div>
+            <div class="form-group">
+                <label for="assignedTo">Assigned To:</label>
+                <select id="assignedTo" name="assignedTo">
+                    <option value="">-- Select User --</option>
+                    <option value="user1">User 1</option>
+                    <option value="user2">User 2</option>
+                    <option value="user3">User 3</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+    </div>
     
     <table>
         <thead>
             <tr>
-                <th>Subject</th>
-                <th>Start Date</th>
-                <th>Due Date</th>
+                <th>Contract Title</th>
                 <th>Status</th>
-                <th>Contacts</th>
+                <th>Contract Manager</th>
+                <th>Account</th>
+                <th>Contract Value</th>
+                <th>Start Date</th>
+                <th>End Date</th>
             </tr>
         </thead>
         <tbody>
         {% for data in data_list %}
             <tr>
-                <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
-                
-                {% if data.customer_first_name %}
-                    <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
-                    <td>{{ data.customer_email }}</td>
-                    <td>{{data.customer_mobile_number}}</td>
-                    <td>{{data.city}}</td>
-                    <td>{{data.state}}</td>
-                {% elif data.first_name %}
-                    <td>{{ data.first_name }} {{ data.last_name }}</td>
-                    <td>{{ data.email_id }}</td>
-                    <td>-</td>
-                    <td>-</td>
-                {% elif data.opportunity_name %}
-                    <td>{{ data.opportunity_name }}</td>
-                    <td>-</td>
-                    <td>{{ data.probability }}</td>
-                    <td>{{ data.assigned_to }}</td>
-                {% elif data.title %}
-                    <td>{{ data.title }}</td>
-                    <td>-</td>
-                    <td>{{ data.valid_until }}</td>
-                    <td>{{ data.approval_status }}</td>
-                {% endif %}
+                <td><a href="{% url 'detaildata' data %}">{{ data.contract_title }}</a></td>
+                <td>{{ data.status }}</td>
+                <td>{{ data.contract_manager }}</td>
+                <td>{{ data.account }}</td>
+                <td>{{ data.contract_value }}</td>
+                <td>{{ data.start_date }}</td>
+                <td>{{ data.end_date }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
     
-    </section>
+</section>
 
-
-    <script>
-        
-const filterBtn = document.getElementById('filter-btn');
-const filterSection = document.getElementById('filter-section');
-
-
-filterBtn.onclick = function() {
-    if (filterSection.style.display === 'none' || filterSection.style.display === '') {
-        filterSection.style.display = 'block';
-    } else {
-        filterSection.style.display = 'none';
+<script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
     }
-}
 
-// Clear filter function
-function clearFilters() {
-    document.getElementById('time_frame').selectedIndex = 0;
-    document.getElementById('state-filter').selectedIndex = 0;
-    document.getElementById('zone-filter').selectedIndex = 0;
-}
+    function clearForm() {
+        document.getElementById("subject").value = "";
+        document.getElementById("contact").value = "";
+        document.getElementById("priority").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("contacts").value = "";
+        document.getElementById("assignedTo").value = "";
+    }
 
+    function performSearch() {
+        // Get filter values
+        var subject = document.getElementById("subject").value.toLowerCase();
+        var contact = document.getElementById("contact").value.toLowerCase();
+        var priority = document.getElementById("priority").value.toLowerCase();
+        var status = document.getElementById("status").value.toLowerCase();
+        var contacts = document.getElementById("contacts").value.toLowerCase();
+        var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
 
-    </script>
+        // Get all rows in the table
+        var rows = document.querySelectorAll("table tbody tr");
 
-    <!-- <script>
-        function toggleFilter() {
-          var filterForm = document.getElementById("filterForm");
-          if (filterForm.style.display === "block") {
-              filterForm.style.display = "none";
-          } else {
-              filterForm.style.display = "block";
-          }
-      }
-      
-      function clearForm() {
-          document.getElementById("subject").value = "";
-          document.getElementById("contactName").value = "";
-          document.getElementById("status").value = "";
-          document.getElementById("relatedTo").value = "";
-          document.getElementById("assignedTo").value = "";
-      }
+        rows.forEach(function(row) {
+            var rowSubject = row.cells[0].innerText.toLowerCase();
+            var rowStatus = row.cells[1].innerText.toLowerCase();
+            var rowManager = row.cells[2].innerText.toLowerCase();
+            var rowAccount = row.cells[3].innerText.toLowerCase();
+            var rowValue = row.cells[4].innerText.toLowerCase();
+            var rowStartDate = row.cells[5].innerText.toLowerCase();
+            var rowEndDate = row.cells[6].innerText.toLowerCase();
 
-      function performSearch() {
-    // Collect form data
-    var subject = document.getElementById("subject").value;
-    var contactName = document.getElementById("contactName").value;
-    var status = document.getElementById("status").value;
-    var relatedTo = document.getElementById("relatedTo").value;
-    var assignedTo = document.getElementById("assignedTo").value;
+            // Check if the row matches the filters
+            var match = (!subject || rowSubject.includes(subject)) &&
+                        (!contact || rowManager.includes(contact)) &&
+                        (!priority || rowStatus.includes(priority)) &&
+                        (!status || rowStatus.includes(status)) &&
+                        (!contacts || rowAccount.includes(contacts)) &&
+                        (!assignedTo || rowManager.includes(assignedTo));
 
-    // Simulate search (this is where you'd add real search functionality, e.g., an API call)
-    var results = "Search results for: \n" +
-                  "Subject: " + subject + "\n" +
-                  "Contact Name: " + contactName + "\n" +
-                  "Status: " + status + "\n" +
-                  "Related To: " + relatedTo + "\n" +
-                  "Assigned To: " + assignedTo;
-
-    // Display search results (you can modify this to display real search results)
-    document.getElementById("searchResults").innerText = results;
-}
-      </script> -->
+            // Show or hide the row based on match
+            row.style.display = match ? "" : "none";
+        });
+    }
+</script>
 {% endblock %}
 
 {% block javascript %}{% endblock %}
