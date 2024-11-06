@@ -11,7 +11,7 @@
 .filter-search-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-left: 20px;
     margin-bottom: 40px;
     gap: 10px;
@@ -27,6 +27,15 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-right: 100px;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: flex-start; 
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .filter-button:hover {
@@ -34,18 +43,32 @@
 }
 
 .filter-container {
-    display: none;
+    display: none; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     margin-top: 10px;
     border: 1px solid rgb(97, 94, 94);
+    width: 80%; 
+    max-width: 500px; 
+    z-index: 1000; 
+    transition: opacity 0.3s ease; 
+    opacity: 0;
 }
 
-.filter-form {
+.filter-container.show {
+    display: block; 
+    opacity: 1; 
+}
+
+.filter-container .filter-form {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
@@ -74,13 +97,12 @@
 
 .filter-form textarea {
     resize: vertical;
-    height: 40px; 
+    height: 40px;
 }
 
 .form-actions {
-    grid-column: span 3; 
+    grid-column: span 3;
     display: flex;
-    /* justify-content: center; */
     gap: 10px;
     margin-top: 20px;
 }
