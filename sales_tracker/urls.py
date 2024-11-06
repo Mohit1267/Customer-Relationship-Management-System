@@ -121,6 +121,8 @@ urlpatterns = [
     path("viewContract", login_required((views.viewContract)), name="viewContract"),
     path("createCase", login_required((views.createCase)), name="createCase"),
     path("viewCase", login_required((views.viewCases)), name="viewCase"),
+    path("createManualTime", login_required((views.createManualTime)), name="createManualTime"),
+    path("viewManualTime", login_required((views.viewManualTime)), name="viewManualTime"),
 
 
 
