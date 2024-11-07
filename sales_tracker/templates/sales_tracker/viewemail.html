@@ -11,7 +11,6 @@
 
 {% block content %}
 <div class="main_container">
-    
     <div class="filter-search-container">
         <form class="d-flex" style="flex-grow: 1;">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
@@ -21,13 +20,11 @@
         <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
     </div>
 
-
-    <div class="filter-container">
-
+    <!-- Filter Container as a Popup Modal -->
+    <div id="filterModal" class="filter-container">
         <div class="filter-buttons" style="margin-bottom: 15px;">
             <button id="quick-filter-btn" class="filter-button" onclick="toggleQuickFilter()">Quick Filter</button>
-            <button id="advanced-filter-btn" class="filter-button" onclick="toggleAdvancedFilter()">Advanced
-                Filter</button>
+            <button id="advanced-filter-btn" class="filter-button" onclick="toggleAdvancedFilter()">Advanced Filter</button>
         </div>
 
         <div id="quickFilterForm" class="filter-form" style="display: none;">
@@ -46,114 +43,101 @@
             </div>
         </div>
 
-           <div id="advancedFilterForm" class="filter-form" style="display: none;">
-        <div class="form-group">
-            <label for="imapKeywords">IMAP Keywords:</label>
-            <input type="text" id="imapKeywords" name="imapKeywords">
+        <div id="advancedFilterForm" class="filter-form" style="display: none;">
+            <div class="form-group">
+                <label for="imapKeywords">IMAP Keywords:</label>
+                <input type="text" id="imapKeywords" name="imapKeywords">
+            </div>
+            <div class="form-group">
+                <label for="from">From:</label>
+                <input type="text" id="from" name="from">
+            </div>
+            <div class="form-group">
+                <label for="to">To:</label>
+                <input type="text" id="to" name="to">
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject">
+            </div>
+            <div class="form-group">
+                <label for="body">Body:</label>
+                <textarea id="body" name="body"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="assignedTo">Assigned To:</label>
+                <input type="text" id="assignedTo" name="assignedTo">
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category">
+            </div>
+            <div class="form-group">
+                <label for="relatedTo">Related To:</label>
+                <input type="text" id="relatedTo" name="relatedTo">
+            </div>
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+                <button type="button" onclick="saveFilter()">Save Filter</button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="from">From:</label>
-            <input type="text" id="from" name="from">
-        </div>
-        <div class="form-group">
-            <label for="to">To:</label>
-            <input type="text" id="to" name="to">
-        </div>
-        <div class="form-group">
-            <label for="subject">Subject:</label>
-            <input type="text" id="subject" name="subject">
-        </div>
-        <div class="form-group">
-            <label for="body">Body:</label>
-            <textarea id="body" name="body"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="assignedTo">Assigned To:</label>
-            <input type="text" id="assignedTo" name="assignedTo">
-        </div>
-        <div class="form-group">
-            <label for="category">Category:</label>
-            <input type="text" id="category" name="category">
-        </div>
-        <div class="form-group">
-            <label for="relatedTo">Related To:</label>
-            <input type="text" id="relatedTo" name="relatedTo">
-        </div>
-        <div class="inside-filter-container">
-            <label for="time_frame">Select Time Frame:</label>
-            <select name="time_frame" id="time_frame">
-                <option value="all" disabled selected hidden>Select Time Frame</option>
-                <option value="today">Today</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="quarterly">Quarterly</option>
-                <option value="yearly">Yearly</option>
-            </select>
-        </div>
-        <div class="form-actions">
-            <button type="submit">Apply Filter</button>
-            <button type="button" onclick="clearForm()">Clear</button>
-            <button type="button" onclick="saveFilter()">Save Filter</button>
-        </div>
-        </div>
-
     </div>
 </div>
 
-
-
 <script>
-    function toggleFilter() {
-        var filterContainer = document.querySelector(".filter-container");
-        if (filterContainer.style.display === "none" || !filterContainer.style.display) {
-            filterContainer.style.display = "block";
-        } else {
-            filterContainer.style.display = "none";
-        }
+    // Function to toggle the filter modal visibility with fade effect
+function toggleFilter() {
+    var filterModal = document.getElementById("filterModal");
+    if (filterModal.classList.contains('show')) {
+        // Hide filter modal with fade-out
+        filterModal.classList.remove('show');
+        filterModal.style.opacity = 0;
+    } else {
+        // Show filter modal with fade-in
+        filterModal.classList.add('show');
+        filterModal.style.opacity = 1;
     }
+}
 
+// Function to toggle between Quick and Advanced Filters
+function toggleQuickFilter() {
+    document.getElementById("quickFilterForm").style.display = "block";
+    document.getElementById("advancedFilterForm").style.display = "none";
+}
 
-    function clearForm() {
-        document.getElementById("subject").value = "";
-        document.getElementById("contactName").value = "";
-        document.getElementById("status").value = "";
-        document.getElementById("relatedTo").value = "";
-        document.getElementById("assignedTo").value = "";
+function toggleAdvancedFilter() {
+    document.getElementById("advancedFilterForm").style.display = "block";
+    document.getElementById("quickFilterForm").style.display = "none";
+}
+
+// Function to clear all input fields in the form
+function clearForm() {
+    document.querySelectorAll(".filter-form input, .filter-form textarea, .filter-form select").forEach(field => {
+        field.value = "";  // Clear the value of each field
+    });
+}
+
+// Optional: To close the modal when clicking outside of it (optional)
+window.addEventListener('click', function(event) {
+    var filterModal = document.getElementById("filterModal");
+    if (event.target === filterModal) {
+        filterModal.classList.remove('show');
+        filterModal.style.opacity = 0;
     }
+});
 
-    function performSearch() {
-   
-        var subject = document.getElementById("subject").value;
-        var contactName = document.getElementById("contactName").value;
-        var status = document.getElementById("status").value;
-        var relatedTo = document.getElementById("relatedTo").value;
-        var assignedTo = document.getElementById("assignedTo").value;
-
-        var results = "Search results for: \n" +
-            "Subject: " + subject + "\n" +
-            "Contact Name: " + contactName + "\n" +
-            "Status: " + status + "\n" +
-            "Related To: " + relatedTo + "\n" +
-            "Assigned To: " + assignedTo;
-
-        document.getElementById("searchResults").innerText = results;
-    }
 </script>
 
-<script>
-    function toggleQuickFilter() {
-        document.getElementById("quickFilterForm").style.display = "block";
-        document.getElementById("advancedFilterForm").style.display = "none";
-    }
-    
-    function toggleAdvancedFilter() {
-        document.getElementById("advancedFilterForm").style.display = "block";
-        document.getElementById("quickFilterForm").style.display = "none";
-    }
-    
-    function clearForm() {
-        
-        document.querySelectorAll(".filter-form input").forEach(field => field.value = "");
-    }
-    </script>
 {% endblock %}

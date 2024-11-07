@@ -79,6 +79,19 @@ textarea:focus {
     font-size: 1.2em;
 }
 
+.ql-toolbar.ql-snow {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    background-color:  #f8f9fa;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+    margin-right: 10px; 
+    display: flex;
+}
+
 
 @media (max-width: 768px) {
     .col-md-6 {

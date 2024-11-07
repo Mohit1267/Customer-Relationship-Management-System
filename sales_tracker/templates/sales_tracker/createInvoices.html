@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block css_link %}
-    <link rel="stylesheet" href="{% static 'sales_tracker/createInvoices.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/createInvoices.css' %}">
 {% endblock %}
 
 {% block title %}New Invoice{% endblock %}
@@ -28,110 +28,228 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 pt-5 pb-5 px-4">
-                <div class="form-group">
-                    {{ form.title|as_crispy_field }}
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-12 d-flex align-items-center">
+                        <button type="button" id="minimizeBtnOverview" class="btn btn-link text-dark">-</button>
+                        <h3 class="ml-2">OVERVIEW</h3>
+                    </div>
+
                 </div>
-                <div class="form-group">
-                    {{ form.customer_name|as_crispy_field }}
+
+                <div id="overviewContent">
+                    <div class="row">
+                        <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+
+                            <div class="form-group">
+                                {{ form.title|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.invoice_number|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.quote_number|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.invoice_date|as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 pt-5 px-4 mt-2"
+                            style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+
+                            <div class="form-group">
+                                {{ form.due_date|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.assigned_to|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.status|as_crispy_field }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    {{ form.assigned_to|as_crispy_field }}
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12 d-flex align-items-center">
+                        <button type="button" id="minimizeBtnInvoices" class="btn btn-link text-dark">-</button>
+                        <h3 class="ml-2">INVOICES</h3>
+                    </div>
                 </div>
-                <div class="form-group">
-                    {{ form.due_date|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.description|as_crispy_field }}
+
+                <div id="invoicesContent">
+                    <div class="row">
+
+                        <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+                            <div class="form-group mb-5">
+                                {{ form.account|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group mb-5">
+                                {{ form.contact|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group mb-5">
+                                <h5>Billing Address</h5>
+                                <div>{{ form.billing_street|as_crispy_field }}</div>
+                                <div>{{ form.billing_city|as_crispy_field }}</div>
+                                <div>{{ form.billing_state|as_crispy_field }}</div>
+                                <div>{{ form.billing_postal_code|as_crispy_field }}</div>
+                                <div>{{ form.billing_country|as_crispy_field }}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 pt-5 px-4 mt-2"
+                            style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+
+                            <div class="form-group mb-5">
+                                <h5>Shipping Address</h5>
+                                <div>{{ form.shipping_street|as_crispy_field }}</div>
+                                <div>{{ form.shipping_city|as_crispy_field }}</div>
+                                <div>{{ form.shipping_state|as_crispy_field }}</div>
+                                <div>{{ form.shipping_postal_code|as_crispy_field }}</div>
+                                <div>{{ form.shipping_country|as_crispy_field }}</div>
+                            </div>
+
+                            <div class="form-group mb-5">
+                                <div class="d-flex align-items-center">
+                                    <input type="checkbox" class="form-check-input small-checkbox" id="copy_address"
+                                        name="copy_address" {% if form.copy_address.value %}checked{% endif %}>
+                                    <label for="copy_address" class="ml-2">Copy Address</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 pt-5 pb-5 px-4">
-                <div class="form-group">
-                    {{ form.invoice_number|as_crispy_field }}
+        
+        <div class="card">
+            <div class="card-body">
+        
+                <div class="row">
+        
+                    <div class="col-12 d-flex align-items-center">
+                        <button type="button" id="minimizeBtnLineitems" class="btn btn-link text-dark">-</button>
+                        <h3 class="ml-2">Line Items</h3>
+                    </div>
+        
                 </div>
-                <div class="form-group">
-                    {{ form.quotation_number|as_crispy_field }}
-                </div>
-            </div>
-            <div class="col-md-6 pt-5 px-4">
-                <div class="form-group">
-                    {{ form.invoice_date|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.status|as_crispy_field }}
-                </div>
-            </div>
-        </div>
+        
+                <div id="lineitemsContent">
+                    <div class="row">
+                        <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+        
+                            <div class="form-group">
+                                {{ form.currency|as_crispy_field }}
+                            </div>
+        
+                            <div class="form-group">
+                                {{ form.line_items|as_crispy_field }}
+                            </div>
+        
+                            <div class="form-group">
+                                {{ form.total|as_crispy_field }}
+                            </div>
+        
+                            <div class="form-group">
+                                {{ form.discount|as_crispy_field }}
+                            </div>
+                 
+                            <div class="form-group">
+                                {{ form.subtotal|as_crispy_field }}
+                            </div>
+        
+                        </div>
+        
+                        <div class="col-md-6 pt-5 px-4 mt-2" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+        
+                            <div class="form-group">
+                                {{ form.shipping|as_crispy_field }}
+                            </div>
+        
+                            <div class="form-group">
+                                {{ form.shipping_tax|as_crispy_field }}
+                            </div>
+        
+                            <div class="form-group">
+                                {{ form.tax|as_crispy_field }}
+                            </div>
+        
+                            <div class="form-group">
+                                {{ form.grand_total|as_crispy_field }}
+                            </div>
+                        </div>
 
-        <div class="row">
-            <div class="col-md-6 pt-5 pb-5 px-4">
-                <div class="form-group">
-                    {{ form.account|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.contact|as_crispy_field }}
-                </div>
-            </div>
-        </div>
+                    </div>
 
-        <div class="row">
-            <div class="col-md-6 pt-5 pb-5 px-4">
-                <div class="form-group">
-                    {{ form.billing_address|as_crispy_field }}
                 </div>
-            </div>
-            <div class="col-md-6 pt-5 px-4">
-                <div class="form-group">
-                    {{ form.shipping_address|as_crispy_field }}
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 pt-5 pb-5 px-4">
-                <div class="form-group">
-                    {{ form.currency|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.line_items|as_crispy_field }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.total|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.discount|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.subtotal|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.shipping|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.adjustment|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.tax|as_crispy_field }}
-                </div>
-                <div class="form-group">
-                    {{ form.grand_total|as_crispy_field }}
-                </div>
-            </div>
-        </div>
-
-        <!-- Totals Section -->
-        <!-- <div class="row">
-            <div class="col-12 pt-5 pb-5 px-4">
                 
             </div>
-        </div> -->
+        </div>
     </form>
 </div>
+
+
+
+
 {% endblock %}
 
-{% block javascript %}{% endblock %}
+{% block javascript %}
+<script>
+    document.getElementById('minimizeBtnOverview').addEventListener('click', function () {
+        var content = document.getElementById('overviewContent');
+        var button = document.getElementById('minimizeBtnOverview');
+
+        if (content.style.display === "none") {
+            content.style.display = "block";
+            button.textContent = "-";
+        } else {
+            content.style.display = "none";
+            button.textContent = "+";
+        }
+    });
+
+    document.getElementById('minimizeBtnInvoices').addEventListener('click', function () {
+        var content = document.getElementById('invoicesContent');
+        var button = document.getElementById('minimizeBtnInvoices');
+
+        if (content.style.display === "none") {
+            content.style.display = "block";
+            button.textContent = "-";
+        } else {
+            content.style.display = "none";
+            button.textContent = "+";
+        }
+    });
+
+    document.getElementById('minimizeBtnLineitems').addEventListener('click', function () {
+        var content = document.getElementById('lineitemsContent');
+        var button = document.getElementById('minimizeBtnLineitems');
+
+        if (content.style.display === "none") {
+            content.style.display = "block";
+            button.textContent = "-";
+        } else {
+            content.style.display = "none";
+            button.textContent = "+";
+        }
+    });
+</script>
+{% endblock %}

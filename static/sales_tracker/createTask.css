@@ -231,6 +231,16 @@ select {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+input[type="date"] {
+    color: #2c2b2baf; 
+}
+
+input[type="date"]:focus,
+input[type="date"]:valid {
+    color: #000; 
+}
+
+
 @media (max-width: 1200px) {
     .moving_title {
         font-size: 30px;

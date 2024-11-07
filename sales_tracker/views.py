@@ -31,7 +31,7 @@ from .forms import (
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
-    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm
+    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm, ManualTimeForm
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
@@ -1665,36 +1665,46 @@ def Agentaccount(request):
             if not re.match("^[A-Za-z0-9 ]+$", assigned_to):
                 messages.error(request, "Assigned To can only contain alphabets and numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
-
-            account_type = form.cleaned_data['Type']
-            if not re.match("^[A-Za-z0-9 ]+$", account_type):
-                messages.error(request, "Type can only contain alphabets and numbers.")
+            
+            office_phone = form.cleaned_data['office_phone']
+            if not re.match("^\d+$", office_phone):
+                messages.error(request, "Office Phone can only contain numbers.")
+                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            
+            fax= form.cleaned_data['fax']
+            if not re.match("^\d+$", fax):
+                messages.error(request, "Fax can only contain numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            member_of = form.cleaned_data['Member_Of']
-            if not re.match("^[A-Za-z0-9 ]+$", member_of):
-                messages.error(request, "Member Of can only contain alphabets and numbers.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # account_type = form.cleaned_data['Type']
+            # if not re.match("^[A-Za-z0-9 ]+$", account_type):
+            #     messages.error(request, "Type can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            campaign = form.cleaned_data['Campaign']
-            if not re.match("^[A-Za-z0-9 ]+$", campaign):
-                messages.error(request, "Campaign can only contain alphabets and numbers.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # member_of = form.cleaned_data['Member_Of']
+            # if not re.match("^[A-Za-z0-9 ]+$", member_of):
+            #     messages.error(request, "Member Of can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            industry = form.cleaned_data['Industry']
-            if not re.match("^[A-Za-z0-9 ]+$", industry):
-                messages.error(request, "Industry can only contain alphabets and numbers.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # campaign = form.cleaned_data['Campaign']
+            # if not re.match("^[A-Za-z0-9 ]+$", campaign):
+            #     messages.error(request, "Campaign can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            employees = form.cleaned_data['Employees']
-            if not isinstance(employees, int) or employees < 0:  
-                messages.error(request, "Employees must be a non-negative integer.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # industry = form.cleaned_data['Industry']
+            # if not re.match("^[A-Za-z0-9 ]+$", industry):
+            #     messages.error(request, "Industry can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            annual_revenue = form.cleaned_data['Annual_Revenue']
-            if annual_revenue is None or annual_revenue <= 0:
-                messages.error(request, "Annual Revenue must be a positive number.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # employees = form.cleaned_data['Employees']
+            # if not isinstance(employees, int) or employees < 0:  
+            #     messages.error(request, "Employees must be a non-negative integer.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # annual_revenue = form.cleaned_data['Annual_Revenue']
+            # if annual_revenue is None or annual_revenue <= 0:
+            #     messages.error(request, "Annual Revenue must be a positive number.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
             account = Account(
                 Name=name,
@@ -1712,12 +1722,8 @@ def Agentaccount(request):
                 Shipping_City=shipping_city,
                 Shipping_State=shipping_state,
                 Shipping_Country=shipping_country,
-                Type=account_type,
-                Annual_Revenue=annual_revenue,
-                Member_Of=member_of,
-                Campaign=campaign,
-                Industry=industry,
-                Employees=employees,
+                office_phone=office_phone,
+                fax=fax
             )
             account.save()  
 
@@ -1854,18 +1860,27 @@ def DSRimport(request):
     return render(request, "sales_tracker/DSRimport.html")
 
 
+from django.shortcuts import render, redirect
+from .models import ContactData  # Import your Contact model
+from .forms import TaskForm  # Import your Task form
+
 def createTask(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save()
-      
             return redirect('create_task') 
     else:
         form = TaskForm()
 
-    return render(request, "sales_tracker/createTask.html"
-                  , {'form': form})
+    # Fetch all contacts to display in the popup
+    contacts = ContactData.objects.all()
+
+    return render(request, "sales_tracker/createTask.html", {
+        'form': form,
+        'contacts': contacts 
+    })
+
 
 
 
@@ -2157,5 +2172,19 @@ def createCase(request):
     
     return render(request, 'sales_tracker/createCase.html', {'form': form})
 
+
+
 def viewCases(request):
     return render(request, "sales_tracker/viewCase.html")
+
+def createManualTime(request):
+    return render(request, "sales_tracker/createManualTime.html")
+
+def createManualTime(request):
+    form = ManualTimeForm()
+    return render(request, 'sales_tracker/createManualTime.html', {'form': form})
+
+
+
+def viewManualTime(request):
+    return render(request, "sales_tracker/viewManualTime.html")
