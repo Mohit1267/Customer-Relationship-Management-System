@@ -523,3 +523,125 @@ class AgentTemplate(models.Model):
 
 #     def __str__(self):
 #         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
+
+
+class Contract(models.Model):
+    contract_title = models.CharField(max_length=100)
+    contract_value = models.DecimalField(max_digits=10, decimal_places=2)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    renewal_reminder_date = models.DateField(null=True, blank=True)
+    customer_schedule_date = models.DateField(null=True, blank=True)
+    company_schedule_date = models.DateField(null=True, blank=True)
+    description = models.TextField(blank=True)
+    status = models.CharField(max_length=10, choices=[('enabled', 'Enabled'), ('disabled', 'Disabled')])
+    contact_manager = models.CharField(max_length=100)
+    account = models.CharField(max_length=100)
+    contact = models.CharField(max_length=100)
+    opportunity = models.CharField(max_length=100, blank=True)
+    contract_type = models.CharField(max_length=10, choices=[('type1', 'Type 1'), ('type2', 'Type 2')])
+    currency = models.CharField(max_length=3, choices=[('usd', 'USD'), ('eur', 'EUR')])
+    total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    shipping = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    SHIPPING_TAX_CHOICES = [
+        ('5', '5%'),
+        ('7', '7%'),
+        ('10', '10%'),
+        ('20', '20%'),
+        ('25', '25%')
+    ]
+    
+    shipping_tax = models.CharField(
+        max_length=3,
+        choices=SHIPPING_TAX_CHOICES,
+        null=True,
+        blank=True,
+        default='5'
+    )
+    tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    def _str_(self):
+        return self.contract_title
+
+
+
+class Target(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    job_title = models.CharField(max_length=100, blank=True, null=True)
+    office_phone = models.CharField(max_length=15, blank=True, null=True)
+    department = models.CharField(max_length=100, blank=True, null=True)
+    mobile = models.CharField(max_length=15, blank=True, null=True)
+    account_name = models.CharField(max_length=100, blank=True, null=True)
+    fax = models.CharField(max_length=15, blank=True, null=True)
+    primary_address_street = models.CharField(max_length=255, blank=True, null=True)
+    primary_address_postal_code = models.CharField(max_length=20, blank=True, null=True)
+    primary_address_city = models.CharField(max_length=100, blank=True, null=True)
+    primary_address_state = models.CharField(max_length=100, blank=True, null=True)
+    primary_address_country = models.CharField(max_length=100, blank=True, null=True)
+    other_address_street = models.CharField(max_length=255, blank=True, null=True)
+    other_address_postal_code = models.CharField(max_length=20, blank=True, null=True)
+    other_address_city = models.CharField(max_length=100, blank=True, null=True)
+    other_address_state = models.CharField(max_length=100, blank=True, null=True)
+    other_address_country = models.CharField(max_length=100, blank=True, null=True)
+    email_address = models.EmailField()
+    description = models.TextField(blank=True, null=True)
+    assigned_to = models.CharField(max_length=100, blank=True, null=True)
+
+    def _str_(self):
+        return f"{self.first_name} {self.last_name}"
+
+
+class Case(models.Model):
+    CASE_STATES = [
+        ('open', 'Open'),
+        ('closed', 'Closed'),
+    ]
+    
+    STATUS_OPTIONS = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('resolved', 'Resolved'),
+    ]
+    
+    PRIORITY_OPTIONS = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    case_number = models.CharField(max_length=50)
+    priority = models.CharField(max_length=10, choices=PRIORITY_OPTIONS)
+    state = models.CharField(max_length=10, choices=CASE_STATES)
+    status = models.CharField(max_length=15, choices=STATUS_OPTIONS)
+    type = models.CharField(max_length=50)
+    account_name = models.CharField(max_length=100)
+    subject = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    resolution = models.TextField(blank=True, null=True)
+    assigned_to = models.CharField(max_length=100, blank=True, null=True)
+    date_created = models.DateField(blank=True, null=True)
+    date_modified = models.DateField(blank=True, null=True)
+
+    def _str_(self):
+        return f"{self.case_number} - {self.subject}"
+
+
+
+class ImportTemplate(models.Model):
+    template_file = models.FileField(upload_to='import_templates/')
+    action_choice = models.CharField(
+        max_length=50,
+        choices=[
+            ('create_only', 'Create new records only'),
+            ('create_update', 'Create new records and update existing records')
+        ]
+    )
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return f"Template - {self.template_file.name} ({self.get_action_choice_display()})"
+    
