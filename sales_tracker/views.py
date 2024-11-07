@@ -2172,6 +2172,8 @@ def createCase(request):
     
     return render(request, 'sales_tracker/createCase.html', {'form': form})
 
+
+
 def viewCases(request):
     return render(request, "sales_tracker/viewCase.html")
 

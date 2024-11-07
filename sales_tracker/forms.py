@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-
 from django import forms
 from django.core.exceptions import ValidationError
 from ckeditor.fields import RichTextField
@@ -11,6 +10,11 @@ from .models import (
     DailySalesReport, agentProjects, AgentTemplate
 )
 
+from .models import Task
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, Submit
+from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator
 
 
 class MiningForm(forms.ModelForm):
@@ -56,19 +60,32 @@ class LeadForm(forms.ModelForm):
             'nextdate': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
         }
 
+
 class OpportunityForm(forms.ModelForm):
     class Meta:
         model = OpportunityData
         fields = "__all__"
-        exclude = ["date", "assigned_to" ]
+        exclude = ["date", "assigned_to"]
+        
+        widgets = {
+            'opportunity_name': forms.TextInput(attrs={'placeholder': 'Enter opportunity name'}),
+            'amount': forms.NumberInput(attrs={'placeholder': 'Enter amount'}),
+            'sales_stage': forms.Select(attrs={'placeholder': 'Select sales stage'}),
+            'probability': forms.NumberInput(attrs={'placeholder': 'Enter probability'}),
+            'next_step': forms.TextInput(attrs={'placeholder': 'Enter next step'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Enter description'}),
+            'expected_close_date': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+            'lead_source': forms.TextInput(attrs={'placeholder': 'Enter lead source'}),
+            'lead': forms.Select(attrs={'placeholder': 'Select lead'}),
+        }
+
 
 class QuoteForm(forms.ModelForm):
      class Meta:
         model = QuotesData
         fields = "__all__"
         exclude = ["date", "assigned_to"]
-        
-        # Widgets for placeholders
+   
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Enter quote title'}),
             'valid_until': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
@@ -107,8 +124,6 @@ class PasswordForm(forms.ModelForm):
 class SortForm(forms.Form):
     select = forms.ChoiceField(choices=MY_CHOICES, label='Select an option')
 
-from django import forms
-from .models import Task
 
 class TaskForm(forms.ModelForm):
     class Meta:
@@ -213,35 +228,30 @@ class Accountform(forms.Form):
 
 
 
+from django import forms
+from .models import Document
+
 class DocumentForm(forms.ModelForm):
- 
-    publish_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        required=False
-    )
-    expiration_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        required=False
-    )
-    
     class Meta:
         model = Document
-        fields = ['file_name', 'document_name', 'document_type', 'publish_date', 'category',
-                  'description', 'status', 'revision', 'template', 'expiration_date',
-                  'subcategory', 'related_document', 'assigned_to']
-
+        fields = '__all__'
+        
         widgets = {
-            'file_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'document_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'document_type': forms.Select(attrs={'class': 'form-control'}),  
-            'category': forms.Select(attrs={'class': 'form-control'}), 
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'status': forms.Select(attrs={'class': 'form-control'}),  
-            'revision': forms.TextInput(attrs={'class': 'form-control'}),
-            'template': forms.TextInput(attrs={'class': 'form-control'}),
-            'subcategory': forms.Select(attrs={'class': 'form-control'}), 
-            'related_document': forms.TextInput(attrs={'class': 'form-control'}),
-            'assigned_to': forms.Select(attrs={'class': 'form-control'}),  
+            'file_name': forms.TextInput(attrs={'placeholder': 'Enter file name'}),
+            'document_name': forms.TextInput(attrs={'placeholder': 'Enter document name'}),
+            'document_type': forms.Select(attrs={'placeholder': 'Select document type'}),
+            'publish_date': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+            'category': forms.Select(attrs={'placeholder': 'Select category'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Enter description'}),
+            'status': forms.Select(attrs={'placeholder': 'Select status'}),
+            'revision': forms.TextInput(attrs={'placeholder': 'Enter revision'}),
+            'template': forms.TextInput(attrs={'placeholder': 'Enter template (if applicable)'}),
+            'expiration_date': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+            'subcategory': forms.Select(attrs={'placeholder': 'Select subcategory'}),
+            'related_document': forms.TextInput(attrs={'placeholder': 'Enter related document'}),
+            'assigned_to': forms.Select(attrs={'placeholder': 'Assign to user'}),
+            'notes': forms.TextInput(attrs={'placeholder': 'Enter any notes'}),
+            'reason': forms.TextInput(attrs={'placeholder': 'Enter reason (if applicable)'}),
         }
 
 
@@ -784,28 +794,19 @@ class TargetsListForm(forms.Form):
 class AgentProjectsForm(forms.ModelForm):
     class Meta:
         model = agentProjects
-        fields = [
-            'name', 'status', 'draft', 'start_date', 'priority', 
-            'end_date', 'consider_working_days', 'project_manager', 
-            'project_template'
-        ]
+        fields = '__all__'
         
         widgets = {
-            'start_date': forms.DateInput(attrs={'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'type': 'date'}),
+            'name': forms.TextInput(attrs={'placeholder': 'Enter project name'}),
+            'status': forms.Select(attrs={'placeholder': 'Select status'}),
+            'draft': forms.CheckboxInput(attrs={'placeholder': 'Draft'}),
+            'start_date': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+            'priority': forms.Select(attrs={'placeholder': 'Select priority'}),
+            'end_date': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+            'consider_working_days': forms.CheckboxInput(attrs={'placeholder': 'Consider working days'}),
+            'project_manager': forms.TextInput(attrs={'placeholder': 'Enter project manager name'}),
+            'project_template': forms.TextInput(attrs={'placeholder': 'Enter project template'}),
         }
-
-    def __init__(self, *args, **kwargs):
-        super(AgentProjectsForm, self).__init__(*args, **kwargs)
-        self.fields['name'].label = "Name*"
-        self.fields['status'].label = "Status"
-        self.fields['draft'].label = "Draft"
-        self.fields['start_date'].label = "Start Date*"
-        self.fields['priority'].label = "Priority"
-        self.fields['end_date'].label = "End Date*"
-        self.fields['consider_working_days'].label = "Consider Working Days"
-        self.fields['project_manager'].label = "Project Manager"
-        self.fields['project_template'].label = "Project Template"
 
 
 
@@ -838,82 +839,238 @@ class AgentTemplate(forms.ModelForm):
         self.fields['priority'].label = "Priority"
 
 
-
 class ContractForm(forms.Form):
 
-    contract_title = forms.CharField(label="Contract Title", max_length=100, required=True)
-    contract_value = forms.DecimalField(label="Contract Value", max_digits=10, decimal_places=2, required=True)
-    start_date = forms.DateField(label="Start Date", widget=forms.DateInput(attrs={'type': 'date'}), required=True)
-    end_date = forms.DateField(label="End Date", widget=forms.DateInput(attrs={'type': 'date'}), required=True)
-    renewal_reminder_date = forms.DateField(label="Renewal Reminder Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
-    customer_schedule_date = forms.DateField(label="Customer Schedule Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
-    company_schedule_date = forms.DateField(label="Company Schedule Date", widget=forms.DateInput(attrs={'type': 'date'}), required=False)
-    description = forms.CharField(label="Description", widget=forms.Textarea, required=False)
+    contract_title = forms.CharField(
+        label="Contract Title", 
+        max_length=100, 
+        required=True, 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter contract title'})
+    )
+    contract_value = forms.DecimalField(
+        label="Contract Value", 
+        max_digits=10, 
+        decimal_places=2, 
+        required=True, 
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter contract value'})
+    )
+    start_date = forms.DateField(
+        label="Start Date", 
+        widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}), 
+        required=True
+    )
+    end_date = forms.DateField(
+        label="End Date", 
+        widget=forms.DateInput(attrs={ 'placeholder': 'YYYY-MM-DD'}), 
+        required=True
+    )
+    renewal_reminder_date = forms.DateField(
+        label="Renewal Reminder Date", 
+        widget=forms.DateInput(attrs={ 'placeholder': 'YYYY-MM-DD'}), 
+        required=False
+    )
+    customer_schedule_date = forms.DateField(
+        label="Customer Schedule Date", 
+        widget=forms.DateInput(attrs={ 'placeholder': 'YYYY-MM-DD'}), 
+        required=False
+    )
+    company_schedule_date = forms.DateField(
+        label="Company Schedule Date", 
+        widget=forms.DateInput(attrs={ 'placeholder': 'YYYY-MM-DD'}), 
+        required=False
+    )
+    description = forms.CharField(
+        label="Description", 
+        widget=forms.Textarea(attrs={'placeholder': 'Enter contract description'}), 
+        required=False
+    )
 
-    status = forms.ChoiceField(label="Status", choices=[('enabled', 'Enabled'), ('disabled', 'Disabled')], required=True)
-    contact_manager = forms.CharField(label="Contact Manager", max_length=100, required=True)
-    account = forms.CharField(label="Account", max_length=100, required=True)
-    contact = forms.CharField(label="Contact", max_length=100, required=True)
-    opportunity = forms.CharField(label="Opportunity", max_length=100, required=False)
-    contact_type = forms.ChoiceField(label="Contact Type", choices=[('type1', 'Type 1'), ('type2', 'Type 2')], required=True)
+    status = forms.ChoiceField(
+        label="Status", 
+        choices=[('enabled', 'Enabled'), ('disabled', 'Disabled')], 
+        required=True,
+        widget=forms.Select(attrs={'placeholder': 'Select status'})
+    )
+    contact_manager = forms.CharField(
+        label="Contact Manager", 
+        max_length=100, 
+        required=True, 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter contact manager name'})
+    )
+    account = forms.CharField(
+        label="Account", 
+        max_length=100, 
+        required=True, 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter account name'})
+    )
+    contact = forms.CharField(
+        label="Contact", 
+        max_length=100, 
+        required=True, 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter contact name'})
+    )
+    opportunity = forms.CharField(
+        label="Opportunity", 
+        max_length=100, 
+        required=False, 
+        widget=forms.TextInput(attrs={'placeholder': 'Enter opportunity name'})
+    )
+    contact_type = forms.ChoiceField(
+        label="Contact Type", 
+        choices=[('------', '------'),('type1', 'Type 1'), ('type2', 'Type 2')], 
+        required=True, 
+        widget=forms.Select(attrs={'placeholder': 'Select contact type'})
+    )
+    currency = forms.ChoiceField(
+        label="Currency", 
+        choices=[('------', '------'),('usd', 'USD'), ('inr', 'INR'), ('eur', 'EUR')], 
+        required=True, 
+        widget=forms.Select(attrs={'placeholder': 'Select currency'})
+    )
+    total = forms.DecimalField(
+        label="Total", 
+        max_digits=10, 
+        decimal_places=2, 
+        required=True, 
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter total amount'})
+    )
+    discount = forms.DecimalField(
+        label="Discount", 
+        max_digits=10, 
+        decimal_places=2, 
+        required=True, 
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter discount amount'})
+    )
+    subtotal = forms.DecimalField(
+        label="Subtotal", 
+        max_digits=10, 
+        decimal_places=2, 
+        required=False, 
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter subtotal amount'})
+    )
+    shipping = forms.DecimalField(
+        label="Shipping", 
+        max_digits=10, 
+        decimal_places=2, 
+        required=True, 
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter shipping amount'})
+    )
+    shipping_tax = forms.DecimalField(
+        label="Shipping Tax", 
+        max_digits=10, 
+        decimal_places=2, 
+        required=True, 
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter shipping tax amount'})
+    )
+    tax = forms.DecimalField(
+        label="Tax", 
+        max_digits=10, 
+        decimal_places=2, 
+        required=True, 
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter tax amount'})
+    )
+    grand_total = forms.DecimalField(
+        label="Grand Total", 
+        max_digits=10, 
+        decimal_places=2, 
+        required=True, 
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter grand total amount'})
+    )
 
     
-    # Financial details section
-    currency = forms.ChoiceField(label="Currency", choices=[('usd', 'USD'), ('inr', 'INR'), ('eur', 'EUR')], required=True)
 
-    total = forms.DecimalField(label="Total", max_digits=10, decimal_places=2, required=False)
-    discount = forms.DecimalField(label="Discount", max_digits=10, decimal_places=2, required=False)
-    subtotal = forms.DecimalField(label="Subtotal", max_digits=10, decimal_places=2, required=False)
-    shipping = forms.DecimalField(label="Shipping", max_digits=10, decimal_places=2, required=False)
-    shipping_tax = forms.DecimalField(label="Shipping Tax", max_digits=10, decimal_places=2, required=False)
-    tax = forms.DecimalField(label="Tax", max_digits=10, decimal_places=2, required=False)
-    grand_total = forms.DecimalField(label="Grand Total", max_digits=10, decimal_places=2, required=False)
-
-    
+from django import forms
 
 class CaseForm(forms.Form):
     CASE_STATES = [
+        ('------', '------'),
         ('open', 'Open'),
         ('closed', 'Closed'),
     ]
     
     STATUS_OPTIONS = [
+        ('------', '------'),
         ('new', 'New'),
-        ('in_progress', 'In Progress'),
-        ('resolved', 'Resolved'),
+        ('assigned', 'Assigned'),
+        ('pending input', 'Pending Input'),
     ]
     
     PRIORITY_OPTIONS = [
+        ('------', '------'),
         ('low', 'Low'),
         ('medium', 'Medium'),
         ('high', 'High'),
     ]
 
-    case_number = forms.CharField(label="CASE NUMBER", required=True, max_length=50)
-    priority = forms.ChoiceField(label="PRIORITY", choices=PRIORITY_OPTIONS, required=True)
-    state = forms.ChoiceField(label="STATE", choices=CASE_STATES, required=True)
-    status = forms.ChoiceField(label="STATUS", choices=STATUS_OPTIONS, required=True)
-    type = forms.CharField(label="TYPE", required=True, max_length=50)
-    account_name = forms.CharField(label="ACCOUNT NAME", required=True, max_length=100)
-    subject = forms.CharField(label="SUBJECT", required=True, max_length=100)
-    description = forms.CharField(label="DESCRIPTION", required=False, widget=forms.Textarea)
-    resolution = forms.CharField(label="RESOLUTION", required=False, widget=forms.Textarea)
-    assigned_to = forms.CharField(label="ASSIGNED TO", required=False, max_length=100)
-    date_created = forms.DateField(label="DATE CREATED", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
-    date_modified = forms.DateField(label="DATE MODIFIED", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    case_number = forms.CharField(
+        label="CASE NUMBER", 
+        required=True, 
+        max_length=50,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter case number'})
+    )
+    priority = forms.ChoiceField(
+        label="PRIORITY", 
+        choices=PRIORITY_OPTIONS, 
+        required=True,
+        widget=forms.Select(attrs={'placeholder': 'Select priority'})
+    )
+    state = forms.ChoiceField(
+        label="STATE", 
+        choices=CASE_STATES, 
+        required=True,
+        widget=forms.Select(attrs={'placeholder': 'Select case state'})
+    )
+    status = forms.ChoiceField(
+        label="STATUS", 
+        choices=STATUS_OPTIONS, 
+        required=True,
+        widget=forms.Select(attrs={'placeholder': 'Select case status'})
+    )
+    type = forms.CharField(
+        label="TYPE", 
+        required=True, 
+        max_length=50,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter case type'})
+    )
+    account_name = forms.CharField(
+        label="ACCOUNT NAME", 
+        required=True, 
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter account name'})
+    )
+    subject = forms.CharField(
+        label="SUBJECT", 
+        required=True, 
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter case subject'})
+    )
+    description = forms.CharField(
+        label="DESCRIPTION", 
+        required=True, 
+        widget=forms.Textarea(attrs={'placeholder': 'Enter case description'})
+    )
+    resolution = forms.CharField(
+        label="RESOLUTION", 
+        required=True, 
+        widget=forms.Textarea(attrs={'placeholder': 'Enter case resolution'})
+    )
+    assigned_to = forms.CharField(
+        label="ASSIGNED TO", 
+        required=True, 
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter assigned person'})
+    )
+    date_created = forms.DateField(
+        label="DATE CREATED", 
+        required=True, 
+        widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'})
+    )
+    date_modified = forms.DateField(
+        label="DATE MODIFIED", 
+        required=True, 
+        widget=forms.DateInput(attrs={ 'placeholder': 'YYYY-MM-DD'})
+    )
 
-
-# forms.py
-
-from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Submit
-
-from django import forms
-from django.core.validators import FileExtensionValidator
-
-from django import forms
-from django.core.validators import FileExtensionValidator
 
 class ManualTimeForm(forms.Form):
     date = forms.DateField(
