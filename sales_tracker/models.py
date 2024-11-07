@@ -488,8 +488,8 @@ class AgentTemplate(models.Model):
     template_name = models.CharField(max_length=255)
     consider_working_days = models.BooleanField(default=False)
     project_manager = models.CharField(max_length=255)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
-    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='medium')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
