@@ -8,7 +8,7 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import (
     MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
     Schedule_Meeting, Schedule_Calling, Task, agentNotes, NewPasswords,
-    DailySalesReport, agentProjects, AgentTemplate
+    DailySalesReport, agentProjects
 )
 
 
@@ -748,9 +748,12 @@ class AgentProjectsForm(forms.ModelForm):
 
 
 
-class AgentTemplate(forms.ModelForm):
+from django import forms
+from .models import ProjectTemplate
+
+class ProjectTemplateForm(forms.ModelForm):
     class Meta:
-        model = AgentTemplate
+        model = ProjectTemplate
         fields = [
             'template_name',
             'consider_working_days',
@@ -769,12 +772,12 @@ class AgentTemplate(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         self.fields['template_name'].label = "Template Name"
         self.fields['consider_working_days'].label = "Consider Working Days"
         self.fields['project_manager'].label = "Project Manager"
         self.fields['status'].label = "Status"
         self.fields['priority'].label = "Priority"
+
 
 
 

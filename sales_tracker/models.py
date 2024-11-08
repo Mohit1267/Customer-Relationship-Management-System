@@ -444,32 +444,29 @@ class agentProjects(models.Model):
     def __str__(self):
         return self.name
     
+from django.db import models
 
-class AgentTemplate(models.Model):
+class ProjectTemplate(models.Model):
     STATUS_CHOICES = [
-        ('draft', 'Draft'),
-        ('in_review', 'In Review'),
-        ('underway', 'Underway'),
-        ('on_hold', 'On Hold'),
-        ('completed', 'Completed'),
-]
-
-    PRIORITY_CHOICES = [
-        ('high', 'High'),
-        ('medium', 'Medium'),
-        ('low', 'Low'),
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
     ]
-
-    template_name = models.CharField(max_length=255)
+    
+    PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+    
+    template_name = models.CharField(max_length=100)
     consider_working_days = models.BooleanField(default=False)
-    project_manager = models.CharField(max_length=255)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
-    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='medium')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    project_manager = models.CharField(max_length=100)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
 
     def __str__(self):
         return self.template_name
+
 
 
 
@@ -651,7 +648,7 @@ class Case(models.Model):
 
 from django.db import models
 
-class AgentTemplate(models.Model):
+class ProjectTemplate(models.Model):
     STATUS_CHOICES = [
         ('active', 'Active'),
         ('inactive', 'Inactive'),
@@ -671,7 +668,6 @@ class AgentTemplate(models.Model):
 
     def __str__(self):
         return self.template_name
-
 
 
 

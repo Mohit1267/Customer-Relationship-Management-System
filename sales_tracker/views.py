@@ -49,7 +49,7 @@ from .forms import (
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
-    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm
+    AgentProjectsForm,  ContractForm, SortForm, CaseForm
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
@@ -2276,7 +2276,7 @@ def Resourcecalendar(request):
 def ProjectTask(request):
     return render(request, "sales_tracker/viewprojectTask.html")
 
-
+'''
 def agentTemplate(request):
     """
     Handles the agent project form submission.
@@ -2302,31 +2302,38 @@ def agentTemplate(request):
     else:
         form = AgentTemplate() 
 
-    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})'''
 
 from django.shortcuts import render, redirect
-from .models import AgentTemplate
-from .forms import AgentTemplate
+# from .models import projectTemplate
+# from .forms import projectTemplate
 
-# View to create a new template
-def agentTemplate(request):
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import ProjectTemplate
+from .forms import ProjectTemplateForm
+from .models import ProjectTemplate
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import ProjectTemplate
+from .forms import ProjectTemplateForm
+
+# View to create a project template
+def create_project_template(request):
     if request.method == 'POST':
-        form = AgentTemplate(request.POST)
+        form = ProjectTemplateForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('view_templates')  # Redirect to the template list view
+            return redirect('sales_tracker/agentTemplate.html')  # Ensure this route is correctly defined in urls.py
     else:
-        form = AgentTemplate()
+        form = ProjectTemplateForm()
     
-    return render(request, 'agenttemplate.html', {'form': form})
+    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
 
-# View to display all templates
-def ViewTemplate(request):
-    templates = AgentTemplate.objects.all()
-    return render(request, 'view_templates.html', {'templates': templates})
-
-
-
+# View to display a specific template
+def agent_template_view(request, template_id):
+    template_instance = get_object_or_404(ProjectTemplate, id=template_id)
+    return render(request, 'sales_tracker/viewTemplate.html', {'template': template_instance})
 
 from django.shortcuts import render, redirect
 from .forms import ContractForm
