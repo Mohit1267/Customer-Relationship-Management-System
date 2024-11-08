@@ -18,6 +18,7 @@
     </div>
 
     <div class="filter-container">
+        
         <div id="filterForm" class="filter-form">
             <div class="form-group">
                 <label for="anyPhone">Any Phone:</label>
@@ -90,21 +91,21 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Website</th>
+                <th>City</th>
+                <th>Billing Country</th>
+                <th>Phone</th>
+                <th>User</th>
                 <th>Email Address</th>
-                <th>Type</th>
-                <th>Annual Revenue</th>
-                <th>Industry</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>{{ data.name }}</td>
-                <td>{{ data.website }}</td>
-                <td>{{ data.email }}</td>
-                <td>{{ data.type }}</td>
-                <td>{{ data.revenue }}</td>
-                <td>{{ data.industry }}</td>
+                <td>{{ data.city }}</td>
+                <td>{{ data.billing_country }}</td>
+                <td>{{ data.phone }}</td>
+                <td>{{ data.user }}</td>
+                <td>{{ data.email_address }}</td>
             </tr>
         </tbody>
     </table>

@@ -69,6 +69,7 @@ class ContactData(models.Model):
 
 class LeadsData(models.Model):
     LEAD_STATUS_CHOICES = [
+       
         ('HOT', 'Hot'),
         ('COLD', 'Cold'),
         ('MILD', 'Mild'),
@@ -83,10 +84,10 @@ class LeadsData(models.Model):
     date = models.DateField(default="2000-10-10")
     contact_link = models.ForeignKey(ContactData, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
-    status = models.CharField(max_length=4, choices=LEAD_STATUS_CHOICES, default='COLD')
+    status = models.CharField(max_length=10, choices=LEAD_STATUS_CHOICES)
     created_by = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, related_name='leads_by',default=11)
-    remarks = models.TextField( default="nothing" )
-    nextdate = models.DateField(default="2024-11-11")
+    remarks = models.TextField(  )
+    nextdate = models.DateField()
     
     def __str__(self):
         return f"{self.lead_name}"
@@ -153,7 +154,7 @@ class QuotesData(models.Model):
     shipping_tax = models.CharField(max_length=50)
     tax = models.CharField(max_length=50)
     grandtotal = models.CharField(max_length=50)
-    date = models.DateField(default="2000-10-10")
+    date = models.DateField()
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
 
 
@@ -328,18 +329,22 @@ class Task(models.Model):
     ]
 
     TASK_STATUS_CHOICES = [
-        ('open', 'Open'),
+        ('-------', '-------'),
+        ('not started ', 'Not Started '),
         ('in_progress', 'In Progress'),
         ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
+        ('pending_input', 'Pending Input'),
+        ('deferred ', 'Deferred '),
     ]
 
     subject = models.CharField(max_length=100)
-    start_date = models.DateField(null = True)
-    due_date = models.DateField(null = True)
-    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES,null = True)
-    description = models.TextField(null= True)
-    status = models.CharField(max_length=12, choices=TASK_STATUS_CHOICES, default='open')
+
+    start_date = models.DateField()
+    due_date = models.DateField()
+    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=TASK_STATUS_CHOICES, default='open')
+
     related_to = models.CharField(max_length=100, blank=True, null=True)  
     contacts = models.ManyToManyField('ContactData', related_name='tasks')
     def _str_(self):
@@ -374,14 +379,32 @@ class DailySalesReport(models.Model):
 
 
 class agentNotes(models.Model):
+    RELATED_TO_CHOICES = [
+        ('', ' '),
+        ('account', 'Account'),
+        ('opportunity', 'Opportunity'),
+        ('case', 'Case'),
+        ('lead', 'Lead'),
+        ('contact', 'Contact'),
+        ('bug', 'Bug'),
+        ('project', 'Project'),
+        ('target', 'Target'),
+        ('project_task', 'Project Task'),
+        ('contract', 'Contract'),
+        ('invoice', 'Invoice'),
+        ('quote', 'Quote'),
+        ('product', 'Product'),
+    ]
+
     subject = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
     attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
     note = models.TextField()
-    related_to = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255, choices=RELATED_TO_CHOICES, blank=True)
 
     def __str__(self):
         return self.subject
+
     
 '''
 class createInvoices(models.Model):
@@ -462,6 +485,7 @@ class agentProjects(models.Model):
 #         ('low', 'Low'),
 #     ]
 
+
 #     template_name = models.CharField(max_length=255)
 #     consider_working_days = models.BooleanField(default=False)
 #     project_manager = models.CharField(max_length=255)
@@ -469,6 +493,7 @@ class agentProjects(models.Model):
 #     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='medium')
 #     created_at = models.DateTimeField(auto_now_add=True)
 #     updated_at = models.DateTimeField(auto_now=True)
+
 
 #     def __str__(self):
 #         return self.template_name
@@ -648,14 +673,17 @@ from django.db import models
 
 class projectTemplate(models.Model):
     STATUS_CHOICES = [
-        ('active', 'Active'),
-        ('inactive', 'Inactive'),
-    ]
-    
+        ('draft', 'Draft'),
+        ('in_review', 'In Review'),
+        ('underway', 'Underway'),
+        ('on_hold', 'On Hold'),
+        ('completed', 'Completed'),
+]
+
     PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
         ('high', 'High'),
+        ('medium', 'Medium'),
+        ('low', 'Low'),
     ]
     
     template_name = models.CharField(max_length=100)
@@ -685,3 +713,4 @@ class ImportTemplate(models.Model):
 
     def _str_(self):
         return f"Template - {self.template_file.name} ({self.get_action_choice_display()})"
+

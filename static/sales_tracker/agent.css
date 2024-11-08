@@ -15,13 +15,13 @@ body {
 
 .navbar-horizontal {
     background-color: #eff3f7 !important;
-    width: calc(100% - 250px);
+    width: calc(100% - 255px);
     background-color: #f8f9fa;
     padding: 10px 20px;
     /* border-radius: 20px 20px 20px 20px; */
     position: fixed;
     top: 0;
-    left: 250px;
+    left: 255px;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
@@ -39,88 +39,111 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 80px;
+    margin-top: 100px;
     margin-left: 20px;
     /* position: fixed; */
     /* gap: 10px; */
     /* padding: 10px; */
 }
 
-.filter-section {
-    display: none;
-    /* margin-top: 20px; */
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
 .filter-button {
-    padding: 5px 20px;
-    color: black;
-    border: 1px solid black;
+    width: 100px; 
+    height: 30px;
+    color: black; 
+    border: 1px light black; 
     cursor: pointer;
-    transition: background-color 0.3s;
-    background-color: #eff3f7;
+    transition: background-color 0.3s, transform 0.3s; 
 }
 
 .filter-button:hover {
-    background-color: rgb(78, 81, 82);
+    background-color: #1E2A38; 
+    transform: scale(1.05); 
+    color: white;
 }
 
-.inside-filter-container,
-.state-filter-container,
-.zone-filter-container {
+.filter-container {
+    margin: 20px;
+}
+
+.filter-toggle-btn {
+    background-color: #1E2A38;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+/* .filter-form {
+    display: none;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+} */
+
+.filter-form {
+    display: none;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.808);
+    /* display: grid; */
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 20px; 
+    width: 80%;
+}
+
+.form-group {
     margin-bottom: 15px;
 }
 
-.buttons {
-    display: flex;
-    gap: 10px;
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
 }
 
-.button {
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-actions {
+    grid-column: span 3; 
+    margin-top: 20px;
+}
+
+.form-actions button {
     padding: 10px 15px;
+    margin-right: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-
-.button4[type="submit"] {
+.form-actions button[type="submit"] {
     background-color: #28a745;
     color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
-.button[type="submit"] {
-    background-color: #ffffff;
+.form-actions button[type="button"] {
+    background-color: #dc3545;
     color: white;
 }
 
-.button2[type="button"] {
-    background-color: #f88d00;
+.form-actions button[type="submit"]:hover {
+    background-color: #218838;
     color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
-.button:hover {
-    opacity: 0.9;
+.form-actions button[type="button"]:hover {
+    background-color: #c82333; 
+    color: white;
 }
 
-.button2:hover {
-    opacity: 0.9;
-}
-
-.button4:hover {
-    opacity: 0.9;
-}
 
 .inside-filter-container {
     /* margin-left: 80px; */
@@ -328,6 +351,7 @@ body {
     box-sizing: border-box;
     overflow: visible;
     margin: 1rem;
+    z-index: -100;
 
 }
 

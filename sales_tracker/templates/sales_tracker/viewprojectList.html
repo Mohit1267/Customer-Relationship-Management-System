@@ -9,6 +9,8 @@
 {% block content %}
 
 <section class="main_container">
+
+    
     <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
         <form class="d-flex" style="flex-grow: 1;">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
@@ -75,40 +77,30 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Job Title</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Date Created</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>Project Manager</th>
+                <th>End Date</th>
+
             </tr>
         </thead>
+
         <tbody>
             {% for data in data_list %}
             <tr>
                 <td><a href="{% url 'detaildata' data %}">{{ data.name }}</a></td>
-                {% if data.customer_first_name %}
-                <td>{{ data.customer_job_title }}</td>
-                <td>{{ data.customer_email }}</td>
-                <td>{{ data.customer_mobile_number }}</td>
-                <td>{{ data.date_created }}</td>
-                {% elif data.first_name %}
-                <td>{{ data.job_title }}</td>
-                <td>{{ data.email_id }}</td>
-                <td>{{ data.phone_number }}</td>
-                <td>{{ data.date_created }}</td>
-                {% elif data.opportunity_name %}
-                <td>{{ data.opportunity_job_title }}</td>
-                <td>{{ data.opportunity_email }}</td>
-                <td>{{ data.opportunity_phone }}</td>
-                <td>{{ data.date_created }}</td>
-                {% elif data.title %}
-                <td>{{ data.title_job }}</td>
-                <td>{{ data.title_email }}</td>
-                <td>{{ data.title_phone }}</td>
-                <td>{{ data.date_created }}</td>
-                {% endif %}
+                <td>{{ data.name }}</td>
+                <td>{{ data.priority }}</td>
+                <td>{{ data.status }}</td>
+                <td>{{ data.start_date }}</td>
+                <td>{{ data.project_manager }}</td>
+                <td>{{ data.end_date }}</td>
+
             </tr>
             {% endfor %}
         </tbody>
+
     </table>
 </section>
 
