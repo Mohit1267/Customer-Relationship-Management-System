@@ -122,9 +122,21 @@ urlpatterns = [
     path("viewCase", login_required((views.viewCases)), name="viewCase"),
     path("createManualTime", login_required((views.createManualTime)), name="createManualTime"),
     path("viewManualTime", login_required((views.viewManualTime)), name="viewManualTime"),
+    path("viewprojectTask", login_required((views.ProjectTask)), name="viewprojectTask"),
+    path("agentTemplate", login_required((views.agentTemplate)), name="agentTemplate"),
+    path("viewTemplate", login_required((views.ViewTemplate)), name="viewTemplate"),
+    path('Importtemplate/', views.upload_import_file, name='Importtemplate'),
+
 
     path('adminattendance', (views.AdminAttendence), name='adminattendance'),
     path("location", login_required((views.Location)), name="location"),
+
+    path("createContract", login_required((views.create_contract)), name="createContract"),
+    path("view_contract", login_required((views.view_contract)), name="viewContract"),
+    path('createCase/', views.add_case, name='createCase'),
+    path('viewCase/', views.view_cases, name='viewCase'),
+    path("InvoiceImport", login_required((views.InvoiceImport)), name="InvoiceImport"),
+
 
 
     # Employee screen share URL

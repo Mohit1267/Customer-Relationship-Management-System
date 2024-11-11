@@ -29,11 +29,12 @@ from .models import (
     Account, NewPasswords, Task
 )
 from .forms import (
-    MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm,
-    agentmeeting, DocumentForm, TaskForm, agentcalling, NoteForm,
-    InvoiceForm, DSRForm, AccountForm, PasswordForm, ComposeEmailForm,
-    TargetsForm, TargetsListForm, AgentProjectsForm, AgentTemplate,
-    ContractForm, SortForm, CaseForm, ManualTimeForm
+
+    MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
+    DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
+    AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
+    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm, ManualTimeForm,projectTemplate
+
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
@@ -2113,3 +2114,382 @@ def AdminAttendence(request):
 
 def Location(request):
     return render(request, 'sales_tracker/location.html')
+
+def viewNotes(request):
+      return render(request, "sales_tracker/viewNotes.html")
+
+
+
+def createInvoices(request):
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+           
+            return redirect('invoice_list')  
+    else:
+        form = InvoiceForm()
+    return render(request, 'sales_tracker/createInvoices.html', {'form': form})
+
+
+def compose_email(request):
+    """
+    This view handles the email composition form.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = ComposeEmailForm(request.POST)
+        if form.is_valid():
+         
+            email_template = form.cleaned_data.get('template')
+            related_to = form.cleaned_data.get('related_to')
+            from_address = form.cleaned_data.get('from')
+            to_address = form.cleaned_data.get('to')
+            cc_address = form.cleaned_data.get('cc')
+            bcc_address = form.cleaned_data.get('bcc')
+            subject = form.cleaned_data.get('subject')
+            body = form.cleaned_data.get('body')
+            send_plain_text = form.cleaned_data.get('send_plain_text')
+
+            messages.success(request, 'Email composed successfully!')
+            return redirect('agentemail')
+        else:
+            messages.error(request, 'There was an error composing the email. Please check your input.')
+    else:
+        form = ComposeEmailForm()  
+
+    return render(request, 'sales_tracker/agentemail.html', {'form': form})
+
+
+
+def viewEmail(request):
+    return render(request, "sales_tracker/viewemail.html")
+
+
+
+
+def Agenttarget(request):
+    """
+    This view handles the contact form submission.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = TargetsForm(request.POST)
+        if form.is_valid():
+        
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            job_title = form.cleaned_data.get('job_title')
+            office_phone = form.cleaned_data.get('office_phone')
+            department = form.cleaned_data.get('department')
+            mobile = form.cleaned_data.get('mobile')
+            account_name = form.cleaned_data.get('account_name')
+            fax = form.cleaned_data.get('fax')
+            primary_address_street = form.cleaned_data.get('primary_address_street')
+            primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
+            primary_address_city = form.cleaned_data.get('primary_address_city')
+            primary_address_state = form.cleaned_data.get('primary_address_state')
+            primary_address_country = form.cleaned_data.get('primary_address_country')
+            other_address_street = form.cleaned_data.get('other_address_street')
+            other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
+            other_address_city = form.cleaned_data.get('other_address_city')
+            other_address_state = form.cleaned_data.get('other_address_state')
+            other_address_country = form.cleaned_data.get('other_address_country')
+            email_address = form.cleaned_data.get('email_address')
+            description = form.cleaned_data.get('description')
+            assigned_to = form.cleaned_data.get('assigned_to')
+
+            messages.success(request, 'Contact information submitted successfully!')
+            return redirect('agenttarget') 
+        else:
+            messages.error(request, 'There was an error submitting the contact information. Please check your input.')
+    else:
+        form = TargetsForm()
+
+    return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+
+
+def viewInvoices(request):
+    return render(request, 'sales_tracker/viewInvoices.html')
+
+
+
+def viewTarget(request):
+    return render(request, "sales_tracker/viewtarget.html")
+
+def Targetimport(request):
+    return render(request, "sales_tracker/targetimport.html")
+
+
+def TargetList(request):
+    """
+    This view handles the target form submission.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = TargetsListForm(request.POST)
+        if form.is_valid():
+           
+            name = form.cleaned_data.get('name')
+            total_entries = form.cleaned_data.get('total_entries')
+            type = form.cleaned_data.get('type')
+            domain_name = form.cleaned_data.get('domain_name')
+            description = form.cleaned_data.get('description')
+
+            messages.success(request, 'Target information submitted successfully!')
+            return redirect('targetsList')  
+        else:
+            messages.error(request, 'There was an error submitting the target information. Please check your input.')
+    else:
+        form = TargetsListForm() 
+
+    return render(request, 'sales_tracker/targetsList.html', {'form': form})
+
+def viewTargetList(request):
+    return render(request, "sales_tracker/viewtargetsList.html")
+
+
+
+def agentProjects(request):
+    """
+    Handles the agent project form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = AgentProjectsForm(request.POST)
+        if form.is_valid():
+          
+            name = form.cleaned_data.get('name')
+            status = form.cleaned_data.get('status')
+            draft = form.cleaned_data.get('draft')
+            start_date = form.cleaned_data.get('start_date')
+            priority = form.cleaned_data.get('priority')
+            end_date = form.cleaned_data.get('end_date')
+            consider_working_days = form.cleaned_data.get('consider_working_days')
+            project_manager = form.cleaned_data.get('project_manager')
+            project_template = form.cleaned_data.get('project_template')
+
+            form.save()
+
+            messages.success(request, 'Agent project information submitted successfully!')
+            return redirect('agentProjects')  
+        else:
+            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+    else:
+        form = AgentProjectsForm() 
+
+    return render(request, 'sales_tracker/agentProjects.html', {'form': form})
+
+
+def viewProjectList(request):
+    return render(request, "sales_tracker/viewprojectList.html")
+
+def projectimport(request):
+    return render(request, "sales_tracker/projectimport.html")
+
+def Resourcecalendar(request):
+    return render(request, "sales_tracker/resourceCalendar.html")
+
+def ProjectTask(request):
+    return render(request, "sales_tracker/viewprojectTask.html")
+
+
+def agentTemplate(request):
+    """
+    Handles the agent project form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = AgentTemplate(request.POST)
+        if form.is_valid():
+ 
+            template_name = form.cleaned_data.get('template_name')
+            consider_working_days = form.cleaned_data.get('consider_working_days')
+            project_manager = form.cleaned_data.get('project_manager')
+            status = form.cleaned_data.get('status')
+            priority = form.cleaned_data.get('priority')
+
+            form.save()
+
+            messages.success(request, 'Agent project information submitted successfully!')
+            return redirect('agentTemplate') 
+        else:
+            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+    else:
+        form = AgentTemplate() 
+
+    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+
+from django.shortcuts import render, redirect
+
+
+# View to create a new template
+def projectTemplate(request):
+    if request.method == 'POST':
+        form = projectTemplate(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('view_templates')  # Redirect to the template list view
+    else:
+        form = projectTemplate()
+    
+    return render(request, 'sales_tracker/agenttemplate.html', {'form': form})
+
+# View to display all templates
+def ViewTemplate(request):
+    templates = projectTemplate.objects.all()
+    return render(request, 'sales_tracker/viewTemplates.html', {'templates': templates})
+
+
+
+
+from django.shortcuts import render, redirect
+from .forms import ContractForm
+from .models import Contract
+from django.db.models import F
+from decimal import Decimal
+
+def create_contract(request):
+    if request.method == "POST":
+        form = ContractForm(request.POST)
+        
+        if form.is_valid():
+            # Fetch cleaned data from form
+            contract_title = form.cleaned_data['contract_title']
+            contract_value = form.cleaned_data['contract_value']
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+            renewal_reminder_date = form.cleaned_data['renewal_reminder_date']
+            customer_schedule_date = form.cleaned_data['customer_schedule_date']
+            company_schedule_date = form.cleaned_data['company_schedule_date']
+            description = form.cleaned_data['description']
+            status = form.cleaned_data['status']
+            contact_manager = form.cleaned_data['contact_manager']
+            account = form.cleaned_data['account']
+            contact = form.cleaned_data['contact']
+            opportunity = form.cleaned_data['opportunity']
+            contract_type = form.cleaned_data['contract_type']
+            currency = form.cleaned_data['currency']
+            shipping = form.cleaned_data['shipping']
+            shipping_tax = form.cleaned_data['shipping_tax']
+            discount = form.cleaned_data['discount'] or Decimal(0)
+
+            # Calculate tax based on shipping_tax selection
+            if shipping_tax == "other":
+                custom_shipping_tax = Decimal(form.cleaned_data['custom_shipping_tax']) / Decimal(100)
+            else:
+                custom_shipping_tax = Decimal(shipping_tax) / Decimal(100)
+
+            # Calculate subtotal
+            subtotal = contract_value - discount
+
+            # Calculate total shipping with tax
+            shipping_tax_amount = shipping * custom_shipping_tax
+            total_shipping = shipping + shipping_tax_amount
+
+            # Calculate tax and grand total
+            tax = subtotal * Decimal(0.18)  # Assuming a fixed 18% tax rate for example
+            grand_total = subtotal + total_shipping + tax
+
+            # Save to the database
+            contract = Contract(
+                contract_title=contract_title,
+                contract_value=contract_value,
+                start_date=start_date,
+                end_date=end_date,
+                renewal_reminder_date=renewal_reminder_date,
+                customer_schedule_date=customer_schedule_date,
+                company_schedule_date=company_schedule_date,
+                description=description,
+                status=status,
+                contact_manager=contact_manager,
+                account=account,
+                contact=contact,
+                opportunity=opportunity,
+                contract_type=contract_type,
+                currency=currency,
+                total=contract_value,
+                discount=discount,
+                subtotal=subtotal,
+                shipping=shipping,
+                shipping_tax=shipping_tax,
+                tax=tax,
+                grand_total=grand_total,
+            )
+            contract.save()
+            return redirect('success')  # Redirect to a success page or another URL
+
+    else: 
+        form = ContractForm()
+
+    return render(request, 'sales_tracker/createContract.html', {'form': form})
+
+from django.shortcuts import render, get_object_or_404
+from .models import Contract
+
+def view_contract(request, contract_id):
+    # Retrieve the contract by ID or return a 404 if not found
+    contract = get_object_or_404(Contract, id=contract_id)
+    
+    # Pass the contract data to the template
+    return render(request, 'sales_tracker/viewContract.html', {'contract': contract})
+
+
+from .models import Target
+from .forms import TargetsForm
+
+def add_target(request):
+    if request.method == 'POST':
+        form = TargetsForm(request.POST)
+        if form.is_valid():
+            # Create a new Target object and save it to the database
+            target = Target.objects.create(**form.cleaned_data)
+            return redirect('view_targets')  # Redirect to the target list view after saving
+    else:
+        form = TargetsForm()
+    
+    return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ImportTemplateForm
+
+def upload_import_file(request):
+    if request.method == 'POST':
+        form = ImportTemplateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # This saves the uploaded file and selected action to the database
+            messages.success(request, "File uploaded successfully!")
+            return redirect('targetimport')
+    else:
+        form = ImportTemplateForm()
+
+    return render(request, 'sales_tracker/targetimport.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from .models import Case
+from .forms import CaseForm
+
+def add_case(request):
+    if request.method == 'POST':
+        form = CaseForm(request.POST)
+        if form.is_valid():
+            # Save the form data as a new Case instance
+            case = Case.objects.create(**form.cleaned_data)
+            return redirect('view_cases')  # Redirect to the case list view
+    else:
+        form = CaseForm()
+    
+    return render(request, 'sales_tracker/createCase.html', {'form': form})
+
+def view_cases(request):
+    cases = Case.objects.all()
+    return render(request, 'sales_tracker/viewCase.html', {'cases': cases})
+
+def InvoiceImport(request):
+    return render(request, "sales_tracker/InvoiceImport.html")
+

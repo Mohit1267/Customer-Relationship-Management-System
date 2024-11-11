@@ -7,7 +7,7 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import (
     MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
     Schedule_Meeting, Schedule_Calling, Task, agentNotes, NewPasswords,
-    DailySalesReport, agentProjects, AgentTemplate
+    DailySalesReport, agentProjects, projectTemplate
 )
 
 from .models import Task
@@ -658,6 +658,37 @@ class InvoiceForm(forms.Form):
 
 
 
+
+class InvoiceForm(forms.Form):
+    title = forms.CharField(max_length=255)
+    customer_name = forms.CharField(max_length=255)
+    due_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    assigned_to = forms.CharField(max_length=255)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
+    
+    invoice_number = forms.CharField(max_length=100, required=False)
+    quotation_number = forms.CharField(max_length=100, required=False)
+    invoice_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
+    status = forms.ChoiceField(choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], initial='open')
+    
+    account = forms.CharField(max_length=255)
+    contact = forms.CharField(max_length=255)
+    billing_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    shipping_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    
+    currency = forms.CharField(max_length=10, initial='USD')
+    line_items = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
+    
+    total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    discount = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    subtotal = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    shipping = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    adjustment = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+
+
+
 class ComposeEmailForm(forms.Form):
 
     template = forms.CharField(
@@ -731,6 +762,7 @@ class ComposeEmailForm(forms.Form):
         label="Send in Plain Text",
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
     )
+
 
 
 
@@ -812,6 +844,39 @@ class TargetsListForm(forms.Form):
         required=False,
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter description'})
     )
+    name = forms.CharField(
+        label="Name",
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter name'})
+    )
+    total_entries = forms.IntegerField(
+        label="Total Entries",
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter total entries'})
+    )
+    type = forms.ChoiceField(
+        label="Type",
+        choices=[
+        ('default', 'Default'),
+        ('seed', 'Seed'),
+        ('suppression_list_by_domain', 'Suppression List - by Domain'),
+        ('suppression_list_by_email', 'Suppression List - by Email'),
+        ('suppression_list_by_id', 'Suppression List - by ID'),
+        ('test', 'Test')
+    ],
+    widget=forms.Select(attrs={'class': 'form-control'})
+)
+
+    domain_name = forms.CharField(
+        label="Domain Name",
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter domain name'})
+    )
+    description = forms.CharField(
+        label="Description",
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter description'})
+    )
 
 
 class AgentProjectsForm(forms.ModelForm):
@@ -832,10 +897,24 @@ class AgentProjectsForm(forms.ModelForm):
         }
 
 
+    def _init_(self, *args, **kwargs):
+        super(AgentProjectsForm, self)._init_(*args, **kwargs)
+        self.fields['name'].label = "Name*"
+        self.fields['status'].label = "Status"
+        self.fields['draft'].label = "Draft"
+        self.fields['start_date'].label = "Start Date*"
+        self.fields['priority'].label = "Priority"
+        self.fields['end_date'].label = "End Date*"
+        self.fields['consider_working_days'].label = "Consider Working Days"
+        self.fields['project_manager'].label = "Project Manager"
+        self.fields['project_template'].label = "Project Template"
+
+
+
 
 class AgentTemplate(forms.ModelForm):
     class Meta:
-        model = AgentTemplate
+        model = projectTemplate
         fields = [
             'template_name',
             'consider_working_days',
@@ -852,8 +931,8 @@ class AgentTemplate(forms.ModelForm):
             'priority': forms.Select(attrs={'class': 'form-control'}),
         }
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def _init_(self, *args, **kwargs):
+        super()._init_(*args, **kwargs)
 
         self.fields['template_name'].label = "Template Name"
         self.fields['consider_working_days'].label = "Consider Working Days"
@@ -861,6 +940,22 @@ class AgentTemplate(forms.ModelForm):
         self.fields['status'].label = "Status"
         self.fields['priority'].label = "Priority"
 
+
+
+from .models import ImportTemplate
+
+class ImportTemplateForm(forms.ModelForm):
+    class Meta:
+        model = ImportTemplate
+        fields = ['template_file', 'action_choice']
+        widgets = {
+            'template_file': forms.FileInput(attrs={'class': 'form-control'}),
+            'action_choice': forms.RadioSelect,  # Use radio buttons for options
+        }
+        labels = {
+            'template_file': 'Select File',
+            'action_choice': 'What would you like to do with the imported data?',
+        }
 
 class ContractForm(forms.Form):
 
@@ -978,12 +1073,25 @@ class ContractForm(forms.Form):
         required=True, 
         widget=forms.NumberInput(attrs={'placeholder': 'Enter shipping amount'})
     )
-    shipping_tax = forms.DecimalField(
-        label="Shipping Tax", 
-        max_digits=10, 
-        decimal_places=2, 
-        required=True, 
-        widget=forms.NumberInput(attrs={'placeholder': 'Enter shipping tax amount'})
+
+    SHIPPING_TAX_CHOICES = [
+    ('5', '5%'),
+    ('7', '7%'),
+    ('10', '10%'),
+    ('20', '20%'),
+    ('25', '25%'),
+    ('other', 'Other'),  # Option for custom input
+]
+    
+    
+    shipping_tax = forms.ChoiceField(
+        label="Shipping Tax",
+        choices=SHIPPING_TAX_CHOICES,
+        required=True,
+    )
+    custom_shipping_tax = forms.CharField(
+        label="Custom Shipping Tax",
+        required=True,
     )
     tax = forms.DecimalField(
         label="Tax", 
@@ -1002,7 +1110,7 @@ class ContractForm(forms.Form):
 
     
 
-from django import forms
+
 
 class CaseForm(forms.Form):
     CASE_STATES = [
