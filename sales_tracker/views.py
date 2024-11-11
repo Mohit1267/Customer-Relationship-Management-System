@@ -38,7 +38,7 @@ from .admin_analysis import (
     Att_perct, Late_perct, Mining_Count, Leads_Count, EachMinerTarget,
     Time_worked, Productivity, admin_attendance_graph, dailymining, monthlymining,
     quarterlymining, yearlymining, yearlyleads, quarterlyleads, monthlyleads,
-    dailyleads
+    dailyleads, admin_attendance_pie
 )
 from .requirements import timer
 
@@ -65,11 +65,14 @@ def Dashboards(request):
         att = Att_perct()
         late = Late_perct()
         attendence_graph = admin_attendance_graph(request)
+        attendence_graph_pie = admin_attendance_pie(request)
+
         context['admin_message'] = "Welcome to the Admin Page"
         context['attendances'] = attendances
         context['attendence_graph'] = attendence_graph
+        context['attendence_graph_pie'] = attendence_graph_pie
         context['att'] = att
-        context['temp'] = "temp"
+        context['temp'] = "temp"    
         # context['request'] = request
         latitude = request.session.get('latitude')
         longitude = request.session.get('longitude')

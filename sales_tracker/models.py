@@ -339,10 +339,10 @@ class Task(models.Model):
 
     subject = models.CharField(max_length=100)
 
-    start_date = models.DateField()
-    due_date = models.DateField()
-    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
-    description = models.TextField()
+    start_date = models.DateField(null=True)
+    due_date = models.DateField(null=True)
+    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES,null=True)
+    description = models.TextField(null=True)
     status = models.CharField(max_length=20, choices=TASK_STATUS_CHOICES, default='open')
 
     related_to = models.CharField(max_length=100, blank=True, null=True)  
@@ -548,6 +548,48 @@ class AgentTemplate(models.Model):
 #         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
 
 
+# class Contract(models.Model):
+#     contract_title = models.CharField(max_length=100)
+#     contract_value = models.DecimalField(max_digits=10, decimal_places=2)
+#     start_date = models.DateField()
+#     end_date = models.DateField()
+#     renewal_reminder_date = models.DateField(null=True, blank=True)
+#     customer_schedule_date = models.DateField(null=True, blank=True)
+#     company_schedule_date = models.DateField(null=True, blank=True)
+#     description = models.TextField(blank=True)
+#     status = models.CharField(max_length=10, choices=[('enabled', 'Enabled'), ('disabled', 'Disabled')])
+#     contact_manager = models.CharField(max_length=100)
+#     account = models.CharField(max_length=100)
+#     contact = models.CharField(max_length=100)
+#     opportunity = models.CharField(max_length=100, blank=True)
+#     contract_type = models.CharField(max_length=10, choices=[('type1', 'Type 1'), ('type2', 'Type 2')])
+#     currency = models.CharField(max_length=3, choices=[('usd', 'USD'), ('eur', 'EUR')])
+#     total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     subtotal = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     shipping = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     SHIPPING_TAX_CHOICES = [
+#         ('5', '5%'),
+#         ('7', '7%'),
+#         ('10', '10%'),
+#         ('20', '20%'),
+#         ('25', '25%')
+#     ]
+    
+#     shipping_tax = models.CharField(
+#         max_length=3,
+#         choices=SHIPPING_TAX_CHOICES,
+#         null=True,
+#         blank=True,
+#         default='5'
+#     )
+#     tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+#     def _str_(self):
+#         return self.contract_title
+
+
 class Contract(models.Model):
     contract_title = models.CharField(max_length=100)
     contract_value = models.DecimalField(max_digits=10, decimal_places=2)
@@ -556,40 +598,18 @@ class Contract(models.Model):
     renewal_reminder_date = models.DateField(null=True, blank=True)
     customer_schedule_date = models.DateField(null=True, blank=True)
     company_schedule_date = models.DateField(null=True, blank=True)
-    description = models.TextField(blank=True)
-    status = models.CharField(max_length=10, choices=[('enabled', 'Enabled'), ('disabled', 'Disabled')])
+    description = models.TextField(null=True, blank=True, default='Nothing')
+    status = models.CharField(max_length=20)
     contact_manager = models.CharField(max_length=100)
     account = models.CharField(max_length=100)
     contact = models.CharField(max_length=100)
-    opportunity = models.CharField(max_length=100, blank=True)
-    contract_type = models.CharField(max_length=10, choices=[('type1', 'Type 1'), ('type2', 'Type 2')])
-    currency = models.CharField(max_length=3, choices=[('usd', 'USD'), ('eur', 'EUR')])
-    total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    opportunity = models.CharField(max_length=100, null=True, blank=True)
+    contact_type = models.CharField(max_length=20, null=True)  # <-- Add this line
+    currency = models.CharField(max_length=10)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     shipping = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    SHIPPING_TAX_CHOICES = [
-        ('5', '5%'),
-        ('7', '7%'),
-        ('10', '10%'),
-        ('20', '20%'),
-        ('25', '25%')
-    ]
-    
-    shipping_tax = models.CharField(
-        max_length=3,
-        choices=SHIPPING_TAX_CHOICES,
-        null=True,
-        blank=True,
-        default='5'
-    )
     tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-
-    def _str_(self):
-        return self.contract_title
-
-
+    total = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 
 class Target(models.Model):
     first_name = models.CharField(max_length=100)
