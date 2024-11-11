@@ -1,4 +1,4 @@
-{% extends "adminbase.html" %}
+{% extends "adminbase1.html" %}
 {% load static %}
 {% block title %}Calling agent dashboard{% endblock %}
 {% block css_link %}
@@ -15,27 +15,27 @@
                 <th>System ID</th>
                 <th>Employee ID</th>
                 <th>Employee Name</th>
-                <th>Uptime</th>   
-                <th>Downtime</th>   
-                <th>IP</th>   
+                <th>Uptime</th>
+                <th>Downtime</th>
+                <th>IP</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{id2}}</td>
-                <th>{{eid2}}</th>
-                <th>{{ename2}}</th>
-                <td>{{ uptime2 }}</td>
-                <td>{{downtime2}}</td>
-                <td>{{ip2}}</td>
+                <td data-label="System ID">{{ id2 }}</td>
+                <td data-label="Employee ID">{{ eid2 }}</td>
+                <td data-label="Employee Name">{{ ename2 }}</td>
+                <td data-label="Uptime">{{ uptime2 }}</td>
+                <td data-label="Downtime">{{ downtime2 }}</td>
+                <td data-label="IP">{{ ip2 }}</td>
             </tr>
             <tr>
-                <td>{{id3}}</td>
-                <th>{{eid3}}</th>
-                <th>{{ename3}}</th>
-                <td>{{ uptime3 }}</td>
-                <td>{{downtime3}}</td>
-                <td>{{ip3}}</td>
+                <td data-label="System ID">{{ id3 }}</td>
+                <td data-label="Employee ID">{{ eid3 }}</td>
+                <td data-label="Employee Name">{{ ename3 }}</td>
+                <td data-label="Uptime">{{ uptime3 }}</td>
+                <td data-label="Downtime">{{ downtime3 }}</td>
+                <td data-label="IP">{{ ip3 }}</td>
             </tr>
         </tbody>
     </table>

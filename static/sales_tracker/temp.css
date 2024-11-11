@@ -1,3 +1,8 @@
+
+body, html {
+    overflow-x: hidden;
+}
+
 .main_container {
     /* margin: 20px auto; */
     padding: 20px;

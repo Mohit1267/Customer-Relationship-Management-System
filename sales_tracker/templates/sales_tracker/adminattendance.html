@@ -1,0 +1,38 @@
+{% extends "adminbase1.html" %}
+{% load static %}
+{% block css_link %}
+
+ <link rel="stylesheet" href="{% static 'sales_tracker/adminattendance.css' %}">
+
+{% endblock %}
+
+{% block title %}Attendance{% endblock %}
+
+{% block content %}
+
+    <div class="row mt-2 mb-2 ">
+        <div class="col-md-2 center-text  moving_title " 
+        style="color: white;">
+        Hello {{ u }} </div>
+
+
+<div class="chart-container">
+    <img src="{% static 'bar_chart.png' %}" alt="Attendance Chart">
+</div>
+
+
+<div class="card-container" >
+    <div class="card">
+        <p>Total Days: {{ days.Tdays }}</p>
+    </div>
+    <div class="card">
+        <p>Present: {{ days.Pdays }}</p>
+    </div>
+    <div class="card">
+        <p>Absent: {{ days.Adays }}</p>
+    </div>
+    <div class="card">
+        <p>Late: {{ days.Ldays }}</p>
+    </div>
+</div>
+{% endblock %}

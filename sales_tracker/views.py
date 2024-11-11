@@ -3,6 +3,7 @@ import random
 import re
 from datetime import date, datetime, timedelta
 from typing import Any
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -18,9 +19,9 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, TemplateView
-from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from users.models import Profile, RegisterUser, Location, AttendanceRecord
 from .models import (
     MiningData, ContactData, LeadsData, OpportunityData, QuotesData,
@@ -28,17 +29,19 @@ from .models import (
     Account, NewPasswords, Task
 )
 from .forms import (
+
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
     AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm, ManualTimeForm,projectTemplate
+
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
     Att_perct, Late_perct, Mining_Count, Leads_Count, EachMinerTarget,
-    Time_worked, Productivity, admin_attendance_graph, dailymining, monthlymining,
-    quarterlymining, yearlymining, yearlyleads, quarterlyleads, monthlyleads,
-    dailyleads
+    Time_worked, Productivity, admin_attendance_graph, dailymining,
+    monthlymining, quarterlymining, yearlymining, yearlyleads,
+    quarterlyleads, monthlyleads, dailyleads
 )
 from .requirements import timer
 
@@ -210,13 +213,12 @@ def assign_miningCt():
     return RegisterUser.objects.get(id=assigned_to_id)
 
 
-
-
 def mining_view(request):
     user = request.user
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+    
     now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     today_mining = MiningData.objects.filter(date=now_date)
@@ -224,162 +226,86 @@ def mining_view(request):
 
     if request.method == "POST":
         form = MiningForm(request.POST)
-        state = request.POST.get("state")
-        city = request.POST.get("city")
-        zone = request.POST.get("zone")
+        
+        if form.is_valid():
+         
+            organisation_name = form.cleaned_data.get("organisation_name")
+            customer_first_name = form.cleaned_data.get("customer_first_name")
+            customer_last_name = form.cleaned_data.get("customer_last_name")
+            customer_contact_number = form.cleaned_data.get("customer_contact_number")
+            customer_mobile_number = form.cleaned_data.get("customer_mobile_number")
+            company_revenue = form.cleaned_data.get("company_revenue")
+            customer_offering = form.cleaned_data.get("customer_offering")
+            competition_of_AT = form.cleaned_data.get("competition_of_AT")
+            stock_market_registered = form.cleaned_data.get("stock_market_registered")
+            it_spending_budget = form.cleaned_data.get("IT_spending_budget")
+            source_of_data_mining = form.cleaned_data.get("source_of_data_mining")
+            company_emp_size = form.cleaned_data.get("company_emp_size")
 
-        organisation_name = form.data.get("organisation_name")
-        customer_first_name = form.data.get("customer_first_name")
-        customer_last_name = form.data.get("customer_last_name")
-        customer_contact_number = form.data.get("customer_contact_number")
-        customer_mobile_number = form.data.get("customer_mobile_number")
-        company_revenue = form.data.get("company_revenue")
-        customer_offering = form.data.get("customer_offering")
-        competition_of_AT = form.data.get("competition_of_AT")
-        stock_market_registered = form.data.get("stock_market_registered")
-        it_spending_budget = form.data.get("IT_spending_budget")
-        source_of_data_mining = form.data.get("source_of_data_mining")
-        company_emp_size = form.data.get("company_emp_size")
+            if not re.match("^[A-Za-z0-9 ]+$", organisation_name):
+                form.add_error('organisation_name', "Organisation name can only contain alphabets and numbers.")
+            elif not re.match("^[A-Za-z ]+$", customer_first_name):
+                form.add_error('customer_first_name', "First name can only contain alphabets.")
+            elif not re.match("^[A-Za-z ]+$", customer_last_name):
+                form.add_error('customer_last_name', "Last name can only contain alphabets.")
+            elif not re.match(r"^\d{10}$", customer_contact_number):
+                form.add_error('customer_contact_number', "Contact number must be exactly 10 digits.")
+            elif not re.match(r"^\d{10}$", customer_mobile_number):
+                form.add_error('customer_mobile_number', "Mobile number must be exactly 10 digits.")
+            elif not company_revenue.isdigit():
+                form.add_error('company_revenue', "Company revenue must be a numeric value.")
+            elif not re.match("^[A-Za-z0-9 ]+$", customer_offering):
+                form.add_error('customer_offering', "Customer offering can only contain alphabets and numbers.")
+            elif not re.match("^[A-Za-z0-9 ]+$", competition_of_AT):
+                form.add_error('competition_of_AT', "Competition of AT can only contain alphabets and numbers.")
+            elif not re.match("^[A-Za-z0-9 ]+$", stock_market_registered):
+                form.add_error('stock_market_registered', "Stock market registered can only contain alphabets and numbers.")
+            elif not it_spending_budget.isdigit():
+                form.add_error('IT_spending_budget', "IT spending budget must be a numeric value.")
+            elif not re.match("^[A-Za-z0-9 ]+$", source_of_data_mining):
+                form.add_error('source_of_data_mining', "Source of data mining can only contain alphabets and numbers.")
+            elif not company_emp_size.isdigit() or int(company_emp_size) <= 0:
+                form.add_error('company_emp_size', "Employee size must be a positive numeric value.")
+            else:
 
-        if not re.match("^[A-Za-z0-9 ]+$", organisation_name):
-            form.add_error('organisation_name', "Organisation name can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z ]+$", customer_first_name):
-            form.add_error('customer_first_name', "First name can only contain alphabets.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z ]+$", customer_last_name):
-            form.add_error('customer_last_name', "Last name can only contain alphabets.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match(r"^\d{10}$", customer_contact_number):
-            form.add_error('customer_contact_number', "Contact number must be exactly 10 digits.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match(r"^\d{10}$", customer_mobile_number):
-            form.add_error('customer_mobile_number', "Mobile number must be exactly 10 digits.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not company_revenue.isdigit():
-            form.add_error('company_revenue', "Company revenue must be a numeric value.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z0-9 ]+$", customer_offering):
-            form.add_error('customer_offering', "Customer offering can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z0-9 ]+$", competition_of_AT):
-            form.add_error('competition_of_AT', "Competition of AT can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z0-9 ]+$", stock_market_registered):
-            form.add_error('stock_market_registered', "Stock market registered can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not it_spending_budget.isdigit():
-            form.add_error('IT_spending_budget', "IT spending budget must be a numeric value.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z0-9 ]+$", source_of_data_mining):
-            form.add_error('source_of_data_mining', "Source of data mining can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not company_emp_size.isdigit() or int(company_emp_size) <= 0:
-            form.add_error('company_emp_size', "Employee size must be a positive numeric value.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        try:
-            MiningData.objects.get(organisation_name=organisation_name)
-            print("hello world")
-        except MiningData.DoesNotExist:
-            assignTo = assign_miningCt()
-            now_date_time = datetime.now()
-            now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-            username = request.user.username
-            mining_details = MiningData(
-                organisation_name=organisation_name,
-                customer_first_name=customer_first_name,
-                customer_last_name=customer_last_name,
-                customer_address=form.data.get("customer_address"),
-                customer_contact_number=customer_contact_number,
-                customer_mobile_number=customer_mobile_number,
-                customer_email=form.data.get("customer_email"),
-                company_revenue=company_revenue,
-                company_emp_size=company_emp_size,
-                customer_offering=customer_offering,
-                competition_of_AT=competition_of_AT,
-                stock_market_registered=stock_market_registered,
-                influncer=form.data.get("influncer") == "on",
-                desition_maker=form.data.get("desition_maker") == "on",
-                IT_spending_budget=it_spending_budget,
-                source_of_data_mining=source_of_data_mining,
-                date=now_date,
-                assigned_to=assignTo,
-                created_by=user,
-                state=state,
-                city=city,
-                region=zone,
-            )
-            mining_details.save()
-            print("Hello world 4")
-            return redirect("mining")
-
-        print("Hello world 2")
+                try:
+                    MiningData.objects.get(organisation_name=organisation_name)
+                except MiningData.DoesNotExist:
+                    assignTo = assign_miningCt()
+                    mining_details = MiningData(
+                        organisation_name=organisation_name,
+                        customer_first_name=customer_first_name,
+                        customer_last_name=customer_last_name,
+                        customer_address=form.cleaned_data.get("customer_address"),
+                        customer_contact_number=customer_contact_number,
+                        customer_mobile_number=customer_mobile_number,
+                        customer_email=form.cleaned_data.get("customer_email"),
+                        company_revenue=company_revenue,
+                        company_emp_size=company_emp_size,
+                        customer_offering=customer_offering,
+                        competition_of_AT=competition_of_AT,
+                        stock_market_registered=stock_market_registered,
+                        influncer=form.cleaned_data.get("influncer") == "on",
+                        desition_maker=form.cleaned_data.get("desition_maker") == "on",
+                        IT_spending_budget=it_spending_budget,
+                        source_of_data_mining=source_of_data_mining,
+                        date=now_date,
+                        assigned_to=assignTo,
+                        created_by=user,
+                        state=form.cleaned_data.get("state"),
+                        city=form.cleaned_data.get("city"),
+                        region=form.cleaned_data.get("zone"),
+                    )
+                    mining_details.save()
+                    return redirect("mining")
+                form.add_error(None, "Mining data with this organisation name already exists.")
+        
         return render(request, "sales_tracker/mining.html", {
             "form": form,
             "timer": formated_timer,
             "mining_count": today_mining_count
         })
-
+    
     else:
         form = MiningForm()
 
@@ -1882,13 +1808,6 @@ def createTask(request):
     })
 
 
-
-
-
-
-def temp(request):
-    return render(request, 'sales_tracker/temp.html')
-
 def send_meeting_email(request, meeting_id):
     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
     subject = "Meeting Reminder"
@@ -2188,6 +2107,13 @@ def createManualTime(request):
 
 def viewManualTime(request):
     return render(request, "sales_tracker/viewManualTime.html")
+
+def AdminAttendence(request):    
+ 
+    return render(request, "sales_tracker/adminattendance.html")
+
+def Location(request):
+    return render(request, 'sales_tracker/location.html')
 
 def viewNotes(request):
       return render(request, "sales_tracker/viewNotes.html")
@@ -2566,3 +2492,4 @@ def view_cases(request):
 
 def InvoiceImport(request):
     return render(request, "sales_tracker/InvoiceImport.html")
+
