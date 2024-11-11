@@ -15,19 +15,30 @@ body {
 
 .navbar-horizontal {
     background-color: #eff3f7 !important;
-    width: calc(100% - 255px);
+    width: 100%;
     background-color: #f8f9fa;
     padding: 10px 20px;
     /* border-radius: 20px 20px 20px 20px; */
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     left: 255px;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap; /* Allows elements to wrap on smaller screens */
+    padding: 1rem;
+    max-width: 100%;
+    overflow: hidden;
 
 }
-
+.navbar-horizontal {
+    
+    flex-grow: 1;
+   
+}
 .small-nav {
     display: flex;
     justify-content: space-between;
@@ -39,7 +50,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 100px;
+    margin-top: 40px;
     margin-left: 20px;
     /* position: fixed; */
     /* gap: 10px; */

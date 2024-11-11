@@ -6,9 +6,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>{% block title %}title{% endblock %}</title>
+  {% block css_link %}{% endblock %}
   <link rel="stylesheet" href="{% static 'base_copy.css' %}">
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <!-- <script type="text/javascript" src="app.js" defer></script> -->
+  
 </head>
 
 <body>
@@ -22,25 +28,37 @@
               d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
           </svg>
         </button>
-      </li>
+      </li> 
+
+
+      
 
       <li>
-        <a href="AgentBase.html">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+        <a class="nav-link spacing" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+        aria-controls="offcanvasExample" id="profileLink">
+        
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#e8eaed"
+          >
             <path
-              d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
+              d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
+            />
           </svg>
           <span>Profile</span>
         </a>
       </li>
 
-      <li class="active">
-        <a href="AgentBase.html">
+      <li>
+        <a href="{% url 'Dashboards'%}">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
             <path
               d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z" />
           </svg>
-          <span>Home</span>
+          <span>Dashboard</span>
         </a>
       </li>
 
@@ -68,7 +86,7 @@
         <ul class="sub-menu">
           <div>
 
-            <li><a href="#">View Mining</a></li>
+            <li><a href="{% url 'agentmining' %}">View Mining</a></li>
 
           </div>
         </ul>
@@ -88,9 +106,9 @@
         </button>
         <ul class="sub-menu">
           <div>
-            <li><a href="#">Create</a></li>
-            <li><a href="#">View</a></li>
-            <li><a href="#">Import</a></li>
+            <li><a href="{% url 'agentlead' %}">Create Leads</a></li>
+            <li><a href="{%url 'lead_data'%}">View Leads</a></li>
+            <li><a href="{%url 'leadImport'%}">Import</a></li>
           </div>
         </ul>
       </li>
@@ -111,9 +129,9 @@
       
         <ul class="sub-menu">
           <div>
-            <li><a href="#">Create</a></li>
-            <li><a href="#">View</a></li>
-            <li><a href="#">Import</a></li>
+            <li><a href="{% url 'agentcontact' %}">Create Contacts</a></li>
+            <li><a href="{% url 'viewcontact' %}">View Contacts</a></li>
+            <li><a href="{%url 'contactImport'%}">Import</a></li>
           </div>
         </ul>
       </li>
@@ -134,9 +152,9 @@
       
         <ul class="sub-menu">
           <div>
-            <li><a href="#">Create</a></li>
-            <li><a href="#">View</a></li>
-            <li><a href="#">Import</a></li>
+            <li><a href="{% url 'agentquote' %}">Create Quotes</a></li>
+            <li><a href="{% url 'quotes_data' %}">View Quotes</a></li>
+            <li><a href="{%url 'quoteimport'%}">Import</a></li>
           </div>
         </ul>
       </li>
@@ -156,8 +174,31 @@
       
         <ul class="sub-menu">
           <div>
-            <li><a href="#">Schedule Meeting</a></li>
-            <li><a href="#">Schedule Call</a></li>
+            <li><a href="{% url 'agentmeeting' %}">Schedule Meeting</a></li>
+            <li><a href="{% url 'agentcalling' %}">Schedule Call</a></li>
+
+          </div>
+        </ul>
+      </li>
+
+      <li>
+        <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+          <span>Opportunity</span>
+
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+              <path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/>
+          </svg>
+        </button>
+      
+        <ul class="sub-menu">
+          <div>
+            <li><a href="{% url 'agentopportunity' %}">Create Opportunity</a></li>
+            <li><a href="{% url 'opportunity_data' %}">View Opportunity</a></li>
+            <li><a href="{%url 'opportunityimport'%}">Import</a></li>
 
           </div>
         </ul>
@@ -191,27 +232,12 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                <li><a href="{% url 'createDocument' %}">Create Document</a></li>
+                <li><a href="{% url 'viewDocument' %}">View Document</a></li>
                 <!-- </div> -->
               </ul>
             </li>
-            <li>
-              <button onclick="toggleDocumentsMenu(this)" class="dropdown-btn">
-                <span>Policy</span>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                  fill="#e8eaed">
-                  <path
-                    d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
-                </svg>
-              </button>
-              <ul class="document-sub-option">
-                <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
-                <!-- </div> -->
-              </ul>
-            </li>
+            
             <li>
               <button onclick="toggleDocumentsMenu(this)" class="dropdown-btn">
                 <span>Notes</span>
@@ -222,9 +248,8 @@
                 </svg>
               </button>
               <ul class="document-sub-option">
-                <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Notes 3</a></li>
-                <li><a href="#">Notes 4</a></li>
+                <li><a href="{% url 'createNotes' %}">Create Notes</a></li>
+                <li><a href="{% url 'viewNotes' %}">View Notes</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -239,8 +264,9 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'agentaccount' %}">Create Accounts</a></li>
+                  <li><a href="{% url 'viewaccount' %}">View Accounts</a></li>
+                  <li><a href="{%url 'accountimport'%}">Import</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -255,8 +281,9 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'agentDsr' %}">Create DSR</a></li>
+                  <li><a href="{%url 'DSRimport'%}">View DSR</a></li>
+                  
                 <!-- </div> -->
               </ul>
             </li>
@@ -271,8 +298,8 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'createTask' %}">Create Tasks</a></li>
+                  <li><a href="{% url 'viewTask' %}">View Tasks</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -287,8 +314,9 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'createInvoices' %}">Create Invoices</a></li>
+                  <li><a href="{% url 'viewInvoices' %}">View Invoices</a></li>
+                  <li><a href="{% url 'InvoiceImport' %}">Import</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -303,8 +331,9 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'agentemail' %}">Compose Email</a></li>
+                  <li><a href="{% url 'viewemail' %}">View Email</a></li>
+                  
                 <!-- </div> -->
               </ul>
             </li>
@@ -319,8 +348,9 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'agenttarget' %}">Create Targets</a></li>
+                  <li><a href="{% url 'viewtarget' %}">View Targets</a></li>
+                  <li><a href="{% url 'targetimport' %}">Import</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -335,8 +365,8 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'targetsList' %}">Create Targets-Lists</a></li>
+                  <li><a href="{% url 'viewtargetsList' %}">View Targets-Lists</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -351,8 +381,11 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                <li><a href="{% url 'agentProjects' %}">Create Projects</a></li>
+                <li><a href="{% url 'viewprojectList' %}">View Project-List</a></li>
+                <li><a href="{% url 'projectimport' %}">Import</a></li>
+                <li><a href="{% url 'resourceCalendar' %}">Resource Calendar</a></li>
+                <li><a href="{% url 'viewprojectTask' %}">View Project-Task</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -367,8 +400,9 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'agentTemplate' %}">Create Templates</a></li>
+                  <li><a href="{% url 'viewTemplate' %}">View Templates</a></li>
+                  <li><a href="{% url 'Importtemplate' %}">Import</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -383,8 +417,9 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'createContract' %}">Create Contracts</a></li>
+                  <li><a href="{% url 'viewContract' %}">View Contracts</a></li>
+                  <li><a href="{% url 'Importtemplate' %}">Import</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -399,8 +434,9 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                <li><a href="#">Sub Option 3</a></li>
-                <li><a href="#">Sub Option 4</a></li>
+                  <li><a href="{% url 'createCase' %}">Create Cases</a></li>
+                  <li><a href="{% url 'viewCase' %}">View Cases</a></li>
+                  <li><a href="{% url 'Importtemplate' %}">Import</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -425,8 +461,39 @@
       </li> -->
 
     </ul>
+
+
+    <div class="offcanvas offcanvas-end" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel"
+    data-bs-backdrop="false" id="profileLink">
+
+    <div class="offcanvas-body">
+      <div class="row p-2">
+        <a href="{% url 'detail_profile' %}" class="right_profile">View Profile</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Edit Profile</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Employees</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Community</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">About</a>
+      </div>
+      <div class="row p-2">
+        <a href="{% url 'logout'%}" class="right_profile">Logout</a>
+      </div>
+
+     
+      <!-- <button id="toggleBreakBtn"   class="btn btn-primary brack-st">Start Break</button>
+      <div id="timerDisplay"></div> -->
+    </div>
+  </div>
+    
   </nav>
-  
+  {% block content %}{% endblock %}
 </body> 
 
 </html> 
@@ -508,6 +575,31 @@ function toggleDocumentsMenu(button) {
   // Update the active submenu reference
   activeSubMenu = subOptionDiv.classList.contains('active') ? subOptionDiv : null;
 }
+
+</script>
+
+<script>
+ document.addEventListener('DOMContentLoaded', function () {
+        const profileButton = document.getElementById('profileLink');
+        const offcanvas = document.getElementById('offcanvasExample');
+      
+        profileButton.addEventListener('click', function (e) {
+          e.stopPropagation();
+          offcanvas.classList.toggle('show');
+        });
+      
+        document.addEventListener('click', function (e) {
+          if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+            offcanvas.classList.remove('show');
+          }
+        });
+        
+        // Close button functionality
+        document.querySelector('.btn-close')?.addEventListener('click', function () {
+          offcanvas.classList.remove('show');
+        });
+      });
+
 
 </script>
 
