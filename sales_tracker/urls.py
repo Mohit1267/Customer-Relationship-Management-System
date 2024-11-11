@@ -130,8 +130,9 @@ urlpatterns = [
 
     path("createContract", login_required((views.create_contract)), name="createContract"),
     path("view_contract", login_required((views.view_contract)), name="viewContract"),
-     path('createCase/', views.add_case, name='createCase'),
+    path('createCase/', views.add_case, name='createCase'),
     path('viewCase/', views.view_cases, name='viewCase'),
+    path("InvoiceImport", login_required((views.InvoiceImport)), name="InvoiceImport"),
 
 
     # Employee screen share URL

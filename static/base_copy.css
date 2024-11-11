@@ -45,7 +45,7 @@ body{
 #sidebar{
  
     box-sizing: border-box;
-    height: 100vh;
+    height: 1500px;
     width: 250px;
     padding: 5px 1em;
     background-color: var(--base-clr);

@@ -2411,12 +2411,12 @@ def projectTemplate(request):
     else:
         form = projectTemplate()
     
-    return render(request, 'agenttemplate.html', {'form': form})
+    return render(request, 'sales_tracker/agenttemplate.html', {'form': form})
 
 # View to display all templates
 def ViewTemplate(request):
     templates = projectTemplate.objects.all()
-    return render(request, 'view_templates.html', {'templates': templates})
+    return render(request, 'sales_tracker/viewTemplates.html', {'templates': templates})
 
 
 
@@ -2497,7 +2497,7 @@ def create_contract(request):
             contract.save()
             return redirect('success')  # Redirect to a success page or another URL
 
-    else:
+    else: 
         form = ContractForm()
 
     return render(request, 'sales_tracker/createContract.html', {'form': form})
@@ -2563,3 +2563,6 @@ def add_case(request):
 def view_cases(request):
     cases = Case.objects.all()
     return render(request, 'sales_tracker/viewCase.html', {'cases': cases})
+
+def InvoiceImport(request):
+    return render(request, "sales_tracker/InvoiceImport.html")

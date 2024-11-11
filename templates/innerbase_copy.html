@@ -52,13 +52,13 @@
         </a>
       </li>
 
-      <li class="active">
+      <li>
         <a href="{% url 'Dashboards'%}">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
             <path
               d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z" />
           </svg>
-          <span>Home</span>
+          <span>Dashboard</span>
         </a>
       </li>
 
@@ -106,8 +106,8 @@
         </button>
         <ul class="sub-menu">
           <div>
-            <li><a href="{% url 'agentlead' %}">Create</a></li>
-            <li><a href="{%url 'lead_data'%}">View</a></li>
+            <li><a href="{% url 'agentlead' %}">Create Leads</a></li>
+            <li><a href="{%url 'lead_data'%}">View Leads</a></li>
             <li><a href="{%url 'leadImport'%}">Import</a></li>
           </div>
         </ul>
@@ -129,8 +129,8 @@
       
         <ul class="sub-menu">
           <div>
-            <li><a href="{% url 'agentcontact' %}">Create</a></li>
-            <li><a href="{% url 'viewcontact' %}">View</a></li>
+            <li><a href="{% url 'agentcontact' %}">Create Contacts</a></li>
+            <li><a href="{% url 'viewcontact' %}">View Contacts</a></li>
             <li><a href="{%url 'contactImport'%}">Import</a></li>
           </div>
         </ul>
@@ -152,8 +152,8 @@
       
         <ul class="sub-menu">
           <div>
-            <li><a href="{% url 'agentquote' %}">Create</a></li>
-            <li><a href="{% url 'quotes_data' %}">View</a></li>
+            <li><a href="{% url 'agentquote' %}">Create Quotes</a></li>
+            <li><a href="{% url 'quotes_data' %}">View Quotes</a></li>
             <li><a href="{%url 'quoteimport'%}">Import</a></li>
           </div>
         </ul>
@@ -183,15 +183,16 @@
 
       <li>
         <button onclick="toggleSubMenu(this)" class="dropdown-btn">
-          <!-- Calendar icon with date grid and rounded shape -->
+
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
-              <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
           </svg>
           <span>Opportunity</span>
+
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
               <path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/>
           </svg>
-      </button>
+        </button>
       
         <ul class="sub-menu">
           <div>
@@ -315,7 +316,7 @@
                 <!-- <div class="document-sub-option"> -->
                   <li><a href="{% url 'createInvoices' %}">Create Invoices</a></li>
                   <li><a href="{% url 'viewInvoices' %}">View Invoices</a></li>
-                  <li><a href="{% url 'viewemail' %}">Import</a></li>
+                  <li><a href="{% url 'InvoiceImport' %}">Import</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -364,8 +365,8 @@
               </button>
               <ul class="document-sub-option">
                 <!-- <div class="document-sub-option"> -->
-                  <li><a href="#">Create Targets-Lists</a></li>
-                  <li><a href="#">View Targets-Lists</a></li>
+                  <li><a href="{% url 'targetsList' %}">Create Targets-Lists</a></li>
+                  <li><a href="{% url 'viewtargetsList' %}">View Targets-Lists</a></li>
                 <!-- </div> -->
               </ul>
             </li>
@@ -486,8 +487,8 @@
       </div>
 
      
-      <button id="toggleBreakBtn"   class="btn btn-primary brack-st">Start Break</button>
-      <div id="timerDisplay"></div>
+      <!-- <button id="toggleBreakBtn"   class="btn btn-primary brack-st">Start Break</button>
+      <div id="timerDisplay"></div> -->
     </div>
   </div>
     
