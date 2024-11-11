@@ -470,31 +470,33 @@ class agentProjects(models.Model):
         return self.name
     
 
-class AgentTemplate(models.Model):
-    STATUS_CHOICES = [
-        ('draft', 'Draft'),
-        ('in_review', 'In Review'),
-        ('underway', 'Underway'),
-        ('on_hold', 'On Hold'),
-        ('completed', 'Completed'),
-]
+# class AgentTemplate(models.Model):
+#     STATUS_CHOICES = [
+#         ('draft', 'Draft'),
+#         ('in_review', 'In Review'),
+#         ('underway', 'Underway'),
+#         ('on_hold', 'On Hold'),
+#         ('completed', 'Completed'),
+# ]
 
-    PRIORITY_CHOICES = [
-        ('high', 'High'),
-        ('medium', 'Medium'),
-        ('low', 'Low'),
-    ]
+#     PRIORITY_CHOICES = [
+#         ('high', 'High'),
+#         ('medium', 'Medium'),
+#         ('low', 'Low'),
+#     ]
 
-    template_name = models.CharField(max_length=255)
-    consider_working_days = models.BooleanField(default=False)
-    project_manager = models.CharField(max_length=255)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.template_name
+#     template_name = models.CharField(max_length=255)
+#     consider_working_days = models.BooleanField(default=False)
+#     project_manager = models.CharField(max_length=255)
+#     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+#     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='medium')
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+
+#     def __str__(self):
+#         return self.template_name
 
 
 
@@ -545,6 +547,7 @@ class AgentTemplate(models.Model):
 #     created_at = models.DateTimeField(auto_now_add=True)
 
 #     def __str__(self):
+
 #         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
 
 
@@ -611,6 +614,11 @@ class Contract(models.Model):
     tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     total = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 
+
+
+
+from django.db import models
+
 class Target(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -636,6 +644,13 @@ class Target(models.Model):
 
     def _str_(self):
         return f"{self.first_name} {self.last_name}"
+
+
+
+
+
+
+
 
 
 class Case(models.Model):
@@ -674,6 +689,38 @@ class Case(models.Model):
 
 
 
+
+from django.db import models
+
+class projectTemplate(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('in_review', 'In Review'),
+        ('underway', 'Underway'),
+        ('on_hold', 'On Hold'),
+        ('completed', 'Completed'),
+]
+
+    PRIORITY_CHOICES = [
+        ('high', 'High'),
+        ('medium', 'Medium'),
+        ('low', 'Low'),
+    ]
+    
+    template_name = models.CharField(max_length=100)
+    consider_working_days = models.BooleanField(default=False)
+    project_manager = models.CharField(max_length=100)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
+
+    def _str_(self):
+        return self.template_name
+
+
+
+
+from django.db import models
+
 class ImportTemplate(models.Model):
     template_file = models.FileField(upload_to='import_templates/')
     action_choice = models.CharField(
@@ -687,41 +734,4 @@ class ImportTemplate(models.Model):
 
     def _str_(self):
         return f"Template - {self.template_file.name} ({self.get_action_choice_display()})"
-    
-#         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
 
-
-# from django.db import models
-# from django.contrib.auth.models import User
-
-# class Invoice(models.Model):
-#     # Title of the invoice
-#     title = models.CharField(max_length=255)
-
-#     # Unique invoice number
-#     invoice_number = models.CharField(max_length=255, unique=True)
-
-#     # Quote number (can be linked to a quote)
-#     quote_number = models.CharField(max_length=255)
-
-#     # Date when the invoice was created
-#     invoice_date = models.DateField()
-
-#     # Due date for the payment
-#     due_date = models.DateField()
-
-#     # The person to whom the invoice is assigned
-#     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-
-#     # Status of the invoice (Draft, Sent, Paid)
-#     STATUS_CHOICES = [
-#         ('Draft', 'Draft'),
-#         ('Sent', 'Sent'),
-#         ('Paid', 'Paid'),
-#     ]
-#     status = models.CharField(max_length=50, choices=STATUS_CHOICES)
-
-#     def __str__(self):
-#         return f"Invoice {self.invoice_number} - {self.title}"
-
-#         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
