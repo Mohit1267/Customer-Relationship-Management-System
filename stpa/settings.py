@@ -418,6 +418,7 @@ ASGI_APPLICATION = 'stpa.asgi.application'
 
 
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -429,4 +430,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 import os
+
 print("Current working directory:", os.getcwd())
+

@@ -1,92 +1,102 @@
 {% extends "agentbase.html" %}
 {% load static %}
- 
+
 {% block css_link %}
 
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <style>
-       html, body {
-       height: 100%;
-       margin: 0;
-       }
-       .wrapper {
-       height: 100%; 
-       }
-       .bg-gradient {
-           background: linear-gradient(to right, #a2e9da, #69d4c6);
-       }
-       .bg-gradient1 {
-           background: linear-gradient(to right, #cee0e0, #e6dfd4);
-       }
-       .container-fluid{
-         margin-left: 30px;
-       }
-       .wrapper{
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        /* Remove default margin */
+    }
+
+    .wrapper {
+        height: 100%;
+        /* Ensure wrapper takes full height */
+    }
+
+    .bg-gradient {
+        background: linear-gradient(to right, #a2e9da, #69d4c6);
+    }
+
+    .bg-gradient1 {
+        background: linear-gradient(to right, #cee0e0, #e6dfd4);
+    }
+
+    .container-fluid {
+        margin-left: 30px;
+    }
+
+    .wrapper {
+
         margin-left: 60px;
         z-index: 100;
-       }
-       .container {
+    }
+
+    .container {
         z-index: 100;
-       }
-       
-   </style>
+    }
+</style>
 {% endblock %}
 
 
 {% block title %}Scheduled Meetings {% endblock %}
 
-{% block content %} 
-    <div class="wrapper   overflow-auto  ">
-         <div class="container-fluid    ">
-             <div class="container  bg-gradient">
-        <h1 class="text-center mb-4">Scheduled Meetings</h1>
+{% block content %}
+<div class="wrapper   overflow-auto  ">
+    <div class="container-fluid    ">
+        <div class="container  bg-gradient">
+            <h1 class="text-center mb-4">Scheduled Meetings</h1>
 
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Duration</th>
-                    <th>Frequency</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Subject</th>
-                    <th>Related To</th>
-                    <th>Assigned To</th>
-                    <th>Notification</th>
-                    <th>Contact</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for meeting in scheduled_meetings %}
-                <tr>
-                    <td>{{ meeting.start_date }}</td>
-                    <td>{{ meeting.end_date }}</td>
-                    <td>{{ meeting.duration }}</td>
-                    <td>{{ meeting.frequency }}</td>
-                    <td>{{ meeting.start_time }}</td>
-                    <td>{{ meeting.end_time }}</td>
-                    <td>{{ meeting.subject }}</td>
-                    <td>{{ meeting.related_to }}</td>
-                    <td>{{ meeting.assigned_to }}</td>
-                    <td>{{ meeting.notification }}</td>
-                    <td>{{ meeting.contact }}</td>
-                    <td>
-                        <form action="{% url 'send_meeting_email' meeting.id %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit" {% if meeting.end_date < now %}disabled{% endif %}>Send Email</button>
-                        </form>
-                    </td>
-                   
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="11" class="text-center">No scheduled Meeting found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-            </div>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Duration</th>
+                        <th>Frequency</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Subject</th>
+                        <th>Related To</th>
+                        <th>Assigned To</th>
+                        <th>Notification</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for meeting in scheduled_meetings %}
+                    <tr>
+                        <td>{{ meeting.start_date }}</td>
+                        <td>{{ meeting.end_date }}</td>
+                        <td>{{ meeting.duration }}</td>
+                        <td>{{ meeting.frequency }}</td>
+                        <td>{{ meeting.start_time }}</td>
+                        <td>{{ meeting.end_time }}</td>
+                        <td>{{ meeting.subject }}</td>
+                        <td>{{ meeting.related_to }}</td>
+                        <td>{{ meeting.assigned_to }}</td>
+                        <td>{{ meeting.notification }}</td>
+                        <td>{{ meeting.contact }}</td>
+                        <td>
+                            <form action="{% url 'send_meeting_email' meeting.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="meeting_id" value="{{ meeting.id }}">
+                                <button type="submit">Send Email</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="11" class="text-center">No scheduled Meeting found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+>>>>>>> origin/pushkar
         </div>
     </div>
+</div>
 {% endblock %}
