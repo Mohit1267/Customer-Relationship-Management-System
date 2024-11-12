@@ -10,6 +10,10 @@ body {
     overflow-x: hidden;
 }
 
+.container-fluid {
+    background-color: #E0EAF6;
+}
+
 .moving_title {
     all: unset;
     font-size: 35px;
