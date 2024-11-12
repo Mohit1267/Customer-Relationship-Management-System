@@ -1,6 +1,6 @@
-/* Default styles (for desktop and larger screens) */
 .import-container {
     padding: 20px;
+  background-color: #E0EAF6;
 }
 
 .import-container h2 {
@@ -52,7 +52,6 @@
     margin-left: 8px;
 }
 
-/* Medium screens (tablets, 768px to 1024px) */
 @media (max-width: 1024px) {
     .import-container {
         padding: 15px;
@@ -76,8 +75,6 @@
     }
 }
 
-
-/* Small screens (large phones, 576px to 767px) */
 @media (max-width: 767px) {
     .import-container {
         padding: 10px;
@@ -96,7 +93,7 @@
     }
 
     .option {
-        flex-direction: column; /* Stack options vertically */
+        flex-direction: column;
         align-items: flex-start;
     }
 
@@ -106,15 +103,14 @@
 
     .option label {
         margin-left: 0;
-        margin-top: 5px; /* Add space between label and radio button */
+        margin-top: 5px; 
     }
 
     #importFile {
-        width: 100%; /* Full width for file input on smaller screens */
+        width: 100%; 
     }
 }
 
-/* Extra small screens (small phones, less than 576px) */
 @media (max-width: 576px) {
     .import-container {
         padding: 8px;

@@ -19,6 +19,7 @@ body, html {
     overflow-x: hidden; 
     scrollbar-width: bold; 
     scrollbar-color: #888 #f9f9f9;
+    background-color: #E0EAF6;
 }
 
 .container::-webkit-scrollbar {
