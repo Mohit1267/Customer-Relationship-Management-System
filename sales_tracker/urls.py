@@ -100,8 +100,8 @@ urlpatterns = [
     # path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
     path("createInvoices", login_required((views.createInvoices)), name="createInvoices"),
     path("viewInvoices", login_required((views.viewInvoices)), name="viewInvoices"),
-    path("agentemail", login_required((views.compose_email)), name="agentemail"),
-    path("viewemail", login_required((views.viewEmail)), name="viewemail"),
+    # path("agentemail", login_required((views.compose_email)), name="agentemail"),
+    # path("viewemail", login_required((views.viewEmail)), name="viewemail"),
     path("agenttarget", login_required((views.Agenttarget)), name="agenttarget"),
 
     path("viewtarget", login_required((views.viewTarget)), name="viewtarget"),
@@ -136,6 +136,10 @@ urlpatterns = [
     path('createCase/', views.add_case, name='createCase'),
     path('viewCase/', views.view_cases, name='viewCase'),
     path("InvoiceImport", login_required((views.InvoiceImport)), name="InvoiceImport"),
+    #path('agentemail/', views.compose_email, name='agentemail'),
+    # path('inbox/', views.inbox, name='inbox'),
+    path('agentemail', views.compose_email, name='agentemail'),
+    #path("viewemail", login_required(views.inbox), name="viewemail"),
 
 
 

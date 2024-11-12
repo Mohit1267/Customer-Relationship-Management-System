@@ -5,7 +5,7 @@ from ckeditor.fields import RichTextField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import (
-    MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
+    EmailTemplate, MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
     Schedule_Meeting, Schedule_Calling, Task, agentNotes, NewPasswords,
     DailySalesReport, agentProjects, projectTemplate
 )
@@ -687,15 +687,15 @@ class InvoiceForm(forms.Form):
     tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
     grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
 
-
-
 class ComposeEmailForm(forms.Form):
 
-    template = forms.CharField(
-        max_length=255,
+    template = forms.ModelChoiceField(
+        queryset=EmailTemplate.objects.all(),
         required=False,
+        empty_label="Select an email template",
         label="Email Template",
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'})
+       
     )
 
     related_to = forms.ChoiceField(
@@ -762,7 +762,6 @@ class ComposeEmailForm(forms.Form):
         label="Send in Plain Text",
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
     )
-
 
 
 
