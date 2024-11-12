@@ -1,4 +1,14 @@
 import json
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import HttpResponse
+from django.utils import timezone
+from datetime import  datetime, timedelta
+from django.utils import timezone
+from django.http import JsonResponse
+from django.db.models import Count, OuterRef, Subquery
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import connection
 import random
 import re
 from datetime import date, datetime, timedelta
@@ -22,6 +32,15 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from users.models import AttendanceRecord
+import random
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils.decorators import method_decorator
+from .forms import agentmeeting
+from django.http import JsonResponse
+#from datetime import date
+from datetime import datetime
+
 from users.models import Profile, RegisterUser, Location, AttendanceRecord
 from .models import (
     ComposedEmail, MiningData, ContactData, LeadsData, OpportunityData, QuotesData,
@@ -33,8 +52,7 @@ from .forms import (
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
-
-    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm, ManualTimeForm,projectTemplate,ContractForm
+    AgentProjectsForm,  ContractForm, SortForm, CaseForm, ManualTimeForm,projectTemplate,ContractForm
 
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
@@ -1805,18 +1823,38 @@ def createTask(request):
         'contacts': contacts 
     })
 
-
 def send_meeting_email(request, meeting_id):
     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
     subject = "Meeting Reminder"
     message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n{meeting.notification}\n\nBest regards,\nAARNAV Technologies"
     recipient_list = [meeting.contact]
 
-    try:
-        send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
-        return HttpResponse("Email sent successfully!")
-    except Exception as e:
-        return HttpResponse(f"Failed to send email: {e}")
+
+def temp(request):
+    return render(request, 'sales_tracker/temp.html')
+
+# def send_meeting_email(request, meeting_id):
+#     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
+#     subject = "Meeting Reminder"
+#     # Meeting details
+#     start_time = datetime.now() + timedelta(days=1)
+#     duration = 30
+#     #host_email = 'pushakrpandey200@gmail.com'
+#     #recipient_list = attendees_list + [host_email]
+
+
+#             # Create the Google Meet link
+#     meet_link = create_meeting_event(start_time, duration)
+
+    
+#     message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting{meet_link}.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n\nBest regards,\nAapai Technology."
+#     recipient_list = [meeting.contact]
+
+#     try:
+#         send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+#         return HttpResponse("Email sent successfully!")
+#     except Exception as e:
+#         return HttpResponse(f"Failed to send email: {e}")
 
 @login_required
 def employee_screen_share(request):
@@ -1850,7 +1888,6 @@ def viewNotes(request):
     print(notes,"this is notes")
     context['notes'] = notes 
     return render(request, "sales_tracker/viewNotes.html",context)
-
 
 
 def createInvoices(request):
@@ -1939,8 +1976,23 @@ def compose_email(request):
     return render(request, 'sales_tracker/agentemail.html', {'form': form})
 
 
+from django.shortcuts import render
+from .models import LeadsData
 
+def leads_view(request):
+    weekly_leads = LeadsData.objects.get_weekly_leads()
+    monthly_leads = LeadsData.objects.get_monthly_leads()
+    six_month_leads = LeadsData.objects.get_six_month_leads()
+    annual_leads = LeadsData.objects.get_annual_leads()
 
+    context = {
+        'weekly_leads': weekly_leads,
+        'monthly_leads': monthly_leads,
+        'six_month_leads': six_month_leads,
+        'annual_leads': annual_leads,
+    }
+
+    return render(request, 'sales_tracker/leadsdata.html', context)
 
 import imaplib
 import email
@@ -2215,6 +2267,156 @@ def AdminAttendence(request):
 def Location(request):
     return render(request, 'sales_tracker/location.html')
 
+
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+def send_gmeet_invitation(email, subject, message, meet_link):
+    # Customize your email content
+    email_message = f"{message}\n\nJoin the Google Meet at: {meet_link}"
+    
+    send_mail(
+        subject,
+        email_message,
+        settings.EMAIL_HOST_USER,
+        [email],
+        fail_silently=False,
+    )
+
+
+
+
+
+
+'''
+
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from datetime import datetime
+from .google_calendar_service import create_meeting_event
+
+def send_meeting_invitation(request):
+    # Set up the meeting details
+    start_time = datetime.now() + timedelta(days=1)  # Schedule for tomorrow
+    duration = 30  # Duration in minutes
+    attendees = ['gannu2032001@gmail.com','sahithya@aarnavtechnologies.com']  # List of attendee emails
+
+    # Generate the Google Meet link
+    meet_link = create_meeting_event(start_time, duration, attendees)
+    
+    # Prepare email content
+    email_subject = 'Your Google Meet Invitation'
+    email_message = f"Please join the meeting at this link: {meet_link}"
+    from_email = 'pushakrpandey200@gmail.com'
+    recipient_list = attendees
+
+    # Send the email
+    send_mail(
+        email_subject,
+        email_message,
+        from_email,
+        recipient_list,
+        fail_silently=False,
+    )
+
+    return HttpResponse("Meeting invitation sent successfully!")'''
+
+
+'''
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from datetime import datetime, timedelta
+from .google_calendar_service import create_meeting_event
+
+def send_meeting_invitation(request):
+    # Meeting details
+    start_time = datetime.now() + timedelta(days=1)
+    duration = 30
+    attendees = []
+    host_email = 'pushakrpandey200@gmail.com'  # Set the host email
+    recipient_list = attendees + [host_email]
+
+
+    # Create the Google Meet link with host as the organizer
+    meet_link = create_meeting_event(start_time, duration, attendees)
+
+    # Email details
+    email_subject = 'Your Google Meet Invitation'
+    email_message = (
+        f"Hello,\n\nYou have been invited to a Google Meet meeting.\n"
+        f"Organizer: {host_email}\n"
+        f"Please join the meeting at this link: {meet_link}\n\n"
+        "Best regards,\nUniqueBaba CRM Team"
+    )
+    from_email = host_email
+    recipient_list = attendees
+
+    # Send email
+    send_mail(
+        email_subject,
+        email_message,
+        from_email,
+        recipient_list,
+        fail_silently=False,
+    )
+
+    return HttpResponse("Meeting invitation sent successfully!")'''
+
+'''
+
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from datetime import datetime, timedelta
+from .google_calendar_service import create_meeting_event
+from .forms import agentmeeting
+from .models import Schedule_Meeting  # Assuming you have a Meeting model
+
+def send_meeting_invitation(request):
+    if request.method == "POST":
+        meeting_id = request.POST.get("meeting_id")
+        meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)  # Retrieve meeting details by ID
+        
+        # Initialize form and get attendees
+        form = agentmeeting(request.POST)
+        if form.is_valid():
+            attendees = form.cleaned_data['contact']
+            attendees_list = attendees.split(',')
+
+            # Meeting details
+            start_time = datetime.now() + timedelta(days=1)
+            duration = 30
+            host_email = 'pushakrpandey200@gmail.com'
+            recipient_list = attendees_list + [host_email]
+
+            # Create the Google Meet link
+            meet_link = create_meeting_event(start_time, duration, attendees_list)
+
+            # Email details
+            email_subject = 'Your Google Meet Invitation'
+            email_message = (
+                f"Hello,\n\nYou have been invited to a Google Meet meeting.\n"
+                f"Organizer: {host_email}\n"
+                f"Please join the meeting at this link: {meet_link}\n\n"
+                "Best regards,\nUniqueBaba CRM Team"
+            )
+
+            # Send email
+            send_mail(
+                email_subject,
+                email_message,
+                host_email,
+                recipient_list,
+                fail_silently=False,
+            )
+
+            return HttpResponse("Meeting invitation sent successfully!")
+        else:
+        form = agentmeeting()  # Render form for GET request
+    return render(request, 'sales_tracker/agentmeeting.html', {'form': form})'''
+
+
 def viewNotes(request):
       return render(request, "sales_tracker/viewNotes.html")
 
@@ -2395,7 +2597,7 @@ def Resourcecalendar(request):
 def ProjectTask(request):
     return render(request, "sales_tracker/viewprojectTask.html")
 
-
+'''
 def agentTemplate(request):
     """
     Handles the agent project form submission.
@@ -2421,7 +2623,30 @@ def agentTemplate(request):
     else:
         form = AgentTemplate() 
 
+    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})'''
+
+from django.shortcuts import render, redirect
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import projectTemplate
+from .forms import ProjectTemplateForm
+
+# View to create a project template
+def create_project_template(request):
+    if request.method == 'POST':
+        form = ProjectTemplateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('sales_tracker/agentTemplate.html')  # Ensure this route is correctly defined in urls.py
+    else:
+        form = ProjectTemplateForm()
+    
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+
 
 from django.shortcuts import render, redirect
 
@@ -2522,14 +2747,96 @@ def create_contract(request):
             Contract.save()
             return redirect('success')  # Redirect to a success page or another URL
 
-    else: 
+    
+
+# View to display a specific template
+def agent_template_view(request, template_id):
+    template_instance = get_object_or_404(ProjectTemplate, id=template_id)
+    return render(request, 'sales_tracker/viewTemplate.html', {'template': template_instance})
+
+from django.shortcuts import render, redirect
+from .forms import ContractForm
+from .models import Contract
+from django.db.models import F
+from decimal import Decimal
+
+def create_contract(request):
+    if request.method == "POST":
+        form = ContractForm(request.POST)
+        
+        if form.is_valid():
+            # Fetch cleaned data from form
+            contract_title = form.cleaned_data['contract_title']
+            contract_value = form.cleaned_data['contract_value']
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+            renewal_reminder_date = form.cleaned_data['renewal_reminder_date']
+            customer_schedule_date = form.cleaned_data['customer_schedule_date']
+            company_schedule_date = form.cleaned_data['company_schedule_date']
+            description = form.cleaned_data['description']
+            status = form.cleaned_data['status']
+            contact_manager = form.cleaned_data['contact_manager']
+            account = form.cleaned_data['account']
+            contact = form.cleaned_data['contact']
+            opportunity = form.cleaned_data['opportunity']
+            contract_type = form.cleaned_data['contract_type']
+            currency = form.cleaned_data['currency']
+            shipping = form.cleaned_data['shipping']
+            shipping_tax = form.cleaned_data['shipping_tax']
+            discount = form.cleaned_data['discount'] or Decimal(0)
+
+            # Calculate tax based on shipping_tax selection
+            if shipping_tax == "other":
+                custom_shipping_tax = Decimal(form.cleaned_data['custom_shipping_tax']) / Decimal(100)
+            else:
+                custom_shipping_tax = Decimal(shipping_tax) / Decimal(100)
+
+            # Calculate subtotal
+            subtotal = contract_value - discount
+
+            # Calculate total shipping with tax
+            shipping_tax_amount = shipping * custom_shipping_tax
+            total_shipping = shipping + shipping_tax_amount
+
+            # Calculate tax and grand total
+            tax = subtotal * Decimal(0.18)  # Assuming a fixed 18% tax rate for example
+            grand_total = subtotal + total_shipping + tax
+
+            # Save to the database
+            contract = Contract(
+                contract_title=contract_title,
+                contract_value=contract_value,
+                start_date=start_date,
+                end_date=end_date,
+                renewal_reminder_date=renewal_reminder_date,
+                customer_schedule_date=customer_schedule_date,
+                company_schedule_date=company_schedule_date,
+                description=description,
+                status=status,
+                contact_manager=contact_manager,
+                account=account,
+                contact=contact,
+                opportunity=opportunity,
+                contract_type=contract_type,
+                currency=currency,
+                total=contract_value,
+                discount=discount,
+                subtotal=subtotal,
+                shipping=shipping,
+                shipping_tax=shipping_tax,
+                tax=tax,
+                grand_total=grand_total,
+            )
+            contract.save()
+            return redirect('success')  # Redirect to a success page or another URL
+
+    else:
+
         form = ContractForm()
 
     return render(request, 'sales_tracker/createContract.html', {'form': form})
 
 from django.shortcuts import render, get_object_or_404
-
-
 
 def view_contract(request):    
     # Retrieve the contract by ID or return a 404 if not found
@@ -2537,6 +2844,7 @@ def view_contract(request):
     
     # Pass the contract data to the template
     return render(request, 'sales_tracker/viewContract.html', {'contract': contract})
+
 
 
 from .models import Target
@@ -2554,6 +2862,7 @@ def add_target(request):
     
     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
 
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import ImportTemplateForm
@@ -2570,6 +2879,7 @@ def upload_import_file(request):
 
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
+
 from django.shortcuts import render, redirect
 from .models import Case
 from .forms import CaseForm
@@ -2580,7 +2890,9 @@ def add_case(request):
         if form.is_valid():
             # Save the form data as a new Case instance
             case = Case.objects.create(**form.cleaned_data)
-            return redirect('view_cases') 
+
+            return redirect('view_cases')  # Redirect to the case list view
+
     else:
         form = CaseForm()
     
@@ -2590,6 +2902,24 @@ def view_cases(request):
     cases = Case.objects.all()
     return render(request, 'sales_tracker/viewCase.html', {'cases': cases})
 
+
 def InvoiceImport(request):
     return render(request, "sales_tracker/InvoiceImport.html")
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ImportTemplateForm
+
+def upload_import_file(request):
+    if request.method == 'POST':
+        form = ImportTemplateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # This saves the uploaded file and selected action to the database
+            messages.success(request, "File uploaded successfully!")
+            return redirect('targetimport')
+    else:
+        form = ImportTemplateForm()
+
+    return render(request, 'sales_tracker/targetimport.html', {'form': form})
+
 

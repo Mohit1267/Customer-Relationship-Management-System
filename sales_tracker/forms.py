@@ -7,7 +7,9 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import (
     EmailTemplate, MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
     Schedule_Meeting, Schedule_Calling, Task, agentNotes, NewPasswords,
+
     DailySalesReport, agentProjects, projectTemplate
+
 )
 
 from .models import Task
@@ -911,9 +913,10 @@ class AgentProjectsForm(forms.ModelForm):
         self.fields['project_template'].label = "Project Template"
 
 
+from django import forms
+from .models import projectTemplate
 
-
-class AgentTemplate(forms.ModelForm):
+class ProjectTemplateForm(forms.ModelForm):
     class Meta:
         model = projectTemplate
         fields = [
@@ -932,8 +935,8 @@ class AgentTemplate(forms.ModelForm):
             'priority': forms.Select(attrs={'class': 'form-control'}),
         }
     
-    def _init_(self, *args, **kwargs):
-        super()._init_(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.fields['template_name'].label = "Template Name"
         self.fields['consider_working_days'].label = "Consider Working Days"
@@ -942,6 +945,7 @@ class AgentTemplate(forms.ModelForm):
         self.fields['priority'].label = "Priority"
 
 
+from django import forms
 
 from .models import ImportTemplate
 
@@ -957,6 +961,7 @@ class ImportTemplateForm(forms.ModelForm):
             'template_file': 'Select File',
             'action_choice': 'What would you like to do with the imported data?',
         }
+
 
 class ContractForm(forms.Form):
 
@@ -1075,6 +1080,7 @@ class ContractForm(forms.Form):
         widget=forms.NumberInput(attrs={'placeholder': 'Enter shipping amount'})
     )
 
+
     SHIPPING_TAX_CHOICES = [
     ('5', '5%'),
     ('7', '7%'),
@@ -1094,6 +1100,7 @@ class ContractForm(forms.Form):
         label="Custom Shipping Tax",
         required=True,
     )
+
     tax = forms.DecimalField(
         label="Tax", 
         max_digits=10, 
@@ -1108,6 +1115,20 @@ class ContractForm(forms.Form):
         required=True, 
         widget=forms.NumberInput(attrs={'placeholder': 'Enter grand total amount'})
     )
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        shipping_tax = cleaned_data.get("shipping_tax")
+        custom_shipping_tax = cleaned_data.get("custom_shipping_tax")
+
+        # If "Other" is selected, custom_shipping_tax must be filled
+        if shipping_tax == "other" and not custom_shipping_tax:
+            self.add_error("custom_shipping_tax", "Please specify a custom shipping tax.")
+        return cleaned_data
+    tax = forms.DecimalField(label="Tax", max_digits=10, decimal_places=2, required=False)
+    grand_total = forms.DecimalField(label="Grand Total", max_digits=10, decimal_places=2, required=False)
+
 
     
 
