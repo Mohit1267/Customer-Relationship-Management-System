@@ -81,14 +81,10 @@
 
         </thead>
         <tbody>
-            {% for document in document_list %}
+            {% for note in notes %}
             <tr>
-                <td>{{ data.subject }}</td>
-                <td>{{ data.contact }}</td>
-                <td>{{ data.related_To }}</td>
-                <td>{{ data.attachment }}</td>
-                <td>{{ data.created_by }}</td>
-                <td>{{ data.date_created }}</td>
+                <td>{{ note.contact }}</td>
+                <td>{{ note.note }}</td>
             </tr>
             {% endfor %}
         </tbody>

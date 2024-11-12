@@ -1113,4 +1113,32 @@ def yearlyleads(request):
     # Render the Plotly figure to HTML and save it as an HTML div
     yearlyleads = plot(fig, output_type='div')
     return yearlyleads
-        
+
+def admin_attendance_pie(request):
+    print("This is in admin attendance pie function")
+
+    # Calculate the total counts for each status
+    total_present = sum(present_counts)
+    total_absent = sum(absent_counts)
+    total_late = sum(late_counts)
+
+    # Create a Plotly pie chart
+    fig = go.Figure(go.Pie(
+        labels=['Present', 'Absent', 'Late'],  # Labels for the pie chart
+        values=[total_present, total_absent, total_late],  # Values for each slice
+        marker=dict(colors=['#1f77b4', '#ff7f0e', '#2ca02c']),  # Colors for the slices
+        hole=0.3  # For a donut chart (optional)
+    ))
+
+    # Customize the layout
+    fig.update_layout(
+        title='Employee Attendance Distribution',
+        plot_bgcolor='#e0eaf6',
+        paper_bgcolor='#e0eaf6',
+        font=dict(color='black'),
+        legend=dict(title='Status')
+    )
+
+    # Render the Plotly figure to HTML and save it as an HTML file
+    graph_html = plot(fig, output_type='div')
+    return graph_html
