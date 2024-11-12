@@ -1,6 +1,6 @@
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f0f4f8; /* Soft background color */
+    background-color: #E0EAF6 !important;
 }
 
 .container-fluid {
@@ -24,28 +24,28 @@ body {
  } 
 
 .form {
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Space out sections */
-    width: 100%; /* Full width */
-    margin-top: 20px; /* Space above the form */
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    margin-top: 20px; 
 }
 
 .form-section {
-    width: 48%; /* Each section takes up about half of the form */
-    padding: 20px; /* Add padding for spacing */
-    background-color: #ffffff; /* White background for sections */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width: 48%; 
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
 }
 
 .form-section h2 {
-    font-size: 24px; /* Header size for sections */
-    margin-bottom: 15px; /* Space below header */
-    color: #333; /* Darker color for headers */
+    font-size: 24px; 
+    margin-bottom: 15px; 
+    color: #333; 
 }
 
 .form-group {
-    margin-bottom: 20px; /* Space between form groups */
+    margin-bottom: 20px; 
 }
 
 .button1 { 

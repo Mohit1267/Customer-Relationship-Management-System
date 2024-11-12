@@ -88,7 +88,6 @@ urlpatterns = [
     path("accountimport", login_required((views.accountimport)), name="accountimport"),
     path("DSRimport", login_required((views.DSRimport)), name="DSRimport"),
     path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
-    path("temp", login_required((views.temp)), name="temp"),
     path("miningimport", login_required((views.miningimport)), name="miningimport"),
     path("viewNotes", login_required((views.viewNotes)), name="viewNotes"),
     path('send-email/<int:meeting_id>/', views.send_meeting_email, name='send_meeting_email'),
@@ -127,10 +126,14 @@ urlpatterns = [
     path("agentTemplate", login_required((views.agentTemplate)), name="agentTemplate"),
     path("viewTemplate", login_required((views.ViewTemplate)), name="viewTemplate"),
     path('Importtemplate/', views.upload_import_file, name='Importtemplate'),
+    path('adminattendance', (views.AdminAttendence), name='adminattendance'),
+    path("location", login_required((views.Location)), name="location"),
     path("createContract", login_required((views.create_contract)), name="createContract"),
-    path("view_contract/", login_required((views.view_contract)), name="viewContract"),
-     path('createCase/', views.add_case, name='createCase'),
+    path("view_contract", login_required((views.view_contract)), name="viewContract"),
+    path('createCase/', views.add_case, name='createCase'),
     path('viewCase/', views.view_cases, name='viewCase'),
+    path("InvoiceImport", login_required((views.InvoiceImport)), name="InvoiceImport"),
+
 
 
     # Employee screen share URL

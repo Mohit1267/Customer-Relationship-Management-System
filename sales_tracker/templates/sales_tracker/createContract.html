@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load static %}
@@ -169,7 +169,3 @@
         taxInput.addEventListener("input", calculateTotals);  // Added listener for tax input
     });
 </script>
-
-
-
-{% endblock %}

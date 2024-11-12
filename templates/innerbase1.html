@@ -1,0 +1,379 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% block css_link %}{% endblock %}
+
+    <link rel="stylesheet" href="{% static 'innerbase1.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/datatables/datatables.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/datatables/datatables.css' %}"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      
+
+      <ul>
+        <li>
+          <span class="logo">Shanaya-CRM</span>
+          <button onclick="toggleSidebar()" id="toggle-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"
+              />
+            </svg>
+          </button>
+        </li>
+
+        <div class="count_down">
+          <p id="count_down">00:00:00</p>  
+        </div>
+
+        <li>
+          <a class="nav-link spacing" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+          aria-controls="offcanvasExample" id="profileLink">
+          
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'index' %}">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"
+              />
+            </svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li>
+          <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+            <!-- Replacing icon with a shovel icon for "mine" -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M14.06 9.02l-2.12 2.12 6.02 6.02c.39.39.39 1.02 0 1.41l-1.83 1.83c-.39.39-1.02.39-1.41 0l-6.02-6.02-2.12 2.12c-.39.39-1.02.39-1.41 0L4.7 12.88c-.39-.39-.39-1.02 0-1.41l6.02-6.02c.39-.39 1.02-.39 1.41 0l1.83 1.83c.39.39.39 1.02 0 1.41zM5.61 7.1L3.87 5.36c-.39-.39-.39-1.02 0-1.41l1.41-1.41c.39-.39 1.02-.39 1.41 0l1.74 1.74-2.82 2.82z"
+              />
+            </svg>
+            <span>Mining</span>
+            <!-- Chevron icon remains the same -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"
+              />
+            </svg>
+          </button>
+
+          <ul class="sub-menu">
+            <div>
+              <li><a href="{% url 'mining' %}">Create Mining</a></li>
+              <li><a href="{% url 'data' %}">View Mining</a></li>
+              <li><a href="{% url 'miningimport' %}">Import</a></li>
+            </div>
+          </ul>
+        </li>
+
+        <li>
+          <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+            <!-- Replacing icon with a calendar icon SVG -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"
+              />
+            </svg>
+            <span>Calendar</span>
+            <!-- Chevron icon remains the same -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"
+              />
+            </svg>
+          </button>
+
+          <ul class="sub-menu">
+            <div>
+              <li><a href="#">Schedule Meeting</a></li>
+              <li><a href="#">Schedule Call</a></li>
+            </div>
+          </ul>
+        </li>
+
+        <li>
+          <a href="{% url 'attendance'%}">
+            <!-- Replacing icon with a clipboard report icon for "Attendance Reports" -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm4 14H8v-2h8v2zm0-4H8v-2h8v2z"
+              />
+            </svg>
+            <span>Attendance</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    {% block content %} {% endblock %}
+    
+
+    <div class="offcanvas offcanvas-end" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel"
+    data-bs-backdrop="false" id="profileLink">
+
+    <div class="offcanvas-body">
+      <div class="row p-2">
+        <a href="{% url 'detail_profile' %}" class="right_profile">View Profile</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Edit Profile</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Employees</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Community</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">About</a>
+      </div>
+      <div class="row p-2">
+        <a href="{% url 'logout'%}" class="right_profile">Logout</a>
+      </div>
+
+     
+      <button id="toggleBreakBtn"   class="btn btn-primary brack-st">Start Break</button>
+      <div id="timerDisplay"></div>
+    </div>
+  </div>
+
+
+     {% comment %}
+    <main></main>
+    {% endcomment %}
+
+    <script>
+ let totalSeconds = parseInt("{{ timer.hrs }}", 10) * 3600 +
+      parseInt("{{ timer.min }}", 10) * 60 +
+      parseInt("{{ timer.sec }}", 10);
+
+    const countDownEle = document.getElementById("count_down");
+
+    function convertSecondsToHms(seconds) {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const sec = Math.floor(seconds % 60);
+
+      const formattedHours = hours.toString().padStart(2, "0");
+      const formattedMinutes = minutes.toString().padStart(2, "0");
+      const formattedSeconds = sec.toString().padStart(2, "0");
+
+      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    function updateCountDown() {
+      if (totalSeconds <= 0) {
+        countDownEle.innerHTML = "00:00:00";
+        clearInterval(mainTimerInterval);
+        return;
+      }
+      let formattedTimer = convertSecondsToHms(totalSeconds);
+      countDownEle.innerHTML = formattedTimer;
+      totalSeconds++;
+    }
+
+    let mainTimerInterval = setInterval(updateCountDown, 1000);
+
+    function startMainTimer() {
+      clearInterval(mainTimerInterval);
+      mainTimerInterval = setInterval(updateCountDown, 1000);
+    }
+
+    function pauseMainTimer() {
+      clearInterval(mainTimerInterval);
+    }
+
+    function sendHeartbeat() {
+      fetch("{% url 'heartbeat' %}", {
+        method: "GET",
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      }).then(response => {
+        if (response.status !== 200) {
+          console.error("Session may have expired.");
+        }
+      }).catch(error => {
+        console.error("Failed to send heartbeat:", error);
+      });
+    }
+
+    let breakTimeLeft = 3600;
+    let breakTimerInterval = null;
+
+    document.getElementById("toggleBreakBtn").addEventListener("click", function () {
+      if (breakTimerInterval) {
+        clearInterval(breakTimerInterval);
+        breakTimerInterval = null;
+        this.innerHTML = "Start Break";
+
+        startMainTimer();
+      } else {
+        pauseMainTimer();
+        breakTimeLeft = 3600;
+        startBreakTimer();
+        this.innerHTML = "End Break";
+      }
+    });
+
+    function startBreakTimer() {
+      breakTimerInterval = setInterval(() => {
+        if (breakTimeLeft === 0) {
+          clearInterval(breakTimerInterval);
+          breakTimerInterval = null;
+          document.getElementById("toggleBreakBtn").innerHTML = "Start Break";
+          alert("Break time is over!");
+
+          startMainTimer();
+        } else {
+          breakTimeLeft--;
+          displayTime();
+          sendHeartbeat();
+        }
+      }, 1000);
+    }
+
+    function displayTime() {
+      const minutes = Math.floor(breakTimeLeft / 60);
+      const seconds = breakTimeLeft % 60;
+      document.getElementById("timerDisplay").innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+
+    startMainTimer();
+
+
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const profileButton = document.getElementById('profileLink');
+        const offcanvas = document.getElementById('offcanvasExample');
+      
+        profileButton.addEventListener('click', function (e) {
+          e.stopPropagation();
+          offcanvas.classList.toggle('show');
+        });
+      
+        document.addEventListener('click', function (e) {
+          if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+            offcanvas.classList.remove('show');
+          }
+        });
+        
+        // Close button functionality
+        document.querySelector('.btn-close')?.addEventListener('click', function () {
+          offcanvas.classList.remove('show');
+        });
+      });
+      
+      
+      
+      
+      
+      
+      const toggleButton = document.getElementById('toggle-btn')
+      const sidebar = document.getElementById('sidebar')
+      
+      function toggleSidebar(){
+        sidebar.classList.toggle('close')
+        toggleButton.classList.toggle('rotate')
+      
+        closeAllSubMenus()
+      }
+      
+      function toggleSubMenu(button){
+      
+        if(!button.nextElementSibling.classList.contains('show')){
+          closeAllSubMenus()
+        }
+      
+        button.nextElementSibling.classList.toggle('show')
+        button.classList.toggle('rotate')
+      
+        if(sidebar.classList.contains('close')){
+          sidebar.classList.toggle('close')
+          toggleButton.classList.toggle('rotate')
+        }
+      }
+      
+      function closeAllSubMenus(){
+        Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
+          ul.classList.remove('show')
+          ul.previousElementSibling.classList.remove('rotate')
+        })
+      }
+      </script>
+  </body>
+</html>

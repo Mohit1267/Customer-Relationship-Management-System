@@ -1,0 +1,66 @@
+{% extends "adminbase1.html" %}
+{% load static %}
+{% block title %}Live Location Tracker{% endblock %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/location.css' %}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+{% endblock %}
+
+{% block content %}
+<div id="map"></div> 
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    
+    var map = L.map('map').setView([12.9716, 77.5946], 13); 
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+   
+    var userMarker = L.marker([12.9716, 77.5946]).addTo(map).bindPopup("You are here.");
+
+    var locationTrail = [];
+
+    var trailLine = L.polyline(locationTrail, { color: 'blue' }).addTo(map);
+
+    function updateLocation(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        locationTrail.push([latitude, longitude]);
+
+        map.setView([latitude, longitude], 13); 
+        userMarker.setLatLng([latitude, longitude]).openPopup(); 
+
+        trailLine.setLatLngs(locationTrail);
+    }
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.");
+                break;
+        }
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(updateLocation, showError);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+</script>
+{% endblock %}

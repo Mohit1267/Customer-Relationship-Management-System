@@ -1,12 +1,13 @@
+.body{
+    background-color: #E0EAF6 !important;
+}
+
 .dashboard-container {
     padding: 20px;
+    width: 100%;
     /* max-width: 1200px; */
-    width: 100vw;
     margin: 0 auto;
-    height: 100vh;
-    overflow-y: auto;
-    /* overflow-y: scroll; */
-
+    background-color: #E0EAF6;
 }
 
 .section {
@@ -14,14 +15,15 @@
 }
 
 .section h2 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+
     /* color: #FFFFFF;
     font-size: 26px;
     border-bottom: 3px solid #5e87b0;
     padding-bottom: 12px;
     font-weight: 600;
     letter-spacing: 1px; */
-    margin-top: 50px;
-    margin-bottom: 20px;
     color:black;
     font-size: 24px;
     border-bottom: 2px solid gray;
@@ -33,35 +35,17 @@
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
-
 }
 
 .card {
-    /* height: 200px !important; */
-    background: #1E2A38 !important;
+    background: #1E2A38 !important; 
     border: 1px solid #3C4A5E;
     border-radius: 12px;
-    flex: 1 1 calc(25% - 25px);
+    flex: 1 1 calc(25% - 25px); 
     min-width: 260px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-align: left;
-}
 
-.card1 {
-    height: 200px !important;
-    background: #1E2A38 !important;
-    border: 1px solid #3C4A5E;
-    border-radius: 7px;
-    flex: 1 1 calc(25% - 25px);
-    min-width: 260px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 25px;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -75,7 +59,7 @@
 
 .card-icon {
     font-size: 45px;
-    color: #5e87b0;
+    color: #5e87b0; 
     margin-right: 20px;
     flex-shrink: 0;
 }
@@ -83,7 +67,7 @@
 .card-content h3 {
     margin: 0 0 12px 0;
     font-size: 20px;
-    color: #ffffff;
+    color: #ffffff; 
     font-weight: 500;
     align-items: center;
 }
@@ -91,7 +75,7 @@
 .card-content p {
     margin: 0;
     font-size: 15px;
-    color: #a9b7c6;
+    color: #a9b7c6; 
     align-items: center;
 
 }
@@ -100,7 +84,6 @@
     align-items: center;
 }
 
-
 @media (max-width: 992px) {
     .card {
         flex: 1 1 calc(33.333% - 25px);
@@ -115,24 +98,6 @@
 
 @media (max-width: 576px) {
     .card {
-        flex: 1 1 100%;
-    }
-}
-
-@media (max-width: 992px) {
-    .card1 {
-        flex: 1 1 calc(33.333% - 25px);
-    }
-}
-
-@media (max-width: 768px) {
-    .card1 {
-        flex: 1 1 calc(50% - 25px);
-    }
-}
-
-@media (max-width: 576px) {
-    .card1 {
         flex: 1 1 100%;
     }
 }

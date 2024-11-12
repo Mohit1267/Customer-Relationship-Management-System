@@ -21,7 +21,30 @@ class MiningForm(forms.ModelForm):
     class Meta:
         model = MiningData
         fields = "__all__"
-        exclude = ["date", "assigned_to" ]
+        exclude = ["date", "assigned_to"]
+        
+        widgets = {
+            "organisation_name": forms.TextInput(attrs={"placeholder": "Enter organisation name"}),
+            "customer_first_name": forms.TextInput(attrs={"placeholder": "Enter first name"}),
+            "customer_last_name": forms.TextInput(attrs={"placeholder": "Enter last name"}),
+            "customer_contact_number": forms.TextInput(attrs={"placeholder": "Enter contact number (10 digits)"}),
+            "customer_mobile_number": forms.TextInput(attrs={"placeholder": "Enter mobile number (10 digits)"}),
+            "company_revenue": forms.TextInput(attrs={"placeholder": "Enter company revenue"}),
+            "company_emp_size": forms.TextInput(attrs={"placeholder": "Enter number of employees"}),
+            "customer_offering": forms.TextInput(attrs={"placeholder": "Enter customer offering"}),
+            "competition_of_AT": forms.TextInput(attrs={"placeholder": "Enter competition details"}),
+            "stock_market_registered": forms.TextInput(attrs={"placeholder": "Enter stock market status"}),
+            "IT_spending_budget": forms.TextInput(attrs={"placeholder": "Enter IT spending budget"}),
+            "source_of_data_mining": forms.TextInput(attrs={"placeholder": "Enter source of data mining"}),
+            "customer_address": forms.TextInput(attrs={"placeholder": "Enter customer address"}),
+            "customer_email": forms.EmailInput(attrs={"placeholder": "Enter email address"}),
+            "influncer": forms.CheckboxInput(),
+            "desition_maker": forms.CheckboxInput(),
+            "state": forms.TextInput(attrs={"placeholder": "Enter state"}),
+            "city": forms.TextInput(attrs={"placeholder": "Enter city"}),
+            "region": forms.TextInput(attrs={"placeholder": "Enter region/zone"}),
+        }
+
 
 class ContactForm(forms.ModelForm):
      class Meta:

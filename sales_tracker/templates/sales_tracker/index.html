@@ -1,35 +1,28 @@
-{% extends "innerbase.html" %}
+{% extends "innerbase1.html" %}
 {% load static %}
 
 {% block css_link %}
 <link rel="stylesheet" href="{% static 'sales_tracker/index3.css' %}">
-<script src="chart.js"></script>
 
 {% endblock %}
-{% block title %}DashBoard{% endblock %}
 
+{% block title %}DashBoard{% endblock %}
 
 {% block content %}
 {% if messages %}
 <div class="messages">
     {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-        {{ message }}
-    </div>
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
     {% endfor %}
 </div>
 {% endif %}
 
 <div class="content">
-    <div class="heading title_animation">
-        Welcome to the Aapai Technologies
-    </div>
+    <div class="heading title_animation">Welcome to Aapai Technologies</div>
 
     <div class="filter-dash d-flex align-items-center">
-   
         <h5 class="me-3">Filter by Category:</h5>
-
-        <select class="form-select filter-dashb me-2" aria-label="Filter" id="filterSelect">
+        <select class="form-select filter-dashb me-2" id="filterSelect">
             <option value="" disabled selected hidden>Filter by</option>
             <option value="Mining">Mining</option>
             <option value="Opportunities">Opportunities</option>
@@ -38,87 +31,59 @@
         </select>
     </div>
 
-
-
-    <div class="flex-container cards-container z-[-10]  " >
-        <div class="card ">
-            <div class="card-body ">
+    <div class="flex-container">
+        <div class="card" data-category="Mining">
+            <div class="card-body">
                 <h5 class="card-title" style="color: white;"><b>Today's Mining</b></h5>
                 <p class="card-text">{{ mining_count }}/40</p>
             </div>
         </div>
-        <div class="card">
+        <div class="card" data-category="Opportunities">
             <div class="card-body">
-                <h5 class="card-title" style="color: white;"><b>Today's Opportunity</b></h5>
+                <h5 class="card-title" style="color: white;"><b>Today's Opportunities</b></h5>
                 <p class="card-text">{{ Opportunity_count }}</p>
             </div>
         </div>
-        <div class="card">
+        <div class="card" data-category="Contacts">
             <div class="card-body">
                 <h5 class="card-title" style="color: white;"><b>Today's Contacts</b></h5>
                 <p class="card-text">{{ contact_count }}</p>
             </div>
         </div>
-        <div class="card">
+        <div class="card" data-category="Leads">
             <div class="card-body">
-                <h5 class="card-title" style="color:  white;"><b>Today's Leads</b></h5>
+                <h5 class="card-title" style="color: white;"><b>Today's Leads</b></h5>
                 <p class="card-text">{{ lead_count }}</p>
             </div>
         </div>
 
-    </div>
-
-        <div class="flex-container graph-container">
-            <div class="graph" data-category="Mining" >
-                {{ graph_html|safe }}
-            </div>
-
-            <div class="graph" data-category="Opportunity" >
-                {{ monthlymining|safe }}
-            </div>
-
-            <div class="graph" data-category="Contacts" >
-                {{ quarterlymining|safe }}
-            </div>
-
-            <div class="graph" data-category="Leads" >
-                {{ yearlymining|safe }}
-            </div>
+        <div class="flex-container ">
+            <div class="graph1" data-category="Mining">{{ graph_html|safe }}</div>
+            <div class="graph1" data-category="Opportunities">{{ monthlymining|safe }}</div>
+            <div class="graph1" data-category="Contacts">{{ quarterlymining|safe }}</div>
+            <div class="graph1" data-category="Leads">{{ yearlymining|safe }}</div>
         </div>
-       
-    </div>
-    
-   
-    <script>
-        document.getElementById('filterSelect').addEventListener('change', function() {
-            const selectedValue = this.value;
-            const cards = document.querySelectorAll('.card');
-            const graphs = document.querySelectorAll('.graph');
-    
-            
-            cards.forEach(card => {
-                const category = card.getAttribute('data-category');
-    
-                if (selectedValue === '' || selectedValue === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-    
-            
-            graphs.forEach(graph => {
-                const category = graph.getAttribute('data-category');
-    
-                if (selectedValue === 'Mining') {
-                    graph.style.display = 'block';
-                } else {
-                    graph.style.display = 'none';
-                }
-            });
-        });
-    </script>
-  
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    </div>
+
+   
+</div>
+
+<script>
+    document.getElementById('filterSelect').addEventListener('change', function() {
+        const selectedValue = this.value;
+        const cards = document.querySelectorAll('.card');
+        const graphs = document.querySelectorAll('.graph');
+
+        cards.forEach(card => {
+            card.style.display = (selectedValue === '' || selectedValue === card.getAttribute('data-category')) ? 'block' : 'none';
+        });
+
+        graphs.forEach(graph => {
+            graph.style.display = (selectedValue === graph.getAttribute('data-category')) ? 'block' : 'none';
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock %}
