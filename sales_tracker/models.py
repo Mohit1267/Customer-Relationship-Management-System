@@ -735,12 +735,14 @@ class ImportTemplate(models.Model):
         return f"Template - {self.template_file.name} ({self.get_action_choice_display()})"
 
 class EmailTemplate(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, null=True, blank=True)
+
     subject = models.CharField(max_length=255)
     body = models.TextField()
 
     def _str_(self):
         return self.name
+
 
 
 class ComposedEmail(models.Model):
