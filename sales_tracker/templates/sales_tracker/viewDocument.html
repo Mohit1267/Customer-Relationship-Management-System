@@ -80,32 +80,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for data in data_list %}
+            {% for data in data %}
             <tr>
-                <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td>
-
-                {% if data.customer_first_name %}
-                <td>{{ data.customer_first_name }} {{ data.customer_last_name }}</td>
-                <td>{{ data.customer_email }}</td>
-                <td>{{data.customer_mobile_number}}</td>
-                <td>{{data.city}}</td>
-                <td>{{data.state}}</td>
-                {% elif data.first_name %}
-                <td>{{ data.first_name }} {{ data.last_name }}</td>
-                <td>{{ data.email_id }}</td>
-                <td>-</td>
-                <td>-</td>
-                {% elif data.opportunity_name %}
-                <td>{{ data.opportunity_name }}</td>
-                <td>-</td>
-                <td>{{ data.probability }}</td>
-                <td>{{ data.assigned_to }}</td>
-                {% elif data.title %}
-                <td>{{ data.title }}</td>
-                <td>-</td>
-                <td>{{ data.valid_until }}</td>
-                <td>{{ data.approval_status }}</td>
-                {% endif %}
+                <td>{{ data.file_name }}</td>
+                <td>{{ data.document_name }}</td>
+                <td>{{ data.category }}</td>
+                
             </tr>
             {% endfor %}
         </tbody>

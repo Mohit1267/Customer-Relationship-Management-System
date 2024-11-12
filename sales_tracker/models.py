@@ -593,6 +593,7 @@ class agentProjects(models.Model):
 #         return self.contract_title
 
 
+
 class Contract(models.Model):
     contract_title = models.CharField(max_length=100)
     contract_value = models.DecimalField(max_digits=10, decimal_places=2)
@@ -601,20 +602,18 @@ class Contract(models.Model):
     renewal_reminder_date = models.DateField(null=True, blank=True)
     customer_schedule_date = models.DateField(null=True, blank=True)
     company_schedule_date = models.DateField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True, default='Nothing')
+    description = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=20)
     contact_manager = models.CharField(max_length=100)
     account = models.CharField(max_length=100)
     contact = models.CharField(max_length=100)
     opportunity = models.CharField(max_length=100, null=True, blank=True)
-    contact_type = models.CharField(max_length=20, null=True)  # <-- Add this line
+    contact_type = models.CharField(max_length=20)  # <-- Add this line
     currency = models.CharField(max_length=10)
     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     shipping = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     total = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-
-
 
 
 from django.db import models
@@ -735,3 +734,29 @@ class ImportTemplate(models.Model):
     def _str_(self):
         return f"Template - {self.template_file.name} ({self.get_action_choice_display()})"
 
+class EmailTemplate(models.Model):
+    name = models.CharField(max_length=100)
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+
+    def _str_(self):
+        return self.name
+
+
+class ComposedEmail(models.Model):
+    """Model to store composed email details."""
+    template = models.ForeignKey(EmailTemplate, on_delete=models.SET_NULL, null=True, blank=True)
+    related_to = models.CharField(max_length=255, blank=True, null=True)
+    from_address = models.EmailField()
+    to_address = models.EmailField()
+    cc_address = models.TextField(blank=True, null=True)
+    bcc_address = models.TextField(blank=True, null=True)
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    send_plain_text = models.BooleanField(default=False)
+    sent_status = models.BooleanField(default=False)  # New field to track email status
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return f"Email to {self.to_address} - Subject: {self.subject[:50]}"

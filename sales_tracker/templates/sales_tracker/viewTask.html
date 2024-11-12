@@ -95,15 +95,10 @@
             </tr>
         </thead>
         <tbody>
-        {% for data in data_list %}
+        {% for task in Tasks %}
             <tr>
-                <td><a href="{% url 'detaildata' data %}">{{ data.contract_title }}</a></td>
-                <td>{{ data.status }}</td>
-                <td>{{ data.contract_manager }}</td>
-                <td>{{ data.account }}</td>
-                <td>{{ data.contract_value }}</td>
-                <td>{{ data.start_date }}</td>
-                <td>{{ data.end_date }}</td>
+                <td>{{ task.subject }}</td>
+                
             </tr>
         {% endfor %}
         </tbody>

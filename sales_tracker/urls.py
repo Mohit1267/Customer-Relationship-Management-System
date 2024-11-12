@@ -127,9 +127,8 @@ urlpatterns = [
     path("agentTemplate", login_required((views.agentTemplate)), name="agentTemplate"),
     path("viewTemplate", login_required((views.ViewTemplate)), name="viewTemplate"),
     path('Importtemplate/', views.upload_import_file, name='Importtemplate'),
-
     path("createContract", login_required((views.create_contract)), name="createContract"),
-    path("view_contract", login_required((views.view_contract)), name="viewContract"),
+    path("view_contract/", login_required((views.view_contract)), name="viewContract"),
      path('createCase/', views.add_case, name='createCase'),
     path('viewCase/', views.view_cases, name='viewCase'),
 
