@@ -26,22 +26,24 @@ from users.models import Profile, RegisterUser, Location, AttendanceRecord
 from .models import (
     ComposedEmail, MiningData, ContactData, LeadsData, OpportunityData, QuotesData,
     CallingAgent, Schedule_Meeting, Schedule_Calling, DailySalesReport,
-    Account, NewPasswords, Task
+    Account, NewPasswords, Task,Contract,Document,agentNotes
 )
 from .forms import (
 
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
-    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm, ManualTimeForm,projectTemplate
+
+    AgentProjectsForm, AgentTemplate, ContractForm, SortForm, CaseForm, ManualTimeForm,projectTemplate,ContractForm
 
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
     Att_perct, Late_perct, Mining_Count, Leads_Count, EachMinerTarget,
-    Time_worked, Productivity, admin_attendance_graph, dailymining,
-    monthlymining, quarterlymining, yearlymining, yearlyleads,
-    quarterlyleads, monthlyleads, dailyleads
+    Time_worked, Productivity, admin_attendance_graph, dailymining, monthlymining,
+    quarterlymining, yearlymining, yearlyleads, quarterlyleads, monthlyleads,
+    dailyleads, admin_attendance_pie
+
 )
 from .requirements import timer
 
@@ -68,11 +70,14 @@ def Dashboards(request):
         att = Att_perct()
         late = Late_perct()
         attendence_graph = admin_attendance_graph(request)
+        attendence_graph_pie = admin_attendance_pie(request)
+
         context['admin_message'] = "Welcome to the Admin Page"
         context['attendances'] = attendances
         context['attendence_graph'] = attendence_graph
+        context['attendence_graph_pie'] = attendence_graph_pie
         context['att'] = att
-        context['temp'] = "temp"
+        context['temp'] = "temp"    
         # context['request'] = request
         latitude = request.session.get('latitude')
         longitude = request.session.get('longitude')
@@ -1509,9 +1514,6 @@ def validate_password_view(request):
             entered_minor_password = form.cleaned_data['Minor_password']
             entered_sales_password = form.cleaned_data['Sales_password']
             entered_admin_password = form.cleaned_data['Admin_password']
-
-
-
             return redirect('createTask') 
     else:
         form = TaskForm()
@@ -1519,7 +1521,12 @@ def validate_password_view(request):
     return render(request, 'sales_tracker/createTask.html', {'form': form})
 
 def viewTask(request):
-    return render(request, "sales_tracker/viewTask.html")
+    context = {}
+    
+    Tasks = Task.objects.all()
+    context['Tasks']=Tasks
+
+    return render(request, "sales_tracker/viewTask.html", context)
 
 
 def Agentaccount(request):
@@ -1689,28 +1696,19 @@ def createDocument(request):
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('success_url')
+            # return redirect('success_url')
     else:
         form = DocumentForm()
     
     return render(request, 'sales_tracker/createDocument.html', {'form': form})
 
 def viewDocument(request):
+    context = {}
+    data = Document.objects.all()
+    context = {'data':data}
+    return render(request, "sales_tracker/viewDocument.html",context)
 
-    return render(request, "sales_tracker/viewDocument.html")
 
-
-
-#     def post(self, request):
-#         form = agentcalling(request.POST)
-#         if form.is_valid():
-#             # Save the form data to the database
-#             form.save()
-#             print("Form is valid")
-#         else:
-#             print("Form errors: ", form.errors)
-
-#         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
 
 
 class ViewScheduledCalls(View):
@@ -1755,7 +1753,7 @@ def createNotes(request):
         form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('note_list')  
+            # return redirect('note_list')  
     else:
         form = NoteForm()
     
@@ -1795,7 +1793,7 @@ def createTask(request):
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save()
-            return redirect('create_task') 
+            return redirect('createTask') 
     else:
         form = TaskForm()
 
@@ -1847,7 +1845,11 @@ def miningimport(request):
     return render(request, "sales_tracker/miningimport.html")
 
 def viewNotes(request):
-      return render(request, "sales_tracker/viewNotes.html")
+    context ={}
+    notes = agentNotes.objects.all()
+    print(notes,"this is notes")
+    context['notes'] = notes 
+    return render(request, "sales_tracker/viewNotes.html",context)
 
 
 
@@ -2217,7 +2219,6 @@ def viewNotes(request):
       return render(request, "sales_tracker/viewNotes.html")
 
 
-
 def createInvoices(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
@@ -2518,7 +2519,7 @@ def create_contract(request):
                 tax=tax,
                 grand_total=grand_total,
             )
-            contract.save()
+            Contract.save()
             return redirect('success')  # Redirect to a success page or another URL
 
     else: 
@@ -2527,11 +2528,12 @@ def create_contract(request):
     return render(request, 'sales_tracker/createContract.html', {'form': form})
 
 from django.shortcuts import render, get_object_or_404
-from .models import Contract
 
-def view_contract(request, contract_id):
+
+
+def view_contract(request):    
     # Retrieve the contract by ID or return a 404 if not found
-    contract = get_object_or_404(Contract, id=contract_id)
+    contract = get_object_or_404(Contract)
     
     # Pass the contract data to the template
     return render(request, 'sales_tracker/viewContract.html', {'contract': contract})
@@ -2578,7 +2580,7 @@ def add_case(request):
         if form.is_valid():
             # Save the form data as a new Case instance
             case = Case.objects.create(**form.cleaned_data)
-            return redirect('view_cases')  # Redirect to the case list view
+            return redirect('view_cases') 
     else:
         form = CaseForm()
     

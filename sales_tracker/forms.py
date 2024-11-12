@@ -161,12 +161,14 @@ class TaskForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Enter task description'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to (optional)'}),
-            'contacts': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'contacts': forms.TextInput(attrs={'class': 'form-control'}),
+            'contacts': forms.SelectMultiple(),
         }
     
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
         self.fields['subject'].label = "Task Subject"
+        self.fields['contacts'].queryset = ContactData.objects.all()
         # self.fields['contacts'].help_text = "Hold Ctrl to select multiple contacts"
 
 
