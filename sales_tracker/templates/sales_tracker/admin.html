@@ -13,108 +13,51 @@
 
 <div class="center-content">
 
+    <nav class="navbar-horizontal ">
+
+        <div class="small-nav">
+    
+          <form class="d-flex">
+
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+
+          </form>
+    
+        </div>
+
+    </nav>
+
     <div class="filter-search-container">
 
         <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
 
     </div>
 
+
     <div class="filter-container">
+
         <div id="filterForm" class="filter-form">
 
-  </div>
-  
-  <div id="filter-section" class="filter-section" style="display: none;">
-  
-      <form method="GET" action="{% url 'lead_data' %}">
-          <div class="inside-filter-container">
-              <label for="time_frame">Select Time Frame:</label>
-              <select name="time_frame" id="time_frame">
-                  <option value="all" disabled selected hidden>Select Time Frame</option>
-                  <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
-                  <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
-                  <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
-                  <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
-                  <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
-              </select>
-          </div>
-  
-          <div class="state-filter-container">
-              <label for="state-filter">State:</label>
-              <select name="state" id="state-filter">
-                  <option value="all" disabled selected hidden>Select State</option>
-                  <option value="AP">Andhra Pradesh</option>
-                  <option value="AR">Arunachal Pradesh</option>
-                  <option value="AS">Assam</option>
-                  <option value="BR">Bihar</option>
-                  <option value="CG">Chhattisgarh</option>
-                  <option value="GA">Goa</option>
-                  <option value="GJ">Gujarat</option>
-                  <option value="HR">Haryana</option>
-                  <option value="HP">Himachal Pradesh</option>
-                  <option value="JH">Jharkhand</option>
-                  <option value="KA">Karnataka</option>
-                  <option value="KL">Kerala</option>
-                  <option value="MP">Madhya Pradesh</option>
-                  <option value="MH">Maharashtra</option>
-                  <option value="MN">Manipur</option>
-                  <option value="ML">Meghalaya</option>
-                  <option value="MZ">Mizoram</option>
-                  <option value="NL">Nagaland</option>
-                  <option value="OD">Odisha</option>
-                  <option value="PB">Punjab</option>
-                  <option value="SK">Sikkim</option>
-                  <option value="TN">Tamil Nadu</option>
-                  <option value="TG">Telangana</option>
-                  <option value="TR">Tripura</option>
-                  <option value="UP">Uttar Pradesh</option>
-                  <option value="UT">Uttarakhand</option>
-                  <option value="WB">West Bengal</option>
-              </select>
-          </div>
-  
-          <div class="zone-filter-container">
-              <label for="zone-filter">Zone:</label>
-              <select name="zone" id="zone-filter">
-                  <option value="all" disabled selected hidden>Select Zone</option>
-                  <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
-                  <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
-                  <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
-                  <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
-              </select>
-          </div>
-  
-          <div class="buttons">
-              <button type="submit" class="button4">Apply Filter</button>
-              <button type="button" class="button2" onclick="clearFilters()">Clear</button>
-          </div>
-      </form>
-  </div>
-      <div class="graphBox">
-      <div>{{ attendence_graph|safe }}</div>
-      <div>{{ attendence_graph_pie|safe }}</div>
-      </div>
-      <!-- <p>{{lat}}</p> -->
-      <!-- <p>{{long}}</p> -->
-            <form class="d-flex">
-                <input class="form-control me-2 " style="width: 150px;" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-
             <form method="GET" action="{% url 'lead_data' %}">
+
                 <div class="inside-filter-container">
+
                     <label for="time_frame">Select Time Frame:</label>
+
                     <select name="time_frame" id="time_frame">
+
                         <option value="" disabled selected hidden>Select Time Frame</option>
                         <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
                         <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
                         <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
                         <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
                         <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
+
                     </select>
                 </div>
-            </form>
 
+            </form>
 
             <div class="state-filter-container">
 
@@ -153,9 +96,10 @@
 
             </div>
 
-
             <div class="zone-filter-container">
+
                 <label for="zone-filter">Zone:</label>
+
                 <select name="zone" id="zone-filter">
                     <option value="all" disabled selected hidden>Select Zone</option>
                     <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
@@ -175,42 +119,46 @@
     </div>
 
     <div class="graphBox">
+
         <div>{{ attendence_graph|safe }}</div>
+        <div>{{ attendence_graph_pie|safe }}</div>
+
     </div>
+
 </div>
 
 
 <script>
 
     function toggleFilter() {
-      var filterForm = document.getElementById("filterForm");
-      filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "grid" : "none";
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "grid" : "none";
     }
-  
+
     function clearForm() {
-      document.getElementById("anyPhone").value = "";
-      document.getElementById("anyEmail").value = "";
-      document.getElementById("anyAddress").value = "";
-      document.getElementById("state").value = "";
-      document.getElementById("postalCode").value = "";
-      document.getElementById("country").value = "";
-      document.getElementById("firstName").value = "";
-      document.getElementById("lastName").value = "";
-      document.getElementById("assistant").value = "";
-      document.getElementById("doNotCall").checked = false;
-      document.getElementById("assignedTo").value = "";
+        document.getElementById("anyPhone").value = "";
+        document.getElementById("anyEmail").value = "";
+        document.getElementById("anyAddress").value = "";
+        document.getElementById("state").value = "";
+        document.getElementById("postalCode").value = "";
+        document.getElementById("country").value = "";
+        document.getElementById("firstName").value = "";
+        document.getElementById("lastName").value = "";
+        document.getElementById("assistant").value = "";
+        document.getElementById("doNotCall").checked = false;
+        document.getElementById("assignedTo").value = "";
     }
-  
-  </script>
+
+
+</script>
 
 <script>
 
     function clearFilters() {
-      document.getElementById('time_frame').selectedIndex = 0;
-      document.getElementById('state-filter').selectedIndex = 0;
-      document.getElementById('zone-filter').selectedIndex = 0;
+        document.getElementById('time_frame').selectedIndex = 0;
+        document.getElementById('state-filter').selectedIndex = 0;
+        document.getElementById('zone-filter').selectedIndex = 0;
     }
-  
-  </script>
-  
+
+</script>
 {% endblock %}

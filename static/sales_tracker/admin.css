@@ -1,3 +1,4 @@
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #E0EAF6 !important;
@@ -9,24 +10,24 @@ body {
     width: 100%;
     text-align: center;
     display: grid;
-    flex-direction: row;
     align-items: center;
     background-color: #E0EAF6;
 }
 
 .navbar-horizontal {
-    background-color: #eff3f7 !important;
-    width: calc(100% - 255px);
     background-color: #f8f9fa;
     padding: 10px 20px;
-    /* border-radius: 20px 20px 20px 20px; */
-    position: fixed;
     top: 0;
     left: 255px;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
-
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 100%;
+    overflow: hidden;
+    flex-grow: 1;
 }
 
 .small-nav {
@@ -40,18 +41,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 50px;
-    margin-left: 20px;
-    /* position: fixed; */
-    /* gap: 10px; */
-    /* padding: 10px; */
+    margin-top: 40px;
+    margin-left: 15px;
 }
 
 .filter-button {
-    width: 100px;
+    width: 90px;
     height: 30px;
     color: black;
-    border: 1px light black;
+    border: 1px solid light black;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
 }
@@ -63,13 +61,13 @@ body {
 }
 
 .filter-container {
-    margin: 20px;
+    margin: 15px;
 }
 
 .filter-toggle-btn {
     background-color: #1E2A38;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 18px;
     border: none;
     cursor: pointer;
 }
@@ -81,37 +79,36 @@ body {
     padding: 20px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.808);
-    /* display: grid; */
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 20px; 
     width: 80%;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 8px;
+    padding: 7px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .form-actions {
     grid-column: span 3;
-    margin-top: 20px;
+    margin-top: 18px;
 }
 
 .form-actions button {
-    padding: 10px 15px;
-    margin-right: 10px;
+    padding: 8px 12px;
+    margin-right: 8px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -137,13 +134,10 @@ body {
     color: white;
 }
 
-
 .inside-filter-container {
-    /* margin-left: 80px; */
     display: flex;
     align-items: center;
     gap: 5px;
-
 }
 
 .inside-filter-container label {
@@ -157,7 +151,6 @@ body {
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #eff3f7;
-
 }
 
 .state-filter-container {
@@ -176,7 +169,7 @@ body {
     font-size: 16px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    background-color: #eff3f7
+    background-color: #eff3f7;
 }
 
 .zone-filter-container {
@@ -184,7 +177,6 @@ body {
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    margin-top: 50px;
 }
 
 .zone-filter-container label {
@@ -206,111 +198,9 @@ body {
 }
 
 .filter-select {
-    width: 150px;
-    margin-left: 20px;
+    width: 140px;
+    margin-left: 15px;
 }
-
-.location-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 40px;
-}
-
-.button-location {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 20px;
-    gap: 20px;
-}
-
-.button5 {
-    padding: 10px 20px;
-    color: white;
-    background-color: #00ffb3;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    font-size: 16px;
-}
-
-.button5:hover {
-    background-color: #b0b300;
-    transform: scale(1.05);
-}
-
-.button5:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
-}
-
-.lat {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    /* margin-bottom: 27%; */
-    margin-top: 30px;
-    padding: 15px;
-    background-color: #b1e9dd;
-    border: 1px solid #d1d1d1;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.lat:hover {
-    transform: scale(1.02);
-}
-
-.lat label {
-
-    color: #333;
-    margin-right: 10px;
-
-}
-
-.profile-button {
-    padding: 5px 10px;
-    color: black;
-    background-color: #eff3f7;
-    /* border: 1px solid black;  */
-    /* border-radius: 5px;  */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border: none;
-    /* border-radius: 15%; */
-}
-
-.button1 {
-    padding: 5px 10px;
-    color: black;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    background-color: #eff3f7;
-
-}
-
-.button1:hover {
-    border-color: white;
-    color: white;
-    background-color: black;
-    /* border-radius: 17%;; */
-}
-
-.profile-button:hover {
-    background-color: #eff3f7;
-}
-
-.profile-button:hover img {
-    border-color: white;
-    color: white;
-    /* background-color: #eff3f7; */
-    border-radius: 17%;
-    ;
-}
-
 
 .graphBox {
     display: flex;
@@ -318,244 +208,85 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    z-index: -1;
-    margin-top: 100px;
+    margin-top: 80px;
+    gap: 30px;
 }
 
-
-@media (max-width: 1400px) and (min-width: 1200px) {
-    body {
-        font-size: 15px;
-    }
-
-    .centered-content {
-        padding: 0 20px;
-    }
-
+@media (max-width: 1400px) and (min-width: 1200px){
     .navbar-horizontal {
-        width: calc(100% - 230px);
-        left: 230px;
-        padding: 10px 15px;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        padding: 8px 16px;
+        gap: 0.8rem;
     }
 
     .small-nav {
-        padding: 0 10px;
+        gap: 3px;
+    }
+
+    .filter-search-container {
+        margin-top: 30px;
+        margin-left: 10px;
+        flex-wrap: wrap;
+    }
+
+    .filter-button {
+        width: 80px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+
+    .filter-container {
+        margin: 10px;
+    }
+
+    .filter-toggle-btn {
+        padding: 6px 16px;
+    }
+
+    .filter-form {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 15px;
+        width: 90%;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 6px;
+    }
+
+    .form-actions {
+        grid-column: span 3; 
+        margin-top: 15px;
+    }
+
+    .form-actions button {
+        padding: 6px 10px;
+        font-size: 0.9rem;
     }
 
     .inside-filter-container,
     .state-filter-container,
     .zone-filter-container {
-        display: flex;
         gap: 4px;
     }
 
-    .inside-filter-container label,
-    .state-filter-container label,
-    .zone-filter-container label {
-        font-size: 14px;
-        margin: 3px;
-    }
-
     .inside-filter-container select,
     #state-filter,
     #zone-filter {
-
         padding: 4px;
-        font-size: 14px;
-    }
-
-    .filter-select {
-        width: 130px;
-        margin-left: 15px;
-    }
-
-    .profile-button {
-        margin-right: 300px;
-        /* padding: 8px 16px;  */
-        /* gap: 1px; */
-        font-size: 14px;
-        border-radius: 12%;
-    }
-
-    .button1 {
-        /* margin-right: 100px; */
-        /* padding: 8px 16px;  */
-        font-size: 14px;
-        border-radius: 12%
-    }
-
-    button:hover {
-        border-radius: 15%;
-    }
-
-    .buttons {
-        display: flex;
-        gap: 1px;
-        margin-right: 120px;
-    }
-
-    .profile-button:hover {
-        font-size: 14px;
-    }
-
-    .graphBox {
-        margin-top: 5%;
-
-    }
-
-    .graph {
-        padding: 15px;
-        margin: 0.5rem;
-        width: calc(50% - 20px);
+        font-size: 0.9rem;
     }
 
     .filter-bar {
-        flex-wrap: wrap;
-    }
-
-    .navbar-horizontal {
-        justify-content: space-between;
-    }
-}
-
-@media (max-width: 1200px) and (min-width: 1020px) {
-    body {
-        font-size: 14px;
-    }
-
-    .centered-content {
-        padding: 0 15px;
-    }
-
-    .navbar-horizontal {
-        width: calc(100% - 200px);
-        left: 200px;
-        padding: 8px 15px;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    }
-
-    .small-nav {
-        padding: 0 8px;
-    }
-
-    .inside-filter-container,
-    .state-filter-container,
-    .zone-filter-container {
-        gap: 3px;
-    }
-
-    .inside-filter-container label,
-    .state-filter-container label,
-    .zone-filter-container label {
-        font-size: 13px;
-        margin: 3px;
-    }
-
-    .inside-filter-container select,
-    #state-filter,
-    #zone-filter {
-        padding: 4px;
-        font-size: 14px;
-    }
-
-    .filter-select {
-        width: 120px;
-        margin-left: 15px;
-    }
-
-    .profile-button {
-        /* padding: 8px 14px; */
-        /* gap: 1px;
-        margin-right: 500px; */
-        font-size: 13px;
-        border-radius: 10%;
-    }
-
-    .button1 {
-        /* padding: 8px 14px; */
-        font-size: 13px;
-        border-radius: 10%;
-    }
-
-    .buttons {
-        display: flex;
-        gap: 1px;
-        margin-right: 250px;
-    }
-
-    button:hover {
-        border-radius: 13%;
-    }
-
-    .profile-button:hover {
-        font-size: 13px;
-    }
-
-    .graphBox {
-        margin-top: 4%;
-    }
-
-    .graph {
-        padding: 12px;
-        margin: 0.5rem;
-        width: calc(50% - 20px);
-    }
-
-    .filter-bar {
-        flex-wrap: wrap;
-    }
-
-    .navbar-horizontal {
-        justify-content: space-between;
-    }
-}
-
-@media (max-width: 1020px) and (min-width: 800px) {
-    body {
-        font-size: 13px;
-    }
-
-    .centered-content {
-        padding: 0 10px;
-    }
-
-    .navbar-horizontal {
-        width: calc(100% - 250px);
-        left: 250px;
-        padding: 8px 10px;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
-
-    .small-nav {
-        /* gap: 2px; */
-        padding: 2px 6px;
-    }
-
-    /* .form{
-        padding: 2px;
-    } */
-
-    .inside-filter-container,
-    .state-filter-container,
-    .zone-filter-container {
-        gap: 3px;
-        flex-wrap: wrap;
-    }
-
-    .inside-filter-container label,
-    .state-filter-container label,
-    .zone-filter-container label {
-        font-size: 12px;
-        margin: 2px;
-    }
-
-    .inside-filter-container select,
-    #state-filter,
-    #zone-filter {
-        padding: 4px;
-        font-size: 14px;
-        width: 100%;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .filter-select {
@@ -563,162 +294,483 @@ body {
         margin-left: 10px;
     }
 
-    .profile-button {
-        padding: 6px 12px;
-        font-size: 12px;
-        border-radius: 10%;
-    }
-
-    .button1 {
-        /* padding: 6px 12px; */
-        font-size: 12px;
-        border-radius: 10%;
-    }
-
-    .buttons {
-        display: flex;
-        gap: 1px;
-        margin-right: 200px;
-    }
-
-    button:hover {
-        border-radius: 12%;
-    }
-
-    .profile-button:hover {
-        font-size: 12px;
-    }
-
     .graphBox {
-        margin-top: 20%;
+        gap: 20px;
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 1020px) {
+    .navbar-horizontal {
+        padding: 6px 12px;
+        gap: 0.6rem;
     }
 
-    .graph {
-        padding: 12px;
-        margin: 0.5rem;
-        width: calc(50% - 10px);
+    .small-nav {
+        gap: 2px;
     }
 
-    .filter-bar {
+    .filter-search-container {
+        margin-top: 25px;
+        margin-left: 8px;
         flex-wrap: wrap;
     }
 
-    .navbar-horizontal {
-        justify-content: space-between;
+    .filter-button {
+        width: 75px;
+        height: 26px;
+        font-size: 0.85rem;
     }
 
-    .graphBox {
-        flex-direction: column;
+    .filter-container {
+        margin: 8px;
+    }
+
+    .filter-toggle-btn {
+        padding: 5px 14px;
+    }
+
+    .filter-form {
+        grid-template-columns: 3fr 3fr;
+        grid-gap: 12px;
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 8px;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 5px;
+        font-size: 0.85rem;
+    }
+
+    .form-actions {
+        grid-column: span 3;
+        margin-top: 12px;
+    }
+
+    .form-actions button {
+        padding: 5px 8px;
+        font-size: 0.85rem;
     }
 
     .inside-filter-container,
     .state-filter-container,
     .zone-filter-container {
+        gap: 3px;
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        padding: 3px;
+        font-size: 0.85rem;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-select {
+        width: 110px;
+        margin-left: 8px;
+    }
+
+    .graphBox {
+        gap: 15px;
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 1020px) and (min-width: 800px) {
+    .navbar-horizontal {
+        padding: 4px 10px;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .small-nav {
+        gap: 2px;
+        font-size: 0.8rem;
+    }
+
+    .filter-search-container {
+        margin-top: 20px;
+        margin-left: 5px;
+        flex-wrap: wrap;
+    }
+
+    .filter-button {
+        width: 70px;
+        height: 24px;
+        font-size: 0.8rem;
+    }
+
+    .filter-container {
+        margin: 6px;
+    }
+
+    .filter-toggle-btn {
+        padding: 4px 12px;
+        font-size: 0.8rem;
+    }
+
+    .filter-form {
+        grid-template-columns: 3fr;
+        grid-gap: 10px;
         width: 100%;
-        margin-bottom: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 6px;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 4px;
+        font-size: 0.8rem;
+    }
+
+    .form-actions {
+        grid-column: span 3;
+        margin-top: 10px;
+    }
+
+    .form-actions button {
+        padding: 4px 6px;
+        font-size: 0.8rem;
+    }
+
+    .inside-filter-container,
+    .state-filter-container,
+    .zone-filter-container {
+        gap: 3px;
+        flex-direction: row; 
+        align-items: flex-start;
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        padding: 3px;
+        font-size: 0.8rem;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .filter-select {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .graphBox {
+        gap: 10px;
+        margin-top: 40px;
     }
 }
 
 @media (max-width: 800px) and (min-width: 600px) {
-    body {
-        font-size: 12px;
-    }
-
-    .centered-content {
-        padding: 0 8px;
-    }
-
     .navbar-horizontal {
-        width: calc(100% - 180px);
-        left: 180px;
-        padding: 8px 10px;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        padding: 3px 8px;
+        gap: 0.4rem;
+        flex-wrap: wrap;
     }
 
     .small-nav {
-        /* padding: 0 4px; */
-        gap: 5px;
+        gap: 1.5px;
+        font-size: 0.75rem;
+    }
+
+    .filter-search-container {
+        margin-top: 15px;
+        margin-left: 5px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .filter-button {
+        width: 60px;
+        height: 22px;
+        font-size: 0.75rem;
+    }
+
+    .filter-container {
+        margin: 4px;
+    }
+
+    .filter-toggle-btn {
+        padding: 3px 10px;
+        font-size: 0.75rem;
+    }
+
+    .filter-form {
+        grid-template-columns: 3fr; 
+        grid-gap: 8px;
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-group label {
+        font-size: 0.75rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 3px;
+        font-size: 0.75rem;
+    }
+
+    .form-actions {
+        grid-column: span 3;
+        margin-top: 8px;
+    }
+
+    .form-actions button {
+        padding: 3px 5px;
+        font-size: 0.75rem;
     }
 
     .inside-filter-container,
     .state-filter-container,
     .zone-filter-container {
         gap: 2px;
-        flex-wrap: wrap;
-    }
-
-    .inside-filter-container label,
-    .state-filter-container label,
-    .zone-filter-container label {
-        font-size: 11px;
-        margin: 1px;
+        flex-direction: row;
+        align-items: flex-start;
     }
 
     .inside-filter-container select,
     #state-filter,
     #zone-filter {
-        padding: 4px;
-        font-size: 12px;
-        width: 100%;
-    }
-
-    .filter-select {
-        width: 100px;
-        margin-left: 10px;
-    }
-
-    .profile-button {
-        padding: 5px 10px;
-        font-size: 10px;
-        border-radius: 10%;
-    }
-
-    .button1 {
-        /* padding: 5px 10px; */
-        font-size: 10px;
-        border-radius: 10%;
-    }
-
-    .buttons {
-        display: flex;
-        gap: 1px;
-        margin-right: 180px;
-    }
-
-    button:hover {
-        border-radius: 12%;
-    }
-
-    .profile-button:hover {
-        font-size: 10px;
-    }
-
-    .graphBox {
-        margin-top: 20%;
-    }
-
-    .graph {
-        padding: 10px;
-        margin: 0.5rem;
-        width: calc(50% - 10px);
+        padding: 2px;
+        font-size: 0.75rem;
     }
 
     .filter-bar {
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 5px;
     }
 
-    .navbar-horizontal {
-        justify-content: space-between;
+    .filter-select {
+        width: 100%;
+        margin-left: 0;
     }
 
     .graphBox {
-        flex-direction: column;
+        gap: 8px;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 600px) and (min-width: 200px) {
+    .navbar-horizontal {
+        padding: 2px 6px;
+        gap: 0.3rem;
+        flex-wrap: wrap;
+    }
+
+    .small-nav {
+        gap: 0.8rem;
+        font-size: 0.7rem;
+    }
+
+    .filter-search-container {
+        margin-top: 10px;
+        margin-left: 2px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .filter-button {
+        width: 50px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+
+    .filter-container {
+        margin: 3px;
+    }
+
+    .filter-toggle-btn {
+        padding: 2px 8px;
+        font-size: 0.7rem;
+    }
+
+    .filter-form {
+        grid-template-columns: 3fr; 
+        grid-gap: 6px;
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 4px;
+    }
+
+    .form-group label {
+        font-size: 0.7rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 2px;
+        font-size: 0.7rem;
+    }
+
+    .form-actions {
+        grid-column: span 3;
+        margin-top: 6px;
+    }
+
+    .form-actions button {
+        padding: 2px 4px;
+        font-size: 0.7rem;
     }
 
     .inside-filter-container,
     .state-filter-container,
     .zone-filter-container {
+        gap: 1px;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        padding: 2px;
+        font-size: 0.7rem;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .filter-select {
         width: 100%;
-        margin-bottom: 8px;
+        margin-left: 0;
+    }
+
+    .graphBox {
+        gap: 6px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 200px) {
+    body {
+        font-size: 0.6rem; /* Reduce font size */
+        padding: 0;
+        margin: 0;
+    }
+
+    .navbar-horizontal {
+        padding: 1px 3px;
+        gap: 0.2rem;
+        font-size: 0.6rem;
+        flex-direction: column;
+    }
+
+    .small-nav {
+        gap: 0.5rem;
+        font-size: 0.6rem;
+    }
+
+    .filter-search-container {
+        margin-top: 5px;
+        margin-left: 1px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .filter-button {
+        width: 40px;
+        height: 15px;
+        font-size: 0.5rem;
+    }
+
+    .filter-container {
+        margin: 2px;
+    }
+
+    .filter-toggle-btn {
+        padding: 1px 5px;
+        font-size: 0.5rem;
+    }
+
+    .filter-form {
+        grid-template-columns: 3fr;
+        grid-gap: 4px;
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 3px;
+    }
+
+    .form-group label {
+        font-size: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 1px;
+        font-size: 0.5rem;
+    }
+
+    .form-actions {
+        grid-column: span 3;
+        margin-top: 4px;
+    }
+
+    .form-actions button {
+        padding: 1px 3px;
+        font-size: 0.5rem;
+    }
+
+    .inside-filter-container,
+    .state-filter-container,
+    .zone-filter-container {
+        gap: 1px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        padding: 1px;
+        font-size: 0.5rem;
+    }
+
+    .filter-bar {
+        flex-direction: row;
+        gap: 2px;
+    }
+
+    .filter-select {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .graphBox {
+        gap: 3px;
+        margin-top: 10px;
     }
 }
