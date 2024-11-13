@@ -1,4 +1,5 @@
-{% extends "adminbase.html" %}
+{% extends "adminbase1.html" %}
+
 {% load static %}
 {% block title %}Daily Sales Report Table{% endblock %}
 {% block css_link %}
@@ -12,7 +13,7 @@
     </div>
 
     <section class="main_container">
-        <!-- Start of form with POST method and CSRF token -->
+    
         <form method="POST" action="">
             {% csrf_token %}
 
@@ -39,7 +40,6 @@
                 </tbody>
             </table>
 
-            <!-- Submit button -->
             <button type="submit">Submit</button>
         </form>
     </section>

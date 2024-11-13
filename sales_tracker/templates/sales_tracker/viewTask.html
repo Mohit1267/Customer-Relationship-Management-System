@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 
 {% load static %}
 {% block css_link %}
@@ -61,11 +61,24 @@
                     <option value="user3">User 3</option>
                 </select>
             </div>
+
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
             
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
+            
         </div>
     </div>
     
@@ -82,15 +95,10 @@
             </tr>
         </thead>
         <tbody>
-        {% for data in data_list %}
+        {% for task in Tasks %}
             <tr>
-                <td><a href="{% url 'detaildata' data %}">{{ data.contract_title }}</a></td>
-                <td>{{ data.status }}</td>
-                <td>{{ data.contract_manager }}</td>
-                <td>{{ data.account }}</td>
-                <td>{{ data.contract_value }}</td>
-                <td>{{ data.start_date }}</td>
-                <td>{{ data.end_date }}</td>
+                <td>{{ task.subject }}</td>
+                
             </tr>
         {% endfor %}
         </tbody>
@@ -114,7 +122,7 @@
     }
 
     function performSearch() {
-        // Get filter values
+        
         var subject = document.getElementById("subject").value.toLowerCase();
         var contact = document.getElementById("contact").value.toLowerCase();
         var priority = document.getElementById("priority").value.toLowerCase();
@@ -122,7 +130,6 @@
         var contacts = document.getElementById("contacts").value.toLowerCase();
         var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
 
-        // Get all rows in the table
         var rows = document.querySelectorAll("table tbody tr");
 
         rows.forEach(function(row) {
@@ -134,7 +141,6 @@
             var rowStartDate = row.cells[5].innerText.toLowerCase();
             var rowEndDate = row.cells[6].innerText.toLowerCase();
 
-            // Check if the row matches the filters
             var match = (!subject || rowSubject.includes(subject)) &&
                         (!contact || rowManager.includes(contact)) &&
                         (!priority || rowStatus.includes(priority)) &&
@@ -142,7 +148,6 @@
                         (!contacts || rowAccount.includes(contacts)) &&
                         (!assignedTo || rowManager.includes(assignedTo));
 
-            // Show or hide the row based on match
             row.style.display = match ? "" : "none";
         });
     }

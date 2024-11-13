@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 {% load static %}
 {% block title %}Account Table{% endblock %}
 {% block css_link %}
@@ -18,6 +18,7 @@
     </div>
 
     <div class="filter-container">
+        
         <div id="filterForm" class="filter-form">
             <div class="form-group">
                 <label for="anyPhone">Any Phone:</label>
@@ -68,9 +69,20 @@
                     <option value="user3">User 3</option>
                 </select>
             </div>
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
             <div class="form-actions">
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
-                <button type="submit">Search</button>
             </div>
         </div>
     </div>
@@ -79,21 +91,21 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Website</th>
+                <th>City</th>
+                <th>Billing Country</th>
+                <th>Phone</th>
+                <th>User</th>
                 <th>Email Address</th>
-                <th>Type</th>
-                <th>Annual Revenue</th>
-                <th>Industry</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>{{ data.name }}</td>
-                <td>{{ data.website }}</td>
-                <td>{{ data.email }}</td>
-                <td>{{ data.type }}</td>
-                <td>{{ data.revenue }}</td>
-                <td>{{ data.industry }}</td>
+                <td>{{ data.city }}</td>
+                <td>{{ data.billing_country }}</td>
+                <td>{{ data.phone }}</td>
+                <td>{{ data.user }}</td>
+                <td>{{ data.email_address }}</td>
             </tr>
         </tbody>
     </table>

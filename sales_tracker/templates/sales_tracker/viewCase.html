@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 
 {% load static %}
 {% block css_link %}
@@ -20,53 +20,100 @@
     </div>
 
     <div class="filter-container">
+
         <div id="filterForm" class="filter-form">
+
             <div class="form-group">
                 <label for="subject">Subject:</label>
                 <input type="text" id="subject" name="subject">
             </div>
+            
             <div class="form-group">
                 <label for="accountName">Account Name:</label>
                 <input type="text" id="accountName" name="accountName">
             </div>
+
             <div class="form-group">
-                <label for="priority">Priority:</label>
-                <select id="priority" name="priority">
-                    <option value="">-- Select Priority --</option>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                <label for="type">Type:</label>
+
+                <select id="type" name="type">
+                    <option value="">-- Select Type--</option>
+                    <option value="administration">Administration</option>
+                    <option value="product">Product</option>
+                    <option value="user">User</option>
                 </select>
+
             </div>
+
+            <div class="form-group">
+                <label for="state">State:</label>
+
+                <select id="state" name="state">
+                    <option value="">-- Select State --</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                </select>
+
+            </div>
+
             <div class="form-group">
                 <label for="status">Status:</label>
+
                 <select id="status" name="status">
                     <option value="">-- Select Status --</option>
-                    <option value="open">Open</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
+                    <option value="new">New</option>
+                    <option value="assigned">Assigned</option>
+                    <option value="closed">Closed</option>
+                    <option value="pending input">Pending Input</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="duplicate">Duplicate</option>
                 </select>
+
             </div>
+
             <div class="form-group">
                 <label for="assignedTo">Assigned To:</label>
-                <select id="assignedTo" name="assignedTo">
-                    <option value="">-- Select User --</option>
-                    <option value="user1">User 1</option>
-                    <option value="user2">User 2</option>
-                    <option value="user3">User 3</option>
+                <input type="assignedTo" id="assignedTo" name="assignedTo">
+            </div>
+
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+
+                <select id="priority" name="priority">
+                    <option value="">-- Select Priority --</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
                 </select>
+
             </div>
             <div class="form-group">
                 <label for="dateCreated">Date Created:</label>
                 <input type="date" id="dateCreated" name="dateCreated">
             </div>
-            
+
+            <div class="inside-filter-container">
+
+                <label for="time_frame">Select Time Frame:</label>
+
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+
+            </div>
+
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
+
         </div>
+
     </div>
     
     <table>
@@ -112,7 +159,7 @@
     }
 
     function performSearch() {
-        // Get filter values
+      
         var subject = document.getElementById("subject").value.toLowerCase();
         var accountName = document.getElementById("accountName").value.toLowerCase();
         var priority = document.getElementById("priority").value.toLowerCase();
@@ -120,7 +167,6 @@
         var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
         var dateCreated = document.getElementById("dateCreated").value;
 
-        // Get all rows in the table
         var rows = document.querySelectorAll("table tbody tr");
 
         rows.forEach(function(row) {
@@ -131,7 +177,6 @@
             var rowAssignedTo = row.cells[4].innerText.toLowerCase();
             var rowDateCreated = row.cells[5].innerText;
 
-            // Check if the row matches the filters
             var match = (!subject || rowSubject.includes(subject)) &&
                         (!accountName || rowAccountName.includes(accountName)) &&
                         (!priority || rowPriority.includes(priority)) &&
@@ -139,7 +184,6 @@
                         (!assignedTo || rowAssignedTo.includes(assignedTo)) &&
                         (!dateCreated || rowDateCreated === dateCreated);
 
-            // Show or hide the row based on match
             row.style.display = match ? "" : "none";
         });
     }

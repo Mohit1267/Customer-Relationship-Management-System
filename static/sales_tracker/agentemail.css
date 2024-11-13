@@ -10,8 +10,9 @@ body {
 }
 
 .container-fluid {
-    padding: 20px;
-}
+    background-color: #E0EAF6;
+  }
+  
 
 .moving_title {
     margin-bottom: 20px;
@@ -41,14 +42,14 @@ input[type="text"],
 input[type="email"],
 textarea {
     width: 100%;
-    border: none;
-    border-bottom: 1px solid #0a0a0a;
-    border-radius: 0;
-    padding: 0px 0;
-    background: transparent;
-    color: black;
-    box-shadow: none;
-    transition: border-bottom-color 0.3s ease;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    color: white;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 input[type="text"]:focus,
@@ -59,25 +60,37 @@ textarea:focus {
 }
 
 .button-label {
-    display: none; /* Hide the label by default */
-    margin-left: 8px; /* Add some space between the icon and the label */
+    display: none; 
+    margin-left: 8px;
 }
 
 .btn:hover .button-label {
-    display: inline; /* Show the label on hover */
+    display: inline;
 }
 
 .btn {
-    position: relative; /* Required for proper positioning of the button */
+    position: relative; 
 }
 
 .btn:hover i {
-    opacity: 1; /* Ensure icon is still visible */
+    opacity: 1;
 }
 
-/* Optional: make the icon a bit larger to improve visibility */
 .btn i {
-    font-size: 1.2em; /* Adjust size of the icons */
+    font-size: 1.2em;
+}
+
+.ql-toolbar.ql-snow {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    background-color:  #f8f9fa;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+    margin-right: 10px; 
+    display: flex;
 }
 
 

@@ -13,6 +13,7 @@ import random
 import re
 from datetime import date, datetime, timedelta
 from typing import Any
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -28,9 +29,9 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, TemplateView
-from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from users.models import AttendanceRecord
 import random
 from django.core.exceptions import ObjectDoesNotExist
@@ -39,24 +40,28 @@ from .forms import agentmeeting
 from django.http import JsonResponse
 #from datetime import date
 from datetime import datetime
+
 from users.models import Profile, RegisterUser, Location, AttendanceRecord
 from .models import (
-    MiningData, ContactData, LeadsData, OpportunityData, QuotesData,
+    ComposedEmail, MiningData, ContactData, LeadsData, OpportunityData, QuotesData,
     CallingAgent, Schedule_Meeting, Schedule_Calling, DailySalesReport,
-    Account, NewPasswords, Task
+    Account, NewPasswords, Task,Contract,Document,agentNotes
 )
 from .forms import (
+
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
-    AgentProjectsForm,  ContractForm, SortForm, CaseForm
+    AgentProjectsForm,  ContractForm, SortForm, CaseForm, ManualTimeForm,projectTemplate,ContractForm
+
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
     Att_perct, Late_perct, Mining_Count, Leads_Count, EachMinerTarget,
     Time_worked, Productivity, admin_attendance_graph, dailymining, monthlymining,
     quarterlymining, yearlymining, yearlyleads, quarterlyleads, monthlyleads,
-    dailyleads
+    dailyleads, admin_attendance_pie
+
 )
 from .requirements import timer
 
@@ -73,18 +78,24 @@ def get_timer_value(request):
 
 
 
+# def Dashboards(request,user_id):
 def Dashboards(request):
+    # user = RegisterUser.objects.get(id=user_id)
+    # context = {"user": user}
     if (request.user.profile.branch == 'admin'):
         context = {}
         attendances = AttendanceRecord.objects.all()
         att = Att_perct()
         late = Late_perct()
         attendence_graph = admin_attendance_graph(request)
+        attendence_graph_pie = admin_attendance_pie(request)
+
         context['admin_message'] = "Welcome to the Admin Page"
         context['attendances'] = attendances
         context['attendence_graph'] = attendence_graph
+        context['attendence_graph_pie'] = attendence_graph_pie
         context['att'] = att
-        context['temp'] = "temp"
+        context['temp'] = "temp"    
         # context['request'] = request
         latitude = request.session.get('latitude')
         longitude = request.session.get('longitude')
@@ -225,13 +236,12 @@ def assign_miningCt():
     return RegisterUser.objects.get(id=assigned_to_id)
 
 
-
-
 def mining_view(request):
     user = request.user
     utc_login_time = user.last_login
     elapsed_time = timer(utc_login_time)
     formated_timer = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+    
     now_date_time = datetime.now()
     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
     today_mining = MiningData.objects.filter(date=now_date)
@@ -239,162 +249,86 @@ def mining_view(request):
 
     if request.method == "POST":
         form = MiningForm(request.POST)
-        state = request.POST.get("state")
-        city = request.POST.get("city")
-        zone = request.POST.get("zone")
+        
+        if form.is_valid():
+         
+            organisation_name = form.cleaned_data.get("organisation_name")
+            customer_first_name = form.cleaned_data.get("customer_first_name")
+            customer_last_name = form.cleaned_data.get("customer_last_name")
+            customer_contact_number = form.cleaned_data.get("customer_contact_number")
+            customer_mobile_number = form.cleaned_data.get("customer_mobile_number")
+            company_revenue = form.cleaned_data.get("company_revenue")
+            customer_offering = form.cleaned_data.get("customer_offering")
+            competition_of_AT = form.cleaned_data.get("competition_of_AT")
+            stock_market_registered = form.cleaned_data.get("stock_market_registered")
+            it_spending_budget = form.cleaned_data.get("IT_spending_budget")
+            source_of_data_mining = form.cleaned_data.get("source_of_data_mining")
+            company_emp_size = form.cleaned_data.get("company_emp_size")
 
-        organisation_name = form.data.get("organisation_name")
-        customer_first_name = form.data.get("customer_first_name")
-        customer_last_name = form.data.get("customer_last_name")
-        customer_contact_number = form.data.get("customer_contact_number")
-        customer_mobile_number = form.data.get("customer_mobile_number")
-        company_revenue = form.data.get("company_revenue")
-        customer_offering = form.data.get("customer_offering")
-        competition_of_AT = form.data.get("competition_of_AT")
-        stock_market_registered = form.data.get("stock_market_registered")
-        it_spending_budget = form.data.get("IT_spending_budget")
-        source_of_data_mining = form.data.get("source_of_data_mining")
-        company_emp_size = form.data.get("company_emp_size")
+            if not re.match("^[A-Za-z0-9 ]+$", organisation_name):
+                form.add_error('organisation_name', "Organisation name can only contain alphabets and numbers.")
+            elif not re.match("^[A-Za-z ]+$", customer_first_name):
+                form.add_error('customer_first_name', "First name can only contain alphabets.")
+            elif not re.match("^[A-Za-z ]+$", customer_last_name):
+                form.add_error('customer_last_name', "Last name can only contain alphabets.")
+            elif not re.match(r"^\d{10}$", customer_contact_number):
+                form.add_error('customer_contact_number', "Contact number must be exactly 10 digits.")
+            elif not re.match(r"^\d{10}$", customer_mobile_number):
+                form.add_error('customer_mobile_number', "Mobile number must be exactly 10 digits.")
+            elif not company_revenue.isdigit():
+                form.add_error('company_revenue', "Company revenue must be a numeric value.")
+            elif not re.match("^[A-Za-z0-9 ]+$", customer_offering):
+                form.add_error('customer_offering', "Customer offering can only contain alphabets and numbers.")
+            elif not re.match("^[A-Za-z0-9 ]+$", competition_of_AT):
+                form.add_error('competition_of_AT', "Competition of AT can only contain alphabets and numbers.")
+            elif not re.match("^[A-Za-z0-9 ]+$", stock_market_registered):
+                form.add_error('stock_market_registered', "Stock market registered can only contain alphabets and numbers.")
+            elif not it_spending_budget.isdigit():
+                form.add_error('IT_spending_budget', "IT spending budget must be a numeric value.")
+            elif not re.match("^[A-Za-z0-9 ]+$", source_of_data_mining):
+                form.add_error('source_of_data_mining', "Source of data mining can only contain alphabets and numbers.")
+            elif not company_emp_size.isdigit() or int(company_emp_size) <= 0:
+                form.add_error('company_emp_size', "Employee size must be a positive numeric value.")
+            else:
 
-        if not re.match("^[A-Za-z0-9 ]+$", organisation_name):
-            form.add_error('organisation_name', "Organisation name can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z ]+$", customer_first_name):
-            form.add_error('customer_first_name', "First name can only contain alphabets.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z ]+$", customer_last_name):
-            form.add_error('customer_last_name', "Last name can only contain alphabets.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match(r"^\d{10}$", customer_contact_number):
-            form.add_error('customer_contact_number', "Contact number must be exactly 10 digits.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match(r"^\d{10}$", customer_mobile_number):
-            form.add_error('customer_mobile_number', "Mobile number must be exactly 10 digits.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not company_revenue.isdigit():
-            form.add_error('company_revenue', "Company revenue must be a numeric value.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z0-9 ]+$", customer_offering):
-            form.add_error('customer_offering', "Customer offering can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z0-9 ]+$", competition_of_AT):
-            form.add_error('competition_of_AT', "Competition of AT can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z0-9 ]+$", stock_market_registered):
-            form.add_error('stock_market_registered', "Stock market registered can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not it_spending_budget.isdigit():
-            form.add_error('IT_spending_budget', "IT spending budget must be a numeric value.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not re.match("^[A-Za-z0-9 ]+$", source_of_data_mining):
-            form.add_error('source_of_data_mining', "Source of data mining can only contain alphabets and numbers.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        if not company_emp_size.isdigit() or int(company_emp_size) <= 0:
-            form.add_error('company_emp_size', "Employee size must be a positive numeric value.")
-            return render(request, "sales_tracker/mining.html", {
-                "form": form,
-                "timer": formated_timer,
-                "mining_count": today_mining_count
-            })
-
-        try:
-            MiningData.objects.get(organisation_name=organisation_name)
-            print("hello world")
-        except MiningData.DoesNotExist:
-            assignTo = assign_miningCt()
-            now_date_time = datetime.now()
-            now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-            username = request.user.username
-            mining_details = MiningData(
-                organisation_name=organisation_name,
-                customer_first_name=customer_first_name,
-                customer_last_name=customer_last_name,
-                customer_address=form.data.get("customer_address"),
-                customer_contact_number=customer_contact_number,
-                customer_mobile_number=customer_mobile_number,
-                customer_email=form.data.get("customer_email"),
-                company_revenue=company_revenue,
-                company_emp_size=company_emp_size,
-                customer_offering=customer_offering,
-                competition_of_AT=competition_of_AT,
-                stock_market_registered=stock_market_registered,
-                influncer=form.data.get("influncer") == "on",
-                desition_maker=form.data.get("desition_maker") == "on",
-                IT_spending_budget=it_spending_budget,
-                source_of_data_mining=source_of_data_mining,
-                date=now_date,
-                assigned_to=assignTo,
-                created_by=user,
-                state=state,
-                city=city,
-                region=zone,
-            )
-            mining_details.save()
-            print("Hello world 4")
-            return redirect("mining")
-
-        print("Hello world 2")
+                try:
+                    MiningData.objects.get(organisation_name=organisation_name)
+                except MiningData.DoesNotExist:
+                    assignTo = assign_miningCt()
+                    mining_details = MiningData(
+                        organisation_name=organisation_name,
+                        customer_first_name=customer_first_name,
+                        customer_last_name=customer_last_name,
+                        customer_address=form.cleaned_data.get("customer_address"),
+                        customer_contact_number=customer_contact_number,
+                        customer_mobile_number=customer_mobile_number,
+                        customer_email=form.cleaned_data.get("customer_email"),
+                        company_revenue=company_revenue,
+                        company_emp_size=company_emp_size,
+                        customer_offering=customer_offering,
+                        competition_of_AT=competition_of_AT,
+                        stock_market_registered=stock_market_registered,
+                        influncer=form.cleaned_data.get("influncer") == "on",
+                        desition_maker=form.cleaned_data.get("desition_maker") == "on",
+                        IT_spending_budget=it_spending_budget,
+                        source_of_data_mining=source_of_data_mining,
+                        date=now_date,
+                        assigned_to=assignTo,
+                        created_by=user,
+                        state=form.cleaned_data.get("state"),
+                        city=form.cleaned_data.get("city"),
+                        region=form.cleaned_data.get("zone"),
+                    )
+                    mining_details.save()
+                    return redirect("mining")
+                form.add_error(None, "Mining data with this organisation name already exists.")
+        
         return render(request, "sales_tracker/mining.html", {
             "form": form,
             "timer": formated_timer,
             "mining_count": today_mining_count
         })
-
+    
     else:
         form = MiningForm()
 
@@ -1598,9 +1532,6 @@ def validate_password_view(request):
             entered_minor_password = form.cleaned_data['Minor_password']
             entered_sales_password = form.cleaned_data['Sales_password']
             entered_admin_password = form.cleaned_data['Admin_password']
-
-
-
             return redirect('createTask') 
     else:
         form = TaskForm()
@@ -1608,7 +1539,12 @@ def validate_password_view(request):
     return render(request, 'sales_tracker/createTask.html', {'form': form})
 
 def viewTask(request):
-    return render(request, "sales_tracker/viewTask.html")
+    context = {}
+    
+    Tasks = Task.objects.all()
+    context['Tasks']=Tasks
+
+    return render(request, "sales_tracker/viewTask.html", context)
 
 
 def Agentaccount(request):
@@ -1680,36 +1616,46 @@ def Agentaccount(request):
             if not re.match("^[A-Za-z0-9 ]+$", assigned_to):
                 messages.error(request, "Assigned To can only contain alphabets and numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
-
-            account_type = form.cleaned_data['Type']
-            if not re.match("^[A-Za-z0-9 ]+$", account_type):
-                messages.error(request, "Type can only contain alphabets and numbers.")
+            
+            office_phone = form.cleaned_data['office_phone']
+            if not re.match("^\d+$", office_phone):
+                messages.error(request, "Office Phone can only contain numbers.")
+                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            
+            fax= form.cleaned_data['fax']
+            if not re.match("^\d+$", fax):
+                messages.error(request, "Fax can only contain numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            member_of = form.cleaned_data['Member_Of']
-            if not re.match("^[A-Za-z0-9 ]+$", member_of):
-                messages.error(request, "Member Of can only contain alphabets and numbers.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # account_type = form.cleaned_data['Type']
+            # if not re.match("^[A-Za-z0-9 ]+$", account_type):
+            #     messages.error(request, "Type can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            campaign = form.cleaned_data['Campaign']
-            if not re.match("^[A-Za-z0-9 ]+$", campaign):
-                messages.error(request, "Campaign can only contain alphabets and numbers.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # member_of = form.cleaned_data['Member_Of']
+            # if not re.match("^[A-Za-z0-9 ]+$", member_of):
+            #     messages.error(request, "Member Of can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            industry = form.cleaned_data['Industry']
-            if not re.match("^[A-Za-z0-9 ]+$", industry):
-                messages.error(request, "Industry can only contain alphabets and numbers.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # campaign = form.cleaned_data['Campaign']
+            # if not re.match("^[A-Za-z0-9 ]+$", campaign):
+            #     messages.error(request, "Campaign can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            employees = form.cleaned_data['Employees']
-            if not isinstance(employees, int) or employees < 0:  
-                messages.error(request, "Employees must be a non-negative integer.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # industry = form.cleaned_data['Industry']
+            # if not re.match("^[A-Za-z0-9 ]+$", industry):
+            #     messages.error(request, "Industry can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            annual_revenue = form.cleaned_data['Annual_Revenue']
-            if annual_revenue is None or annual_revenue <= 0:
-                messages.error(request, "Annual Revenue must be a positive number.")
-                return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+            # employees = form.cleaned_data['Employees']
+            # if not isinstance(employees, int) or employees < 0:  
+            #     messages.error(request, "Employees must be a non-negative integer.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # annual_revenue = form.cleaned_data['Annual_Revenue']
+            # if annual_revenue is None or annual_revenue <= 0:
+            #     messages.error(request, "Annual Revenue must be a positive number.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
             account = Account(
                 Name=name,
@@ -1727,12 +1673,8 @@ def Agentaccount(request):
                 Shipping_City=shipping_city,
                 Shipping_State=shipping_state,
                 Shipping_Country=shipping_country,
-                Type=account_type,
-                Annual_Revenue=annual_revenue,
-                Member_Of=member_of,
-                Campaign=campaign,
-                Industry=industry,
-                Employees=employees,
+                office_phone=office_phone,
+                fax=fax
             )
             account.save()  
 
@@ -1772,28 +1714,19 @@ def createDocument(request):
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('success_url')
+            # return redirect('success_url')
     else:
         form = DocumentForm()
     
     return render(request, 'sales_tracker/createDocument.html', {'form': form})
 
 def viewDocument(request):
+    context = {}
+    data = Document.objects.all()
+    context = {'data':data}
+    return render(request, "sales_tracker/viewDocument.html",context)
 
-    return render(request, "sales_tracker/viewDocument.html")
 
-
-
-#     def post(self, request):
-#         form = agentcalling(request.POST)
-#         if form.is_valid():
-#             # Save the form data to the database
-#             form.save()
-#             print("Form is valid")
-#         else:
-#             print("Form errors: ", form.errors)
-
-#         return render(request, 'sales_tracker/agentcalling.html', {'form': form})
 
 
 class ViewScheduledCalls(View):
@@ -1838,7 +1771,7 @@ def createNotes(request):
         form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('note_list')  
+            # return redirect('note_list')  
     else:
         form = NoteForm()
     
@@ -1869,21 +1802,32 @@ def DSRimport(request):
     return render(request, "sales_tracker/DSRimport.html")
 
 
+from django.shortcuts import render, redirect
+from .models import ContactData  # Import your Contact model
+from .forms import TaskForm  # Import your Task form
+
 def createTask(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save()
-      
-            return redirect('create_task') 
+            return redirect('createTask') 
     else:
         form = TaskForm()
 
-    return render(request, "sales_tracker/createTask.html"
-                  , {'form': form})
+    # Fetch all contacts to display in the popup
+    contacts = ContactData.objects.all()
 
+    return render(request, "sales_tracker/createTask.html", {
+        'form': form,
+        'contacts': contacts 
+    })
 
-
+def send_meeting_email(request, meeting_id):
+    meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
+    subject = "Meeting Reminder"
+    message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n{meeting.notification}\n\nBest regards,\nAARNAV Technologies"
+    recipient_list = [meeting.contact]
 
 
 def temp(request):
@@ -1898,6 +1842,7 @@ def temp(request):
 #     #host_email = 'pushakrpandey200@gmail.com'
 #     #recipient_list = attendees_list + [host_email]
 
+
 #             # Create the Google Meet link
 #     meet_link = create_meeting_event(start_time, duration)
 
@@ -1911,14 +1856,203 @@ def temp(request):
 #     except Exception as e:
 #         return HttpResponse(f"Failed to send email: {e}")
 
+@login_required
+def employee_screen_share(request):
+    # Ensure only data miners or calling agents can access this view
+    if request.user.profile.branch in ['data_miner', 'calling_agent']:
+        return render(request, 'sales_tracker/employee_screen_share.html')
+    else:
+        return render(request, 'sales_tracker/unauthorized.html')
+
+# Admin view to watch the employee's screen
+# views.py
+# views.py
+@login_required
+def admin_screen_view(request):
+    if request.user.profile.branch == 'admin':
+        # List employees to be viewed
+        employees = RegisterUser.objects.filter(profile__branch__in=['miner', 'agent'])
+        print(employees,"this is employees")
+        context = {'employees': employees}
+        return render(request, 'sales_tracker/admin_screen_view.html', context)
+    else:
+        return render(request, 'sales_tracker/unauthorized.html')
+
 
 def miningimport(request):
     return render(request, "sales_tracker/miningimport.html")
 
+def viewNotes(request):
+    context ={}
+    notes = agentNotes.objects.all()
+    print(notes,"this is notes")
+    context['notes'] = notes 
+    return render(request, "sales_tracker/viewNotes.html",context)
+
+
+def createInvoices(request):
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+           
+            return redirect('invoice_list')  
+    else:
+        form = InvoiceForm()
+    return render(request, 'sales_tracker/createInvoices.html', {'form': form})
+
+from django.core.mail import EmailMultiAlternatives
+from django.http import JsonResponse
+from django.contrib import messages
+from .models import ComposedEmail, EmailTemplate
+
+def compose_email(request):
+    if request.method == 'POST':
+        form = ComposeEmailForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Fetch form data
+            email_template_instance = form.cleaned_data.get('template')
+            related_to = form.cleaned_data.get('related_to')
+            from_address = form.cleaned_data.get('from_address')
+            to_address = form.cleaned_data.get('to_address')
+            cc_address = form.cleaned_data.get('cc_address')
+            bcc_address = form.cleaned_data.get('bcc_address')
+            send_plain_text = form.cleaned_data.get('send_plain_text')
+
+            # Use template's subject and body if selected; otherwise, use form data
+            if email_template_instance:
+                subject = email_template_instance.subject
+                body = email_template_instance.body
+            else:
+                subject = form.cleaned_data.get('subject') or "No Subject"
+                body = form.cleaned_data.get('body') or "No Content"
+
+            # Sending the email
+            try:
+                email = EmailMultiAlternatives(
+                    subject=subject,
+                    body=body,
+                    from_email=from_address,
+                    to=[to_address],
+                    cc=cc_address.split(',') if cc_address else [],
+                    bcc=bcc_address.split(',') if bcc_address else []
+                )
+
+                # Attach as HTML if not sending as plain text
+                if not send_plain_text:
+                    email.attach_alternative(body, "text/html")
+
+                # Handle multiple attachments
+                attachments = request.FILES.getlist('attachments')
+                for attachment in attachments:
+                    email.attach(attachment.name, attachment.read(), attachment.content_type)
+
+                email.send()
+
+                # Save email to the database
+                ComposedEmail.objects.create(
+                    template=email_template_instance,
+                    related_to=related_to,
+                    from_address=from_address,
+                    to_address=to_address,
+                    cc_address=cc_address,
+                    bcc_address=bcc_address,
+                    subject=subject,
+                    body=body,
+                    send_plain_text=send_plain_text,
+                    created_by=request.user,
+                    sent_status=True
+                )
+
+                messages.success(request, 'Email sent successfully!')
+            except Exception as e:
+                print(f"Failed to send email: {e}")
+                messages.error(request, f'Failed to send email: {e}')
+                return JsonResponse({'status': 'failed', 'message': str(e)})
+
+            return JsonResponse({'status': 'success', 'message': 'Email sent successfully!'})
+        else:
+            messages.error(request, 'There was an error composing the email. Please check your input.')
+            return JsonResponse({'status': 'failed', 'message': 'Invalid form data'})
+
+    else:
+        form = ComposeEmailForm()
+
+    return render(request, 'sales_tracker/agentemail.html', {'form': form})
+
+
+
+import imaplib
+import email
+from email.header import decode_header
+from django.shortcuts import render
+from django.http import JsonResponse
+
+# Gmail IMAP server settings (adjust if using a different email provider)
+IMAP_SERVER = 'imap.gmail.com'
+IMAP_PORT = 993
+
+def view_inbox(request):
+    if request.method == 'GET':
+        try:
+            # Replace these with your email credentials
+            email_user = "pushkarpandey200@gmail.com"
+            email_pass = "ucz syco dqfd dbcv"  # Consider using an App Password
+
+            # Connect to the IMAP server
+            mail = imaplib.IMAP4_SSL(IMAP_SERVER, IMAP_PORT)
+            mail.login(email_user, email_pass)
+
+            # Select the mailbox you want to read (e.g., "inbox")
+            mail.select("inbox")
+
+            # Search for all emails in the inbox
+            status, messages = mail.search(None, 'ALL')
+            email_ids = messages[0].split()
+
+            inbox_emails = []
+
+            # Fetch the latest 10 emails (adjust the range as needed)
+            for email_id in email_ids[-10:]:
+                res, msg = mail.fetch(email_id, "(RFC822)")
+                for response in msg:
+                    if isinstance(response, tuple):
+                        # Parse the email content
+                        msg = email.message_from_bytes(response[1])
+                        subject, encoding = decode_header(msg["Subject"])[0]
+                        if isinstance(subject, bytes):
+                            subject = subject.decode(encoding if encoding else "utf-8")
+                        from_ = msg.get("From")
+                        date_ = msg.get("Date")
+
+                        # Append email details to list
+                        inbox_emails.append({
+                            "subject": subject,
+                            "from": from_,
+                            "date": date_
+                        })
+
+            # Logout from the email server
+            mail.logout()
+            return render(request, 'sales_tracker/inbox.html', {'emails': inbox_emails})
+
+        except Exception as e:
+            print(f"Failed to fetch emails: {e}")
+            return JsonResponse({'status': 'failed', 'message': str(e)})
+
+    return JsonResponse({'status': 'failed', 'message': 'Invalid request method'})
 
 
 
 
+
+from .models import ComposedEmail
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def view_sent_emails(request):
+    sent_emails = ComposedEmail.objects.filter(created_by=request.user).order_by('-created_at')
+    return render(request, 'sales_tracker/sent_emails.html', {'sent_emails': sent_emails})
 
 
 
@@ -1943,8 +2077,278 @@ def leads_view(request):
 
     return render(request, 'sales_tracker/leadsdata.html', context)
 
+import imaplib
+import email
+from email.header import decode_header
+
+def fetch_emails():
+    # Email server connection
+    imap_host = 'imap.gmail.com'
+    username = 'pushkarpandey200@gmail.com'
+    password = 'nucz syco dqfd dbcv'
+
+    # Connect to the email server
+    mail = imaplib.IMAP4_SSL(imap_host)
+    mail.login(username, password)
+    mail.select('inbox')
+
+    # Search for all emails
+    status, messages = mail.search(None, 'ALL')
+    email_ids = messages[0].split()
+
+    emails = []
+    for email_id in email_ids[-5:]:  # Fetch last 5 emails
+        status, msg_data = mail.fetch(email_id, '(RFC822)')
+        for response_part in msg_data:
+            if isinstance(response_part, tuple):
+                msg = email.message_from_bytes(response_part[1])
+                subject, encoding = decode_header(msg['Subject'])[0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(encoding if encoding else 'utf-8')
+                from_ = msg.get('From')
+                emails.append({'subject': subject, 'from': from_})
+
+    mail.logout()
+    return emails
 
 
+
+
+
+# def inbox(request):
+#     emails = fetch_emails()
+#     return render(request, 'sales_tracker/viewemail.html', {'emails': emails})
+
+
+
+
+
+# def viewEmail(request):
+#     return render(request, "sales_tracker/viewemail.html")
+
+
+
+def viewEmail(request):
+    return render(request, "sales_tracker/viewemail.html")
+
+
+
+
+def Agenttarget(request):
+    """
+    This view handles the contact form submission.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = TargetsForm(request.POST)
+        if form.is_valid():
+        
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            job_title = form.cleaned_data.get('job_title')
+            office_phone = form.cleaned_data.get('office_phone')
+            department = form.cleaned_data.get('department')
+            mobile = form.cleaned_data.get('mobile')
+            account_name = form.cleaned_data.get('account_name')
+            fax = form.cleaned_data.get('fax')
+            primary_address_street = form.cleaned_data.get('primary_address_street')
+            primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
+            primary_address_city = form.cleaned_data.get('primary_address_city')
+            primary_address_state = form.cleaned_data.get('primary_address_state')
+            primary_address_country = form.cleaned_data.get('primary_address_country')
+            other_address_street = form.cleaned_data.get('other_address_street')
+            other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
+            other_address_city = form.cleaned_data.get('other_address_city')
+            other_address_state = form.cleaned_data.get('other_address_state')
+            other_address_country = form.cleaned_data.get('other_address_country')
+            email_address = form.cleaned_data.get('email_address')
+            description = form.cleaned_data.get('description')
+            assigned_to = form.cleaned_data.get('assigned_to')
+
+            messages.success(request, 'Contact information submitted successfully!')
+            return redirect('agenttarget') 
+        else:
+            messages.error(request, 'There was an error submitting the contact information. Please check your input.')
+    else:
+        form = TargetsForm()
+
+    return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+
+
+def viewInvoices(request):
+    return render(request, 'sales_tracker/viewInvoices.html')
+
+
+
+def viewTarget(request):
+    return render(request, "sales_tracker/viewtarget.html")
+
+def Targetimport(request):
+    return render(request, "sales_tracker/targetimport.html")
+
+
+def TargetList(request):
+    """
+    This view handles the target form submission.
+    If the request is POST, it validates and processes the form data.
+    On GET requests, it displays the empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = TargetsListForm(request.POST)
+        if form.is_valid():
+           
+            name = form.cleaned_data.get('name')
+            total_entries = form.cleaned_data.get('total_entries')
+            type = form.cleaned_data.get('type')
+            domain_name = form.cleaned_data.get('domain_name')
+            description = form.cleaned_data.get('description')
+
+            messages.success(request, 'Target information submitted successfully!')
+            return redirect('targetsList')  
+        else:
+            messages.error(request, 'There was an error submitting the target information. Please check your input.')
+    else:
+        form = TargetsListForm() 
+
+    return render(request, 'sales_tracker/targetsList.html', {'form': form})
+
+def viewTargetList(request):
+    return render(request, "sales_tracker/viewtargetsList.html")
+
+
+
+def agentProjects(request):
+    """
+    Handles the agent project form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = AgentProjectsForm(request.POST)
+        if form.is_valid():
+          
+            name = form.cleaned_data.get('name')
+            status = form.cleaned_data.get('status')
+            draft = form.cleaned_data.get('draft')
+            start_date = form.cleaned_data.get('start_date')
+            priority = form.cleaned_data.get('priority')
+            end_date = form.cleaned_data.get('end_date')
+            consider_working_days = form.cleaned_data.get('consider_working_days')
+            project_manager = form.cleaned_data.get('project_manager')
+            project_template = form.cleaned_data.get('project_template')
+
+            form.save()
+
+            messages.success(request, 'Agent project information submitted successfully!')
+            return redirect('agentProjects')  
+        else:
+            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+    else:
+        form = AgentProjectsForm() 
+
+    return render(request, 'sales_tracker/agentProjects.html', {'form': form})
+
+
+def viewProjectList(request):
+    return render(request, "sales_tracker/viewprojectList.html")
+
+def projectimport(request):
+    return render(request, "sales_tracker/projectimport.html")
+
+def Resourcecalendar(request):
+    return render(request, "sales_tracker/resourceCalendar.html")
+
+def ProjectTask(request):
+    return render(request, "sales_tracker/viewprojectTask.html")
+
+
+def agentTemplate(request):
+    """
+    Handles the agent project form submission.
+    On POST, it validates and processes the form data.
+    On GET, it displays an empty form for the user to fill out.
+    """
+    if request.method == 'POST':
+        form = agentTemplate(request.POST)
+        if form.is_valid():
+ 
+            template_name = form.cleaned_data.get('template_name')
+            consider_working_days = form.cleaned_data.get('consider_working_days')
+            project_manager = form.cleaned_data.get('project_manager')
+            status = form.cleaned_data.get('status')
+            priority = form.cleaned_data.get('priority')
+
+            form.save()
+
+            messages.success(request, 'Agent project information submitted successfully!')
+            return redirect('agentTemplate') 
+        else:
+            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+    else:
+        form = agentTemplate() 
+
+    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+
+def ViewTemplate(request):
+    return render(request, "sales_tracker/viewTemplate.html")
+
+def Templateimport(request):
+    return render(request, "sales_tracker/Importtemplate.html")
+
+
+
+
+def createContract(request):
+    if request.method == 'POST':
+        form = ContractForm(request.POST)
+        if form.is_valid():
+
+            return redirect('success_url') 
+        
+    else:
+        form = ContractForm()
+    
+    return render(request, 'sales_tracker/createContract.html', {'form': form})
+
+def viewContract(request):
+    return render(request, "sales_tracker/viewContract.html")
+
+
+def createCase(request):
+    if request.method == "POST":
+        form = CaseForm(request.POST)
+        if form.is_valid():
+          
+            return redirect('createCase')
+    else:
+        form = CaseForm()
+    
+    return render(request, 'sales_tracker/createCase.html', {'form': form})
+
+
+
+def viewCases(request):
+    return render(request, "sales_tracker/viewCase.html")
+
+def createManualTime(request):
+    return render(request, "sales_tracker/createManualTime.html")
+
+def createManualTime(request):
+    form = ManualTimeForm()
+    return render(request, 'sales_tracker/createManualTime.html', {'form': form})
+
+
+
+def viewManualTime(request):
+    return render(request, "sales_tracker/viewManualTime.html")
+
+def AdminAttendence(request):    
+ 
+    return render(request, "sales_tracker/adminattendance.html")
+
+def Location(request):
+    return render(request, 'sales_tracker/location.html')
 
 
 
@@ -2095,9 +2499,9 @@ def send_meeting_invitation(request):
         form = agentmeeting()  # Render form for GET request
     return render(request, 'sales_tracker/agentmeeting.html', {'form': form})'''
 
+
 def viewNotes(request):
       return render(request, "sales_tracker/viewNotes.html")
-
 
 
 def createInvoices(request):
@@ -2111,83 +2515,83 @@ def createInvoices(request):
     return render(request, 'sales_tracker/createInvoices.html', {'form': form})
 
 
-def compose_email(request):
-    """
-    This view handles the email composition form.
-    If the request is POST, it validates and processes the form data.
-    On GET requests, it displays the empty form for the user to fill out.
-    """
-    if request.method == 'POST':
-        form = ComposeEmailForm(request.POST)
-        if form.is_valid():
+# def compose_email(request):
+#     """
+#     This view handles the email composition form.
+#     If the request is POST, it validates and processes the form data.
+#     On GET requests, it displays the empty form for the user to fill out.
+#     """
+#     if request.method == 'POST':
+#         form = ComposeEmailForm(request.POST)
+#         if form.is_valid():
          
-            email_template = form.cleaned_data.get('template')
-            related_to = form.cleaned_data.get('related_to')
-            from_address = form.cleaned_data.get('from')
-            to_address = form.cleaned_data.get('to')
-            cc_address = form.cleaned_data.get('cc')
-            bcc_address = form.cleaned_data.get('bcc')
-            subject = form.cleaned_data.get('subject')
-            body = form.cleaned_data.get('body')
-            send_plain_text = form.cleaned_data.get('send_plain_text')
+#             email_template = form.cleaned_data.get('template')
+#             related_to = form.cleaned_data.get('related_to')
+#             from_address = form.cleaned_data.get('from')
+#             to_address = form.cleaned_data.get('to')
+#             cc_address = form.cleaned_data.get('cc')
+#             bcc_address = form.cleaned_data.get('bcc')
+#             subject = form.cleaned_data.get('subject')
+#             body = form.cleaned_data.get('body')
+#             send_plain_text = form.cleaned_data.get('send_plain_text')
 
-            messages.success(request, 'Email composed successfully!')
-            return redirect('agentemail')
-        else:
-            messages.error(request, 'There was an error composing the email. Please check your input.')
-    else:
-        form = ComposeEmailForm()  
+#             messages.success(request, 'Email composed successfully!')
+#             return redirect('agentemail')
+#         else:
+#             messages.error(request, 'There was an error composing the email. Please check your input.')
+#     else:
+#         form = ComposeEmailForm()  
 
-    return render(request, 'sales_tracker/agentemail.html', {'form': form})
-
-
-
-def viewEmail(request):
-    return render(request, "sales_tracker/viewemail.html")
+#     return render(request, 'sales_tracker/agentemail.html', {'form': form})
 
 
 
+# def viewEmail(request):
+#     return render(request, "sales_tracker/viewemail.html")
 
-def Agenttarget(request):
-    """
-    This view handles the contact form submission.
-    If the request is POST, it validates and processes the form data.
-    On GET requests, it displays the empty form for the user to fill out.
-    """
-    if request.method == 'POST':
-        form = TargetsForm(request.POST)
-        if form.is_valid():
+
+
+
+# def Agenttarget(request):
+#     """
+#     This view handles the contact form submission.
+#     If the request is POST, it validates and processes the form data.
+#     On GET requests, it displays the empty form for the user to fill out.
+#     """
+#     if request.method == 'POST':
+#         form = TargetsForm(request.POST)
+#         if form.is_valid():
         
-            first_name = form.cleaned_data.get('first_name')
-            last_name = form.cleaned_data.get('last_name')
-            job_title = form.cleaned_data.get('job_title')
-            office_phone = form.cleaned_data.get('office_phone')
-            department = form.cleaned_data.get('department')
-            mobile = form.cleaned_data.get('mobile')
-            account_name = form.cleaned_data.get('account_name')
-            fax = form.cleaned_data.get('fax')
-            primary_address_street = form.cleaned_data.get('primary_address_street')
-            primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
-            primary_address_city = form.cleaned_data.get('primary_address_city')
-            primary_address_state = form.cleaned_data.get('primary_address_state')
-            primary_address_country = form.cleaned_data.get('primary_address_country')
-            other_address_street = form.cleaned_data.get('other_address_street')
-            other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
-            other_address_city = form.cleaned_data.get('other_address_city')
-            other_address_state = form.cleaned_data.get('other_address_state')
-            other_address_country = form.cleaned_data.get('other_address_country')
-            email_address = form.cleaned_data.get('email_address')
-            description = form.cleaned_data.get('description')
-            assigned_to = form.cleaned_data.get('assigned_to')
+#             first_name = form.cleaned_data.get('first_name')
+#             last_name = form.cleaned_data.get('last_name')
+#             job_title = form.cleaned_data.get('job_title')
+#             office_phone = form.cleaned_data.get('office_phone')
+#             department = form.cleaned_data.get('department')
+#             mobile = form.cleaned_data.get('mobile')
+#             account_name = form.cleaned_data.get('account_name')
+#             fax = form.cleaned_data.get('fax')
+#             primary_address_street = form.cleaned_data.get('primary_address_street')
+#             primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
+#             primary_address_city = form.cleaned_data.get('primary_address_city')
+#             primary_address_state = form.cleaned_data.get('primary_address_state')
+#             primary_address_country = form.cleaned_data.get('primary_address_country')
+#             other_address_street = form.cleaned_data.get('other_address_street')
+#             other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
+#             other_address_city = form.cleaned_data.get('other_address_city')
+#             other_address_state = form.cleaned_data.get('other_address_state')
+#             other_address_country = form.cleaned_data.get('other_address_country')
+#             email_address = form.cleaned_data.get('email_address')
+#             description = form.cleaned_data.get('description')
+#             assigned_to = form.cleaned_data.get('assigned_to')
 
-            messages.success(request, 'Contact information submitted successfully!')
-            return redirect('agenttarget') 
-        else:
-            messages.error(request, 'There was an error submitting the contact information. Please check your input.')
-    else:
-        form = TargetsForm()
+#             messages.success(request, 'Contact information submitted successfully!')
+#             return redirect('agenttarget') 
+#         else:
+#             messages.error(request, 'There was an error submitting the contact information. Please check your input.')
+#     else:
+#         form = TargetsForm()
 
-    return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+#     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
 
 
 def viewInvoices(request):
@@ -2305,17 +2709,13 @@ def agentTemplate(request):
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})'''
 
 from django.shortcuts import render, redirect
-# from .models import projectTemplate
-# from .forms import projectTemplate
+
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import ProjectTemplate
-from .forms import ProjectTemplateForm
-from .models import ProjectTemplate
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import ProjectTemplate
+from .models import projectTemplate
 from .forms import ProjectTemplateForm
 
 # View to create a project template
@@ -2330,9 +2730,30 @@ def create_project_template(request):
     
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
 
+
+from django.shortcuts import render, redirect
+
+
+# View to create a new template
+def projectTemplate(request):
+    if request.method == 'POST':
+        form = projectTemplate(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('view_templates')  # Redirect to the template list view
+    else:
+        form = projectTemplate()
+    
+    return render(request, 'sales_tracker/agenttemplate.html', {'form': form})
+
+# View to display all templates
+def ViewTemplate(request):
+    templates = projectTemplate.objects.all()
+    return render(request, 'sales_tracker/viewTemplates.html', {'templates': templates})
+
 # View to display a specific template
 def agent_template_view(request, template_id):
-    template_instance = get_object_or_404(ProjectTemplate, id=template_id)
+    template_instance = get_object_or_404(projectTemplate, id=template_id)
     return render(request, 'sales_tracker/viewTemplate.html', {'template': template_instance})
 
 from django.shortcuts import render, redirect
@@ -2412,19 +2833,20 @@ def create_contract(request):
             return redirect('success')  # Redirect to a success page or another URL
 
     else:
+
         form = ContractForm()
 
     return render(request, 'sales_tracker/createContract.html', {'form': form})
 
 from django.shortcuts import render, get_object_or_404
-from .models import Contract
 
-def view_contract(request, contract_id):
+def view_contract(request):    
     # Retrieve the contract by ID or return a 404 if not found
-    contract = get_object_or_404(Contract, id=contract_id)
+    contract = get_object_or_404(Contract)
     
     # Pass the contract data to the template
     return render(request, 'sales_tracker/viewContract.html', {'contract': contract})
+
 
 
 from .models import Target
@@ -2443,14 +2865,21 @@ def add_target(request):
     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
 
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ImportTemplateForm
 
+def upload_import_file(request):
+    if request.method == 'POST':
+        form = ImportTemplateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # This saves the uploaded file and selected action to the database
+            messages.success(request, "File uploaded successfully!")
+            return redirect('targetimport')
+    else:
+        form = ImportTemplateForm()
 
-
-
-
-
-
-
+    return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
 
 from django.shortcuts import render, redirect
@@ -2463,7 +2892,9 @@ def add_case(request):
         if form.is_valid():
             # Save the form data as a new Case instance
             case = Case.objects.create(**form.cleaned_data)
+
             return redirect('view_cases')  # Redirect to the case list view
+
     else:
         form = CaseForm()
     
@@ -2474,9 +2905,8 @@ def view_cases(request):
     return render(request, 'sales_tracker/viewCase.html', {'cases': cases})
 
 
-
-
-
+def InvoiceImport(request):
+    return render(request, "sales_tracker/InvoiceImport.html")
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -2493,4 +2923,5 @@ def upload_import_file(request):
         form = ImportTemplateForm()
 
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
+
 

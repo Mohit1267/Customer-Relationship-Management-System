@@ -10,10 +10,8 @@ body {
 
 
 .container-fluid {
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 950px;
-}
+    background-color: #E0EAF6;
+  }
 
 
 /* .heading_links { 
@@ -114,17 +112,17 @@ body {
     outline: none;
 }
 
-.form-group input,
-.form-group textarea {
+.form_control input,
+.form_control textarea {
     width: 100%;
-    border: none;
-    border-bottom: 1px solid #0a0a0a;
-    border-radius: 0;
-    padding: 0px 0;
-    background: transparent;
-    color: black;
-    box-shadow: none;
-    transition: border-bottom-color 0.3s ease;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    color: white;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .form-group input:focus,
@@ -199,7 +197,7 @@ select {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
- 
+
 .button1:active {
     transform: translateY(-1px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);

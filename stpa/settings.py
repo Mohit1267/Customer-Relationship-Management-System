@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'users',
     'sales_tracker',
     'Unique_voice',
@@ -107,11 +108,16 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shanaya',
         'USER': 'root',
-        'PASSWORD':'shanaya2',
-        'HOST' : '34.100.214.94',
+        'PASSWORD': 'shanaya2',
+        'HOST': '34.100.214.94',
         'PORT': '3306',
+        # Ensure there are no SSL options specified
+        'OPTIONS': {
+            'ssl': {'disabled': True}  # This line is optional, but you can add it for clarity
+        }
     }
-}
+}   
+
 
 
 
@@ -243,6 +249,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'localhost:8000', '104.197.128.246']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'users',
     'sales_tracker',
     'django.contrib.admin',
@@ -298,10 +305,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'stpa.wsgi.application'
 
 
-
-# AUTHENTICATION_BACKENDS = ['users.authentication.EmailBackend', 'django.contrib.auth.backends.ModelBackend']
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -312,49 +315,6 @@ WSGI_APPLICATION = 'stpa.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
-
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',}
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'Siddhi@2002',
-#         'PASSWORD':'Pj@123456',
-
-#         'HOST' : 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shanaya',
-#         'USER': 'root',
-#         'PASSWORD':'Siddhi@2002',
-#         'HOST' : 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shanaya',
-        'USER': 'root',
-        'PASSWORD':'shanaya2',
-        'HOST' : '34.100.214.94',
-        'PORT': '3306',
-    }
-}
 
 
 
@@ -444,13 +404,19 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 
 
+ASGI_APPLICATION = 'stpa.asgi.application'
 
-
-# settings.py
 #from decouple import config
+
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -464,8 +430,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 import os
+
 print("Current working directory:", os.getcwd())
-
-
-
 

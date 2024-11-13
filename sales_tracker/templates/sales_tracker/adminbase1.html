@@ -1,0 +1,294 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block css_link %}{% endblock %}
+
+  <link rel="stylesheet" href="{% static 'adminbase1.css' %}">
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/datatables/datatables.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script type="text/javascript" src="app.js" defer></script>
+
+  <title>{% block title %}Home{% endblock %}</title>
+</head>
+
+<body>
+  <nav id="sidebar">
+
+    <!-- <div class="timer-container">
+      <p id="timer-display">00:00:00</p>
+    </div> -->
+
+    <ul>
+      <li>
+        <span class="logo">Shanaya-CRM</span>
+        <button onclick=toggleSidebar() id="toggle-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path
+              d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+          </svg>
+        </button>
+      </li>
+
+
+      <li>
+        <a class="nav-link spacing" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+          aria-controls="offcanvasExample" id="profileLink">
+
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path
+              d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
+          </svg>
+          <span>Profile</span>
+        </a>
+      </li>
+
+
+
+
+      <li>
+        <a href="{% url 'Dashboards'%}">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path
+              d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
+          </svg>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+
+      <li>
+        <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+          <!-- Replacing icon with a device icon for "device" -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+            <path d="M4 6h16v10H4z" opacity=".3" />
+            <path d="M2 18h20v2H2zM22 6H2v10h20V6zm-2 8H4V8h16v6z" />
+          </svg>
+          <span>Device</span>
+          <!-- Chevron icon remains the same -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path
+              d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+          </svg>
+        </button>
+
+
+
+
+        <ul class="sub-menu">
+          <div>
+            <li><a href="{% url 'adminActive' %}">Active device</a></li>
+            <li><a href="{% url 'adminPassive' %}">Passive device</a></li>
+
+          </div>
+        </ul>
+      </li>
+
+
+
+      <li>
+        <a href="{% url 'reports' %}">
+          <!-- Replacing icon with a report icon for "Reports" -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+            <path
+              d="M9 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6H9zm3 1.5L18.5 9H15a1 1 0 01-1-1V3.5zm-5 7h8v1.5H7V10.5zm0 3h8v1.5H7v-1.5zm0 3h5v1.5H7v-1.5z" />
+          </svg>
+          <span>Reports</span>
+        </a>
+      </li>
+
+
+
+      <li>
+        <a href="{%url 'AdminAnalysis'%}">
+          <!-- Replacing icon with an analytics icon for "Analytics" -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+            <path d="M3 17h2V7H3v10zm4 0h2V3H7v14zm4 0h2V11h-2v6zm4 0h2V5h-2v12zm4 0h2V9h-2v8z" />
+          </svg>
+          <span>Analytics</span>
+        </a>
+      </li>
+
+
+
+
+      <li>
+        <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+          <!-- Replacing icon with a stopwatch icon for "Real Time" -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+            <path
+              d="M15.07 1H8.93V3H15.07V1ZM12 7a8.5 8.5 0 018.5 8.5A8.5 8.5 0 0112 24a8.5 8.5 0 01-8.5-8.5A8.5 8.5 0 0112 7zm0 2a6.5 6.5 0 100 13 6.5 6.5 0 000-13zm-.5 1.5h1v5h-1v-5zm6.78-1.72l1.42-1.42-1.88-1.88-1.42 1.42 1.88 1.88z" />
+          </svg>
+          <span>Real Time</span>
+          <!-- Chevron icon remains the same -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path
+              d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+          </svg>
+        </button>
+
+        <ul class="sub-menu">
+          <div>
+            <li><a href="{% url 'liveStreaming' %}">Live Streaming</a></li>
+            <li><a href="{% url 'temp' %}">Location Tracking</a></li>
+          </div>
+        </ul>
+      </li>
+
+
+
+      <li>
+        <a href="{% url 'attendance' %}">
+          <!-- Replacing icon with a clipboard report icon for "Attendance Reports" -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+            <path
+              d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm4 14H8v-2h8v2zm0-4H8v-2h8v2z" />
+          </svg>
+          <span>Attendance</span>
+        </a>
+
+
+
+
+
+
+
+
+      <li>
+        <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+          <!-- Replacing icon with an hourglass icon for "Manual Time" -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+            <path
+              d="M6 2h12v2c0 1.1-.9 2-2 2v3.17c0 .53-.21 1.04-.59 1.41L12 12l3.41 3.41c.38.38.59.88.59 1.41V20c1.1 0 2 .9 2 2H6c0-1.1.9-2 2-2v-3.17c0-.53.21-1.04.59-1.41L12 12 8.59 8.59c-.38-.38-.59-.88-.59-1.41V4c-1.1 0-2-.9-2-2V2zm2 18h8v-3.17L12 12l-4 4.83V20zm0-12V4h8v2.83L12 12 8 8.83z" />
+          </svg>
+          <span>Manual Time</span>
+          <!-- Chevron icon remains the same -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path
+              d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+          </svg>
+        </button>
+
+        <ul class="sub-menu">
+          <div>
+            <li><a href="{% url 'createManualTime' %}">Create Manual Time</a></li>
+            <li><a href="{% url 'viewManualTime' %}">View Manual Time</a></li>
+          </div>
+        </ul>
+      </li>
+
+
+
+
+      </li>
+
+
+    </ul>
+  </nav>
+  {% block content %}{% endblock %}
+
+  <div class="offcanvas offcanvas-end" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel"
+    data-bs-backdrop="false" id="profileLink">
+
+    <div class="offcanvas-body">
+      <div class="row p-2">
+        <a href="{% url 'detail_profile' %}" class="right_profile">View Profile</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Edit Profile</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Employees</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">Community</a>
+      </div>
+      <div class="row p-2">
+        <a href="#" class="right_profile">About</a>
+      </div>
+      <div class="row p-2">
+        <a href="{% url 'logout'%}" class="right_profile">Logout</a>
+      </div>
+
+    </div>
+  </div>
+  <!-- 
+
+
+  <main>
+ad
+  </main> -->
+
+
+
+</body>
+
+</html>
+
+<script>
+
+
+  const toggleButton = document.getElementById('toggle-btn')
+  const sidebar = document.getElementById('sidebar')
+
+  function toggleSidebar() {
+    sidebar.classList.toggle('close')
+    toggleButton.classList.toggle('rotate')
+
+    closeAllSubMenus()
+  }
+
+  function toggleSubMenu(button) {
+
+    if (!button.nextElementSibling.classList.contains('show')) {
+      closeAllSubMenus()
+    }
+
+    button.nextElementSibling.classList.toggle('show')
+    button.classList.toggle('rotate')
+
+    if (sidebar.classList.contains('close')) {
+      sidebar.classList.toggle('close')
+      toggleButton.classList.toggle('rotate')
+    }
+  }
+
+  function closeAllSubMenus() {
+    Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
+      ul.classList.remove('show')
+      ul.previousElementSibling.classList.remove('rotate')
+    })
+  }
+
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const profileButton = document.getElementById('profileLink');
+    const offcanvas = document.getElementById('offcanvasExample');
+
+    profileButton.addEventListener('click', function (e) {
+      e.stopPropagation();
+      offcanvas.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
+        offcanvas.classList.remove('show');
+      }
+    });
+
+    // Close button functionality
+    document.querySelector('.btn-close')?.addEventListener('click', function () {
+      offcanvas.classList.remove('show');
+    });
+  });
+
+</script>

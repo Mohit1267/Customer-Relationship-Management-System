@@ -1,120 +1,332 @@
-/* Main Container Styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6f8;
+    margin: 0; 
+    padding: 0; 
+    height: 100vh; 
+}
+
 .main_container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    padding: 0; 
+    background-color: #E0EAF6;
+    box-shadow: none; 
+    border: none; 
     width: 100%;
+    height: 100vh; 
     overflow-y: auto;
     overflow-x: auto;
 }
 
-/* Filter Search Container Styling */
-.filter-search-container {
+.container2 {
+    display: flex;
+    width: 100%;
+    height: 100%; 
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #e7eaef;
+    padding: 20px;
+    border-right: none; 
+}
+
+.sidebar .menu {
+    margin-bottom: 20px;
+}
+
+.sidebar button {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    text-align: left;
+}
+
+.sidebar button:hover {
+    background-color: #ddd;
+}
+
+.compose-button {
+    color: black; 
+    background-color: #82b8f3 !important; 
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+}
+
+.compose-button:hover {
+    background-color: #0056b3; 
+}
+
+
+.labels {
+    margin-top: 30px;
+}
+
+.labels h4 {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.labels ul {
+    list-style-type: none;
+    padding: 0; 
+    margin: 0; 
+}
+
+.labels ul li {
+    margin-bottom: 10px; 
+}
+
+.labels ul li button {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-left: 20px;
-    margin-bottom: 40px;
-    gap: 10px;
-}
-
-/* Filter Button Styling */
-.filter-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #1E2A38;
-    color: white;
+    background-color: #f1f1f1;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 100px;
-}
-
-.filter-button:hover {
-    background-color: rgb(78, 81, 82);
-}
-
-/* Filter Container and Form Styling */
-.filter-container {
-    display: none; /* Hidden by default */
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-    border: 1px solid rgb(97, 94, 94);
-}
-
-/* Filter Form Styling */
-.filter-form {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three fields per row */
-    gap: 20px;
-}
-
-/* Form Group and Input Styling */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-}
-
-.filter-form input[type="text"],
-.filter-form select,
-.filter-form textarea {
+    padding: 10px;
+    font-size: 16px;
     width: 100%;
-    max-width: 300px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.labels ul li button i {
+    margin-right: 10px;
+}
+
+.labels ul li button:hover {
+    background-color: #ddd;
+}
+
+.main-content {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    height: 100%; 
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.header input[type="text"] {
+    width: 70%;
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    border-radius: 5px;
 }
 
-.filter-form textarea {
-    resize: vertical;
-    height: 40px; /* Match text input height */
+.email-list {
+    display: none;
 }
 
-/* Form Action Buttons */
-.form-actions {
-    grid-column: span 3; /* Aligns buttons across all columns */
+.email-list.active {
+    display: block;
+}
+
+.email-item {
     display: flex;
-    /* justify-content: center; */
-    gap: 10px;
-    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
 }
 
-.form-actions button {
-    padding: 10px 15px;
+.email-item:hover {
+    background-color: #f1f1f1;
+}
+
+.email-details {
+    display: flex;
+    align-items: center;
+}
+
+.email-details h5 {
+    margin: 0 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.email-preview {
+    color: #888;
+    font-size: 13px;
+}
+
+.email-date {
+    font-size: 12px;
+    color: #666;
+}
+
+.label {
+    display: inline-block;
+    padding: 3px 5px;
+    background-color: #ffcc00;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 10px;
+    margin-right: 5px;
+}
+
+.label.new {
+    background-color: #28a745;
+}
+
+/* Compose Modal Overlay */
+.compose-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+/* Compose Modal Content */
+.compose-modal-content {
+    background-color: white;
+    margin: 5% auto; /* Centered */
+    padding: 0;
+    border-radius: 8px;
+    width: 600px; /* Width similar to the screenshot */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+.compose-modal-content h3 {
+    background-color: #f5f7fa;
+    padding: 15px 20px;
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    font-weight: normal;
+    color: #333;
+}
+
+/* Close Button */
+.compose-modal-content .close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+}
+
+/* Form Fields */
+.compose-modal-content form {
+    padding: 15px 20px;
+}
+
+.compose-modal-content label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.compose-modal-content input[type="email"],
+.compose-modal-content input[type="text"],
+.compose-modal-content textarea {
+    width: calc(100% - 20px);
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Cc/Bcc Toggle */
+.compose-modal-content .to-field {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;}
+
+.compose-modal-content .to-field input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+
+.compose-modal-content .cc-bcc {
+    font-size: 14px;
+    color: #1a73e8;
+    cursor: pointer;
+    text-decoration: underline;
+    gap: 5px;
+}
+
+/* Textarea */
+.compose-modal-content textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+/* Footer (Send Button) */
+.compose-modal-content .footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f5f7fa;
+    border-top: 1px solid #ddd;
+}
+
+.compose-modal-content .send-button {
+    background-color: #1a73e8;
+    color: white;
     border: none;
     border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
     cursor: pointer;
-    font-size: 1rem;
+    margin-right: 10px;
 }
 
-/* Button Styles */
-.form-actions button[type="submit"] {
-    background-color: #28a745;
-    color: white;
+.compose-modal-content .send-button:hover {
+    background-color: #1558b0;
 }
 
-.form-actions button[type="submit"]:hover {
-    background-color: #218838;
+/* Optional - Align icons or other controls in footer */
+.compose-modal-content .footer-icons {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    color: #555;
+    font-size: 18px;
 }
 
-.form-actions button[type="button"] {
-    background-color: #e23232;
-    color: white;
+.compose-modal-content .footer-icons i {
+    cursor: pointer;
 }
 
-.form-actions button[type="button"]:hover {
-    background-color: #9b220d;
+#editor-container {
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: white;
 }

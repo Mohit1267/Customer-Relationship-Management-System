@@ -10,9 +10,7 @@ body {
 
 
 .container-fluid {
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 950px;
+    background-color: #E0EAF6;
 }
 
 
@@ -48,7 +46,6 @@ body {
     margin-left: 270px;
 }
 
-/* Styling for the fixed navbar */
 .navbar {
     width: 200px;
     position: fixed;
@@ -61,7 +58,6 @@ body {
     color: white;
 }
 
-/* Adjusting content to not overlap with the navbar */
 .content {
     margin-left: 200px;
     padding: 20px;
@@ -69,7 +65,6 @@ body {
     background-color: #f9f9f9;
 }
 
-/* Styling for the form elements */
 .form {
     display: flex;
     flex-direction: column;
@@ -85,8 +80,6 @@ body {
 
 }
 
-
-/* Additional styling for form controls */
 .form_control {
     display: flex;
     flex-direction: column;
@@ -119,18 +112,17 @@ body {
     outline: none;
 }
 
-/* Optional: Styling for form-group elements */
-.form-group input,
-.form-group textarea {
+.form_control input,
+.form_control textarea {
     width: 100%;
-    border: none;
-    border-bottom: 1px solid #0a0a0a;
-    border-radius: 0;
-    padding: 0px 0;
-    background: transparent;
-    color: black;
-    box-shadow: none;
-    transition: border-bottom-color 0.3s ease;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    color: white;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .form-group input:focus,
@@ -184,7 +176,6 @@ select {
     justify-content: center;
 }
 
-/* Base Styles for Button1 */
 .button1 {
     background: linear-gradient(135deg, #28a745, #218838);
     border: none;
@@ -202,20 +193,17 @@ select {
     letter-spacing: 2px;
 }
 
-/* Hover State for Button1 */
 .button1:hover {
     background: linear-gradient(135deg, #218838, #28a745);
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Active State for Button1 */
 .button1:active {
     transform: translateY(-1px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Base Styles for Button2 */
 .button2 {
     background: linear-gradient(135deg, #e52323, #e23a3a);
     border: none;
@@ -231,21 +219,17 @@ select {
     letter-spacing: 3px;
 }
 
-/* Hover State for Button2 */
 .button2:hover {
     background: linear-gradient(135deg, #ed3a40, #f60101);
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Active State for Button2 */
 .button2:active {
     transform: translateY(-1px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-
-/* Media Queries for Responsiveness */
 @media (max-width: 1200px) {
     .moving_title {
         font-size: 30px;

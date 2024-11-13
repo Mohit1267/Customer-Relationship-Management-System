@@ -1,8 +1,12 @@
 from django.db import models
 from django.conf import settings
+import datetime
+
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from users.models import RegisterUser, Profile
+
 
 
 
@@ -65,6 +69,7 @@ class ContactData(models.Model):
 
 class LeadsData(models.Model):
     LEAD_STATUS_CHOICES = [
+       
         ('HOT', 'Hot'),
         ('COLD', 'Cold'),
         ('MILD', 'Mild'),
@@ -79,10 +84,10 @@ class LeadsData(models.Model):
     date = models.DateField(default="2000-10-10")
     contact_link = models.ForeignKey(ContactData, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
-    status = models.CharField(max_length=4, choices=LEAD_STATUS_CHOICES, default='COLD')
+    status = models.CharField(max_length=10, choices=LEAD_STATUS_CHOICES)
     created_by = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, related_name='leads_by',default=11)
-    remarks = models.TextField( default="nothing" )
-    nextdate = models.DateField(default="2024-11-11")
+    remarks = models.TextField(  )
+    nextdate = models.DateField()
     
     def __str__(self):
         return f"{self.lead_name}"
@@ -138,7 +143,7 @@ class QuotesData(models.Model):
 
     lead_source = models.CharField(max_length= 50)
     account = models.CharField(max_length= 50)
-    contact = models.CharField(max_length= 50)
+    contact = models.CharField(max_length= 50,null = True)
     billing_address = models.TextField()
     shipping_address = models.TextField()
 
@@ -149,7 +154,7 @@ class QuotesData(models.Model):
     shipping_tax = models.CharField(max_length=50)
     tax = models.CharField(max_length=50)
     grandtotal = models.CharField(max_length=50)
-    date = models.DateField(default="2000-10-10")
+    date = models.DateField()
     assigned_to = models.ForeignKey(RegisterUser, on_delete= models.CASCADE, default=1)
 
 
@@ -192,9 +197,9 @@ class Account(models.Model):
     campaign = models.CharField(max_length=100, blank=True, null=True)
     industry = models.CharField(max_length=100, blank=True, null=True)
     employees = models.IntegerField(blank=True, null=True)
+    # Timestamps
+    created_at = models.DateTimeField(default=datetime.datetime.now)  # Temporary for migration
 
-
-    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -242,6 +247,7 @@ class Schedule_Meeting(models.Model):
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
     notes = models.CharField(max_length=255, null = True)
+    contact= models.EmailField(null = True)
     temp = models.CharField(max_length=233, null = True,  blank = True)
 
 
@@ -259,7 +265,7 @@ class Schedule_Calling(models.Model):
     related_to = models.CharField(max_length=255)
     assigned_to = models.CharField(max_length=255)
     notification = models.CharField(max_length=255)
-    contact= models.IntegerField()
+    contact= models.IntegerField(null = True)
     notes = models.CharField(max_length=255, null = True)
     reason = models.CharField(max_length=255, null = True)
 
@@ -314,7 +320,6 @@ class Document(models.Model):
     
     def __str__(self):
         return f"Schedule_Calling from {self.start_date} to {self.end_date}"
-    
 
 class Task(models.Model):
     TASK_PRIORITY_CHOICES = [
@@ -324,24 +329,26 @@ class Task(models.Model):
     ]
 
     TASK_STATUS_CHOICES = [
-        ('open', 'Open'),
+        ('-------', '-------'),
+        ('not started ', 'Not Started '),
         ('in_progress', 'In Progress'),
         ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
+        ('pending_input', 'Pending Input'),
+        ('deferred ', 'Deferred '),
     ]
 
     subject = models.CharField(max_length=100)
-    start_date = models.DateField()
-    due_date = models.DateField()
-    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES)
-    description = models.TextField()
-    status = models.CharField(max_length=12, choices=TASK_STATUS_CHOICES, default='open')
+
+    start_date = models.DateField(null=True)
+    due_date = models.DateField(null=True)
+    priority = models.CharField(max_length=6, choices=TASK_PRIORITY_CHOICES,null=True)
+    description = models.TextField(null=True)
+    status = models.CharField(max_length=20, choices=TASK_STATUS_CHOICES, default='open')
+
     related_to = models.CharField(max_length=100, blank=True, null=True)  
     contacts = models.ManyToManyField('ContactData', related_name='tasks')
-
-    def __str__(self):
+    def _str_(self):
         return self.subject
-
 
 class DailySalesReport(models.Model):
     name = models.CharField(max_length=100)
@@ -372,14 +379,32 @@ class DailySalesReport(models.Model):
 
 
 class agentNotes(models.Model):
+    RELATED_TO_CHOICES = [
+        ('', ' '),
+        ('account', 'Account'),
+        ('opportunity', 'Opportunity'),
+        ('case', 'Case'),
+        ('lead', 'Lead'),
+        ('contact', 'Contact'),
+        ('bug', 'Bug'),
+        ('project', 'Project'),
+        ('target', 'Target'),
+        ('project_task', 'Project Task'),
+        ('contract', 'Contract'),
+        ('invoice', 'Invoice'),
+        ('quote', 'Quote'),
+        ('product', 'Product'),
+    ]
+
     subject = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
     attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
     note = models.TextField()
-    related_to = models.CharField(max_length=255)
+    related_to = models.CharField(max_length=255, choices=RELATED_TO_CHOICES, blank=True)
 
     def __str__(self):
         return self.subject
+
     
 '''
 class createInvoices(models.Model):
@@ -444,28 +469,38 @@ class agentProjects(models.Model):
     def __str__(self):
         return self.name
     
-from django.db import models
+# from django.db import models
 
-class ProjectTemplate(models.Model):
-    STATUS_CHOICES = [
-        ('active', 'Active'),
-        ('inactive', 'Inactive'),
-    ]
+# class ProjectTemplate(models.Model):
+#     STATUS_CHOICES = [
+#         ('active', 'Active'),
+#         ('inactive', 'Inactive'),
+#     ]
     
-    PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High'),
-    ]
+#     PRIORITY_CHOICES = [
+#         ('low', 'Low'),
+#         ('medium', 'Medium'),
+#         ('high', 'High'),
+#     ]
     
-    template_name = models.CharField(max_length=100)
-    consider_working_days = models.BooleanField(default=False)
-    project_manager = models.CharField(max_length=100)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
-    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
+#     template_name = models.CharField(max_length=100)
+#     consider_working_days = models.BooleanField(default=False)
+#     project_manager = models.CharField(max_length=100)
+#     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+#     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
 
-    def __str__(self):
-        return self.template_name
+
+#     template_name = models.CharField(max_length=255)
+#     consider_working_days = models.BooleanField(default=False)
+#     project_manager = models.CharField(max_length=255)
+#     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+#     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='medium')
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+
+#     def __str__(self):
+#         return self.template_name
 
 
 
@@ -517,7 +552,50 @@ class ProjectTemplate(models.Model):
 #     created_at = models.DateTimeField(auto_now_add=True)
 
 #     def __str__(self):
+
 #         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
+
+# class Contract(models.Model):
+#     contract_title = models.CharField(max_length=100)
+#     contract_value = models.DecimalField(max_digits=10, decimal_places=2)
+#     start_date = models.DateField()
+#     end_date = models.DateField()
+#     renewal_reminder_date = models.DateField(null=True, blank=True)
+#     customer_schedule_date = models.DateField(null=True, blank=True)
+#     company_schedule_date = models.DateField(null=True, blank=True)
+#     description = models.TextField(blank=True)
+#     status = models.CharField(max_length=10, choices=[('enabled', 'Enabled'), ('disabled', 'Disabled')])
+#     contact_manager = models.CharField(max_length=100)
+#     account = models.CharField(max_length=100)
+#     contact = models.CharField(max_length=100)
+#     opportunity = models.CharField(max_length=100, blank=True)
+#     contract_type = models.CharField(max_length=10, choices=[('type1', 'Type 1'), ('type2', 'Type 2')])
+#     currency = models.CharField(max_length=3, choices=[('usd', 'USD'), ('eur', 'EUR')])
+#     total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     discount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     subtotal = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     shipping = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     SHIPPING_TAX_CHOICES = [
+#         ('5', '5%'),
+#         ('7', '7%'),
+#         ('10', '10%'),
+#         ('20', '20%'),
+#         ('25', '25%')
+#     ]
+    
+#     shipping_tax = models.CharField(
+#         max_length=3,
+#         choices=SHIPPING_TAX_CHOICES,
+#         null=True,
+#         blank=True,
+#         default='5'
+#     )
+#     tax = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+#     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+#     def _str_(self):
+#         return self.contract_title
+
 
 
 
@@ -570,9 +648,6 @@ class Contract(models.Model):
 
 
 
-
-
-
 from django.db import models
 
 class Target(models.Model):
@@ -598,7 +673,9 @@ class Target(models.Model):
     description = models.TextField(blank=True, null=True)
     assigned_to = models.CharField(max_length=100, blank=True, null=True)
 
+
     def __str__(self):
+
         return f"{self.first_name} {self.last_name}"
 
 
@@ -648,16 +725,20 @@ class Case(models.Model):
 
 from django.db import models
 
-class ProjectTemplate(models.Model):
+class projectTemplate(models.Model):
     STATUS_CHOICES = [
-        ('active', 'Active'),
-        ('inactive', 'Inactive'),
-    ]
-    
+        ('draft', 'Draft'),
+        ('in_review', 'In Review'),
+        ('underway', 'Underway'),
+        ('on_hold', 'On Hold'),
+        ('completed', 'Completed'),
+]
+
     PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
         ('high', 'High'),
+        ('medium', 'Medium'),
+        ('low', 'Low'),
+
     ]
     
     template_name = models.CharField(max_length=100)
@@ -667,8 +748,8 @@ class ProjectTemplate(models.Model):
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
 
     def __str__(self):
-        return self.template_name
 
+        return self.template_name
 
 
 from django.db import models
@@ -684,6 +765,36 @@ class ImportTemplate(models.Model):
     )
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+
+    def _str_(self):
         return f"Template - {self.template_file.name} ({self.get_action_choice_display()})"
+
+class EmailTemplate(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+
+    def _str_(self):
+        return self.name
+    print("----------------")
+
+
+class ComposedEmail(models.Model):
+    """Model to store composed email details."""
+    template = models.ForeignKey(EmailTemplate, on_delete=models.SET_NULL, null=True, blank=True)
+    related_to = models.CharField(max_length=255, blank=True, null=True)
+    from_address = models.EmailField()
+    to_address = models.EmailField()
+    cc_address = models.TextField(blank=True, null=True)
+    bcc_address = models.TextField(blank=True, null=True)
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    send_plain_text = models.BooleanField(default=False)
+    sent_status = models.BooleanField(default=False)  # New field to track email status
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
 

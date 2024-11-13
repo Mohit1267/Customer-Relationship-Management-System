@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 {% load static %}
 {% block title %}Daily Sales Report Table{% endblock %}
 {% block css_link %}
@@ -57,7 +57,7 @@
                     </div>
                     
                     <div class="form-actions">
-                        <button type="button" onclick="performSearch()">Apply Filter</button>
+                        <button type="submit" onclick="performSearch()">Apply Filter</button>
                         <button type="button" onclick="clearForm()">Clear</button>
                     </div>
                 </div>
@@ -74,38 +74,36 @@
                     <th>Name</th>
                     <th>Item Name</th>
                     <th>Total</th>
-                    <!-- <th>State</th> -->
+             
                 </tr>
             </thead>
             <tbody>
-            <!-- {% for data in data_list %} -->
+           
                 <tr>
-                    <!-- <td><a href="{% url 'detaildata' data %}">{{ data }}</a></td> -->
+
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
                     
-                    <!-- {% if data.customer_first_name %} -->
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    <!-- {% elif data.first_name %} -->
                         <td>{{ data.first_name }} {{ data.last_name }}</td>
                         <td>{{ data.email_id }}</td>
                         <td>-</td>
                         <td>-</td>
-                    <!-- {% elif data.opportunity_name %} -->
+                   
                         <td>{{ data.opportunity_name }}</td>
                         <td>-</td>
                         <td>{{ data.probability }}</td>
                         <td>{{ data.assigned_to }}</td>
-                    <!-- {% elif data.title %} -->
+        
                         <td>{{ data.title }}</td>
                         <td>-</td>
                         <td>{{ data.valid_until }}</td>
                         <td>{{ data.approval_status }}</td>
-                    <!-- {% endif %} -->
+                 
                 </tr>
-            <!-- {% endfor %} -->
+          
             </tbody>
         </table>
         
@@ -149,10 +147,8 @@ function performSearch() {
                   "Job Title: " + jobTitle + "\n" +
                   "Assigned To: " + assignedTo;
 
-    // Display results in the console (or replace this with actual search/filtering code)
     console.log(results);
 
-    // Alternatively, if you want to display results on the page
     document.getElementById("searchResults").innerText = results;
 }
 

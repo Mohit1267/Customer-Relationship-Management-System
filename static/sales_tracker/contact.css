@@ -47,8 +47,7 @@ body {
      margin-right:300px; 
      margin-left: 270px;  
  } 
- 
- /* Styling for the fixed navbar */ 
+
  .navbar { 
      width: 200px; 
      position: fixed;  
@@ -60,16 +59,14 @@ body {
      z-index: 1000; 
      color: white; 
  } 
-  
- /* Adjusting content to not overlap with the navbar */ 
+
  .content { 
      margin-left: 200px;
      padding: 20px; 
      flex: 1; 
      background-color: #f9f9f9; 
  } 
-  
- /* Styling for the form elements */ 
+
  .form {
      display: flex;
      flex-direction: column;
@@ -84,9 +81,7 @@ body {
      max-height: 400px;
     
  }
- 
-  
- /* Additional styling for form controls */ 
+
  .form_control { 
      display: flex; 
      flex-direction: column; 

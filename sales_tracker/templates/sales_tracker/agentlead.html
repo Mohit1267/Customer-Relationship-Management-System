@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load static %}
@@ -18,7 +18,6 @@
   <form method="POST">
     {% csrf_token %}
 
-    <!-- Title Section -->
     <div class="row mt-2 mb-2">
       <div class="col-12 text-center moving_title" style="color: white;">
         Create Leads
@@ -27,7 +26,6 @@
 
     <hr>
 
-    <!-- Button Section -->
     <div class="row mb-2">
       <div class="col-12 d-flex justify-content-end">
         <button type="submit" class="button1 mx-2">Submit</button>
@@ -38,40 +36,40 @@
 
     <div class="row">
       <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.lead_name|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.first_name|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.last_name|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.email_id|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.contact_number|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.job_title|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.address|as_crispy_field}}
         </div>
       </div>
 
       <div class="col-md-6 pt-5 px-4" style="color:rgb(15, 14, 14) ; border-left: 1px solid rgb(15, 14, 14)">
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.contact_link|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.status|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.remarks|as_crispy_field}}
         </div>
-        <div class="form-group">
+        <div class="form-group mb-5">
           {{form.nextdate|as_crispy_field}}
         </div>
       </div>

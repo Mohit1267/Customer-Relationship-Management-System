@@ -1,9 +1,8 @@
-
 .main_container {
     /* margin: 20px auto; */
     padding: 20px;
     /* max-width: 1200px; */
-    background-color: #f9f9f9;
+    background-color: #E0EAF6;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     /* margin-top: 74px; */
@@ -40,8 +39,8 @@
     border-radius: 5px;
     background-color: #f9f9f9;
     /* display: grid; */
-    grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
-    grid-gap: 20px; /* Space between form fields */
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px; 
 }
 
 .form-group {
@@ -61,7 +60,7 @@
 }
 
 .form-actions {
-    grid-column: span 3; /* Form actions take up full width of the grid */
+    grid-column: span 3; 
     margin-top: 20px;
 }
 
@@ -83,12 +82,45 @@
     color: white;
 }
 
+.form-actions button[type="submit"]:hover {
+    background-color: #218838;
+    color: white;
+}
+
+.form-actions button[type="button"]:hover {
+    background-color: #c82333; 
+    color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+    background-color: #218838;
+    color: white;
+}
+
+.form-actions button[type="button"]:hover {
+    background-color: #c82333; 
+    color: white;
+}
+
+
 .form-control {
     width: 300px;
     margin-right: 10px;
     border-radius: 20px 0 0 20px;
     height: 35px;
 
+}
+
+.inside-filter-container select,
+.inside-filter-container input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #333;
 }
 
 button {

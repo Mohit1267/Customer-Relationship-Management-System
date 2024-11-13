@@ -1,0 +1,132 @@
+{% extends "adminbase1.html" %}
+
+{% load static %}
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
+{% endblock %}
+
+{% block title %}Documents{% endblock %}
+
+{% block content %}
+
+<section class="main_container">
+
+    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+        <form class="d-flex" style="flex-grow: 1;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+    </div>
+    <div class="filter-container">
+       
+        <div id="filterForm" class="filter-form">
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <div class="form-group">
+                <label for="startTime">Start Time:</label>
+                <input type="time" id="startTime" name="startTime">
+            </div>
+            <div class="form-group">
+                <label for="endTime">End Time:</label>
+                <input type="time" id="endTime" name="endTime">
+            </div>
+            <div class="form-group">
+                <label for="createdDate">Created Date:</label>
+                <input type="date" id="createdDate" name="createdDate">
+            </div>
+            <div class="form-group">
+                <label for="timeAttribution">Time Attribution:</label>
+                <input type="text" id="timeAttribution" name="timeAttribution">
+            </div>
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="summary">Summary:</label>
+                <textarea id="summary" name="summary" rows="4" placeholder="Enter summary here"></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Created Date</th>
+                <th>Time Attribution</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in data_list %}
+            <tr>
+                <td><a href="{% url 'detaildata' data %}">{{ data.subject }}</a></td>
+                <td>{{ data.date }}</td>
+                <td>{{ data.start_time }}</td>
+                <td>{{ data.end_time }}</td>
+                <td>{{ data.created_date }}</td>
+                <td>{{ data.time_attribution }}</td>
+                <td>{{ data.summary }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+</section>
+
+<script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = (filterForm.style.display === "block") ? "none" : "block";
+    }
+    
+    function clearForm() {
+        document.getElementById("date").value = "";
+        document.getElementById("startTime").value = "";
+        document.getElementById("endTime").value = "";
+        document.getElementById("createdDate").value = "";
+        document.getElementById("timeAttribution").value = "";
+        document.getElementById("summary").value = "";
+    }
+
+    function performSearch() {
+        var date = document.getElementById("date").value;
+        var startTime = document.getElementById("startTime").value;
+        var endTime = document.getElementById("endTime").value;
+        var createdDate = document.getElementById("createdDate").value;
+        var timeAttribution = document.getElementById("timeAttribution").value;
+        var summary = document.getElementById("summary").value;
+
+        var results = "Search results for: \n" +
+                      "Date: " + date + "\n" +
+                      "Start Time: " + startTime + "\n" +
+                      "End Time: " + endTime + "\n" +
+                      "Created Date: " + createdDate + "\n" +
+                      "Time Attribution: " + timeAttribution + "\n" +
+                      "Summary: " + summary;
+
+        document.getElementById("searchResults").innerText = results;
+    }
+</script>
+
+{% endblock %}
+
+{% block javascript %}{% endblock %}

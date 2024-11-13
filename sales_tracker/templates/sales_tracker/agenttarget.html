@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load static %}
@@ -55,7 +55,7 @@
                     {{ form.fax|as_crispy_field }}
                 </div>
 
-                <h4 style="padding-top: 20px;">Shipping Address :</h4>
+                <h5 style="padding-top: 20px;">Shipping Address :</h5>
                 <div class="form-group">
                     {{ form.primary_address_street|as_crispy_field }}
                 </div>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="col-md-6 pt-5 pb-5 px-4" style="border-left: 1px solid rgb(15, 14, 14);">
-                <h4 style="padding-top: 20px;">Other Address :</h4>    
+                <h5 style="padding-top: 20px;">Other Address :</h5>    
                 <div class="form-group">
                         {{ form.other_address_postal_code|as_crispy_field }}
                     </div>

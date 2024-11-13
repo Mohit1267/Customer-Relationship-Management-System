@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 
 {% load static %}
 {% block css_link %}
@@ -13,62 +13,98 @@
 
     <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
         <form class="d-flex" style="flex-grow: 1;">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                style="width: 200px;">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
     </div>
 
     <div class="filter-container">
+
         <div id="filterForm" class="filter-form">
+
             <div class="form-group">
-                <label for="subject">Subject:</label>
-                <input type="text" id="subject" name="subject">
+                <label for="contract_title">Contract Title:</label>
+                <input type="text" id="contract_title" name="contract_title">
             </div>
+
             <div class="form-group">
-                <label for="contact">Contact:</label>
-                <input type="text" id="contact" name="contact">
+                <label for="account">Account:</label>
+                <input type="text" id="account" name="account">
             </div>
+
             <div class="form-group">
-                <label for="priority">Priority:</label>
-                <select id="priority" name="priority">
-                    <option value="">-- Select Priority --</option>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select>
+                <label for="opportunity">Opportunity:</label>
+                <input type="text" id="opportunity" name="opportunity">
             </div>
+
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date">
+            </div>
+
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date">
+            </div>
+
+            <div class="form-group">
+                <label for="contract_value">Contract Value:</label>
+                <input type="number" id="contract_value" name="contract_value" step="0.01">
+            </div>
+
             <div class="form-group">
                 <label for="status">Status:</label>
+
                 <select id="status" name="status">
                     <option value="">-- Select Status --</option>
-                    <option value="open">Open</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
+                    <option value="enabled">Not Started</option>
+                    <option value="disabled">In Progress</option>
+                    <option value="disabled">Signed</option>
+
                 </select>
+
             </div>
+
             <div class="form-group">
-                <label for="contacts">Contacts:</label>
-                <input type="text" id="contacts" name="contacts">
-            </div>
-            <div class="form-group">
-                <label for="assignedTo">Assigned To:</label>
-                <select id="assignedTo" name="assignedTo">
-                    <option value="">-- Select User --</option>
-                    <option value="user1">User 1</option>
-                    <option value="user2">User 2</option>
-                    <option value="user3">User 3</option>
+                <label for="contract_type">Contract Type:</label>
+
+                <select id="contract_type" name="contract_type">
+                    <option value="">-- Select Contract Type --</option>
+                    <option value="type1">Type</option>
                 </select>
+
             </div>
-            
+
+            <div class="form-group">
+                <label for="contract_manager">Contract Manager:</label>
+                <input type="text" id="contract_manager" name="contract_manager">
+            </div>
+
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+
+            </div>
+
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
+
         </div>
+
     </div>
-    
+
     <table>
         <thead>
             <tr>
@@ -82,7 +118,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for data in data_list %}
+            {% for data in data_list %}
             <tr>
                 <td><a href="{% url 'detaildata' data %}">{{ data.contract_title }}</a></td>
                 <td>{{ data.status }}</td>
@@ -92,10 +128,10 @@
                 <td>{{ data.start_date }}</td>
                 <td>{{ data.end_date }}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
-    
+
 </section>
 
 <script>
@@ -105,28 +141,33 @@
     }
 
     function clearForm() {
-        document.getElementById("subject").value = "";
-        document.getElementById("contact").value = "";
-        document.getElementById("priority").value = "";
+        document.getElementById("contract_title").value = "";
+        document.getElementById("account").value = "";
+        document.getElementById("opportunity").value = "";
+        document.getElementById("start_date").value = "";
+        document.getElementById("end_date").value = "";
+        document.getElementById("contract_value").value = "";
         document.getElementById("status").value = "";
-        document.getElementById("contacts").value = "";
-        document.getElementById("assignedTo").value = "";
+        document.getElementById("contract_type").value = "";
+        document.getElementById("contract_manager").value = "";
+        document.getElementById("time_frame").value = "all";
     }
 
     function performSearch() {
-        // Get filter values
-        var subject = document.getElementById("subject").value.toLowerCase();
-        var contact = document.getElementById("contact").value.toLowerCase();
-        var priority = document.getElementById("priority").value.toLowerCase();
+        var contractTitle = document.getElementById("contract_title").value.toLowerCase();
+        var account = document.getElementById("account").value.toLowerCase();
+        var opportunity = document.getElementById("opportunity").value.toLowerCase();
+        var startDate = document.getElementById("start_date").value;
+        var endDate = document.getElementById("end_date").value;
+        var contractValue = document.getElementById("contract_value").value;
         var status = document.getElementById("status").value.toLowerCase();
-        var contacts = document.getElementById("contacts").value.toLowerCase();
-        var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+        var contractType = document.getElementById("contract_type").value.toLowerCase();
+        var contractManager = document.getElementById("contract_manager").value.toLowerCase();
 
-        // Get all rows in the table
         var rows = document.querySelectorAll("table tbody tr");
 
-        rows.forEach(function(row) {
-            var rowSubject = row.cells[0].innerText.toLowerCase();
+        rows.forEach(function (row) {
+            var rowContractTitle = row.cells[0].innerText.toLowerCase();
             var rowStatus = row.cells[1].innerText.toLowerCase();
             var rowManager = row.cells[2].innerText.toLowerCase();
             var rowAccount = row.cells[3].innerText.toLowerCase();
@@ -134,19 +175,21 @@
             var rowStartDate = row.cells[5].innerText.toLowerCase();
             var rowEndDate = row.cells[6].innerText.toLowerCase();
 
-            // Check if the row matches the filters
-            var match = (!subject || rowSubject.includes(subject)) &&
-                        (!contact || rowManager.includes(contact)) &&
-                        (!priority || rowStatus.includes(priority)) &&
-                        (!status || rowStatus.includes(status)) &&
-                        (!contacts || rowAccount.includes(contacts)) &&
-                        (!assignedTo || rowManager.includes(assignedTo));
+            var match = (!contractTitle || rowContractTitle.includes(contractTitle)) &&
+                (!account || rowAccount.includes(account)) &&
+                (!opportunity || rowContractTitle.includes(opportunity)) &&
+                (!startDate || rowStartDate.includes(startDate)) &&
+                (!endDate || rowEndDate.includes(endDate)) &&
+                (!contractValue || rowValue.includes(contractValue)) &&
+                (!status || rowStatus.includes(status)) &&
+                (!contractType || rowContractTitle.includes(contractType)) &&
+                (!contractManager || rowManager.includes(contractManager));
 
-            // Show or hide the row based on match
             row.style.display = match ? "" : "none";
         });
     }
 </script>
+
 {% endblock %}
 
 {% block javascript %}{% endblock %}

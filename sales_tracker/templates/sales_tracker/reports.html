@@ -1,8 +1,8 @@
-{% extends "adminbase.html" %}
+{% extends "adminbase1.html" %}
 {% load static %}
 {% block css_link %}
 <link rel="stylesheet" href="{% static 'sales_tracker/reports.css' %}">
-<!-- Include Font Awesome for icons -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pVILFJ1xXg+v9mN3PFgZxVcPgxdmE0t5EUaO6bD1v1oIHXkbM9d1xG4x8x1DppQypfR3o8cNfKtvVRyytC5CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 {% endblock %}
 {% block title %}Data Mining{% endblock %}
@@ -11,11 +11,9 @@
 <div class="dashboard-container">
     <h1 style="color:black; text-align: center ;">Data Mining Reports</h1>
 
-    <!-- Attendance Section -->
     <section class="section">
         <h2>Attendance</h2>
         <div class="card-container">
-            <!-- Break Report Card -->
 
             <div class="card">
                 <div class="card-icon">
@@ -29,8 +27,7 @@
                 </div>
                 </a>
             </div>
-            
-            <!-- Daily Attendance Card -->
+
             <div class="card">
                 <div class="card-icon">
                     <i class="fas fa-calendar-check"></i>
@@ -43,7 +40,7 @@
                 </div>
             </a>
             </div>
-            <!-- Monthly Attendance Card -->
+
             <div class="card">
                 <div class="card-icon">
                     <i class="fas fa-calendar-alt"></i>
@@ -54,7 +51,7 @@
                     <p>Download monthly attendance reports, including punch-in and punch-out times.</p>
                 </div>
             </div>
-            <!-- Monthly In-Out Card -->
+  
             <div class="card">
                 <div class="card-icon">
                     <i class="fas fa-exchange-alt"></i>
@@ -68,11 +65,10 @@
         </div>
     </section>
 
-    <!-- Analytics Section -->
     <section class="section">
         <h2>Analytics</h2>
         <div class="card-container">
-            <!-- Activity Report Card -->
+        
             <div class="card">
                 <div class="card-icon">
                     <i class="fas fa-chart-bar"></i>
@@ -85,7 +81,7 @@
                 </div>
                 </a>
             </div>
-            <!-- Apps/URLs Report Card -->
+ 
             <div class="card">
                 <div class="card-icon">
                     <i class="fas fa-th"></i>
@@ -121,7 +117,7 @@
                 <div class="card-icon">
                     <i class="fas fa-th"></i>
                 </div>
-                <a href="{% url 'temp' %}">
+                <a href="{% url 'location' %}">
                 <div class="card-content">
                     <img class="icon" src="https://i.ibb.co/0F6XKBr/maps.png"Break icon" style="height: 60px;">
                     <h3>Location Tracker</h3>

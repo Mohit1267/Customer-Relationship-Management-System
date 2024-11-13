@@ -1,14 +1,8 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-}
 .main_container {
     /* margin: 20px auto; */
     /* padding: 20px; */
     /* max-width: 1200px; */
-    background-color: #f9f9f9;
+    background-color: #E0EAF6;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     /* margin-top: 74px; */
@@ -16,43 +10,17 @@ body {
     overflow-y: auto;
     overflow-x: auto;
 }
-.filter-button{
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    margin-top: 10px;
-    padding: 20px;
-}
-
-.filter-button:hover{
-    border-color: white;
-    color: white;
-    background-color: black;
-    opacity: 0.9;
-}
-
 
 .filter-search-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* margin-top: 80px; */
-    margin-left: 20px;
-    margin-bottom: 40px;
-    /* position: fixed; */
-    /* gap: 10px; */
-    /* padding: 10px; */
+    margin-top: 20px;
 }
 
 .filter-container {
     margin: 20px;
 }
-.d-flex{
-    width: 400px;
-}
 
 .filter-toggle-btn {
-    background-color: #1E2A38;
+    background-color: #007bff;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -66,18 +34,6 @@ body {
     padding: 20px;
     border-radius: 5px;
     background-color: #f9f9f9;
-}
-
-.filter-form {
-    display: none;
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    /* display: grid; */
-    grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
-    grid-gap: 20px; /* Space between form fields */
 }
 
 .form-group {
@@ -97,7 +53,6 @@ body {
 }
 
 .form-actions {
-    grid-column: span 3; /* Form actions take up full width of the grid */
     margin-top: 20px;
 }
 
@@ -119,316 +74,753 @@ body {
     color: white;
 }
 
-/* Button Container Styling */
-.buttons {
-    display: flex;
-    gap: 10px;
-    grid-column: span 3; /* Span all columns */
-    justify-content: center; /* Center align buttons */
-    margin-top: 10px;
-}
 
-.button, .button2, .button4 {
-    padding: 10px 15px;
-    border: none;
+.inside-filter-container select,
+.inside-filter-container input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    cursor: pointer;
+    box-sizing: border-box;
     font-size: 1rem;
-}
-
-/* Apply Filter Button */
-.button4 {
-    background-color: #28a745;
-    color: white;
-}
-
-.button4:hover {
-    opacity: 0.9;
-}
-
-/* Clear Button */
-.button2 {
-    background-color: #f88d00;
-    color: white;
-}
-
-.button2:hover {
-    opacity: 0.9;
-}
-
-/* Additional Hover Effects */
-.button:hover, .button2:hover, .button4:hover {
-    opacity: 0.9;
-}
-
-
-
-.containers {
-    margin: 0;
-    padding: 0; /* Remove default padding to align content properly */
-    background-color: #e0eaf6;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Set container width to 100% to align content */
-}
-
-.headingDiv {
-    text-align: center;
-    margin: 0;
-    padding: 20px 0;
-}
-
-h1 {
-    font-size: 24px;
+    font-family: inherit;
     color: #333;
 }
 
-.tableBox {
-    width: 100%;
-    overflow-x: auto;
+.navbar-horizontal {
+    background-color: #eff3f7 !important;
+    width: calc(100% - 250px);
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    /* border-radius: 20px 20px 20px 20px; */
+    position: fixed;
+    top: 0;
+    left: 250px;
+    z-index: 1000;
+    
 }
+
+.inside-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.inside-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+.inside-filter-container select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #eff3f7;
+}
+
+.state-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.state-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+#state-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #eff3f7;
+}
+
+.zone-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.zone-filter-container label {
+    margin: 5px;
+    font-weight: normal;
+}
+
+#zone-filter {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #eff3f7;
+}
+
+.filter-bar {
+    display: flex;
+    align-items: center;
+}
+
+.filter-select {
+    width: 150px;
+    margin-left: 1100px;
+}
+
+.profile-icon {
+    height: 50px;
+    margin-left: 20px;
+    cursor: pointer;
+
+}
+
+.profile-icon:hover {
+    opacity: 0.8;
+
+}
+
+.small-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.form-control {
+    width: 300px;
+    margin-right: 10px;
+    border-radius: 20px 0 0 20px;
+    height: 35px;
+
+}
+
+button {
+    padding: 5px 20px; 
+    color: black; 
+    border: 1px solid black; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+    background-color: #eff3f7;
+}
+
+button:hover {
+    border-color: white;
+    color: white;
+    background-color: black;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; 
+    overflow-y: auto;
+}
+
 
 table {
-    width: 100%; /* Make table fill the container width */
-    border-collapse: collapse;
-    margin: 0; /* Remove margin to avoid extra spacing */
-    font-size: 16px;
-    text-align: left;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; 
 }
 
-th, td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    white-space: nowrap; /* Prevent wrapping of text */
-}
 
 thead {
-    background-color: #1E2A38;
-    color: #fff;
+    background-color: #1E2A38; 
+    color: white;
+}
+
+th,
+td {
+    padding: 15px 20px;
+    text-align: left; 
+}
+
+th {
+    font-weight: bold; 
+    text-transform: uppercase; 
+    font-size: 14px;
+    border-bottom: 2px solid #ddd; 
 }
 
 tbody tr {
-    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd; 
+    transition: background-color 0.3s; 
 }
 
-tbody tr:nth-of-type(even) {
-    background-color: #f2f2f2;
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; 
 }
 
 tbody tr:hover {
-    background-color: #e9e9e9;
+    background-color: #e1f5fe; 
 }
 
-/* Responsive Styling */
-@media (max-width: 1024px) {
-    th, td {
-        padding: 10px 8px; /* Reduce padding for smaller screens */
-    }
-
-    table {
-        font-size: 14px; /* Decrease font size */
-    }
-
-    h1 {
-        font-size: 22px; /* Adjust heading size */
-    }
-}
-
-@media (max-width: 768px) {
-    th, td {
-        padding: 8px 5px;
-    }
-
-    table {
-        font-size: 12px;
-    }
-
-    .headingDiv h1 {
-        font-size: 20px;
-    }
-
-    /* Make the table container scrollable horizontally */
-    .tableBox {
-        overflow-x: scroll;
-    }
-
-    table {
-        width: auto; /* Allow table to take the required width for scrolling */
-    }
-}
-
-@media (max-width: 480px) {
-    th, td {
-        padding: 6px 4px; /* Reduce padding further */
-    }
-
-    table {
-        font-size: 11px; /* Smaller font size for better fit */
-    }
-
-    .headingDiv h1 {
-        font-size: 18px; /* Smaller heading size */
-    }
-
-    /* Make table columns stack for small screens */
-    table, thead, tbody, th, td, tr {
-        display: block; /* Stack elements */
-    }
-
-    /* Adjust individual cell styling */
-    th, td {
-        text-align: right; /* Right align text */
-        padding-left: 50%; /* Add some left padding */
-        position: relative;
-    }
-
-    th::before, td::before {
-        content: attr(data-label); /* Use data-label attribute for column names */
-        position: absolute;
-        left: 0;
-        width: 45%; /* Label width */
-        padding-left: 10px;
-        font-weight: bold;
-        white-space: nowrap;
-        text-align: left;
-    }
-
-    /* Hide the table header */
-    thead {
-        display: none;
-    }
-}
-
-
-.containers {
-    margin: 0;
-    padding: 0; /* Remove default padding to align content properly */
-    background-color: #e0eaf6;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Set container width to 100% to align content */
-}
-
-.headingDiv {
-    text-align: center;
-    margin: 0;
-    padding: 20px 0;
-}
-
-h1 {
-    font-size: 24px;
+td {
+    font-size: 14px; 
     color: #333;
+    transition: color 0.3s ease; 
 }
 
-.tableBox {
-    width: 100%;
-    overflow-x: auto;
+td span {
+    font-weight: bold; 
+    color: #00796b; 
 }
 
-table {
-    width: 100%; /* Make table fill the container width */
-    border-collapse: collapse;
-    font-size: 16px;
-    text-align: left;
+a {
+    color: #0288d1; 
+    text-decoration: none; 
+    transition: color 0.3s; 
 }
 
-th, td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    white-space: nowrap; /* Prevent wrapping of text */
+a:hover {
+    text-decoration: underline; 
+    color: #01579b; 
 }
 
-thead {
-    background-color: #1E2A38;
-    color: #fff;
-}
+@media (max-width: 1400px) and (min-width: 1200px) {
 
-tbody tr {
-    background-color: #f9f9f9;
-}
+    .main_container {
+        margin: 15px auto;
+        padding: 15px;
+        margin-top: 100px;
+        width: 98%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    }
 
-tbody tr:nth-of-type(even) {
-    background-color: #f2f2f2;
-}
+    .navbar-horizontal {
+        width: calc(100% - 230px);
+        left: 230px;
+        padding: 10px 15px; 
+        /* padding: 8px 16px; */
+    }
 
-tbody tr:hover {
-    background-color: #e9e9e9;
-}
+    .small-nav {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 10px;
+    }
 
-/* Responsive Styling */
-@media (max-width: 1024px) {
-    th, td {
-        padding: 10px 8px; /* Reduce padding for smaller screens */
+    .inside-filter-container, 
+    .state-filter-container, 
+    .zone-filter-container {
+        margin-left: 50px;
+        gap: 3px; 
+    }
+
+   .inside-filter-container label,
+    .state-filter-container label,
+    .zone-filter-container label {
+        font-size: 13px;
+        margin: 3px; 
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        padding: 4px;
+        font-size: 14px;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .filter-select {
+        width: 140px;
+        margin-left: 800px;
+    }
+
+    .form-control {
+        width: 280px;
+        height: 30px;
+        border-radius: 15px 0 0 15px;
+    }
+
+    button {
+        padding: 2px 20px;
+        font-size: 14px;
+        border-radius: 15% !important; 
+        
+    }
+
+    .buttons{
+        padding-left: 20px;
+        display: flex;
+        gap: 2px;
+        margin-right: 120px;
+    }
+
+    button:hover {
+        border-radius: 15%;
+    }
+
+
+    .table-responsive {
+        overflow-x: auto;
+        overflow-y: auto;
+        width: 100%;
     }
 
     table {
-        font-size: 14px; /* Decrease font size */
+        top: 20px;
+        width: 100%;
+        margin-bottom: 15px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        border-radius: 6px;
     }
 
-    h1 {
-        font-size: 22px; /* Adjust heading size */
+    th, td {
+        padding: 12px 18px;
+        font-size: 13px;
+    }
+
+    th {
+        font-size: 13px;
+        padding: 10px 18px;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #ccc;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f4f4f4;
+    }
+
+    tbody tr:hover {
+        background-color: #ddeeff;
+    }
+
+    td {
+        font-size: 13px;
+    }
+
+    td span {
+        font-size: 13px;
+        color: #00695c;
+    }
+
+    a {
+        font-size: 13px;
+    }
+
+    .inside-filter-container label,
+    .state-filter-container label,
+    .zone-filter-container label {
+        margin: 3px;
+        font-size: 14px;
+    }
+
+    .state-filter-container,
+    .zone-filter-container {
+        gap: 3px;
+    }
+
+    button:hover {
+        border-color: #999;
     }
 }
 
-@media (max-width: 768px) {
-    th, td {
-        padding: 8px 5px;
+@media (max-width: 1200px) and (min-width: 1020px) {
+
+    .main_container {
+        margin: 10px auto;
+        padding: 12px;
+        margin-top: 90px;
+        width: 96%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    }
+
+    .navbar-horizontal {
+        width: calc(100% - 205px);
+        left: 205px;
+        padding: 8px 12px; 
+    }
+
+    .small-nav {
+        display: flex;
+        flex-direction: row;
+        gap:10px;
+        /* align-items: flex-start; */
+    }
+
+    .inside-filter-container, 
+    .state-filter-container, 
+    .zone-filter-container {
+        margin-left: 40px;
+        gap: 2px; 
+    }
+
+    .inside-filter-container label,
+    .state-filter-container label,
+    .zone-filter-container label {
+        font-size: 12px;
+        margin: 2px; 
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        padding: 3px;
+        font-size: 13px;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .filter-select {
+        width: 130px;
+        margin-left: 700px;
+    }
+
+    .form-control {
+        width: 260px;
+        height: 28px;
+        border-radius: 12px 0 0 12px;
+    }
+
+    button {
+        padding: 2px 15px;
+        font-size: 13px;
+        border-radius: 15% !important; 
+    }
+
+    .buttons {
+        padding-left: 15px;
+        display: flex;
+        gap: 2px;
+        margin-right: 100px;
+    }
+
+    button:hover {
+        border-radius: 12%;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        overflow-y: auto;
+        width: 100%;
     }
 
     table {
+        top: 10px;
+        width: 100%;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        border-radius: 5px;
+    }
+
+    th, td {
+        padding: 10px 16px;
         font-size: 12px;
     }
 
-    .headingDiv h1 {
-        font-size: 20px;
+    th {
+        font-size: 12px;
+        padding: 8px 16px;
     }
 
-    /* Make the table container scrollable horizontally */
-    .tableBox {
-        overflow-x: scroll;
+    tbody tr {
+        border-bottom: 1px solid #ccc;
     }
 
-    table {
-        width: auto; /* Allow table to take the required width for scrolling */
+    tbody tr:nth-child(even) {
+        background-color: #f4f4f4;
+    }
+
+    tbody tr:hover {
+        background-color: #ddeeff;
+    }
+
+    td {
+        font-size: 12px;
+    }
+
+    td span {
+        font-size: 12px;
+        color: #00695c;
+    }
+
+    a {
+        font-size: 12px;
+    
     }
 }
 
-@media (max-width: 480px) {
-    th, td {
-        padding: 6px 4px; /* Reduce padding further */
+@media (max-width: 1020px) and (min-width: 800px) {
+
+    .main_container {
+        margin: 8px auto;
+        padding: 10px;
+        margin-top: 80px;
+        width: 94%; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.07); 
+    }
+
+    .navbar-horizontal {
+        width: calc(100% - 250px);
+        left: 250px; 
+        padding: 6px 10px;
+    }
+
+    .small-nav {
+        display: flex;
+        flex-direction: row;
+        gap: 3px;
+        align-items: flex-start;
+    }
+
+    .inside-filter-container, 
+    .state-filter-container, 
+    .zone-filter-container {
+        margin-left: 30px; 
+        gap: 2px; 
+    }
+
+    .inside-filter-container label,
+    .state-filter-container label,
+    .zone-filter-container label {
+        font-size: 11px;
+        margin: 2px; 
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        padding: 3px;
+        font-size: 12px;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-start;
+    }
+
+    .filter-select {
+        width: 120px;
+        margin-left: 600px;
+    }
+
+    .profile-icon {
+        height: 35px;
+        margin-left: 8px;
+    }
+
+    .form-control {
+        width: 240px;
+        height: 26px;
+        border-radius: 10px 0 0 10px;
+    }
+
+    button {
+        padding: 2px 12px;
+        font-size: 12px;
+        border-radius: 15% !important; 
+    }
+
+    .buttons {
+        padding-left: 12px;
+        display: flex;
+        gap: 1px;
+        margin-right: 180px !important;
+    }
+
+    button:hover {
+        border-radius: 10%;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        overflow-y: auto;
+        width: 100%;
     }
 
     table {
-        font-size: 11px; /* Smaller font size for better fit */
+        top: 10px;
+        width: 100%;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07);
+        border-radius: 5px;
     }
 
-    .headingDiv h1 {
-        font-size: 18px; /* Smaller heading size */
-    }
-
-    /* Make table columns stack for small screens */
-    table, thead, tbody, th, td, tr {
-        display: block; /* Stack elements */
-    }
-
-    /* Adjust individual cell styling */
     th, td {
-        text-align: right; /* Right align text */
-        padding-left: 50%; /* Add some left padding */
-        position: relative;
+        padding: 8px 12px;
+        font-size: 11px;
     }
 
-    th::before, td::before {
-        content: attr(data-label); /* Use data-label attribute for column names */
-        position: absolute;
-        left: 0;
-        width: 45%; /* Label width */
+    th {
+        font-size: 11px;
+        padding: 8px 12px;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #ccc;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f4f4f4;
+    }
+
+    tbody tr:hover {
+        background-color: #ddeeff;
+    }
+
+    td {
+        font-size: 11px;
+    }
+
+    td span {
+        font-size: 11px;
+        color: #005a4f;
+    }
+
+    a {
+        font-size: 11px;
+    }
+
+}
+
+@media (max-width: 800px) and (min-width: 600px) {
+
+    .main_container {
+        /* top: 200px; */
+        margin: 5px auto;
+        padding: 8px;
+        margin-top: 100px;
+        width: 90%; 
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); 
+    }
+
+    .navbar-horizontal {
+        width: calc(100% - 195px); 
+        left: 195px; 
+        padding: 5px 8px;
+    }
+
+    .small-nav {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    .inside-filter-container, 
+    .state-filter-container, 
+    .zone-filter-container {
+        margin-left: 20px; 
+        gap: 1px; 
+    }
+
+    .inside-filter-container label,
+    .state-filter-container label,
+    .zone-filter-container label {
+        font-size: 10px;
+        margin: 1px; 
+    }
+
+    .inside-filter-container select,
+    #state-filter,
+    #zone-filter {
+        padding: 2px;
+        font-size: 11px;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    .filter-select {
+        width: 110px;
+        margin-left: 500px;
+    }
+
+    .profile-icon {
+        height: 30px;
+        margin-left: 5px;
+    }
+
+    .form-control {
+        width: 220px;
+        height: 24px;
+        border-radius: 8px 0 0 8px;
+    }
+
+    button {
+        padding: 1px 10px;
+        font-size: 10px;
+        border-radius: 8% !important; 
+    }
+
+    .buttons {
         padding-left: 10px;
-        font-weight: bold;
-        white-space: nowrap;
-        text-align: left;
+        display: flex;
+        gap: 1px;
+        margin-right: 50px;
     }
 
-    /* Hide the table header */
-    thead {
-        display: none;
+    button:hover {
+        border-radius: 8%;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    table {
+        top: 5px;
+        width: 100%;
+        margin-bottom: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+
+    th {
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #ccc;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f4f4f4;
+    }
+
+    tbody tr:hover {
+        background-color: #ddeeff;
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    td span {
+        font-size: 10px;
+        color: #004d40;
+    }
+
+    a {
+        font-size: 10px;
     }
 }

@@ -1,24 +1,24 @@
-{% extends "adminbase.html" %} 
-{% load static %} 
-{% block title %}Calling agent dashboard{% endblock %} 
-{% block css_link %} 
+{% extends "adminbase1.html" %}
+{% load static %}
+{% block title %}Calling agent dashboard{% endblock %}
+{% block css_link %}
 <link rel="stylesheet" href="{% static 'sales_tracker/LeadsActivity.css' %}"> 
-{% endblock %} 
- 
-{% block content %} 
-<div class="lead-content">
-  <div class="small-container">
-    
+{% endblock %}
 
-    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+{% block content %}
+
+<div class="lead-content">
+
+   
+    <div class="filter-search-container">
 
             
-        <form class="d-flex" style="flex-grow: 1;">
+        <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         
-        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+        <button id="filter-btn" class="filter-button" onclick="clearFilters()">Filter</button>
 
     </div>
     
@@ -88,109 +88,85 @@
             </div>
         </form>
     </div>
-  </div>
-        <img class="attpiechart rotate" src="{% static 'Leads_Count.png' %}" alt="Attendance Chart"> 
 
-      <div class="leadcard" >
-        <div class="card1"> 
-            <h1  class="totallead">Total Leads: {{Total_Leads}}</h1> 
+       
+    <img class="attpiechart" src="{% static 'Leads_Count.png' %}" alt="Attendance Chart"> 
+
+    <div class="leadcard">
+        <div class="card"> 
+            <h1 class="totallead">Total Leads: {{Total_Leads}}</h1> 
         </div> 
-
-        <div class="card2"> 
+    
+        <div class="card"> 
             <h1 class="expectedlead">Expected leads: {{Exp_Leads}}</h1> 
         </div> 
     </div>
-    
+      
     <table class="leadsTable">
-      <thead>
-          <tr>
-              <th>Agent Name</th>
-          </tr>
-      </thead>
-    {% for agent in Agents %}
-      <tbody><tr>
-          <td>{{ agent.user.username }}</td>
-      </tr> 
-    {% endfor %}
-    </tbody>
-    </table> 
-   
-</div>   
-
-
-
-<!-- <div class="container1">
-  <div class="attpiechart">
-      <img class="attpiechart" src="{% static 'Leads_Count.png' %}" alt="Attendance Chart">
-  </div>
-
-<div class="card1"> 
-  <h1 class="rightpart1">Total Leads: {{Total_Leads}}</h1> 
-</div> 
-<div class="card3"> 
-  <h1 class="rightpart2">Expected Leads: {{Exp_Leads}}</h1> 
-</div> -->
-
-
+        <thead>
+            <tr>
+                <th>Agent Name</th>
+            </tr>
+        </thead>
+      {% for agent in Agents %}
+        <tbody><tr>
+            <td>{{ agent.user.username }}</td>
+        </tr> 
+      {% endfor %}
+      </tbody>
+      </table> 
   
-   
-</div>
+</div>  
+
 <script>
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
+    }
 
- function toggleFilter() {
-            var filterForm = document.getElementById("filterForm");
-            filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
-        }
-    
-        function clearForm() {
-            document.getElementById("subject").value = "";
-            document.getElementById("contact").value = "";
-            document.getElementById("priority").value = "";
-            document.getElementById("status").value = "";
-            document.getElementById("contacts").value = "";
-            document.getElementById("assignedTo").value = "";
-        }
-    
-        function performSearch() {
-            // Get filter values
-            var subject = document.getElementById("subject").value.toLowerCase();
-            var contact = document.getElementById("contact").value.toLowerCase();
-            var priority = document.getElementById("priority").value.toLowerCase();
-            var status = document.getElementById("status").value.toLowerCase();
-            var contacts = document.getElementById("contacts").value.toLowerCase();
-            var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
-    
-            // Log values for debugging
-            console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
-    
-            // Get all rows in the table
-            var rows = document.querySelectorAll("table tbody tr");
-    
-            rows.forEach(function(row) {
-                var rowSubject = row.cells[0].innerText.toLowerCase();
-                var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
-                var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
-                var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
-                var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
-                var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
-    
-                // Check if the row matches the filters
-                var match = (!subject || rowSubject.includes(subject)) &&
-                            (!contact || rowContact.includes(contact)) &&
-                            (!priority || rowPriority.includes(priority)) &&
-                            (!status || rowStatus.includes(status)) &&
-                            (!contacts || rowContacts.includes(contacts)) &&
-                            (!assignedTo || rowAssignedTo.includes(assignedTo));
-    
-                // Log matching status for each row
-                console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
-    
-                // Show or hide the row based on match
-                row.style.display = match ? "" : "none";
-            });
-        }
+    function clearForm() {
+        document.getElementById("subject").value = "";
+        document.getElementById("contact").value = "";
+        document.getElementById("priority").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("contacts").value = "";
+        document.getElementById("assignedTo").value = "";
+    }
 
-</script>
+    function performSearch() {
+       
+        var subject = document.getElementById("subject").value.toLowerCase();
+        var contact = document.getElementById("contact").value.toLowerCase();
+        var priority = document.getElementById("priority").value.toLowerCase();
+        var status = document.getElementById("status").value.toLowerCase();
+        var contacts = document.getElementById("contacts").value.toLowerCase();
+        var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+
+        console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
+
+        var rows = document.querySelectorAll("table tbody tr");
+
+        rows.forEach(function(row) {
+            var rowSubject = row.cells[0].innerText.toLowerCase();
+            var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
+            var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
+            var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
+            var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
+            var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
+
+            var match = (!subject || rowSubject.includes(subject)) &&
+                        (!contact || rowContact.includes(contact)) &&
+                        (!priority || rowPriority.includes(priority)) &&
+                        (!status || rowStatus.includes(status)) &&
+                        (!contacts || rowContacts.includes(contacts)) &&
+                        (!assignedTo || rowAssignedTo.includes(assignedTo));
+
+            console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
+
+            row.style.display = match ? "" : "none";
+        });
+    }
 
 
+  </script>
 {% endblock %}

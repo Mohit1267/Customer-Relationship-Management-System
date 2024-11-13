@@ -1,4 +1,4 @@
-{% extends "adminbase.html" %}
+{% extends "adminbase1.html" %}
 {% load static %}
 {% block title %}Calling agent dashboard{% endblock %}
 {% block css_link %}
@@ -10,15 +10,15 @@
 <div class="miner-content">
 
    
-    <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
+    <div class="filter-search-container">
 
             
-        <form class="d-flex" style="flex-grow: 1;">
+        <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         
-        <button id="filter-btn" class="filter-button">Filter</button>
+        <button id="filter-btn" class="filter-button" onclick="clearFilters()">Filter</button>
 
     </div>
     
@@ -133,18 +133,16 @@
         }
     
         function performSearch() {
-            // Get filter values
+      
             var subject = document.getElementById("subject").value.toLowerCase();
             var contact = document.getElementById("contact").value.toLowerCase();
             var priority = document.getElementById("priority").value.toLowerCase();
             var status = document.getElementById("status").value.toLowerCase();
             var contacts = document.getElementById("contacts").value.toLowerCase();
             var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
-    
-            // Log values for debugging
+
             console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
-    
-            // Get all rows in the table
+
             var rows = document.querySelectorAll("table tbody tr");
     
             rows.forEach(function(row) {
@@ -154,19 +152,16 @@
                 var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
                 var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
                 var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
-    
-                // Check if the row matches the filters
+
                 var match = (!subject || rowSubject.includes(subject)) &&
                             (!contact || rowContact.includes(contact)) &&
                             (!priority || rowPriority.includes(priority)) &&
                             (!status || rowStatus.includes(status)) &&
                             (!contacts || rowContacts.includes(contacts)) &&
                             (!assignedTo || rowAssignedTo.includes(assignedTo));
-    
-                // Log matching status for each row
+
                 console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
-    
-                // Show or hide the row based on match
+
                 row.style.display = match ? "" : "none";
             });
         }

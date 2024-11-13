@@ -1,4 +1,4 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 
@@ -6,21 +6,21 @@
 <link rel="stylesheet" href="{% static 'sales_tracker/viewNotes.css' %}">
 {% endblock %}
 
-{% block title %}Notes{% endblock %}
+{% block title %}View Notes{% endblock %}
 
 {% block content %}
 
 <section class="main_container">
-    <!-- Search and Filter Section -->
+
     <div class="filter-search-container" style="display: flex; align-items: center; gap: 10px;">
         <form class="d-flex" style="flex-grow: 1;">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                style="width: 200px;">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
     </div>
 
-    <!-- Filter Form -->
     <div class="filter-container">
         <div id="filterForm" class="filter-form">
             <div class="form-group">
@@ -39,55 +39,58 @@
                 <label for="attachment">Attachment:</label>
                 <input type="text" id="attachment" name="attachment">
             </div>
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today">Today</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
             <div class="form-actions">
-                <button type="button" onclick="performSearch()">Apply Filter</button>
+                <button type="submit" onclick="performSearch()">Apply Filter</button>
                 <button type="button" onclick="clearForm()">Clear</button>
             </div>
         </div>
     </div>
 
-    <!-- Documents Table -->
     <table>
         <thead>
             <tr>
-                <th>File Name</th>
-                <th>Document Name</th>
-                <th>Document Type</th>
-                <th>Publish Date</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Revision</th>
-                <th>Template</th>
-                <th>Expiration Date</th>
-                <th>Subcategory</th>
-                <th>Related Document</th>
-                <th>Assigned To</th>
+                <th>Subject</th>
+                <th>Contact</th>
+                <th>Related To</th>
+                <th>Attachment</th>
+                <th>Created By</th>
+                <th>Date Created</th>
             </tr>
+
         </thead>
         <tbody>
-            {% for document in document_list %}
-                <tr>
-                    <td>{{ document.file_name }}</td>
-                    <td>{{ document.document_name }}</td>
-                    <td>{{ document.document_type }}</td>
-                    <td>{{ document.publish_date }}</td>
-                    <td>{{ document.category }}</td>
-                    <td>{{ document.description }}</td>
-                    <td>{{ document.status }}</td>
-                    <td>{{ document.revision }}</td>
-                    <td>{{ document.template }}</td>
-                    <td>{{ document.expiration_date }}</td>
-                    <td>{{ document.subcategory }}</td>
-                    <td>{{ document.related_document }}</td>
-                    <td>{{ document.assigned_to }}</td>
-                </tr>
+            {% for note in notes %}
+            <tr>
+                <td>{{ note.contact }}</td>
+                <td>{{ note.note }}</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
 </section>
 
-<!-- JavaScript for Filter and Search -->
 <script>
     function toggleFilter() {
         var filterForm = document.getElementById("filterForm");
@@ -111,7 +114,7 @@
 
         var rows = document.querySelectorAll("table tbody tr");
 
-        rows.forEach(function(row) {
+        rows.forEach(function (row) {
             var rowDocumentName = row.cells[1].innerText.toLowerCase();
             var rowDocumentType = row.cells[2].innerText.toLowerCase();
             var rowCategory = row.cells[4].innerText.toLowerCase();
@@ -119,10 +122,10 @@
             var rowAssignedTo = row.cells[12].innerText.toLowerCase();
 
             var match = (!documentName || rowDocumentName.includes(documentName)) &&
-                        (!documentType || rowDocumentType.includes(documentType)) &&
-                        (!category || rowCategory.includes(category)) &&
-                        (!status || rowStatus.includes(status)) &&
-                        (!assignedTo || rowAssignedTo.includes(assignedTo));
+                (!documentType || rowDocumentType.includes(documentType)) &&
+                (!category || rowCategory.includes(category)) &&
+                (!status || rowStatus.includes(status)) &&
+                (!assignedTo || rowAssignedTo.includes(assignedTo));
 
             row.style.display = match ? "" : "none";
         });
