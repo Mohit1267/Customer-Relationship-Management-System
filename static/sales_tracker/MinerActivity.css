@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-    background-color: #f0f0f0;
+    background-color: #E0EAF6;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -21,6 +21,7 @@ td {
 
 /* Container for main content */
 .miner-content {
+    background-color: #E0EAF6;
     padding: 20px;
     display: flex;
     flex-direction: column;

@@ -1,7 +1,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
+    background-color: #E0EAF6 !important;
+
 }
 
 .moving_title {
@@ -88,7 +89,7 @@ body {
 }
 
 .card {
-    background: #1E2A38;
+    background-color: #1E2A38 !important;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 15px;
@@ -96,7 +97,7 @@ body {
     width: 100%;
     max-width: 300px;
     margin: 10px 0;
-    color: white;
+    color: white !important;
     font-size: 1rem;
     display: flex;
     align-items: center;

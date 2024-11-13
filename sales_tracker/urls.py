@@ -136,7 +136,10 @@ urlpatterns = [
     path('createCase/', views.add_case, name='createCase'),
     path('viewCase/', views.view_cases, name='viewCase'),
     path("InvoiceImport", login_required((views.InvoiceImport)), name="InvoiceImport"),
-
+#path('agentemail/', views.compose_email, name='agentemail'),
+    path('inbox/', views.inbox, name='inbox'),
+    path('send-email-endpoint/', views.compose_email, name='send_email_endpoint'),
+    path("viewemail", login_required(views.inbox), name="viewemail"),
 
 
     # Employee screen share URL

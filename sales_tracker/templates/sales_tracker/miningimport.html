@@ -1,5 +1,4 @@
-{% extends "innerbase1.html" %}'
-
+{% extends "innerbase1.html" %}
 {% load static %}
 
 {% block css_link %}
@@ -9,19 +8,22 @@
 {% block title %}Mining Import{% endblock %}
 
 {% block content %}
+
 <div class="import-container">
     <h2>Step 1: Upload Import File</h2>
-    
-    <p>Select a file on your computer that contains the data you would like to import, or download the template to get a head start on creating the import file.</p>
+
+    <p>Select a file on your computer that contains the data you would like to import, or download the template to get a
+        head start on creating the import file.</p>
 
     <hr>
 
     <div class="option">
         <span>Download Import File Template</span>
-  
+
     </div>
 
     <h4>Select File</h4>
+
 
     <input type="file" id="importFile" name="importFile">
 
@@ -32,17 +34,23 @@
     <p class="question">What would you like to do with the imported data?</p>
 
     <div style="margin-top: 10px;">
+      
         <div class="option">
             <input type="radio" id="newRecords" name="recordOption" value="newRecords">
             <label for="newRecords">Create new records only</label>
            
         </div>
-    
+
         <div class="option">
             <input type="radio" id="newAndUpdateRecords" name="recordOption" value="newAndUpdateRecords">
             <label for="newAndUpdateRecords">Create new records and update existing records</label>
           
         </div>
+
     </div>
+
 </div>
+
 {% endblock %}
+
+{% block javascript %}{% endblock %}

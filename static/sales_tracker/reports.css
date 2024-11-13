@@ -1,11 +1,15 @@
-/* Dashboard Container */
-.dashboard-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+.body{
+    background-color: #E0EAF6 !important;
 }
 
-/* Section Styles */
+.dashboard-container {
+    padding: 20px;
+    width: 100%;
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    background-color: #E0EAF6;
+}
+
 .section {
     margin-bottom: 40px;
 }
@@ -27,20 +31,17 @@
 
 }
 
-/* Card Container */
 .card-container {
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
 }
 
-/* Individual Card */
 .card {
-
-    background: #1E2A38 !important; /* Changed background to a solid dark color */
+    background: #1E2A38 !important; 
     border: 1px solid #3C4A5E;
     border-radius: 12px;
-    flex: 1 1 calc(25% - 25px); /* Adjusted width and gap */
+    flex: 1 1 calc(25% - 25px); 
     min-width: 260px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
@@ -48,7 +49,7 @@
     align-items: center;
     padding: 25px;
     transition: transform 0.2s, box-shadow 0.2s;
-    text-align: left; /* Ensures text is left-aligned */
+    text-align: left;
 }
 
 .card:hover {
@@ -56,34 +57,25 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Card Icon */
 .card-icon {
     font-size: 45px;
-    color: #5e87b0; /* Adjusted icon color for consistency */
+    color: #5e87b0; 
     margin-right: 20px;
     flex-shrink: 0;
 }
 
-/* Card Content */
 .card-content h3 {
-/* <<<<<<< HEAD*/
     margin: 0 0 12px 0;
     font-size: 20px;
-    color: #ffffff; /* Changed to white for contrast*/
+    color: #ffffff; 
     font-weight: 500;
     align-items: center;
-/*======= */
-    /* margin: 0 0 10px 0;
-    font-size: 18px;
-    color:beige;
-    color: #333;  */
-/* >>>>>>> 04fdcb6ec1db550a2b91d3b0e50a9c77719f5735 */
 }
 
 .card-content p {
     margin: 0;
     font-size: 15px;
-    color: #a9b7c6; /* Softened text color for readability */
+    color: #a9b7c6; 
     align-items: center;
 
 }
@@ -92,7 +84,6 @@
     align-items: center;
 }
 
-/* Responsive Design */
 @media (max-width: 992px) {
     .card {
         flex: 1 1 calc(33.333% - 25px);

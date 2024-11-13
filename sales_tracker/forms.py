@@ -691,11 +691,12 @@ class InvoiceForm(forms.Form):
 
 class ComposeEmailForm(forms.Form):
 
-    template = forms.CharField(
-        max_length=255,
+    template = forms.ModelChoiceField(
+        queryset=EmailTemplate.objects.all(),
         required=False,
+        empty_label="Select an email template",
         label="Email Template",
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     related_to = forms.ChoiceField(

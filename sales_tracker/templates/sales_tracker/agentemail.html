@@ -1,4 +1,4 @@
-{% extends "innerbase_copy.html" %}
+{% extends "agentbase.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load static %}
@@ -10,8 +10,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<link rel="stylesheet" href="{% static 'agentemail/dist/hamburgers.css' %}">
+
 {% endblock %}
 
 {% block title %}Compose Email{% endblock %}
@@ -29,90 +29,82 @@
 
         <div class="row mt-3">
 
-            <div class="row mt-1 mb-2">
-                <div class="col-12 d-flex justify-content-end mb-5">
-                    <button type="submit" class="btn btn-primary mx-2">
-                        <i class="fas fa-paper-plane"></i>
-                        <span class="button-label">Send</span>
-                    </button>
-                    <button type="button" class="btn btn-secondary mx-2" onclick="cancelAction()">
-                        <i class="fas fa-times"></i>
-                        <span class="button-label">Cancel</span>
-                    </button>
-    
-                    <input type="file" id="fileInput" style="display: none;" multiple onchange="handleFiles(this.files)">
-                    <button type="button" class="btn btn-info mx-2" onclick="document.getElementById('fileInput').click();">
-                        <i class="fas fa-paperclip"></i>
-                        <span class="button-label">Attach Files</span>
-                    </button>
-    
-                    <input type="file" id="documentInput" style="display: none;" multiple
-                        onchange="handleDocuments(this.files)">
-                    <button type="button" class="btn btn-info mx-2"
-                        onclick="document.getElementById('documentInput').click();">
-                        <i class="fas fa-file-upload"></i>
-                        <span class="button-label">Attach Documents</span>
-                    </button>
-    
-                    <button type="button" class="btn btn-warning mx-2" onclick="saveDraft()">
-                        <i class="fas fa-save"></i>
-                        <span class="button-label">Save Draft</span>
-                    </button>
-                    <button type="button" class="btn btn-danger mx-2" onclick="deleteEmail()">
-                        <i class="fas fa-trash"></i>
-                        <span class="button-label">Delete</span>
-                    </button>
-                </div>
-            </div>
-
-            
             <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
-                <div class="form-group mb-5">
+                <div class="form-group">
                     {{ form.template|as_crispy_field }}
                 </div>
 
-                <div class="form-group mb-5">
+                <div class="form-group">
                     {{ form.related_to|as_crispy_field }}
                 </div>
 
-                <div class="form-group mb-5">
+                <div class="form-group">
                     {{ form.from_address|as_crispy_field }}
                 </div>
 
-                <div class="form-group mb-5">
+                <div class="form-group">
                     {{ form.to_address|as_crispy_field }}
                 </div>
 
-                <div class="form-group mb-5">
+                <div class="form-group">
                     {{ form.cc_address|as_crispy_field }}
                 </div>
 
-                <div class="form-group mb-5">
+                <div class="form-group">
                     {{ form.bcc_address|as_crispy_field }}
                 </div>
             </div>
 
-            <div class="col-md-6 pt-5 pb-5 px-4"
-                style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
-                <div class="form-group mb-5">
+            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+                <div class="form-group">
                     {{ form.subject|as_crispy_field }}
                 </div>
 
-                <div class="form-group mb-5">
-                    <label for="editor" class="control-label">Body</label>
-                    <div id="editor"
-                        style="border: 1px solid #ced4da; padding: 10px; min-height: 200px; resize: vertical; background-color:  #f8f9fa;">
-                    </div>
-                    <textarea name="body" id="id_body" style="display:none;"></textarea>
+                <div class="form-group">
+                    {{ form.body|as_crispy_field }}
                 </div>
 
-                <div class="form-group mb-5">
+                <div class="form-group">
                     {{ form.send_plain_text|as_crispy_field }}
                 </div>
             </div>
         </div>
 
+        <div class="row mt-4 mb-2">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary mx-2">
+                    <i class="fas fa-paper-plane"></i>
+                    <span class="button-label">Send</span>
+                </button>
+                <button type="button" class="btn btn-secondary mx-2" onclick="cancelAction()">
+                    <i class="fas fa-times"></i>
+                    <span class="button-label">Cancel</span>
+                </button>
         
+                <input type="file" id="fileInput" style="display: none;" multiple onchange="handleFiles(this.files)">
+                <button type="button" class="btn btn-info mx-2" onclick="document.getElementById('fileInput').click();">
+                    <i class="fas fa-paperclip"></i>
+                    <span class="button-label">Attach Files</span>
+                </button>
+        
+                <input type="file" id="documentInput" style="display: none;" multiple onchange="handleDocuments(this.files)">
+                <button type="button" class="btn btn-info mx-2" onclick="document.getElementById('documentInput').click();">
+                    <i class="fas fa-file-upload"></i>
+                    <span class="button-label">Attach Documents</span>
+                </button>
+        
+                <button type="button" class="btn btn-warning mx-2" onclick="saveDraft()">
+                    <i class="fas fa-save"></i>
+                    <span class="button-label">Save Draft</span>
+                </button>
+                <button type="button" class="btn btn-danger mx-2" onclick="deleteEmail()">
+                    <i class="fas fa-trash"></i>
+                    <span class="button-label">Delete</span>
+                </button>
+            </div>
+        </div>
+        
+        </div>
     </form>
 </div>
 
@@ -120,71 +112,57 @@
 
 {% block javascript %}
 <script>
+document.getElementById('emailForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    sendEmail();
+});
 
-    var quill = new Quill('#editor', {
-        theme: 'snow',
-        placeholder: 'Compose your email here...',
-        modules: {
-            toolbar: [
-                [{ 'font': [] }, { 'size': [] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'script': 'super' }, { 'script': 'sub' }],
-                [{ 'align': [] }],
-                ['link', 'image', 'blockquote', 'code-block'],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                [{ 'indent': '-1' }, { 'indent': '+1' }],
-                [{ 'direction': 'rtl' }]
-            ]
+function sendEmail() {
+    const form = document.getElementById('emailForm');
+    const formData = new FormData(form);
+
+    fetch('/send-email-endpoint/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: formData
+    })
+    .then(response => {
+        // Check if the response is OK (status 200)
+        if (!response.ok) {
+            throw new Error('HTTP error! status:' ${response.status});
         }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Email sent successfully!');
+        } else {
+            alert('Error sending email: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error sending your email.');
     });
-    document.getElementById('emailForm').addEventListener('submit', function (event) {
-        document.getElementById('id_body').value = quill.root.innerHTML;
-    });
+}
 
-    function cancelAction() {
-        if (confirm('Are you sure you want to cancel?')) {
-            window.location.href = '/dashboard';
+// Helper function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
         }
     }
-
-    function saveDraft() {
-        const formData = new FormData(document.getElementById('emailForm'));
-
-        fetch('/save-draft-endpoint/', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Draft saved successfully!');
-                } else {
-                    alert('Error saving draft: ' + data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('There was an error saving your draft.');
-            });
-    }
-
-    function handleFiles(files) {
-        for (const file of files) {
-            console.log('File attached:', file.name);
-        }
-    }
-
-    function handleDocuments(files) {
-        for (const file of files) {
-            console.log('Document attached:', file.name);
-        }
-    }
-
-    function deleteEmail() {
-        if (confirm('Are you sure you want to delete this email?')) {
-            alert('Email deleted!');
-        }
-    }
+    return cookieValue;
+}
 </script>
+
 {% endblock %}

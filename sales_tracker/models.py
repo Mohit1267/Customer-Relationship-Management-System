@@ -714,4 +714,36 @@ class ImportTemplate(models.Model):
 
     def _str_(self):
         return f"Template - {self.template_file.name} ({self.get_action_choice_display()})"
+    
+
+
+class EmailTemplate(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+
+    def _str_(self):
+        return self.name
+
+
+
+
+
+class ComposedEmail(models.Model):
+    """Model to store composed email details."""
+    template = models.ForeignKey(EmailTemplate, on_delete=models.SET_NULL, null=True, blank=True)
+    related_to = models.CharField(max_length=255, blank=True, null=True)
+    from_address = models.EmailField()
+    to_address = models.EmailField()
+    cc_address = models.TextField(blank=True, null=True)
+    bcc_address = models.TextField(blank=True, null=True)
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    send_plain_text = models.BooleanField(default=False)
+    sent_status = models.BooleanField(default=False)  # New field to track email status
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
 
