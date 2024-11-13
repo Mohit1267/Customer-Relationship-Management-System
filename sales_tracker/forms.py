@@ -691,20 +691,20 @@ class InvoiceForm(forms.Form):
     tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
     grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
 
-class ComposeEmailForm(forms.Form):
 
+
+class ComposeEmailForm(forms.Form):
     template = forms.ModelChoiceField(
         queryset=EmailTemplate.objects.all(),
         required=False,
         empty_label="Select an email template",
         label="Email Template",
         widget=forms.Select(attrs={'class': 'form-control'})
-       
     )
 
     related_to = forms.ChoiceField(
         choices=[
-             (' ', ' '),
+            (' ', ' '),
             ('account', 'Account'),
             ('opportunity', 'Opportunity'),
             ('case', 'Case'),
@@ -765,6 +765,13 @@ class ComposeEmailForm(forms.Form):
         required=False,
         label="Send in Plain Text",
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+
+    # Updated for multiple file uploads
+    attachments = forms.FileField(
+        widget=forms.FileInput(attrs={'multiple': False, 'class': 'form-control'}),
+        required=False,
+        label="Attachments"
     )
 
 
