@@ -413,3 +413,23 @@ CHANNEL_LAYERS = {
 
 
 ASGI_APPLICATION = 'stpa.asgi.application'
+
+#from decouple import config
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'pushkarpandey200@gmail.com'          # Your email from .env
+EMAIL_HOST_PASSWORD = 'nucz syco dqfd dbcv'  # Your password from .env
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
+import os
+
+print("Current working directory:", os.getcwd())
+

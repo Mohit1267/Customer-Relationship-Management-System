@@ -1,168 +1,166 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load static %}
 
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/agentemail.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/viewemail.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="{% static 'agentemail/dist/hamburgers.css' %}">
-
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 {% endblock %}
 
-{% block title %}Compose Email{% endblock %}
+{% block title %}Email{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <form id="emailForm" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+<div class="container2">
 
-        <div class="row mt-2 mb-2">
-            <div class="col-12 text-center moving_title" style="color: white;">
-                Compose Email
+    <div class="sidebar">
+        <div class="menu">
+            <a href="javascript:void(0);" onclick="openComposeModal()">
+                <button class="compose-button">
+                    <i class="fas fa-pencil-alt" style="padding-right: 5px;"></i> Compose
+                </button>
+            </a>
+        </div>
+
+        <div class="labels">
+            <ul>
+                <li><button onclick="showSection('inbox')"><i class="fas fa-inbox"></i> Inbox</button></li>
+                <li><button onclick="showSection('sent')"><i class="fas fa-paper-plane"></i> Sent</button></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <input type="text" placeholder="Search mail">
+            <div class="icons">
+                <button>🔍</button>
             </div>
         </div>
 
-        <div class="row mt-3">
-
-            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
-                <div class="form-group">
-                    {{ form.template|as_crispy_field }}
+        <div id="inbox" class="email-list active">
+            {% for email in inbox_emails %}
+            <div class="email-item">
+                <div class="email-details">
+                    <span class="label {{ email.label|lower }}">{{ email.label }}</span>
+                    <h5>{{ email.sender }}</h5>
+                    <p class="email-preview">{{ email.subject }}</p>
                 </div>
-
-                <div class="form-group">
-                    {{ form.related_to|as_crispy_field }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.from_address|as_crispy_field }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.to_address|as_crispy_field }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.cc_address|as_crispy_field }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.bcc_address|as_crispy_field }}
-                </div>
+                <span class="email-date">{{ email.date }}</span>
             </div>
-
-            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
-                <div class="form-group">
-                    {{ form.subject|as_crispy_field }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.body|as_crispy_field }}
-                </div>
-
-                <div class="form-group">
-                    {{ form.send_plain_text|as_crispy_field }}
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
-        <div class="row mt-4 mb-2">
-            <div class="col-12 d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary mx-2">
-                    <i class="fas fa-paper-plane"></i>
-                    <span class="button-label">Send</span>
-                </button>
-                <button type="button" class="btn btn-secondary mx-2" onclick="cancelAction()">
-                    <i class="fas fa-times"></i>
-                    <span class="button-label">Cancel</span>
-                </button>
-        
-                <input type="file" id="fileInput" style="display: none;" multiple onchange="handleFiles(this.files)">
-                <button type="button" class="btn btn-info mx-2" onclick="document.getElementById('fileInput').click();">
-                    <i class="fas fa-paperclip"></i>
-                    <span class="button-label">Attach Files</span>
-                </button>
-        
-                <input type="file" id="documentInput" style="display: none;" multiple onchange="handleDocuments(this.files)">
-                <button type="button" class="btn btn-info mx-2" onclick="document.getElementById('documentInput').click();">
-                    <i class="fas fa-file-upload"></i>
-                    <span class="button-label">Attach Documents</span>
-                </button>
-        
-                <button type="button" class="btn btn-warning mx-2" onclick="saveDraft()">
-                    <i class="fas fa-save"></i>
-                    <span class="button-label">Save Draft</span>
-                </button>
-                <button type="button" class="btn btn-danger mx-2" onclick="deleteEmail()">
-                    <i class="fas fa-trash"></i>
-                    <span class="button-label">Delete</span>
-                </button>
+        <div id="sent" class="email-list">
+            {% for email in sent_emails %}
+            <div class="email-item">
+                <div class="email-details">
+                    <span class="label">{{ email.label }}</span>
+                    <h5>{{ email.recipient }}</h5>
+                    <p class="email-preview">{{ email.subject }}</p>
+                </div>
+                <span class="email-date">{{ email.date }}</span>
             </div>
+            {% endfor %}
         </div>
-        
+    </div>
+
+    <div id="composeModal" class="compose-modal">
+        <div class="compose-modal-content">
+            <span class="close" onclick="closeComposeModal()">&times;</span>
+            <h3>New Message</h3>
+            <form method="post" action="{% url 'agentemail' %}">
+                {% csrf_token %}
+                
+                <label for="email_template">Email Template:</label>
+                <input type="text" id="email_template" name="email_template">
+
+                <label for="related_to">Related To:</label>
+                <input type="text" id="related_to" name="related_to">
+
+                <div class="to-field">
+                    <label for="from_address">From:</label>
+                    <input type="email" id="from_address" name="from_address" required>
+                </div>
+
+                <div class="to-field">
+                    <label for="to_address">To:</label>
+                    <input type="email" id="to_address" name="to_address" required>
+                </div>
+
+                <div class="cc-bcc-field">
+                    <label for="cc_address">Cc:</label>
+                    <input type="text" id="cc_address" name="cc_address">
+                </div>
+
+                <div class="cc-bcc-field">
+                    <label for="bcc_address">Bcc:</label>
+                    <input type="text" id="bcc_address" name="bcc_address">
+                </div>
+
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
+
+                <label for="body">Body:</label>
+                <div id="editor-container"></div>
+                <input type="hidden" name="body" id="body">
+
+                <div class="plain-text-field">
+                    <label for="send_plain_text">Send as Plain Text:</label>
+                    <input type="checkbox" id="send_plain_text" name="send_plain_text">
+                </div>
+
+                <input type="hidden" name="sent_status" value="false">
+                <input type="hidden" name="created_by" value="{{ user.id }}">
+                <input type="hidden" name="created_at" value="{{ now }}">
+
+                <div class="footer">
+                    <button type="submit" class="send-button">Send</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+
 </div>
 
-{% endblock %}
-
-{% block javascript %}
 <script>
-document.getElementById('emailForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    sendEmail();
-});
+    function showSection(sectionId) {
+        document.querySelectorAll('.email-list').forEach((section) => {
+            section.classList.remove('active');
+            section.style.display = 'none';
+        });
 
-function sendEmail() {
-    const form = document.getElementById('emailForm');
-    const formData = new FormData(form);
-
-    fetch('/send-email-endpoint/', {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken')
-        },
-        body: formData
-    })
-    .then(response => {
-        // Check if the response is OK (status 200)
-        if (!response.ok) {
-            throw new Error('HTTP error! status:' ${response.status});
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Email sent successfully!');
-        } else {
-            alert('Error sending email: ' + (data.error || 'Unknown error'));
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('There was an error sending your email.');
-    });
-}
-
-// Helper function to get CSRF token
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
+        const section = document.getElementById(sectionId);
+        section.classList.add('active');
+        section.style.display = 'block';
     }
-    return cookieValue;
-}
+
+    function openComposeModal() {
+        document.getElementById('composeModal').style.display = 'block';
+    }
+
+    function closeComposeModal() {
+        document.getElementById('composeModal').style.display = 'none';
+    }
+
+    var quill = new Quill('#editor-container', {
+        theme: 'snow',
+        placeholder: 'Compose your message...',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'header': 1 }, { 'header': 2 }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link', 'image']
+            ]
+        }
+    });
+
+    document.querySelector('form').onsubmit = function() {
+        document.getElementById('body').value = quill.root.innerHTML;
+    };
 </script>
 
 {% endblock %}

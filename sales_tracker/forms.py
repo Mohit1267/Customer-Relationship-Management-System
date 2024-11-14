@@ -5,9 +5,11 @@ from ckeditor.fields import RichTextField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import (
-    MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
+    EmailTemplate, MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
     Schedule_Meeting, Schedule_Calling, Task, agentNotes, NewPasswords,
+
     DailySalesReport, agentProjects, projectTemplate
+
 )
 
 from .models import Task
@@ -161,12 +163,14 @@ class TaskForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Enter task description'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'related_to': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Related to (optional)'}),
-            'contacts': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'contacts': forms.TextInput(attrs={'class': 'form-control'}),
+            'contacts': forms.SelectMultiple(),
         }
     
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
         self.fields['subject'].label = "Task Subject"
+        self.fields['contacts'].queryset = ContactData.objects.all()
         # self.fields['contacts'].help_text = "Hold Ctrl to select multiple contacts"
 
 
@@ -687,21 +691,21 @@ class InvoiceForm(forms.Form):
     tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
     grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
 
-
+from django import forms
+from .models import EmailTemplate  # Assuming EmailTemplate is defined in your models
 
 class ComposeEmailForm(forms.Form):
-
-    template = forms.ModelChoiceField(
-        queryset=EmailTemplate.objects.all(),
+    
+    # Changed to a CharField for text input
+    email_template = forms.CharField(
         required=False,
-        empty_label="Select an email template",
         label="Email Template",
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
     related_to = forms.ChoiceField(
         choices=[
-             (' ', ' '),
+            (' ', ' '),
             ('account', 'Account'),
             ('opportunity', 'Opportunity'),
             ('case', 'Case'),
@@ -735,13 +739,13 @@ class ComposeEmailForm(forms.Form):
 
     cc_address = forms.CharField(
         required=False,
-        label="CC",
+        label="Cc",
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
     bcc_address = forms.CharField(
         required=False,
-        label="BCC",
+        label="Bcc",
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
@@ -760,7 +764,7 @@ class ComposeEmailForm(forms.Form):
 
     send_plain_text = forms.BooleanField(
         required=False,
-        label="Send in Plain Text",
+        label="Send as Plain Text",
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
     )
 
@@ -911,9 +915,10 @@ class AgentProjectsForm(forms.ModelForm):
         self.fields['project_template'].label = "Project Template"
 
 
+from django import forms
+from .models import projectTemplate
 
-
-class AgentTemplate(forms.ModelForm):
+class ProjectTemplateForm(forms.ModelForm):
     class Meta:
         model = projectTemplate
         fields = [
@@ -932,8 +937,8 @@ class AgentTemplate(forms.ModelForm):
             'priority': forms.Select(attrs={'class': 'form-control'}),
         }
     
-    def _init_(self, *args, **kwargs):
-        super()._init_(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.fields['template_name'].label = "Template Name"
         self.fields['consider_working_days'].label = "Consider Working Days"
@@ -942,6 +947,7 @@ class AgentTemplate(forms.ModelForm):
         self.fields['priority'].label = "Priority"
 
 
+from django import forms
 
 from .models import ImportTemplate
 
@@ -957,6 +963,7 @@ class ImportTemplateForm(forms.ModelForm):
             'template_file': 'Select File',
             'action_choice': 'What would you like to do with the imported data?',
         }
+
 
 class ContractForm(forms.Form):
 
@@ -1075,6 +1082,7 @@ class ContractForm(forms.Form):
         widget=forms.NumberInput(attrs={'placeholder': 'Enter shipping amount'})
     )
 
+
     SHIPPING_TAX_CHOICES = [
     ('5', '5%'),
     ('7', '7%'),
@@ -1094,6 +1102,7 @@ class ContractForm(forms.Form):
         label="Custom Shipping Tax",
         required=True,
     )
+
     tax = forms.DecimalField(
         label="Tax", 
         max_digits=10, 
@@ -1108,6 +1117,20 @@ class ContractForm(forms.Form):
         required=True, 
         widget=forms.NumberInput(attrs={'placeholder': 'Enter grand total amount'})
     )
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        shipping_tax = cleaned_data.get("shipping_tax")
+        custom_shipping_tax = cleaned_data.get("custom_shipping_tax")
+
+        # If "Other" is selected, custom_shipping_tax must be filled
+        if shipping_tax == "other" and not custom_shipping_tax:
+            self.add_error("custom_shipping_tax", "Please specify a custom shipping tax.")
+        return cleaned_data
+    tax = forms.DecimalField(label="Tax", max_digits=10, decimal_places=2, required=False)
+    grand_total = forms.DecimalField(label="Grand Total", max_digits=10, decimal_places=2, required=False)
+
 
     
 
