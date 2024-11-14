@@ -24,17 +24,15 @@
     let map;
 
     function initMap() {
-        // Get latitude and longitude from the context
+     
         const latitude = {{ lat }};
         const longitude = {{ long }};
 
-        // Create a map centered at the given latitude and longitude
         map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: latitude, lng: longitude },
             zoom: 8,
         });
 
-        // Create a marker at the given latitude and longitude
         new google.maps.Marker({
             position: { lat: latitude, lng: longitude },
             map: map,
@@ -42,7 +40,6 @@
         });
     }
 
-    // Declare the initMap function globally
     window.initMap = initMap;
 </script>
 

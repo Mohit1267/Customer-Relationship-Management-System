@@ -39,25 +39,6 @@
     }
 }
 
-.filter-dash {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.filter-dashb {
-    width: 150px !important;
-    margin-left: 20px;
-}
-
-.filter-dash h5 {
-    margin-left: 10px;
-    font-weight: normal;
-    margin-right: 2px !important;
-}
-
 .content {
     width: 100%;
     position: relative;
@@ -385,3 +366,24 @@
         margin: 10px 15px;
     }
 }
+
+
+
+/* .filter-dash {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.filter-dashb {
+    width: 150px !important;
+    margin-left: 20px;
+}
+
+.filter-dash h5 {
+    margin-left: 10px;
+    font-weight: normal;
+    margin-right: 2px !important;
+} */

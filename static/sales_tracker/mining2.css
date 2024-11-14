@@ -1,4 +1,3 @@
-/* General Styling */
 body {
     margin-top: 4%;
     font-family: 'Arial', sans-serif;
@@ -8,6 +7,10 @@ body {
     min-height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.count_down {
+    display: none;
 }
 
 .container-fluid {
