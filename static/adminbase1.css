@@ -47,23 +47,6 @@ body {
     background-color: #e0eaf6;
 }
 
-/* timer css */
-.timer-container {
-
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0px;
-    margin-left: 55px;
-    font-size: 0.7em;
-    color: var(--accent-clr);
-}
-
-#timer-display {
-    font-weight: bold;
-    font-size: 2em;
-    color: var(--text-clr);
-}
-
 #sidebar {
     box-sizing: border-box;
     height: 100%;
@@ -71,7 +54,6 @@ body {
     padding: 5px 1em;
     background-color: var(--base-clr);
     border-right: 1px solid var(--line-clr);
-
     position: sticky;
     top: 0;
     align-self: start;
