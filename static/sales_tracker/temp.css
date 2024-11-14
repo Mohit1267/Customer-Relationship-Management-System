@@ -1,6 +1,9 @@
-
 body, html {
     overflow-x: hidden;
+}
+
+.count_down {
+    display: none;
 }
 
 .main_container {

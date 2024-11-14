@@ -3,6 +3,10 @@
   background-color: #E0EAF6;
 }
 
+.count_down {
+    display: none;
+}
+
 .import-container h2 {
     font-size: 24px;
     margin-bottom: 15px;

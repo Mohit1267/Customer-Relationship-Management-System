@@ -8,6 +8,8 @@
 
 {% block title %}DashBoard{% endblock %}
 
+{% block count_down %}{% endblock %}
+
 {% block content %}
 {% if messages %}
 <div class="messages">
@@ -20,7 +22,7 @@
 <div class="content">
     <div class="heading title_animation">Welcome to Aapai Technologies</div>
 
-    <div class="filter-dash d-flex align-items-center">
+    <!-- <div class="filter-dash d-flex align-items-center">
         <h5 class="me-3">Filter by Category:</h5>
         <select class="form-select filter-dashb me-2" id="filterSelect">
             <option value="" disabled selected hidden>Filter by</option>
@@ -29,7 +31,7 @@
             <option value="Contacts">Contacts</option>
             <option value="Leads">Leads</option>
         </select>
-    </div>
+    </div> -->
 
     <div class="flex-container">
         <div class="card" data-category="Mining">
