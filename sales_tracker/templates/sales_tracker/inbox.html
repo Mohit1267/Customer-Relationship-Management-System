@@ -1,0 +1,33 @@
+{% extends "innerbase_copy.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<!-- <link rel="stylesheet" href="{% static 'sales_tracker/targetImport.css' %}"> -->
+{% endblock %}
+
+{% block title %}Template Import{% endblock %}
+
+{% block content %}
+
+
+<h2>Inbox Emails</h2>
+<table>
+    <thead>
+        <tr>
+            <th>From</th>
+            <th>Subject</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for email in emails %}
+        <tr>
+            <td>{{ email.from }}</td>
+            <td>{{ email.subject }}</td>
+            <td>{{ email.date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

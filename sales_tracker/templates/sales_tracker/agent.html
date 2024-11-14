@@ -207,27 +207,20 @@
     const profileButton = document.querySelector('.profile-button');
     const offcanvas = document.getElementById('offcanvasExample');
 
-    // Toggle offcanvas visibility on profile button click
     profileButton.addEventListener('click', function (e) {
-      e.stopPropagation(); // Prevent event from bubbling
-      offcanvas.classList.toggle('show'); // Toggle the "show" class to open/close offcanvas
+      e.stopPropagation();
+      offcanvas.classList.toggle('show'); 
     });
 
-    // Close the offcanvas when clicking outside of it
     document.addEventListener('click', function (e) {
       if (!offcanvas.contains(e.target) && !profileButton.contains(e.target)) {
-        offcanvas.classList.remove('show'); // Close offcanvas if clicking outside
+        offcanvas.classList.remove('show'); 
       }
     });
 
-    // Ensure the close button inside the offcanvas works
     document.querySelector('.btn-close').addEventListener('click', function () {
-      offcanvas.classList.remove('show'); // Close offcanvas
+      offcanvas.classList.remove('show');
     });
-
-
-
-    // Location submission
 
   });
 
@@ -258,7 +251,7 @@
           })
             .then(response => response.json())
             .then(data => {
-              location.reload(); // Refresh the page after handling the response
+              location.reload();
             })
             .catch(error => {
               console.error("Error:", error);
