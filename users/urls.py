@@ -23,6 +23,7 @@ urlpatterns = [
     path("reason/", user_views.Reason, name="reason"),
     path('', user_views.index, name='index'),
     path('heartbeat/', user_views.heartbeat, name='heartbeat'),
+    path('agentEditProfile', user_views.agentEditProfile, name='agentEditProfile'),
     
     # path('mining_voice_search/', views.mining_ct_voice_automated, name='mining_voice_search'),
 

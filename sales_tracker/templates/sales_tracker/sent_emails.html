@@ -1,0 +1,37 @@
+{% extends "innerbase_copy.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/sentEmail.css' %}">
+{% endblock %}
+
+{% block title %}Sent Emails{% endblock %}
+
+{% block content %}
+
+<div class="main-content">
+    <div class="table-container2">
+        <h2>Sent Emails</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>To</th>
+                    <th>Subject</th>
+                    <th>Date Sent</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for email in sent_emails %}
+                <tr>
+                    <td>{{ email.to_address }}</td>
+                    <td>{{ email.subject }}</td>
+                    <td>{{ email.created_at|date:"M d, Y, h:i a" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1903,25 +1903,37 @@ def createInvoices(request):
     return render(request, 'sales_tracker/createInvoices.html', {'form': form})
 
 
-
 from django.http import JsonResponse
 from django.core.mail import EmailMultiAlternatives
 from django.contrib import messages
 
+from .models import ComposedEmail, EmailTemplate
+
+
 def compose_email(request):
     if request.method == 'POST':
-        form = ComposeEmailForm(request.POST)
+        form = ComposeEmailForm(request.POST, request.FILES)
         if form.is_valid():
             # Fetch form data
-            email_template_text = form.cleaned_data.get('email_template')  # Optional text input field
+
+            email_template_instance = form.cleaned_data.get('template')
+
             related_to = form.cleaned_data.get('related_to')
             from_address = form.cleaned_data.get('from_address')
             to_address = form.cleaned_data.get('to_address')
             cc_address = form.cleaned_data.get('cc_address')
             bcc_address = form.cleaned_data.get('bcc_address')
             send_plain_text = form.cleaned_data.get('send_plain_text')
-            subject = form.cleaned_data.get('subject') or "Welcome"
-            body = form.cleaned_data.get('body') or "Hello, welcome to our service."
+
+
+            # Use template's subject and body if selected; otherwise, use form data
+            if email_template_instance:
+                subject = email_template_instance.subject
+                body = email_template_instance.body
+            else:
+                subject = form.cleaned_data.get('subject') or "No Subject"
+                body = form.cleaned_data.get('body') or "No Content"
+
 
             try:
                 # Construct the email
@@ -1938,10 +1950,18 @@ def compose_email(request):
                 if not send_plain_text:
                     email.attach_alternative(body, "text/html")
 
+                # Handle multiple attachments
+                attachments = request.FILES.getlist('attachments')
+                for attachment in attachments:
+                    email.attach(attachment.name, attachment.read(), attachment.content_type)
+
                 email.send()
 
                 # Save email to the database
                 ComposedEmail.objects.create(
+
+                    template=email_template_instance,
+
                     related_to=related_to,
                     from_address=from_address,
                     to_address=to_address,
@@ -1970,6 +1990,86 @@ def compose_email(request):
         form = ComposeEmailForm()
 
     return render(request, 'sales_tracker/agentemail.html', {'form': form})
+
+
+
+
+import imaplib
+import email
+from email.header import decode_header
+from django.shortcuts import render
+from django.http import JsonResponse
+
+# Gmail IMAP server settings (adjust if using a different email provider)
+IMAP_SERVER = 'imap.gmail.com'
+IMAP_PORT = 993
+
+def view_inbox(request):
+    if request.method == 'GET':
+        try:
+            # Replace these with your email credentials
+            email_user = "pushkarpandey200@gmail.com"
+            email_pass = "ucz syco dqfd dbcv"  # Consider using an App Password
+
+            # Connect to the IMAP server
+            mail = imaplib.IMAP4_SSL(IMAP_SERVER, IMAP_PORT)
+            mail.login(email_user, email_pass)
+
+            # Select the mailbox you want to read (e.g., "inbox")
+            mail.select("inbox")
+
+            # Search for all emails in the inbox
+            status, messages = mail.search(None, 'ALL')
+            email_ids = messages[0].split()
+
+            inbox_emails = []
+
+            # Fetch the latest 10 emails (adjust the range as needed)
+            for email_id in email_ids[-10:]:
+                res, msg = mail.fetch(email_id, "(RFC822)")
+                for response in msg:
+                    if isinstance(response, tuple):
+                        # Parse the email content
+                        msg = email.message_from_bytes(response[1])
+                        subject, encoding = decode_header(msg["Subject"])[0]
+                        if isinstance(subject, bytes):
+                            subject = subject.decode(encoding if encoding else "utf-8")
+                        from_ = msg.get("From")
+                        date_ = msg.get("Date")
+
+                        # Append email details to list
+                        inbox_emails.append({
+                            "subject": subject,
+                            "from": from_,
+                            "date": date_
+                        })
+
+            # Logout from the email server
+            mail.logout()
+            return render(request, 'sales_tracker/inbox.html', {'emails': inbox_emails})
+
+        except Exception as e:
+            print(f"Failed to fetch emails: {e}")
+            return JsonResponse({'status': 'failed', 'message': str(e)})
+
+    return JsonResponse({'status': 'failed', 'message': 'Invalid request method'})
+
+
+
+
+
+from .models import ComposedEmail
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def view_sent_emails(request):
+    sent_emails = ComposedEmail.objects.filter(created_by=request.user).order_by('-created_at')
+    return render(request, 'sales_tracker/sent_emails.html', {'sent_emails': sent_emails})
+
+
+
+
 
 
 
@@ -2429,83 +2529,83 @@ def createInvoices(request):
     return render(request, 'sales_tracker/createInvoices.html', {'form': form})
 
 
-def compose_email(request):
-    """
-    This view handles the email composition form.
-    If the request is POST, it validates and processes the form data.
-    On GET requests, it displays the empty form for the user to fill out.
-    """
-    if request.method == 'POST':
-        form = ComposeEmailForm(request.POST)
-        if form.is_valid():
+# def compose_email(request):
+#     """
+#     This view handles the email composition form.
+#     If the request is POST, it validates and processes the form data.
+#     On GET requests, it displays the empty form for the user to fill out.
+#     """
+#     if request.method == 'POST':
+#         form = ComposeEmailForm(request.POST)
+#         if form.is_valid():
          
-            email_template = form.cleaned_data.get('template')
-            related_to = form.cleaned_data.get('related_to')
-            from_address = form.cleaned_data.get('from')
-            to_address = form.cleaned_data.get('to')
-            cc_address = form.cleaned_data.get('cc')
-            bcc_address = form.cleaned_data.get('bcc')
-            subject = form.cleaned_data.get('subject')
-            body = form.cleaned_data.get('body')
-            send_plain_text = form.cleaned_data.get('send_plain_text')
+#             email_template = form.cleaned_data.get('template')
+#             related_to = form.cleaned_data.get('related_to')
+#             from_address = form.cleaned_data.get('from')
+#             to_address = form.cleaned_data.get('to')
+#             cc_address = form.cleaned_data.get('cc')
+#             bcc_address = form.cleaned_data.get('bcc')
+#             subject = form.cleaned_data.get('subject')
+#             body = form.cleaned_data.get('body')
+#             send_plain_text = form.cleaned_data.get('send_plain_text')
 
-            messages.success(request, 'Email composed successfully!')
-            return redirect('agentemail')
-        else:
-            messages.error(request, 'There was an error composing the email. Please check your input.')
-    else:
-        form = ComposeEmailForm()  
+#             messages.success(request, 'Email composed successfully!')
+#             return redirect('agentemail')
+#         else:
+#             messages.error(request, 'There was an error composing the email. Please check your input.')
+#     else:
+#         form = ComposeEmailForm()  
 
-    return render(request, 'sales_tracker/agentemail.html', {'form': form})
-
-
-
-def viewEmail(request):
-    return render(request, "sales_tracker/viewemail.html")
+#     return render(request, 'sales_tracker/agentemail.html', {'form': form})
 
 
 
+# def viewEmail(request):
+#     return render(request, "sales_tracker/viewemail.html")
 
-def Agenttarget(request):
-    """
-    This view handles the contact form submission.
-    If the request is POST, it validates and processes the form data.
-    On GET requests, it displays the empty form for the user to fill out.
-    """
-    if request.method == 'POST':
-        form = TargetsForm(request.POST)
-        if form.is_valid():
+
+
+
+# def Agenttarget(request):
+#     """
+#     This view handles the contact form submission.
+#     If the request is POST, it validates and processes the form data.
+#     On GET requests, it displays the empty form for the user to fill out.
+#     """
+#     if request.method == 'POST':
+#         form = TargetsForm(request.POST)
+#         if form.is_valid():
         
-            first_name = form.cleaned_data.get('first_name')
-            last_name = form.cleaned_data.get('last_name')
-            job_title = form.cleaned_data.get('job_title')
-            office_phone = form.cleaned_data.get('office_phone')
-            department = form.cleaned_data.get('department')
-            mobile = form.cleaned_data.get('mobile')
-            account_name = form.cleaned_data.get('account_name')
-            fax = form.cleaned_data.get('fax')
-            primary_address_street = form.cleaned_data.get('primary_address_street')
-            primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
-            primary_address_city = form.cleaned_data.get('primary_address_city')
-            primary_address_state = form.cleaned_data.get('primary_address_state')
-            primary_address_country = form.cleaned_data.get('primary_address_country')
-            other_address_street = form.cleaned_data.get('other_address_street')
-            other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
-            other_address_city = form.cleaned_data.get('other_address_city')
-            other_address_state = form.cleaned_data.get('other_address_state')
-            other_address_country = form.cleaned_data.get('other_address_country')
-            email_address = form.cleaned_data.get('email_address')
-            description = form.cleaned_data.get('description')
-            assigned_to = form.cleaned_data.get('assigned_to')
+#             first_name = form.cleaned_data.get('first_name')
+#             last_name = form.cleaned_data.get('last_name')
+#             job_title = form.cleaned_data.get('job_title')
+#             office_phone = form.cleaned_data.get('office_phone')
+#             department = form.cleaned_data.get('department')
+#             mobile = form.cleaned_data.get('mobile')
+#             account_name = form.cleaned_data.get('account_name')
+#             fax = form.cleaned_data.get('fax')
+#             primary_address_street = form.cleaned_data.get('primary_address_street')
+#             primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
+#             primary_address_city = form.cleaned_data.get('primary_address_city')
+#             primary_address_state = form.cleaned_data.get('primary_address_state')
+#             primary_address_country = form.cleaned_data.get('primary_address_country')
+#             other_address_street = form.cleaned_data.get('other_address_street')
+#             other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
+#             other_address_city = form.cleaned_data.get('other_address_city')
+#             other_address_state = form.cleaned_data.get('other_address_state')
+#             other_address_country = form.cleaned_data.get('other_address_country')
+#             email_address = form.cleaned_data.get('email_address')
+#             description = form.cleaned_data.get('description')
+#             assigned_to = form.cleaned_data.get('assigned_to')
 
-            messages.success(request, 'Contact information submitted successfully!')
-            return redirect('agenttarget') 
-        else:
-            messages.error(request, 'There was an error submitting the contact information. Please check your input.')
-    else:
-        form = TargetsForm()
+#             messages.success(request, 'Contact information submitted successfully!')
+#             return redirect('agenttarget') 
+#         else:
+#             messages.error(request, 'There was an error submitting the contact information. Please check your input.')
+#     else:
+#         form = TargetsForm()
 
-    return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+#     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
 
 
 def viewInvoices(request):
@@ -2664,87 +2764,6 @@ def projectTemplate(request):
 def ViewTemplate(request):
     templates = projectTemplate.objects.all()
     return render(request, 'sales_tracker/viewTemplates.html', {'templates': templates})
-
-
-
-
-from django.shortcuts import render, redirect
-from .forms import ContractForm
-from .models import Contract
-from django.db.models import F
-from decimal import Decimal
-
-def create_contract(request):
-    if request.method == "POST":
-        form = ContractForm(request.POST)
-        
-        if form.is_valid():
-            # Fetch cleaned data from form
-            contract_title = form.cleaned_data['contract_title']
-            contract_value = form.cleaned_data['contract_value']
-            start_date = form.cleaned_data['start_date']
-            end_date = form.cleaned_data['end_date']
-            renewal_reminder_date = form.cleaned_data['renewal_reminder_date']
-            customer_schedule_date = form.cleaned_data['customer_schedule_date']
-            company_schedule_date = form.cleaned_data['company_schedule_date']
-            description = form.cleaned_data['description']
-            status = form.cleaned_data['status']
-            contact_manager = form.cleaned_data['contact_manager']
-            account = form.cleaned_data['account']
-            contact = form.cleaned_data['contact']
-            opportunity = form.cleaned_data['opportunity']
-            contract_type = form.cleaned_data['contract_type']
-            currency = form.cleaned_data['currency']
-            shipping = form.cleaned_data['shipping']
-            shipping_tax = form.cleaned_data['shipping_tax']
-            discount = form.cleaned_data['discount'] or Decimal(0)
-
-            # Calculate tax based on shipping_tax selection
-            if shipping_tax == "other":
-                custom_shipping_tax = Decimal(form.cleaned_data['custom_shipping_tax']) / Decimal(100)
-            else:
-                custom_shipping_tax = Decimal(shipping_tax) / Decimal(100)
-
-            # Calculate subtotal
-            subtotal = contract_value - discount
-
-            # Calculate total shipping with tax
-            shipping_tax_amount = shipping * custom_shipping_tax
-            total_shipping = shipping + shipping_tax_amount
-
-            # Calculate tax and grand total
-            tax = subtotal * Decimal(0.18)  # Assuming a fixed 18% tax rate for example
-            grand_total = subtotal + total_shipping + tax
-
-            # Save to the database
-            contract = Contract(
-                contract_title=contract_title,
-                contract_value=contract_value,
-                start_date=start_date,
-                end_date=end_date,
-                renewal_reminder_date=renewal_reminder_date,
-                customer_schedule_date=customer_schedule_date,
-                company_schedule_date=company_schedule_date,
-                description=description,
-                status=status,
-                contact_manager=contact_manager,
-                account=account,
-                contact=contact,
-                opportunity=opportunity,
-                contract_type=contract_type,
-                currency=currency,
-                total=contract_value,
-                discount=discount,
-                subtotal=subtotal,
-                shipping=shipping,
-                shipping_tax=shipping_tax,
-                tax=tax,
-                grand_total=grand_total,
-            )
-            Contract.save()
-            return redirect('success')  # Redirect to a success page or another URL
-
-    
 
 # View to display a specific template
 def agent_template_view(request, template_id):
@@ -3038,9 +3057,9 @@ def fetch_emails():
 
 
 
-def inbox(request):
-    emails = fetch_emails()
-    return render(request, 'sales_tracker/viewemail.html', {'emails': emails})
+# def inbox(request):
+#     emails = fetch_emails()
+#     return render(request, 'sales_tracker/viewemail.html', {'emails': emails})
 
 
 
@@ -3065,3 +3084,59 @@ def upload_import_file(request):
 
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
+
+
+# def createSurvey(request):
+#     return render(request, "sales_tracker/createSurvey.html")
+
+from django.shortcuts import render
+from .forms import SurveyForm
+from django.contrib import messages
+
+def createSurvey(request):
+    if request.method == 'POST':
+        form = SurveyForm(request.POST)
+        if form.is_valid():
+            # Process form data (for now, we just display a success message)
+            messages.success(request, "Task created successfully!")
+            form = TaskForm()  # Reset the form after submission
+        else:
+            messages.error(request, "There was an error with your submission.")
+    else:
+        form = TaskForm()
+
+    return render(request, 'sales_tracker/createSurvey.html', {'form': form})
+
+
+def viewSurveys(request):
+    return render(request, "sales_tracker/viewSurveys.html")
+
+from django.shortcuts import render, redirect
+from .forms import KnowledgeBaseForm
+from django.contrib import messages
+
+def KnowledgeBase(request):
+    if request.method == 'POST':
+        form = KnowledgeBaseForm(request.POST)
+        if form.is_valid():
+            # Process form data here
+            # For demonstration, let's print the data (in real usage, save it or use it as needed)
+            print("Title:", form.cleaned_data['title'])
+            print("Status:", form.cleaned_data['status'])
+            print("Revision:", form.cleaned_data['revision'])
+            print("Body:", form.cleaned_data['body'])
+            print("Resolution:", form.cleaned_data['resolution'])
+            print("Date Created:", form.cleaned_data['date_created'])
+            print("Date Modified:", form.cleaned_data['date_modified'])
+            print("Author:", form.cleaned_data['author'])
+            print("Approver:", form.cleaned_data['approver'])
+
+            # Show a success message
+            messages.success(request, "Note created successfully!")
+
+            # Redirect to another page or reload the same form (for demo, we reload the same form)
+            return redirect('create_note')  # Replace 'create_note' with the name of your URL pattern
+    else:
+        form = KnowledgeBaseForm()
+
+    return render(request, 'sales_tracker/createKnowledgeBase.html', {'form': form})

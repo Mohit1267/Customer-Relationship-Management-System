@@ -26,13 +26,23 @@
 
         <div class="labels">
             <ul>
-                <li><button onclick="showSection('inbox')"><i class="fas fa-inbox"></i> Inbox</button></li>
-                <li><button onclick="showSection('sent')"><i class="fas fa-paper-plane"></i> Sent</button></li>
+                <li>
+                    <a href="{% url 'inbox/' %}">
+                        <button><i class="fas fa-inbox"></i> Inbox</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'sent-emails/' %}">
+                        <button><i class="as fa-paper-plane"></i> Sent</button>
+                    </a>
+                </li>
+                
             </ul>
         </div>
     </div>
 
     <div class="main-content">
+
         <div class="header">
             <input type="text" placeholder="Search mail">
             <div class="icons">
@@ -79,6 +89,12 @@
 
                 <label for="related_to">Related To:</label>
                 <input type="text" id="related_to" name="related_to">
+
+                <label for="email_template">Email Template:</label>
+                <input type="text" id="email_template" name="email_template">
+
+                <label for="id_related_to">Related To:</label>
+                {{ form.related_to }}
 
                 <div class="to-field">
                     <label for="from_address">From:</label>
@@ -152,13 +168,13 @@
             toolbar: [
                 ['bold', 'italic', 'underline'],
                 [{ 'header': 1 }, { 'header': 2 }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                 ['link', 'image']
             ]
         }
     });
 
-    document.querySelector('form').onsubmit = function() {
+    document.querySelector('form').onsubmit = function () {
         document.getElementById('body').value = quill.root.innerHTML;
     };
 </script>

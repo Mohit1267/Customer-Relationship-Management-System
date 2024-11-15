@@ -31,14 +31,11 @@ body {
     flex-wrap: wrap; /* Allows elements to wrap on smaller screens */
     padding: 1rem;
     max-width: 100%;
-    overflow: hidden;
+    overflow: hidden;  
+    flex-grow: 1; 
 
 }
-.navbar-horizontal {
-    
-    flex-grow: 1;
-   
-}
+
 .small-nav {
     display: flex;
     justify-content: space-between;

@@ -691,16 +691,17 @@ class InvoiceForm(forms.Form):
     tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
     grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
 
-from django import forms
-from .models import EmailTemplate  # Assuming EmailTemplate is defined in your models
+
 
 class ComposeEmailForm(forms.Form):
-    
-    # Changed to a CharField for text input
-    email_template = forms.CharField(
+    template = forms.ModelChoiceField(
+        queryset=EmailTemplate.objects.all(),
+
         required=False,
         label="Email Template",
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+
+        widget=forms.Select(attrs={'class': 'form-control'})
+
     )
 
     related_to = forms.ChoiceField(
@@ -766,6 +767,13 @@ class ComposeEmailForm(forms.Form):
         required=False,
         label="Send as Plain Text",
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+
+    # Updated for multiple file uploads
+    attachments = forms.FileField(
+        widget=forms.FileInput(attrs={'multiple': False, 'class': 'form-control'}),
+        required=False,
+        label="Attachments"
     )
 
 
@@ -1277,4 +1285,88 @@ class ManualTimeForm(forms.Form):
             raise forms.ValidationError("End time must be after start time.")
         return end_time
 
+from django import forms
+
+class SurveyForm(forms.Form):
+    subject = forms.CharField(label="Task Subject", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    start_date = forms.DateField(label="Start Date", widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+    due_date = forms.DateField(label="Due Date", widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+    
+    PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+    priority = forms.ChoiceField(label="Priority", choices=PRIORITY_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    
+    description = forms.CharField(label="Description", widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=False)
+    
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+    ]
+    status = forms.ChoiceField(label="Status", choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    
+    related_to = forms.CharField(label="Related To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+    contacts = forms.CharField(label="Assigned To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+
+from django import forms
+
+from django import forms
+
+from ckeditor.widgets import CKEditorWidget
+
+class KnowledgeBaseForm(forms.Form):
+    title = forms.CharField(
+        label="Title",
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter title'})
+    )
+    
+    status = forms.ChoiceField(
+        label="Status",
+        choices=[('Draft', 'Draft'), ('Published', 'Published')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    revision = forms.CharField(
+        label="Revision",
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter revision number'})
+    )
+
+    body = forms.CharField(
+        label="Body",
+        widget=CKEditorWidget(attrs={'class': 'form-control', 'placeholder': 'Enter body content'})
+    )
+
+    resolution = forms.CharField(
+        label="Resolution",
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter resolution details', 'rows': 5})
+    )
+
+    date_created = forms.DateTimeField(
+        label="Date Created",
+        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'yyyy-mm-dd hh:mm'})
+    )
+
+    date_modified = forms.DateTimeField(
+        label="Date Modified",
+        required=False,
+        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'yyyy-mm-dd hh:mm'})
+    )
+
+    author = forms.ChoiceField(
+        label="Author",
+        choices=[('', 'Select an item'), ('Author1', 'Author 1'), ('Author2', 'Author 2')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    approver = forms.ChoiceField(
+        label="Approver",
+        choices=[('', 'Select an item'), ('Approver1', 'Approver 1'), ('Approver2', 'Approver 2')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 

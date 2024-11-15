@@ -31,27 +31,29 @@
       </li> 
 
 
-      
-
       <li>
-        <a class="nav-link spacing" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-        aria-controls="offcanvasExample" id="profileLink">
-        
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 -960 960 960"
-            width="24px"
-            fill="#e8eaed"
-          >
-            <path
-              d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
-            />
+        <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+          <!-- Profile icon (user silhouette) -->
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 2.69-6 6v2h12v-2c0-3.31-2.69-6-6-6z"/>
           </svg>
           <span>Profile</span>
-        </a>
-      </li>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/>
+          </svg>
+        </button>
+        
+      
+        <ul class="sub-menu">
+          <div>
 
+            <li><a href="{% url 'detail_profile' %}">View Profile</a></li>
+            <li><a href="{% url 'agentEditProfile' %}">Edit Profile</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+
+          </div>
+        </ul>
+      </li>
       <li>
         <a href="{% url 'Dashboards'%}">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
@@ -202,7 +204,20 @@
 
           </div>
         </ul>
+      </li> 
+
+
+
+      <li>
+        <a href="{% url 'agentemail' %}">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span>Email</span>
+        </a>
       </li>
+      
 
 
 
@@ -323,13 +338,13 @@
             </li>
 
             
-            <li>
+            <!-- <li>
               <a href="{% url 'agentemail'%}">
                 
                 <span>Email</span>
                 
               </a>
-            </li>
+            </li> -->
       
 
             <li>
@@ -435,6 +450,39 @@
                 <!-- </div> -->
               </ul>
             </li>
+            <li>
+              <button onclick="toggleDocumentsMenu(this)" class="dropdown-btn">
+                <span>Surveys</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                  fill="#e8eaed">
+                  <path
+                    d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+                </svg>
+              </button>
+              <ul class="document-sub-option">
+                <!-- <div class="document-sub-option"> -->
+                  <li><a href="{% url 'createSurvey' %}">Create Surveys</a></li>
+                  <li><a href="{% url 'viewSurveys' %}">View Surveys</a></li>
+                <!-- </div> -->
+              </ul>
+            </li>
+
+            <li>
+              <button onclick="toggleDocumentsMenu(this)" class="dropdown-btn">
+                <span>KnowledgeBase</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                  fill="#e8eaed">
+                  <path
+                    d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z" />
+                </svg>
+              </button>
+              <ul class="document-sub-option">
+                <!-- <div class="document-sub-option"> -->
+                  <li><a href="{% url 'createKnowledgeBase' %}">Create KnowledgeBase</a></li>
+                  <li><a href="{% url 'viewSurveys' %}">View KnowledgeBase</a></li>
+                <!-- </div> -->
+              </ul>
+            </li>
 
 
           </div>
@@ -458,29 +506,7 @@
     </ul>
 
 
-    <div class="offcanvas offcanvas-end" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel"
-    data-bs-backdrop="false" id="profileLink">
-
-    <div class="offcanvas-body">
-      <div class="row p-2">
-        <a href="{% url 'detail_profile' %}" class="right_profile">View Profile</a>
-      </div>
-      <div class="row p-2">
-        <a href="#" class="right_profile">Edit Profile</a>
-      </div>
-      <div class="row p-2">
-        <a href="#" class="right_profile">Employees</a>
-      </div>
-      <div class="row p-2">
-        <a href="#" class="right_profile">Community</a>
-      </div>
-      <div class="row p-2">
-        <a href="#" class="right_profile">About</a>
-      </div>
-      <div class="row p-2">
-        <a href="{% url 'logout'%}" class="right_profile">Logout</a>
-      </div>
-
+    
      
       <!-- <button id="toggleBreakBtn"   class="btn btn-primary brack-st">Start Break</button>
       <div id="timerDisplay"></div> -->
