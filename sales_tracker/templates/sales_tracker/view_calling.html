@@ -1,80 +1,79 @@
-{% extends "agentbase.html" %}
+{% extends "innerbase_copy.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load static %}
- 
-{% block css_link %}
 
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <style>
-       html, body {
-       height: 100%;
-       margin: 0; 
-       }
-       .wrapper {
-       height: 100%;
-       }
-       .bg-gradient {
-           background: linear-gradient(to right, #a2e9da, #69d4c6);
-       }
-       .bg-gradient1 {
-           background: linear-gradient(to right, #cee0e0, #e6dfd4);
-       }
-       .container-fluid {
-    z-index: -1000 !important;
-}
-   </style>
+{% block css_link %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="{% static 'sales_tracker/view_calling.css' %}">
 {% endblock %}
 
 {% block title %}Scheduled Calls{% endblock %}
-{% block content %} 
-    <div class="wrapper  ">
-         <div class="container-fluid  ">
-             <div class="container  bg-gradient">
-        <h1 class="text-center mb-4">Scheduled Calls</h1>
 
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Duration</th>
-                    <th>Frequency</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Subject</th>
-                    <th>Related To</th>
-                    <th>Assigned To</th>
-                    <th>Notification</th>
-                    <th>Contact</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for call in scheduled_calls %}
-                <tr>
-                    <td>{{ call.start_date }}</td>
-                    <td>{{ call.end_date }}</td>
-                    <td>{{ call.duration }}</td>
-                    <td>{{ call.frequency }}</td>
-                    <td>{{ call.start_time }}</td>
-                    <td>{{ call.end_time }}</td>
-                    <td>{{ call.subject }}</td>
-                    <td>{{ call.related_to }}</td>
-                    <td>{{ call.assigned_to }}</td>
-                    <td>{{ call.notification }}</td>
-                    <td>{{ call.contact }}</td>
+{% block content %}
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="container bg-gradient">
+            <h1 class="text-center mb-4">Scheduled Calls</h1>
 
-
-                    
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="11" class="text-center">No scheduled calls found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Duration</th>
+                            <th>Frequency</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Subject</th>
+                            <th>Related To</th>
+                            <th>Assigned To</th>
+                            <th>Notification</th>
+                            <th>Contact</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for call in scheduled_calls %}
+                        <tr>
+                            <td>{{ call.start_date }}</td>
+                            <td>{{ call.end_date }}</td>
+                            <td>{{ call.duration }}</td>
+                            <td>{{ call.frequency }}</td>
+                            <td>{{ call.start_time }}</td>
+                            <td>{{ call.end_time }}</td>
+                            <td>{{ call.subject }}</td>
+                            <td>{{ call.related_to }}</td>
+                            <td>{{ call.assigned_to }}</td>
+                            <td>{{ call.notification }}</td>
+                            <td>{{ call.contact }}</td>
+                            <td>
+                                <button class="button5" onclick="callContact('{{ call.contact }}')">
+                                    <i class="fas fa-phone fa-flip-horizontal"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="12" class="text-center">No scheduled calls found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
+
+<script>
+    function callContact(number) {
+        if (number) {
+            window.location.href = `tel:${number}`;
+        } else {
+            alert("No contact number available.");
+        }
+    }
+</script>
 {% endblock %}
