@@ -2508,9 +2508,6 @@ def upload_import_file(request):
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
 
-
-
-
 # class DataView(ListView):
 #     template_name = "sales_tracker/data.html"
 #     model = MiningData
@@ -2798,3 +2795,6 @@ def upload_import_file(request):
 #     form_class = ContactForm
 #     template_name = "sales_tracker/create_contact.html"
 #     success_url = "message"
+
+#"test pullll_________________________________________________________"
+
