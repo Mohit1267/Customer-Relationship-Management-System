@@ -5,6 +5,10 @@ body {
 
 }
 
+.count_down {
+    display: none;
+}
+
 .moving_title {
     font-size: 2rem;
     position: relative;

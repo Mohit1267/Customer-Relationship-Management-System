@@ -1,27 +1,20 @@
 import json
-from django.core.mail import send_mail
-from django.conf import settings
-from django.http import HttpResponse
-from django.utils import timezone
-from datetime import  datetime, timedelta
-from django.utils import timezone
-from django.http import JsonResponse
-from django.db.models import Count, OuterRef, Subquery
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import connection
 import random
 import re
+import imaplib
+import email
 from datetime import date, datetime, timedelta
 from typing import Any
-
+from email.header import decode_header
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.db import connection
-from django.db.models import Count, OuterRef, Subquery
+from django.db.models import Count, OuterRef, Subquery, F
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
@@ -30,32 +23,25 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from decimal import Decimal
 
-from users.models import AttendanceRecord
-import random
-from django.core.exceptions import ObjectDoesNotExist
-from django.utils.decorators import method_decorator
-from .forms import agentmeeting
-from django.http import JsonResponse
-#from datetime import date
-from datetime import datetime
-
-from users.models import Profile, RegisterUser, Location, AttendanceRecord
+from users.models import (
+    Profile, RegisterUser, Location, AttendanceRecord
+)
 from .models import (
-    ComposedEmail, MiningData, ContactData, LeadsData, OpportunityData, QuotesData,
-    CallingAgent, Schedule_Meeting, Schedule_Calling, DailySalesReport,
 
-    Account, NewPasswords, Task,Contract,Document,agentNotes,  ComposedEmail
+    ComposedEmail, MiningData, ContactData, LeadsData, OpportunityData,
+    QuotesData, CallingAgent, Schedule_Meeting, Schedule_Calling, DailySalesReport,
+    Account, NewPasswords, Task, Contract, Document, agentNotes, projectTemplate,
+    Target, Case
 
 )
 from .forms import (
-
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
-    AgentProjectsForm,  ContractForm, SortForm, CaseForm, ManualTimeForm,projectTemplate,ContractForm
-
+    AgentProjectsForm, ContractForm, SortForm, CaseForm, ManualTimeForm, ProjectTemplateForm,
+    ImportTemplateForm
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
@@ -63,9 +49,10 @@ from .admin_analysis import (
     Time_worked, Productivity, admin_attendance_graph, dailymining, monthlymining,
     quarterlymining, yearlymining, yearlyleads, quarterlyleads, monthlyleads,
     dailyleads, admin_attendance_pie
-
 )
 from .requirements import timer
+
+
 
 
 def get_timer_value(request):
@@ -78,9 +65,6 @@ def get_timer_value(request):
         'sec': int(elapsed_time[2])
     })
 
-
-
-# def Dashboards(request,user_id):
 def Dashboards(request):
     # user = RegisterUser.objects.get(id=user_id)
     # context = {"user": user}
@@ -186,7 +170,6 @@ def Dashboards(request):
         context["MLeads"] = MLeads
         # print(ToCall, "This is the value of ToCall")
         return render(request,'sales_tracker/sales.html',context)
-
 
 
 def admin_required(view_func):
@@ -341,34 +324,6 @@ def mining_view(request):
     })
 
 
-
-
-# class DataView(ListView):
-#     template_name = "sales_tracker/data.html"
-#     model = MiningData
-#     context_object_name = "mined_data"
-
-#     def get_queryset(self):
-#         base_query =  super().get_queryset()
-#         now_date_time = datetime.datetime.now()
-#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-#         data = base_query.filter(date = f"{now_date}")
-#         return data
-    
-#     def get_context_data(self, **kwargs):
-#         context =  super().get_context_data(**kwargs)
-#         request = self.request
-#         user = request.user
-#         utc_login_time = user.last_login
-#         elapsed_time = timer(utc_login_time)
-#         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-#         now_date_time = datetime.datetime.now()
-#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-#         today_mining = MiningData.objects.filter(date = now_date)
-#         today_mining_count = today_mining.count()
-#         context["mining_count"] = today_mining_count
-#         return context
-    
 class DetailDataView(DetailView):
     template_name = "sales_tracker/detail.html"
     model = MiningData
@@ -430,11 +385,6 @@ class Agent(TemplateView):
         context["user"] = u
         context["Tocall"] = ToCall
         return context
-# class ContactCreateView(CreateView):
-#     model = ContactData
-#     form_class = ContactForm
-#     template_name = "sales_tracker/create_contact.html"
-#     success_url = "message"
     
     
 class Message(TemplateView):
@@ -450,25 +400,6 @@ class Agentmessage(TemplateView):
         context =  super().get_context_data(**kwargs)
         context["message"] = "data stored successfully"
         return context
-
-# class LeadCreateView(CreateView):
-#     model = LeadsData
-#     form_class = LeadForm
-#     template_name = "sales_tracker/create_contact.html"
-#     success_url = "message"
-    
-
-# def assign_contact_to_agent():
-#     # Get all agents who are active and can accept contacts
-#     agents = Profile.objects.filter(branch='agent', can_login=True)
-
-#     # Find the agent with the least assigned contacts   
-#     agent = agents.annotate(num_contacts=Count('user_id')).order_by('num_contacts').first()
-#     print(agent,"this is agent ")
-
-#     return agent
-
-
 
 
 def Create_contact_view(request):
@@ -515,7 +446,6 @@ def Create_contact_view(request):
     else:
         form = ContactForm()
     return render(request, "sales_tracker/create_contact.html", {"form":form, "timer": formated_timer, "mining_count": today_mining_count,"calling_agents": CallingAgent.objects.all()})
-
 
 
 
@@ -713,37 +643,6 @@ class MiningsView(View):
         return render(request, "sales_tracker/view_data.html", {"form":form, "datas": datas})
     
 
-
-
-
-
-# class LeadView(ListView):
-#     template_name = "sales_tracker/data2.html"
-#     model = LeadsData
-#     context_object_name = "lead_data"
-
-#     def get_queryset(self):
-#         base_query =  super().get_queryset()
-#         now_date_time = datetime.datetime.now()
-#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-#         data = base_query.filter(date = f"{now_date}")
-#         return data
-
-#     def get_context_data(self, **kwargs):
-#         context =  super().get_context_data(**kwargs)
-#         request = self.request
-#         user = request.user
-#         utc_login_time = user.last_login
-#         elapsed_time = timer(utc_login_time)
-#         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-#         now_date_time = datetime.datetime.now()
-#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
-#         todays_lead = LeadsData.objects.filter(date = now_date)
-#         today_lead_count = todays_lead.count()
-#         context["lead_count"] = today_lead_count
-#         return context
-    
-
 class BaseListView(ListView):
     template_name = "sales_tracker/data.html"
     model = None
@@ -752,30 +651,30 @@ class BaseListView(ListView):
 
     def get_queryset(self):
         base_query = super().get_queryset()
-        time_frame = self.request.GET.get('time_frame', 'today')  # Get the time frame from GET parameters
+        time_frame = self.request.GET.get('time_frame', 'today') 
         now_date_time = datetime.now()
         state = self.request.GET.get('state', None)
         zone = self.request.GET.get('zone', None)
 
         if time_frame == "weekly":
-            start_date = now_date_time - datetime.timedelta(days=now_date_time.weekday())  # Start of the week
-            end_date = start_date + datetime.timedelta(days=7)  # End of the week
+            start_date = now_date_time - datetime.timedelta(days=now_date_time.weekday()) 
+            end_date = start_date + datetime.timedelta(days=7) 
             base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "monthly":
-            start_date = now_date_time.replace(day=1)  # Start of the month
-            end_date = (start_date + datetime.timedelta(days=31)).replace(day=1)  # Start of next month
+            start_date = now_date_time.replace(day=1) 
+            end_date = (start_date + datetime.timedelta(days=31)).replace(day=1)
             base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
             base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "quarterly":
             quarter = (now_date_time.month - 1) // 3 + 1
             start_date = datetime(now_date_time.year, (quarter - 1) * 3 + 1, 1)
-            end_date = (start_date + datetime.timedelta(days=92)).replace(day=1)  # Roughly add 3 months
+            end_date = (start_date + datetime.timedelta(days=92)).replace(day=1)
             base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
         elif time_frame == "yearly":
-            start_date = datetime(now_date_time.year, 1, 1)  # Start of the year
-            end_date = datetime(now_date_time.year + 1, 1, 1)  # Start of next year
+            start_date = datetime(now_date_time.year, 1, 1)  
+            end_date = datetime(now_date_time.year + 1, 1, 1) 
             base_query = base_query.filter(date__range=[start_date.date(), end_date.date()])
-        else:  # Default to today
+        else:  
             today = now_date_time.date()
             base_query = base_query.filter(date=today)
         if state and state != 'all':
@@ -791,8 +690,7 @@ class BaseListView(ListView):
         utc_login_time = user.last_login
         elapsed_time = timer(utc_login_time)
         context["timer"] = {"hrs": int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-        
-        # Count today's leads
+
         now_date_time = datetime.now()
         today = now_date_time.date()
         todays_lead = LeadsData.objects.filter(date=today)
@@ -820,26 +718,6 @@ class QuotesView(BaseListView):
     template_name = "sales_tracker/quotesdata.html"
     model = QuotesData
     count_context_name = 'opportunity_count'
-
-# class DSRview(BaseListView):
-#     template_name = "sales_tracker/agentDsrdata.html"
-#     model = DsrData
-#     count_context_name = 'agentDsr_count'
-
-# def Tocall(request):
-#     context = {}
-#     user = request.user
-#     utc_login_time = user.last_login
-#     elapsed_time = timer(utc_login_time)
-#     formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
-#     now_date_time = datetime.datetime.now()
-#     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}" 
-#     orgs = ContactData.objects.filter(date=now_date) 
-#     orgs_list = [orgsN.organization for orgsN in orgs]
-#     context['orgs_list'] = orgs_list
-#     context['timer'] = formated_timer
-
-#     return render(request, "sales_tracker/data2.html", context)
 
 
 class Tocall(TemplateView):
@@ -921,8 +799,6 @@ def get_calling_agents(request):
         context['data'] = data
         return render(request, "sales_tracker/call_center.html",context)
   
-
-
 
 def Attendence(request):    
     
@@ -1046,8 +922,6 @@ def ViewQuote(request):
     pass
 
 
-
-
 def Agentcontact(request):
     user = request.user
     utc_login_time = user.last_login
@@ -1110,9 +984,6 @@ def Agentcontact(request):
         form = ContactForm()
 
     return render(request, "sales_tracker/agentcontact.html", {"form": form, "timer": formated_timer, "calling_agents": CallingAgent.objects.all()})
-
-
-
 
 
 def Agentquote(request):
@@ -1456,14 +1327,6 @@ def AgentDSR(request):
 
     return render(request, 'sales_tracker/agentDsr.html', {'form': form})
 
-# def deviceAdmin(request):
-    # context = {
-    #     "id": "1",
-    #     "uptime": "7:00:00",
-    #     "downtime": "1:00:00",
-    #     "ip": "192.168.123.1"
-    # }
-    # return render(request, 'sales_tracker/deviceAdmin.html', context)
   
 def Admin_active(request):
     context = {
@@ -1629,35 +1492,6 @@ def Agentaccount(request):
                 messages.error(request, "Fax can only contain numbers.")
                 return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # account_type = form.cleaned_data['Type']
-            # if not re.match("^[A-Za-z0-9 ]+$", account_type):
-            #     messages.error(request, "Type can only contain alphabets and numbers.")
-            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
-
-            # member_of = form.cleaned_data['Member_Of']
-            # if not re.match("^[A-Za-z0-9 ]+$", member_of):
-            #     messages.error(request, "Member Of can only contain alphabets and numbers.")
-            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
-
-            # campaign = form.cleaned_data['Campaign']
-            # if not re.match("^[A-Za-z0-9 ]+$", campaign):
-            #     messages.error(request, "Campaign can only contain alphabets and numbers.")
-            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
-
-            # industry = form.cleaned_data['Industry']
-            # if not re.match("^[A-Za-z0-9 ]+$", industry):
-            #     messages.error(request, "Industry can only contain alphabets and numbers.")
-            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
-
-            # employees = form.cleaned_data['Employees']
-            # if not isinstance(employees, int) or employees < 0:  
-            #     messages.error(request, "Employees must be a non-negative integer.")
-            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
-
-            # annual_revenue = form.cleaned_data['Annual_Revenue']
-            # if annual_revenue is None or annual_revenue <= 0:
-            #     messages.error(request, "Annual Revenue must be a positive number.")
-            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
             account = Account(
                 Name=name,
@@ -1737,16 +1571,6 @@ class ViewScheduledCalls(View):
         return render(request, 'sales_tracker/view_calling.html', {'scheduled_calls': scheduled_calls})
 
 
-def schedule_calling_create(request):
-    if request.method == 'POST':
-        form = Schedule_Calling(request.POST)
-        if form.is_valid():
-            print("this is valid form")
-            form.save()
-    else:
-        form = Schedule_Calling()
-    return render(request, 'sales_tracker/agentcalling.html', {'form': form})
-
 class AgentCalling(View):
     def get(self, request):
         form = agentcalling()
@@ -1804,10 +1628,6 @@ def DSRimport(request):
     return render(request, "sales_tracker/DSRimport.html")
 
 
-from django.shortcuts import render, redirect
-from .models import ContactData  # Import your Contact model
-from .forms import TaskForm  # Import your Task form
-
 def createTask(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -1817,7 +1637,6 @@ def createTask(request):
     else:
         form = TaskForm()
 
-    # Fetch all contacts to display in the popup
     contacts = ContactData.objects.all()
 
     return render(request, "sales_tracker/createTask.html", {
@@ -1834,51 +1653,6 @@ def send_meeting_email(request, meeting_id):
 
 def temp(request):
     return render(request, 'sales_tracker/temp.html')
-
-# def send_meeting_email(request, meeting_id):
-#     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
-#     subject = "Meeting Reminder"
-#     # Meeting details
-#     start_time = datetime.now() + timedelta(days=1)
-#     duration = 30
-#     #host_email = 'pushakrpandey200@gmail.com'
-#     #recipient_list = attendees_list + [host_email]
-
-
-#             # Create the Google Meet link
-#     meet_link = create_meeting_event(start_time, duration)
-
-    
-#     message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting{meet_link}.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n\nBest regards,\nAapai Technology."
-#     recipient_list = [meeting.contact]
-
-#     try:
-#         send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
-#         return HttpResponse("Email sent successfully!")
-#     except Exception as e:
-#         return HttpResponse(f"Failed to send email: {e}")
-
-@login_required
-def employee_screen_share(request):
-    # Ensure only data miners or calling agents can access this view
-    if request.user.profile.branch in ['data_miner', 'calling_agent']:
-        return render(request, 'sales_tracker/employee_screen_share.html')
-    else:
-        return render(request, 'sales_tracker/unauthorized.html')
-
-# Admin view to watch the employee's screen
-# views.py
-# views.py
-@login_required
-def admin_screen_view(request):
-    if request.user.profile.branch == 'admin':
-        # List employees to be viewed
-        employees = RegisterUser.objects.filter(profile__branch__in=['miner', 'agent'])
-        print(employees,"this is employees")
-        context = {'employees': employees}
-        return render(request, 'sales_tracker/admin_screen_view.html', context)
-    else:
-        return render(request, 'sales_tracker/unauthorized.html')
 
 
 def miningimport(request):
@@ -1903,19 +1677,11 @@ def createInvoices(request):
     return render(request, 'sales_tracker/createInvoices.html', {'form': form})
 
 
-from django.http import JsonResponse
-from django.core.mail import EmailMultiAlternatives
-from django.contrib import messages
-
-from .models import ComposedEmail, EmailTemplate
-
 
 def compose_email(request):
     if request.method == 'POST':
         form = ComposeEmailForm(request.POST, request.FILES)
         if form.is_valid():
-            # Fetch form data
-
             email_template_instance = form.cleaned_data.get('template')
 
             related_to = form.cleaned_data.get('related_to')
@@ -1925,15 +1691,12 @@ def compose_email(request):
             bcc_address = form.cleaned_data.get('bcc_address')
             send_plain_text = form.cleaned_data.get('send_plain_text')
 
-
-            # Use template's subject and body if selected; otherwise, use form data
             if email_template_instance:
                 subject = email_template_instance.subject
                 body = email_template_instance.body
             else:
                 subject = form.cleaned_data.get('subject') or "No Subject"
                 body = form.cleaned_data.get('body') or "No Content"
-
 
             try:
                 # Construct the email
@@ -1946,18 +1709,15 @@ def compose_email(request):
                     bcc=bcc_address.split(',') if bcc_address else []
                 )
 
-                # Attach as HTML if not sending as plain text
                 if not send_plain_text:
                     email.attach_alternative(body, "text/html")
 
-                # Handle multiple attachments
                 attachments = request.FILES.getlist('attachments')
                 for attachment in attachments:
                     email.attach(attachment.name, attachment.read(), attachment.content_type)
 
                 email.send()
 
-                # Save email to the database
                 ComposedEmail.objects.create(
 
                     template=email_template_instance,
@@ -1993,43 +1753,31 @@ def compose_email(request):
 
 
 
-
-import imaplib
-import email
-from email.header import decode_header
-from django.shortcuts import render
-from django.http import JsonResponse
-
-# Gmail IMAP server settings (adjust if using a different email provider)
 IMAP_SERVER = 'imap.gmail.com'
 IMAP_PORT = 993
 
 def view_inbox(request):
     if request.method == 'GET':
         try:
-            # Replace these with your email credentials
+            
             email_user = "pushkarpandey200@gmail.com"
-            email_pass = "ucz syco dqfd dbcv"  # Consider using an App Password
+            email_pass = "ucz syco dqfd dbcv"  
 
-            # Connect to the IMAP server
             mail = imaplib.IMAP4_SSL(IMAP_SERVER, IMAP_PORT)
             mail.login(email_user, email_pass)
 
-            # Select the mailbox you want to read (e.g., "inbox")
             mail.select("inbox")
 
-            # Search for all emails in the inbox
             status, messages = mail.search(None, 'ALL')
             email_ids = messages[0].split()
 
             inbox_emails = []
 
-            # Fetch the latest 10 emails (adjust the range as needed)
             for email_id in email_ids[-10:]:
                 res, msg = mail.fetch(email_id, "(RFC822)")
                 for response in msg:
                     if isinstance(response, tuple):
-                        # Parse the email content
+
                         msg = email.message_from_bytes(response[1])
                         subject, encoding = decode_header(msg["Subject"])[0]
                         if isinstance(subject, bytes):
@@ -2037,14 +1785,12 @@ def view_inbox(request):
                         from_ = msg.get("From")
                         date_ = msg.get("Date")
 
-                        # Append email details to list
                         inbox_emails.append({
                             "subject": subject,
                             "from": from_,
                             "date": date_
                         })
 
-            # Logout from the email server
             mail.logout()
             return render(request, 'sales_tracker/inbox.html', {'emails': inbox_emails})
 
@@ -2056,25 +1802,11 @@ def view_inbox(request):
 
 
 
-
-
-from .models import ComposedEmail
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
 @login_required
 def view_sent_emails(request):
     sent_emails = ComposedEmail.objects.filter(created_by=request.user).order_by('-created_at')
     return render(request, 'sales_tracker/sent_emails.html', {'sent_emails': sent_emails})
 
-
-
-
-
-
-
-from django.shortcuts import render
-from .models import LeadsData
 
 def leads_view(request):
     weekly_leads = LeadsData.objects.get_weekly_leads()
@@ -2091,27 +1823,23 @@ def leads_view(request):
 
     return render(request, 'sales_tracker/leadsdata.html', context)
 
-import imaplib
-import email
-from email.header import decode_header
+
 
 def fetch_emails():
-    # Email server connection
+
     imap_host = 'imap.gmail.com'
     username = 'pushkarpandey200@gmail.com'
     password = 'nucz syco dqfd dbcv'
 
-    # Connect to the email server
     mail = imaplib.IMAP4_SSL(imap_host)
     mail.login(username, password)
     mail.select('inbox')
 
-    # Search for all emails
     status, messages = mail.search(None, 'ALL')
     email_ids = messages[0].split()
 
     emails = []
-    for email_id in email_ids[-5:]:  # Fetch last 5 emails
+    for email_id in email_ids[-5:]:
         status, msg_data = mail.fetch(email_id, '(RFC822)')
         for response_part in msg_data:
             if isinstance(response_part, tuple):
@@ -2127,25 +1855,8 @@ def fetch_emails():
 
 
 
-
-
-# def inbox(request):
-#     emails = fetch_emails()
-#     return render(request, 'sales_tracker/viewemail.html', {'emails': emails})
-
-
-
-
-
-# def viewEmail(request):
-#     return render(request, "sales_tracker/viewemail.html")
-
-
-
 def viewEmail(request):
     return render(request, "sales_tracker/viewemail.html")
-
-
 
 
 def Agenttarget(request):
@@ -2342,8 +2053,6 @@ def createCase(request):
 
 
 
-def viewCases(request):
-    return render(request, "sales_tracker/viewCase.html")
 
 def createManualTime(request):
     return render(request, "sales_tracker/createManualTime.html")
@@ -2366,11 +2075,7 @@ def Location(request):
 
 
 
-from django.core.mail import send_mail
-from django.conf import settings
-
 def send_gmeet_invitation(email, subject, message, meet_link):
-    # Customize your email content
     email_message = f"{message}\n\nJoin the Google Meet at: {meet_link}"
     
     send_mail(
@@ -2380,10 +2085,6 @@ def send_gmeet_invitation(email, subject, message, meet_link):
         [email],
         fail_silently=False,
     )
-
-
-
-
 
 
 '''
@@ -2529,85 +2230,6 @@ def createInvoices(request):
     return render(request, 'sales_tracker/createInvoices.html', {'form': form})
 
 
-# def compose_email(request):
-#     """
-#     This view handles the email composition form.
-#     If the request is POST, it validates and processes the form data.
-#     On GET requests, it displays the empty form for the user to fill out.
-#     """
-#     if request.method == 'POST':
-#         form = ComposeEmailForm(request.POST)
-#         if form.is_valid():
-         
-#             email_template = form.cleaned_data.get('template')
-#             related_to = form.cleaned_data.get('related_to')
-#             from_address = form.cleaned_data.get('from')
-#             to_address = form.cleaned_data.get('to')
-#             cc_address = form.cleaned_data.get('cc')
-#             bcc_address = form.cleaned_data.get('bcc')
-#             subject = form.cleaned_data.get('subject')
-#             body = form.cleaned_data.get('body')
-#             send_plain_text = form.cleaned_data.get('send_plain_text')
-
-#             messages.success(request, 'Email composed successfully!')
-#             return redirect('agentemail')
-#         else:
-#             messages.error(request, 'There was an error composing the email. Please check your input.')
-#     else:
-#         form = ComposeEmailForm()  
-
-#     return render(request, 'sales_tracker/agentemail.html', {'form': form})
-
-
-
-# def viewEmail(request):
-#     return render(request, "sales_tracker/viewemail.html")
-
-
-
-
-# def Agenttarget(request):
-#     """
-#     This view handles the contact form submission.
-#     If the request is POST, it validates and processes the form data.
-#     On GET requests, it displays the empty form for the user to fill out.
-#     """
-#     if request.method == 'POST':
-#         form = TargetsForm(request.POST)
-#         if form.is_valid():
-        
-#             first_name = form.cleaned_data.get('first_name')
-#             last_name = form.cleaned_data.get('last_name')
-#             job_title = form.cleaned_data.get('job_title')
-#             office_phone = form.cleaned_data.get('office_phone')
-#             department = form.cleaned_data.get('department')
-#             mobile = form.cleaned_data.get('mobile')
-#             account_name = form.cleaned_data.get('account_name')
-#             fax = form.cleaned_data.get('fax')
-#             primary_address_street = form.cleaned_data.get('primary_address_street')
-#             primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
-#             primary_address_city = form.cleaned_data.get('primary_address_city')
-#             primary_address_state = form.cleaned_data.get('primary_address_state')
-#             primary_address_country = form.cleaned_data.get('primary_address_country')
-#             other_address_street = form.cleaned_data.get('other_address_street')
-#             other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
-#             other_address_city = form.cleaned_data.get('other_address_city')
-#             other_address_state = form.cleaned_data.get('other_address_state')
-#             other_address_country = form.cleaned_data.get('other_address_country')
-#             email_address = form.cleaned_data.get('email_address')
-#             description = form.cleaned_data.get('description')
-#             assigned_to = form.cleaned_data.get('assigned_to')
-
-#             messages.success(request, 'Contact information submitted successfully!')
-#             return redirect('agenttarget') 
-#         else:
-#             messages.error(request, 'There was an error submitting the contact information. Please check your input.')
-#     else:
-#         form = TargetsForm()
-
-#     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
-
-
 def viewInvoices(request):
     return render(request, 'sales_tracker/viewInvoices.html')
 
@@ -2722,66 +2344,43 @@ def agentTemplate(request):
 
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})'''
 
-from django.shortcuts import render, redirect
-
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import projectTemplate
-from .forms import ProjectTemplateForm
-
-# View to create a project template
 def create_project_template(request):
     if request.method == 'POST':
         form = ProjectTemplateForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('sales_tracker/agentTemplate.html')  # Ensure this route is correctly defined in urls.py
+            return redirect('sales_tracker/agentTemplate.html')  
     else:
         form = ProjectTemplateForm()
     
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
 
 
-from django.shortcuts import render, redirect
-
-
-# View to create a new template
 def projectTemplate(request):
     if request.method == 'POST':
         form = projectTemplate(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('view_templates')  # Redirect to the template list view
+            return redirect('view_templates')  
     else:
         form = projectTemplate()
     
     return render(request, 'sales_tracker/agenttemplate.html', {'form': form})
 
-# View to display all templates
 def ViewTemplate(request):
     templates = projectTemplate.objects.all()
     return render(request, 'sales_tracker/viewTemplates.html', {'templates': templates})
 
-# View to display a specific template
 def agent_template_view(request, template_id):
     template_instance = get_object_or_404(projectTemplate, id=template_id)
     return render(request, 'sales_tracker/viewTemplate.html', {'template': template_instance})
 
-from django.shortcuts import render, redirect
-from .forms import ContractForm
-from .models import Contract
-from django.db.models import F
-from decimal import Decimal
 
 def create_contract(request):
     if request.method == "POST":
         form = ContractForm(request.POST)
         
         if form.is_valid():
-            # Fetch cleaned data from form
             contract_title = form.cleaned_data['contract_title']
             contract_value = form.cleaned_data['contract_value']
             start_date = form.cleaned_data['start_date']
@@ -2801,24 +2400,19 @@ def create_contract(request):
             shipping_tax = form.cleaned_data['shipping_tax']
             discount = form.cleaned_data['discount'] or Decimal(0)
 
-            # Calculate tax based on shipping_tax selection
             if shipping_tax == "other":
                 custom_shipping_tax = Decimal(form.cleaned_data['custom_shipping_tax']) / Decimal(100)
             else:
                 custom_shipping_tax = Decimal(shipping_tax) / Decimal(100)
 
-            # Calculate subtotal
             subtotal = contract_value - discount
 
-            # Calculate total shipping with tax
             shipping_tax_amount = shipping * custom_shipping_tax
             total_shipping = shipping + shipping_tax_amount
 
-            # Calculate tax and grand total
-            tax = subtotal * Decimal(0.18)  # Assuming a fixed 18% tax rate for example
+            tax = subtotal * Decimal(0.18)
             grand_total = subtotal + total_shipping + tax
 
-            # Save to the database
             contract = Contract(
                 contract_title=contract_title,
                 contract_value=contract_value,
@@ -2844,7 +2438,7 @@ def create_contract(request):
                 grand_total=grand_total,
             )
             contract.save()
-            return redirect('success')  # Redirect to a success page or another URL
+            return redirect('success')  
 
     else:
 
@@ -2852,42 +2446,32 @@ def create_contract(request):
 
     return render(request, 'sales_tracker/createContract.html', {'form': form})
 
-from django.shortcuts import render, get_object_or_404
 
 def view_contract(request):    
-    # Retrieve the contract by ID or return a 404 if not found
+
     contract = get_object_or_404(Contract)
-    
-    # Pass the contract data to the template
+
     return render(request, 'sales_tracker/viewContract.html', {'contract': contract})
 
-
-
-from .models import Target
-from .forms import TargetsForm
 
 def add_target(request):
     if request.method == 'POST':
         form = TargetsForm(request.POST)
         if form.is_valid():
-            # Create a new Target object and save it to the database
             target = Target.objects.create(**form.cleaned_data)
-            return redirect('view_targets')  # Redirect to the target list view after saving
+            return redirect('view_targets')  
     else:
         form = TargetsForm()
     
     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import ImportTemplateForm
 
 def upload_import_file(request):
     if request.method == 'POST':
         form = ImportTemplateForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()  # This saves the uploaded file and selected action to the database
+            form.save()  
             messages.success(request, "File uploaded successfully!")
             return redirect('targetimport')
     else:
@@ -2896,18 +2480,13 @@ def upload_import_file(request):
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
 
-from django.shortcuts import render, redirect
-from .models import Case
-from .forms import CaseForm
-
 def add_case(request):
     if request.method == 'POST':
         form = CaseForm(request.POST)
         if form.is_valid():
-            # Save the form data as a new Case instance
             case = Case.objects.create(**form.cleaned_data)
 
-            return redirect('view_cases')  # Redirect to the case list view
+            return redirect('view_cases') 
 
     else:
         form = CaseForm()
@@ -2921,8 +2500,6 @@ def view_cases(request):
 
 def InvoiceImport(request):
     return render(request, "sales_tracker/InvoiceImport.html")
-
-
 
 
 def createInvoices(request):
@@ -3055,28 +2632,11 @@ def fetch_emails():
 
 
 
-
-
-# def inbox(request):
-#     emails = fetch_emails()
-#     return render(request, 'sales_tracker/viewemail.html', {'emails': emails})
-
-
-
-
-
-# def viewEmail(request):
-#     return render(request, "sales_tracker/viewemail.html")
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import ImportTemplateForm
-
 def upload_import_file(request):
     if request.method == 'POST':
         form = ImportTemplateForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()  # This saves the uploaded file and selected action to the database
+            form.save() 
             messages.success(request, "File uploaded successfully!")
             return redirect('targetimport')
     else:
@@ -3085,9 +2645,6 @@ def upload_import_file(request):
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
 
-
-# def createSurvey(request):
-#     return render(request, "sales_tracker/createSurvey.html")
 
 from django.shortcuts import render
 from .forms import SurveyForm
@@ -3140,3 +2697,294 @@ def KnowledgeBase(request):
         form = KnowledgeBaseForm()
 
     return render(request, 'sales_tracker/createKnowledgeBase.html', {'form': form})
+
+# class DataView(ListView):
+#     template_name = "sales_tracker/data.html"
+#     model = MiningData
+#     context_object_name = "mined_data"
+
+#     def get_queryset(self):
+#         base_query =  super().get_queryset()
+#         now_date_time = datetime.datetime.now()
+#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+#         data = base_query.filter(date = f"{now_date}")
+#         return data
+    
+#     def get_context_data(self, **kwargs):
+#         context =  super().get_context_data(**kwargs)
+#         request = self.request
+#         user = request.user
+#         utc_login_time = user.last_login
+#         elapsed_time = timer(utc_login_time)
+#         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+#         now_date_time = datetime.datetime.now()
+#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+#         today_mining = MiningData.objects.filter(date = now_date)
+#         today_mining_count = today_mining.count()
+#         context["mining_count"] = today_mining_count
+#         return context
+    
+# def compose_email(request):
+#     """
+#     This view handles the email composition form.
+#     If the request is POST, it validates and processes the form data.
+#     On GET requests, it displays the empty form for the user to fill out.
+#     """
+#     if request.method == 'POST':
+#         form = ComposeEmailForm(request.POST)
+#         if form.is_valid():
+         
+#             email_template = form.cleaned_data.get('template')
+#             related_to = form.cleaned_data.get('related_to')
+#             from_address = form.cleaned_data.get('from')
+#             to_address = form.cleaned_data.get('to')
+#             cc_address = form.cleaned_data.get('cc')
+#             bcc_address = form.cleaned_data.get('bcc')
+#             subject = form.cleaned_data.get('subject')
+#             body = form.cleaned_data.get('body')
+#             send_plain_text = form.cleaned_data.get('send_plain_text')
+
+#             messages.success(request, 'Email composed successfully!')
+#             return redirect('agentemail')
+#         else:
+#             messages.error(request, 'There was an error composing the email. Please check your input.')
+#     else:
+#         form = ComposeEmailForm()  
+
+#     return render(request, 'sales_tracker/agentemail.html', {'form': form})
+
+
+
+# def viewEmail(request):
+#     return render(request, "sales_tracker/viewemail.html")
+
+
+
+
+# def Agenttarget(request):
+#     """
+#     This view handles the contact form submission.
+#     If the request is POST, it validates and processes the form data.
+#     On GET requests, it displays the empty form for the user to fill out.
+#     """
+#     if request.method == 'POST':
+#         form = TargetsForm(request.POST)
+#         if form.is_valid():
+        
+#             first_name = form.cleaned_data.get('first_name')
+#             last_name = form.cleaned_data.get('last_name')
+#             job_title = form.cleaned_data.get('job_title')
+#             office_phone = form.cleaned_data.get('office_phone')
+#             department = form.cleaned_data.get('department')
+#             mobile = form.cleaned_data.get('mobile')
+#             account_name = form.cleaned_data.get('account_name')
+#             fax = form.cleaned_data.get('fax')
+#             primary_address_street = form.cleaned_data.get('primary_address_street')
+#             primary_address_postal_code = form.cleaned_data.get('primary_address_postal_code')
+#             primary_address_city = form.cleaned_data.get('primary_address_city')
+#             primary_address_state = form.cleaned_data.get('primary_address_state')
+#             primary_address_country = form.cleaned_data.get('primary_address_country')
+#             other_address_street = form.cleaned_data.get('other_address_street')
+#             other_address_postal_code = form.cleaned_data.get('other_address_postal_code')
+#             other_address_city = form.cleaned_data.get('other_address_city')
+#             other_address_state = form.cleaned_data.get('other_address_state')
+#             other_address_country = form.cleaned_data.get('other_address_country')
+#             email_address = form.cleaned_data.get('email_address')
+#             description = form.cleaned_data.get('description')
+#             assigned_to = form.cleaned_data.get('assigned_to')
+
+#             messages.success(request, 'Contact information submitted successfully!')
+#             return redirect('agenttarget') 
+#         else:
+#             messages.error(request, 'There was an error submitting the contact information. Please check your input.')
+#     else:
+#         form = TargetsForm()
+
+#     return render(request, 'sales_tracker/agenttarget.html', {'form': form})
+
+
+# def inbox(request):
+#     emails = fetch_emails()
+#     return render(request, 'sales_tracker/viewemail.html', {'emails': emails})
+
+
+# def viewEmail(request):
+#     return render(request, "sales_tracker/viewemail.html")
+
+# def send_meeting_email(request, meeting_id):
+#     meeting = get_object_or_404(Schedule_Meeting, id=meeting_id)
+#     subject = "Meeting Reminder"
+#     # Meeting details
+#     start_time = datetime.now() + timedelta(days=1)
+#     duration = 30
+#     #host_email = 'pushakrpandey200@gmail.com'
+#     #recipient_list = attendees_list + [host_email]
+
+
+#             # Create the Google Meet link
+#     meet_link = create_meeting_event(start_time, duration)
+
+    
+#     message = f"Dear {meeting.assigned_to},\n\nThis is a reminder for your meeting{meet_link}.\n\nDetails:\nSubject: {meeting.subject}\nStart Date: {meeting.start_date}\nEnd Date: {meeting.end_date}\nStart Time: {meeting.start_time}\nEnd Time: {meeting.end_time}\n\nBest regards,\nAapai Technology."
+#     recipient_list = [meeting.contact]
+
+#     try:
+#         send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+#         return HttpResponse("Email sent successfully!")
+#     except Exception as e:
+#         return HttpResponse(f"Failed to send email: {e}")
+
+# @login_required
+# def employee_screen_share(request):
+#     # Ensure only data miners or calling agents can access this view
+#     if request.user.profile.branch in ['data_miner', 'calling_agent']:
+#         return render(request, 'sales_tracker/employee_screen_share.html')
+#     else:
+#         return render(request, 'sales_tracker/unauthorized.html')
+
+# # Admin view to watch the employee's screen
+# # views.py
+# # views.py
+# @login_required
+# def admin_screen_view(request):
+#     if request.user.profile.branch == 'admin':
+#         # List employees to be viewed
+#         employees = RegisterUser.objects.filter(profile__branch__in=['miner', 'agent'])
+#         print(employees,"this is employees")
+#         context = {'employees': employees}
+#         return render(request, 'sales_tracker/admin_screen_view.html', context)
+#     else:
+#         return render(request, 'sales_tracker/unauthorized.html')
+
+
+
+
+# def schedule_calling_create(request):
+#     if request.method == 'POST':
+#         form = Schedule_Calling(request.POST)
+#         if form.is_valid():
+#             print("this is valid form")
+#             form.save()
+#     else:
+#         form = Schedule_Calling()
+#     return render(request, 'sales_tracker/agentcalling.html', {'form': form})
+
+
+     # account_type = form.cleaned_data['Type']
+            # if not re.match("^[A-Za-z0-9 ]+$", account_type):
+            #     messages.error(request, "Type can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # member_of = form.cleaned_data['Member_Of']
+            # if not re.match("^[A-Za-z0-9 ]+$", member_of):
+            #     messages.error(request, "Member Of can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # campaign = form.cleaned_data['Campaign']
+            # if not re.match("^[A-Za-z0-9 ]+$", campaign):
+            #     messages.error(request, "Campaign can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # industry = form.cleaned_data['Industry']
+            # if not re.match("^[A-Za-z0-9 ]+$", industry):
+            #     messages.error(request, "Industry can only contain alphabets and numbers.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # employees = form.cleaned_data['Employees']
+            # if not isinstance(employees, int) or employees < 0:  
+            #     messages.error(request, "Employees must be a non-negative integer.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+            # annual_revenue = form.cleaned_data['Annual_Revenue']
+            # if annual_revenue is None or annual_revenue <= 0:
+            #     messages.error(request, "Annual Revenue must be a positive number.")
+            #     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
+
+# def deviceAdmin(request):
+    # context = {
+    #     "id": "1",
+    #     "uptime": "7:00:00",
+    #     "downtime": "1:00:00",
+    #     "ip": "192.168.123.1"
+    # }
+    # return render(request, 'sales_tracker/deviceAdmin.html', context)
+
+
+
+
+# class DSRview(BaseListView):
+#     template_name = "sales_tracker/agentDsrdata.html"
+#     model = DsrData
+#     count_context_name = 'agentDsr_count'
+
+# def Tocall(request):
+#     context = {}
+#     user = request.user
+#     utc_login_time = user.last_login
+#     elapsed_time = timer(utc_login_time)
+#     formated_timer = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+#     now_date_time = datetime.datetime.now()
+#     now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}" 
+#     orgs = ContactData.objects.filter(date=now_date) 
+#     orgs_list = [orgsN.organization for orgsN in orgs]
+#     context['orgs_list'] = orgs_list
+#     context['timer'] = formated_timer
+
+#     return render(request, "sales_tracker/data2.html", context)
+
+
+
+# class LeadView(ListView):
+#     template_name = "sales_tracker/data2.html"
+#     model = LeadsData
+#     context_object_name = "lead_data"
+
+#     def get_queryset(self):
+#         base_query =  super().get_queryset()
+#         now_date_time = datetime.datetime.now()
+#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+#         data = base_query.filter(date = f"{now_date}")
+#         return data
+
+#     def get_context_data(self, **kwargs):
+#         context =  super().get_context_data(**kwargs)
+#         request = self.request
+#         user = request.user
+#         utc_login_time = user.last_login
+#         elapsed_time = timer(utc_login_time)
+#         context["timer"] = {"hrs":int(elapsed_time[0]), "min": int(elapsed_time[1]), "sec": int(elapsed_time[2])}
+#         now_date_time = datetime.datetime.now()
+#         now_date = f"{now_date_time.strftime('%Y')}-{now_date_time.strftime('%m')}-{now_date_time.strftime('%d')}"
+#         todays_lead = LeadsData.objects.filter(date = now_date)
+#         today_lead_count = todays_lead.count()
+#         context["lead_count"] = today_lead_count
+#         return context
+
+
+
+# class LeadCreateView(CreateView):
+#     model = LeadsData
+#     form_class = LeadForm
+#     template_name = "sales_tracker/create_contact.html"
+#     success_url = "message"
+    
+
+# def assign_contact_to_agent():
+#     # Get all agents who are active and can accept contacts
+#     agents = Profile.objects.filter(branch='agent', can_login=True)
+
+#     # Find the agent with the least assigned contacts   
+#     agent = agents.annotate(num_contacts=Count('user_id')).order_by('num_contacts').first()
+#     print(agent,"this is agent ")
+
+#     return agent
+
+
+# class ContactCreateView(CreateView):
+#     model = ContactData
+#     form_class = ContactForm
+#     template_name = "sales_tracker/create_contact.html"
+#     success_url = "message"
+
+#"test pullll_________________________________________________________"
+

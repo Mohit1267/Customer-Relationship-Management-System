@@ -7,7 +7,6 @@
 
 {% block content %} 
 
-<!-- Dropdown to     select employee and button to view their screen -->
 <select id="employee-select">
     {% for employee in employees %}
     <option value="{{ employee.id }}">{{ employee.username }}</option>
@@ -15,7 +14,6 @@
 </select>
 <button id="viewScreenButton">View Screen</button>
 
-<!-- Video element to display the employee's screen -->
 <video id="employee-video" autoplay playsinline controls></video>
 
 <script>
@@ -32,7 +30,6 @@
         });
 
         function viewEmployeeScreen(employeeId) {
-            // JavaScript code to initialize WebSocket
 
             const ws = new WebSocket(`ws://${window.location.host}/ws/screen_share/${employeeId}/`);
 

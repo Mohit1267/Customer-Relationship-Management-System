@@ -446,4 +446,4 @@ def device_list(request):
     return render(request, 'device_list.html', {'devices': devices})
 
 def agentEditProfile(request):
-    return render(request, 'users/agentEditProfile.html')
+    return render(request, 'agentEditProfile.html')

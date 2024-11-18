@@ -88,7 +88,6 @@
                     {{ form.discount|as_crispy_field }}
                 </div>
 
-                <!-- Display calculated Subtotal -->
                 <div class="form-group mb-5">
                     <label>Subtotal:</label>
                     <span id="subtotal-output">0.00</span>
@@ -120,7 +119,7 @@
                         }
                 
                         shippingTaxField.addEventListener("change", toggleCustomField);
-                        toggleCustomField();  // Set initial state on page load
+                        toggleCustomField();  
                     });
                 </script>
                 <div class="form-group">
@@ -128,7 +127,6 @@
                     {{ form.tax|as_crispy_field }}
                 </div>
 
-                <!-- Display calculated Grand Total -->
                 <div class="form-group mb-5">
                     <label>Grand Total:</label>
                     <span id="grand-total-output">0.00</span>
@@ -141,11 +139,11 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const contractValueInput = document.getElementById("id_contract_value");
-        const discountInput = document.getElementById("id_discount");  // Discount in percentage
+        const discountInput = document.getElementById("id_discount"); 
         const shippingInput = document.getElementById("id_shipping");
         const shippingTaxInput = document.getElementById("id_shipping_tax");
         const customShippingTaxInput = document.getElementById("id_custom_shipping_tax");
-        const taxInput = document.getElementById("id_tax");  // User-provided tax input
+        const taxInput = document.getElementById("id_tax");
         
         const subtotalOutput = document.getElementById("subtotal-output");
         const totalShippingOutput = document.getElementById("total-shipping-output");
@@ -156,25 +154,21 @@
             const discountPercent = parseFloat(discountInput.value) / 100 || 0;
             const shipping = parseFloat(shippingInput.value) || 0;
             let shippingTax = parseFloat(shippingTaxInput.value) / 100 || 0;
-            const taxPercent = parseFloat(taxInput.value) / 100 || 0;  // Tax as percentage from user input
+            const taxPercent = parseFloat(taxInput.value) / 100 || 0;
 
             if (shippingTaxInput.value === "other") {
                 shippingTax = parseFloat(customShippingTaxInput.value) / 100 || 0;
             }
 
-            // Calculate discount amount based on percentage
             const discountAmount = contractValue * discountPercent;
             const subtotal = contractValue - discountAmount;
 
-            // Calculate shipping with tax
             const shippingTaxAmount = shipping * shippingTax;
             const totalShipping = shipping + shippingTaxAmount;
 
-            // Calculate tax based on user input and grand total
             const taxAmount = subtotal * taxPercent;
             const grandTotal = subtotal + totalShipping + taxAmount;
 
-            // Update HTML elements with calculated values
             subtotalOutput.textContent = subtotal.toFixed(2);
             totalShippingOutput.textContent = totalShipping.toFixed(2);
             grandTotalOutput.textContent = grandTotal.toFixed(2);
@@ -185,6 +179,6 @@
         shippingInput.addEventListener("input", calculateTotals);
         shippingTaxInput.addEventListener("change", calculateTotals);
         customShippingTaxInput.addEventListener("input", calculateTotals);
-        taxInput.addEventListener("input", calculateTotals);  // Added listener for tax input
+        taxInput.addEventListener("input", calculateTotals);  
     });
 </script>
