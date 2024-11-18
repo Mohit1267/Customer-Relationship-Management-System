@@ -29,10 +29,12 @@ from users.models import (
     Profile, RegisterUser, Location, AttendanceRecord
 )
 from .models import (
+
     ComposedEmail, MiningData, ContactData, LeadsData, OpportunityData,
     QuotesData, CallingAgent, Schedule_Meeting, Schedule_Calling, DailySalesReport,
     Account, NewPasswords, Task, Contract, Document, agentNotes, projectTemplate,
     Target, Case
+
 )
 from .forms import (
     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
@@ -1383,7 +1385,7 @@ from django.shortcuts import render, redirect
 def DSR(request):
     if request.method == 'POST':
      
-        return redirect('your_view_name')  
+        return redirect('DSR')  
     return render(request, 'sales_tracker/dsr.html')
 
 
@@ -1681,6 +1683,7 @@ def compose_email(request):
         form = ComposeEmailForm(request.POST, request.FILES)
         if form.is_valid():
             email_template_instance = form.cleaned_data.get('template')
+
             related_to = form.cleaned_data.get('related_to')
             from_address = form.cleaned_data.get('from_address')
             to_address = form.cleaned_data.get('to_address')
@@ -1696,6 +1699,7 @@ def compose_email(request):
                 body = form.cleaned_data.get('body') or "No Content"
 
             try:
+                # Construct the email
                 email = EmailMultiAlternatives(
                     subject=subject,
                     body=body,
@@ -1715,7 +1719,9 @@ def compose_email(request):
                 email.send()
 
                 ComposedEmail.objects.create(
+
                     template=email_template_instance,
+
                     related_to=related_to,
                     from_address=from_address,
                     to_address=to_address,
@@ -1729,15 +1735,16 @@ def compose_email(request):
                 )
 
                 messages.success(request, 'Email sent successfully!')
+                return JsonResponse({'status': 'success', 'message': 'Email sent successfully!'})
+
             except Exception as e:
                 print(f"Failed to send email: {e}")
-                messages.error(request, f'Failed to send email: {e}')
-                return JsonResponse({'status': 'failed', 'message': str(e)})
+                return JsonResponse({'status': 'failed', 'message': f'Failed to send email: {e}'})
 
-            return JsonResponse({'status': 'success', 'message': 'Email sent successfully!'})
         else:
-            messages.error(request, 'There was an error composing the email. Please check your input.')
-            return JsonResponse({'status': 'failed', 'message': 'Invalid form data'})
+            # Print form errors for debugging
+            print("Form validation failed with errors:", form.errors)
+            return JsonResponse({'status': 'failed', 'message': 'Invalid form data', 'errors': form.errors})
 
     else:
         form = ComposeEmailForm()
@@ -2495,6 +2502,136 @@ def InvoiceImport(request):
     return render(request, "sales_tracker/InvoiceImport.html")
 
 
+def createInvoices(request):
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+           
+            return redirect('invoice_list')  
+    else:
+        form = InvoiceForm()
+    return render(request, 'sales_tracker/createInvoices.html', {'form': form})
+
+from django.core.mail import EmailMultiAlternatives
+# from django.http import JsonResponse
+# from django.contrib import messages
+# from .models import ComposedEmail, EmailTemplate
+def compose_email(request):
+    if request.method == 'POST':
+        form = ComposeEmailForm(request.POST)
+        if form.is_valid():
+            # Fetch form data
+            email_template_instance = form.cleaned_data.get('template')  # This returns an EmailTemplate object or None
+            related_to = form.cleaned_data.get('related_to')
+            from_address = form.cleaned_data.get('from_address')
+            to_address = form.cleaned_data.get('to_address')
+            cc_address = form.cleaned_data.get('cc_address')
+            bcc_address = form.cleaned_data.get('bcc_address')
+            send_plain_text = form.cleaned_data.get('send_plain_text')
+
+            # If a template is selected, use its subject and body
+            if email_template_instance:
+                subject = email_template_instance.subject
+                body = email_template_instance.body
+            else:
+                subject = form.cleaned_data.get('subject')
+                body = form.cleaned_data.get('body')
+
+            print("______________", subject)
+            print("______________", send_plain_text)
+
+            try:
+                # Send as plain text or HTML email using EmailMultiAlternatives
+                email = EmailMultiAlternatives(
+                    subject=subject,
+                    body=body,
+                    from_email=from_address,
+                    to=[to_address],
+                    cc=cc_address.split(',') if cc_address else [],
+                    bcc=bcc_address.split(',') if bcc_address else []
+                )
+
+                if not send_plain_text:
+                    # If HTML format is selected, attach the body as HTML
+                    email.attach_alternative(body, "text/html")
+
+                # Send the email
+                email.send()
+                print("Email sent successfully!")
+
+                # Save email to the database
+                ComposedEmail.objects.create(
+                    template=email_template_instance,
+                    related_to=related_to,
+                    from_address=from_address,
+                    to_address=to_address,
+                    cc_address=cc_address,
+                    bcc_address=bcc_address,
+                    subject=subject,
+                    body=body,
+                    send_plain_text=send_plain_text,
+                    created_by=request.user,
+                    sent_status=True
+                )
+
+                messages.success(request, 'Email sent successfully!')
+            except Exception as e:
+                print(f"Failed to send email: {e}")
+                messages.error(request, f'Failed to send email: {e}')
+                return JsonResponse({'status': 'failed', 'message': str(e)})
+
+            # Return success response
+            return JsonResponse({'status': 'success', 'message': 'Email sent successfully!'})
+        else:
+            messages.error(request, 'There was an error composing the email. Please check your input.')
+            return JsonResponse({'status': 'failed', 'message': 'Invalid form data'})
+
+    else:
+        form = ComposeEmailForm()
+
+    return render(request, 'sales_tracker/agentemail.html', {'form': form})
+
+
+
+
+
+
+import imaplib
+import email
+from email.header import decode_header
+
+def fetch_emails():
+    # Email server connection
+    imap_host = 'imap.gmail.com'
+    username = 'pushkarpandey200@gmail.com'
+    password = 'nucz syco dqfd dbcv'
+
+    # Connect to the email server
+    mail = imaplib.IMAP4_SSL(imap_host)
+    mail.login(username, password)
+    mail.select('inbox')
+
+    # Search for all emails
+    status, messages = mail.search(None, 'ALL')
+    email_ids = messages[0].split()
+
+    emails = []
+    for email_id in email_ids[-5:]:  # Fetch last 5 emails
+        status, msg_data = mail.fetch(email_id, '(RFC822)')
+        for response_part in msg_data:
+            if isinstance(response_part, tuple):
+                msg = email.message_from_bytes(response_part[1])
+                subject, encoding = decode_header(msg['Subject'])[0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(encoding if encoding else 'utf-8')
+                from_ = msg.get('From')
+                emails.append({'subject': subject, 'from': from_})
+
+    mail.logout()
+    return emails
+
+
+
 def upload_import_file(request):
     if request.method == 'POST':
         form = ImportTemplateForm(request.POST, request.FILES)
@@ -2507,6 +2644,59 @@ def upload_import_file(request):
 
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
+
+
+from django.shortcuts import render
+from .forms import SurveyForm
+from django.contrib import messages
+
+def createSurvey(request):
+    if request.method == 'POST':
+        form = SurveyForm(request.POST)
+        if form.is_valid():
+            # Process form data (for now, we just display a success message)
+            messages.success(request, "Task created successfully!")
+            form = TaskForm()  # Reset the form after submission
+        else:
+            messages.error(request, "There was an error with your submission.")
+    else:
+        form = TaskForm()
+
+    return render(request, 'sales_tracker/createSurvey.html', {'form': form})
+
+
+def viewSurveys(request):
+    return render(request, "sales_tracker/viewSurveys.html")
+
+from django.shortcuts import render, redirect
+from .forms import KnowledgeBaseForm
+from django.contrib import messages
+
+def KnowledgeBase(request):
+    if request.method == 'POST':
+        form = KnowledgeBaseForm(request.POST)
+        if form.is_valid():
+            # Process form data here
+            # For demonstration, let's print the data (in real usage, save it or use it as needed)
+            print("Title:", form.cleaned_data['title'])
+            print("Status:", form.cleaned_data['status'])
+            print("Revision:", form.cleaned_data['revision'])
+            print("Body:", form.cleaned_data['body'])
+            print("Resolution:", form.cleaned_data['resolution'])
+            print("Date Created:", form.cleaned_data['date_created'])
+            print("Date Modified:", form.cleaned_data['date_modified'])
+            print("Author:", form.cleaned_data['author'])
+            print("Approver:", form.cleaned_data['approver'])
+
+            # Show a success message
+            messages.success(request, "Note created successfully!")
+
+            # Redirect to another page or reload the same form (for demo, we reload the same form)
+            return redirect('create_note')  # Replace 'create_note' with the name of your URL pattern
+    else:
+        form = KnowledgeBaseForm()
+
+    return render(request, 'sales_tracker/createKnowledgeBase.html', {'form': form})
 
 # class DataView(ListView):
 #     template_name = "sales_tracker/data.html"

@@ -83,6 +83,12 @@
             <h3>New Message</h3>
             <form method="post" action="{% url 'agentemail' %}">
                 {% csrf_token %}
+                
+                <label for="email_template">Email Template:</label>
+                <input type="text" id="email_template" name="email_template">
+
+                <label for="related_to">Related To:</label>
+                <input type="text" id="related_to" name="related_to">
 
                 <label for="email_template">Email Template:</label>
                 <input type="text" id="email_template" name="email_template">

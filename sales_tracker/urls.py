@@ -96,9 +96,15 @@ urlpatterns = [
     path('createCase/', views.add_case, name='createCase'),
     path('viewCase/', views.view_cases, name='viewCase'),
     path("InvoiceImport", login_required((views.InvoiceImport)), name="InvoiceImport"),
+    path('send-email-endpoint/', views.compose_email, name='send_email_endpoint'),
+
     path('agentemail', views.compose_email, name='agentemail'),
     path('inbox/', views.view_inbox, name='inbox/'),
     path('sent-emails/', views.view_sent_emails, name='sent-emails/'),
+    path('createSurvey', views.createSurvey, name='createSurvey'),
+    path('viewSurveys', views.viewSurveys, name='viewSurveys'),
+    path('createKnowledgeBase', views.KnowledgeBase, name='createKnowledgeBase'),
+
 
 
     # path("view_contact", login_required(views.ViewScheduledMeeting), name='view_contact'),  

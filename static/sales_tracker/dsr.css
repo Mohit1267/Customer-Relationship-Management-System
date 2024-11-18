@@ -11,7 +11,8 @@ body {
 }
 
 .containers {
-  margin: 20px auto;
+  /* margin: 20px auto; */
+
   width: 100%;
   padding: 20px;
   background-color: #E0EAF6;
@@ -47,6 +48,7 @@ h1 {
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  width: 100%;
 }
 
 table {

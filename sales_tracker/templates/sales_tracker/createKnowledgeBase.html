@@ -1,0 +1,86 @@
+{% extends "innerbase_copy.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/createTask.css' %}">
+{% endblock %}
+
+{% block title %}New Knowledge Base Entry{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="row mt-2 mb-2">
+            <div class="col-12 text-center moving_title" style="color: white;">
+                Create Knowledge Base Entry
+            </div>
+        </div>
+        
+        <hr>
+        
+        <div class="row mb-2">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="button1 mx-2">Save</button>
+                <button type="button" class="button2">Cancel</button>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 pb-5 px-4" style="color: rgb(15, 14, 14);">
+                <!-- Title Field -->
+                <div class="form-group mb-5">
+                    {{ form.title|as_crispy_field }}
+                </div>
+
+                <!-- Status Field -->
+                <div class="form-group mb-5">
+                    {{ form.status|as_crispy_field }}
+                </div>
+
+                <!-- Revision Field -->
+                <div class="form-group mb-5">
+                    {{ form.revision|as_crispy_field }}
+                </div>
+
+                <!-- Body Field -->
+                <div class="form-group mb-5">
+                    {{ form.body|as_crispy_field }}
+                </div>
+                
+                <!-- Resolution Field -->
+                <div class="form-group mb-5">
+                    {{ form.resolution|as_crispy_field }}
+                </div>
+            </div>
+      
+            <div class="col-md-6 pt-5 px-4" style="color:rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
+                <!-- Date Created Field -->
+                <div class="form-group mb-5">
+                    {{ form.date_created|as_crispy_field }}
+                </div>
+
+                <!-- Date Modified Field -->
+                <div class="form-group mb-5">
+                    {{ form.date_modified|as_crispy_field }}
+                </div>
+
+                <!-- Author Field -->
+                <div class="form-group mb-5">
+                    {{ form.author|as_crispy_field }}
+                </div>
+
+                <!-- Approver Field -->
+                <div class="form-group mb-5">
+                    {{ form.approver|as_crispy_field }}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block javascript %}{% endblock %}

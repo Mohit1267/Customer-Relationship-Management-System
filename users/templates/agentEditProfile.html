@@ -1,0 +1,277 @@
+{% extends "innerbase_copy.html" %}
+{% load static %}
+
+<!-- <link rel="stylesheet" href="{% static 'sales_tracker/Agentprofile_Edit.css' %}"> -->
+
+{% block css_link %}
+
+<style>
+    /* General reset and styling */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto', sans-serif;
+    }
+
+
+    .container {
+        width: 95%;
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 16px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .btn:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+    }
+
+    .img-area {
+        height: 250px;
+        width: 100%;
+        background-color: #f1f1f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        position: relative;
+        margin: 20px 0;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .img-area:hover {
+        background-color: #e9ecef;
+    }
+
+    .img-area i {
+        font-size: 48px;
+        color: #6c757d;
+    }
+
+    .img-area img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+
+    .img-area h3, .img-area p {
+        color: #6c757d;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .badge {
+        background-color: #6c757d;
+        color: white;
+        padding: 6px 15px;
+        border-radius: 50px;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+
+    .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #007bff;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .form-check {
+        margin-bottom: 10px;
+    }
+
+    .form-check input {
+        margin-right: 10px;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card">
+        <div class="text-center">
+            <h2 class="section-title">Profile Settings</h2>
+            <input type="file" id="file" accept="image/*" hidden>
+            <div class="img-area" data-img="">
+                <i class='bx bxs-cloud-upload icon'></i>
+                
+            </div>
+            <button class="btn select-image">Select Image</button>
+        </div>
+
+        <div class="text-center mt-4">
+            <h4>Gannu Kr</h4>
+            <p>@Gannu.m</p>
+            <small>Last seen 2 hours ago</small>
+        </div>
+
+        <div class="text-right">
+            <span class="badge">administrator</span>
+        </div>
+
+        <div class="section-title">Personal Information</div>
+        <form class="form">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input class="form-control" type="text" name="name" placeholder="mick" value="mick kr">
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input class="form-control" type="text" name="username" placeholder="mick.s" value="mick.s">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" type="email" placeholder="mick@example.com">
+            </div>
+            <div class="form-group">
+                <label>About</label>
+                <textarea class="form-control" rows="5" placeholder="My Bio">Lorem ipsum dolor sit amet.</textarea>
+            </div>
+
+            <div class="section-title">Change Password</div>
+            <div class="form-group">
+                <label>Current Password</label>
+                <input class="form-control" type="password" placeholder="••••••">
+            </div>
+            <div class="form-group">
+                <label>New Password</label>
+                <input class="form-control" type="password" placeholder="••••••">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input class="form-control" type="password" placeholder="••••••">
+            </div>
+
+            <div class="section-title">Notifications</div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="notifications-blog" checked>
+                <label class="form-check-label" for="notifications-blog">Blog posts</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="notifications-news" checked>
+                <label class="form-check-label" for="notifications-news">Newsletter</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="notifications-offers" checked>
+                <label class="form-check-label" for="notifications-offers">Personal Offers</label>
+            </div>
+
+            <button class="btn" type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <div class="card text-center">
+        <h6>Support</h6>
+        <p>Get fast, free help from our friendly assistants.</p>
+        <button class="btn">Contact Us</button>
+    </div>
+</div>
+
+<script>
+    const selectImage = document.querySelector('.select-image');
+    const inputFile = document.querySelector('#file');
+    const imgArea = document.querySelector('.img-area');
+
+    selectImage.addEventListener('click', function () { 
+        inputFile.click();
+    });
+    
+    inputFile.addEventListener('change', function () {
+        const image = this.files[0];
+        if (image.size < 2000000) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const allImg = imgArea.querySelectorAll('img');
+                allImg.forEach(item => item.remove());
+                const imgUrl = reader.result;
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                imgArea.appendChild(img);
+                imgArea.classList.add('active');
+                imgArea.dataset.img = image.name;
+            }
+            reader.readAsDataURL(image);
+        } else {
+            alert("Image size more than 2MB");
+        }
+    });
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+{% block javascript %}
+
+{% endblock %}
