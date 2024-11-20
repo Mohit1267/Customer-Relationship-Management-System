@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/createTask.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/createSurvey.css' %}">
 {% endblock %}
 
 {% block title %}New Survey{% endblock %}
@@ -16,51 +16,38 @@
 
         <div class="row mt-2 mb-2">
             <div class="col-12 text-center moving_title" style="color: white;">
-                Create New Survey
+                Create Survey
             </div>
         </div>
 
         <hr>
-        <div class="row mt-4 mb-2">
+
+        <div class="row mb-2">
             <div class="col-12 d-flex justify-content-end">
-                <button type="submit" class="btn btn-success mx-2">Submit</button>
-                <button type="button" class="btn btn-danger">Cancel</button>
+                <button type="submit" class="button1 mx-2">Submit</button>
+                <button type="button" class="button2" onclick="window.history.back()">Cancel</button>
             </div>
         </div>
+
         <div class="row">
-            <!-- Left column -->
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="name">Name:</label>
-                    {{ form.subject|as_crispy_field }}
+           
+            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+                <div class="form-group mb-5">
+                    {{ form.name|as_crispy_field }}
                 </div>
-                <div class="form-group mb-3">
-                    <label for="status">Status:</label>
+
+                <div class="form-group mb-5">
                     {{ form.status|as_crispy_field }}
                 </div>
-                <div class="form-group mb-3">
-                    <label for="description">Description:</label>
+
+                <div class="form-group mb-5">
+                    {{ form.assigned_to|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-5">
                     {{ form.description|as_crispy_field }}
                 </div>
-            </div>
 
-            <!-- Right column -->
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="assigned_to">Assigned To:</label>
-                    {{ form.contacts|as_crispy_field }}
-                </div>
-                <div class="form-group mb-3">
-                    <!-- <label for="related_to">Related To:</label> -->
-                    {{ form.related_to|as_crispy_field }}
-                </div>
-            </div>
-        </div>
-
-        <!-- Questions section -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <h5>Questions:</h5>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -71,76 +58,59 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="questions-container"> <!-- Updated to add ID for targeting -->
+                        <tbody id="questions-container">
+                         
+                            {% for question in form.questions.value %}
                             <tr>
-                                <td>Q1</td>
-                                <td><input type="text" name="question1_text" class="form-control"></td>
+                                <td>Q{{ forloop.counter }}</td>
                                 <td>
-                                    <select name="question1_type" class="form-control">
-                                        <option value="text">Text</option>
-                                        <option value="multiple_choice">Multiple Choice</option>
+                                    <input type="text" name="question{{ forloop.counter }}_text"
+                                           value="{{ question.text }}" class="form-control">
+                                </td>
+                                <td>
+                                    <select name="question{{ forloop.counter }}_type" class="form-control">
+                                        <option value="text" {% if question.type == "text" %}selected{% endif %}>Text</option>
+                                        <option value="multiple_choice" {% if question.type == "multiple_choice" %}selected{% endif %}>
+                                            Multiple Choice
+                                        </option>
                                     </select>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-secondary">▲</button>
-                                    <button type="button" class="btn btn-secondary">▼</button>
-                                    <button type="button" class="btn btn-secondary">✖</button>
+                                    <button type="button" onclick="moveUp(this)" class="btn btn-light">▲</button>
+                                    <button type="button" onclick="moveDown(this)" class="btn btn-light">▼</button>
+                                    <button type="button" onclick="deleteRow(this)" class="btn btn-danger">✖</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Q2</td>
-                                <td><input type="text" name="question2_text" class="form-control"></td>
-                                <td>
-                                    <select name="question2_type" class="form-control">
-                                        <option value="text">Text</option>
-                                        <option value="multiple_choice">Multiple Choice</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary">▲</button>
-                                    <button type="button" class="btn btn-secondary">▼</button>
-                                    <button type="button" class="btn btn-secondary">✖</button>
-                                </td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
-                    <!-- Corrected the onclick attribute -->
                     <button type="button" class="btn btn-secondary" id="new-question-button">New Question</button>
                 </div>
             </div>
-        </div>
 
-        <!-- Other Text Fields Section -->
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="submit_text">Submit Text:</label>
-                    <input type="text" name="submit_text" class="form-control" value="Submit">
+            <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+                <div class="form-group mb-5">
+                    {{ form.submit_text|as_crispy_field }}
                 </div>
-                <div class="form-group mb-3">
-                    <label for="satisfied_text">Satisfied Text:</label>
-                    <input type="text" name="satisfied_text" class="form-control" value="Satisfied">
+
+                <div class="form-group mb-5">
+                    {{ form.satisfied_text|as_crispy_field }}
                 </div>
-            </div>
-            <div class="col-md-6">
+
                 <div class="form-group mb-3">
-                    <label for="neither_text">Neither Text:</label>
-                    <input type="text" name="neither_text" class="form-control" value="Neither Satisfied nor Dissatisfied">
+                    {{ form.neither_text|as_crispy_field }}
                 </div>
+
                 <div class="form-group mb-3">
-                    <label for="dissatisfied_text">Dissatisfied Text:</label>
-                    <input type="text" name="dissatisfied_text" class="form-control" value="Dissatisfied">
+                    {{ form.dissatisfied_text|as_crispy_field }}
                 </div>
             </div>
         </div>
-
-        <!-- Submit and Cancel buttons -->
-        
     </form>
 </div>
 
 <script>
-    let questionCount = 1;  // Starting count based on initial questions Q1 and Q2
+    let questionCount = {{ form.questions.value|length }};
 
     document.getElementById('new-question-button').addEventListener('click', function () {
         addNewQuestion();
@@ -148,7 +118,7 @@
 
     function addNewQuestion() {
         questionCount++;
-        
+
         const questionsContainer = document.getElementById('questions-container');
         const newRow = document.createElement('tr');
         newRow.innerHTML = `

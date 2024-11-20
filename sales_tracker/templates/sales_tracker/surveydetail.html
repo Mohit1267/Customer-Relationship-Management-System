@@ -1,0 +1,68 @@
+{% extends "innerbase_copy.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/createSurvey.css' %}">
+{% endblock %}
+
+{% block title %}Survey Detail{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Survey Title -->
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <h2>{{ survey.name }} Details</h2>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Survey Details -->
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <p><strong>Status:</strong> {{ survey.get_status_display }}</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Assigned To:</strong> {{ survey.assigned_to }}</p>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <p><strong>Description:</strong> {{ survey.description }}</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Satisfaction Texts -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <h3>Satisfaction Texts</h3>
+            <ul>
+                <li><strong>Submit Text:</strong> {{ survey.submit_text }}</li>
+                <li><strong>Satisfied Text:</strong> {{ survey.satisfied_text }}</li>
+                <li><strong>Neither Text:</strong> {{ survey.neither_text }}</li>
+                <li><strong>Dissatisfied Text:</strong> {{ survey.dissatisfied_text }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Questions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <h3>Questions</h3>
+            <ul>
+                {% for question in survey.questions %}
+                <li><strong>{{ question.text }}</strong> ({{ question.type }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

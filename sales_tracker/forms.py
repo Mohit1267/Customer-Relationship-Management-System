@@ -1285,31 +1285,69 @@ class ManualTimeForm(forms.Form):
             raise forms.ValidationError("End time must be after start time.")
         return end_time
 
+
+
 from django import forms
 
 class SurveyForm(forms.Form):
-    subject = forms.CharField(label="Task Subject", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    start_date = forms.DateField(label="Start Date", widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
-    due_date = forms.DateField(label="Due Date", widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
-    
-    PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High'),
-    ]
-    priority = forms.ChoiceField(label="Priority", choices=PRIORITY_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-    
-    description = forms.CharField(label="Description", widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=False)
-    
+    # Static fields for the survey
+    name = forms.CharField(max_length=200, label="Survey Name")
     STATUS_CHOICES = [
+        ('------', '------'),
         ('draft', 'Draft'),
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
+        ('public', 'Public '),
+        ('closed', 'Closed'),
     ]
-    status = forms.ChoiceField(label="Status", choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-    
-    related_to = forms.CharField(label="Related To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
-    contacts = forms.CharField(label="Assigned To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+    status = forms.ChoiceField(choices=STATUS_CHOICES, label="Status")
+    assigned_to = forms.CharField(max_length=100, label="Assigned To")  # For simplicity, using CharField here
+    description = forms.CharField(widget=forms.Textarea, required=False, label="Description")
+
+    # Satisfaction texts
+    submit_text = forms.CharField(max_length=100, required=False, initial="Submit", label="Submit Text")
+    satisfied_text = forms.CharField(max_length=100, required=False, initial="Satisfied", label="Satisfied Text")
+    neither_text = forms.CharField(max_length=100, required=False, initial="Neither Satisfied nor Dissatisfied", label="Neither Text")
+    dissatisfied_text = forms.CharField(max_length=100, required=False, initial="Dissatisfied", label="Dissatisfied Text")
+
+    # Dynamic questions fields (they will be added dynamically in views)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Initialize dynamic question fields if the form contains dynamic data
+        question_count = 1
+        while True:
+            # Check if question data exists in the form submission
+            question_text_field = f'question{question_count}_text'
+            question_type_field = f'question{question_count}_type'
+
+            if question_text_field in self.data and question_type_field in self.data:
+                self.fields[question_text_field] = forms.CharField(max_length=255, label=f"Question {question_count} Text")
+                self.fields[question_type_field] = forms.ChoiceField(
+                    choices=[('text', 'Text'), ('multiple_choice', 'Multiple Choice')],
+                    label=f"Question {question_count} Type"
+                )
+                question_count += 1
+            else:
+                break
+
+    def clean(self):
+        cleaned_data = super().clean()
+        questions = []
+        
+        # Process the dynamic questions and add them to the cleaned data
+        for question_count in range(1, len(self.fields) // 2 + 1):  # Fields are added in pairs of question text and type
+            question_text = cleaned_data.get(f'question{question_count}_text')
+            question_type = cleaned_data.get(f'question{question_count}_type')
+
+            if question_text and question_type:
+                questions.append({
+                    'text': question_text,
+                    'type': question_type
+                })
+
+        cleaned_data['questions'] = questions
+        return cleaned_data
+
+
 
 from django import forms
 
@@ -1370,3 +1408,28 @@ class KnowledgeBaseForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
+# from django import forms
+
+# class SurveyForm(forms.Form):
+#     subject = forms.CharField(label="Task Subject", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+#     start_date = forms.DateField(label="Start Date", widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+#     due_date = forms.DateField(label="Due Date", widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+    
+#     PRIORITY_CHOICES = [
+#         ('low', 'Low'),
+#         ('medium', 'Medium'),
+#         ('high', 'High'),
+#     ]
+#     priority = forms.ChoiceField(label="Priority", choices=PRIORITY_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    
+#     description = forms.CharField(label="Description", widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=False)
+    
+#     STATUS_CHOICES = [
+#         ('draft', 'Draft'),
+#         ('in_progress', 'In Progress'),
+#         ('completed', 'Completed'),
+#     ]
+#     status = forms.ChoiceField(label="Status", choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    
+#     related_to = forms.CharField(label="Related To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+#     contacts = forms.CharField(label="Assigned To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
