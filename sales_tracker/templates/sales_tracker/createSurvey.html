@@ -1,0 +1,163 @@
+{% extends "innerbase_copy.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/createSurvey.css' %}">
+{% endblock %}
+
+{% block title %}New Survey{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="row mt-2 mb-2">
+            <div class="col-12 text-center moving_title" style="color: white;">
+                Create Survey
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row mb-2">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="button1 mx-2">Submit</button>
+                <button type="button" class="button2" onclick="window.history.back()">Cancel</button>
+            </div>
+        </div>
+
+        <div class="row">
+           
+            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+                <div class="form-group mb-5">
+                    {{ form.name|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-5">
+                    {{ form.status|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-5">
+                    {{ form.assigned_to|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-5">
+                    {{ form.description|as_crispy_field }}
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Text</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="questions-container">
+                         
+                            {% for question in form.questions.value %}
+                            <tr>
+                                <td>Q{{ forloop.counter }}</td>
+                                <td>
+                                    <input type="text" name="question{{ forloop.counter }}_text"
+                                           value="{{ question.text }}" class="form-control">
+                                </td>
+                                <td>
+                                    <select name="question{{ forloop.counter }}_type" class="form-control">
+                                        <option value="text" {% if question.type == "text" %}selected{% endif %}>Text</option>
+                                        <option value="multiple_choice" {% if question.type == "multiple_choice" %}selected{% endif %}>
+                                            Multiple Choice
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="button" onclick="moveUp(this)" class="btn btn-light">▲</button>
+                                    <button type="button" onclick="moveDown(this)" class="btn btn-light">▼</button>
+                                    <button type="button" onclick="deleteRow(this)" class="btn btn-danger">✖</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-secondary" id="new-question-button">New Question</button>
+                </div>
+            </div>
+
+            <div class="col-md-6 pt-5 px-4" style="color: rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14);">
+                <div class="form-group mb-5">
+                    {{ form.submit_text|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-5">
+                    {{ form.satisfied_text|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form.neither_text|as_crispy_field }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form.dissatisfied_text|as_crispy_field }}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    let questionCount = {{ form.questions.value|length }};
+
+    document.getElementById('new-question-button').addEventListener('click', function () {
+        addNewQuestion();
+    });
+
+    function addNewQuestion() {
+        questionCount++;
+
+        const questionsContainer = document.getElementById('questions-container');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>Q${questionCount}</td>
+            <td><input type="text" name="question${questionCount}_text" class="form-control"></td>
+            <td>
+                <select name="question${questionCount}_type" class="form-control">
+                    <option value="text">Text</option>
+                    <option value="multiple_choice">Multiple Choice</option>
+                </select>
+            </td>
+            <td>
+                <button type="button" onclick="moveUp(this)" class="btn btn-light">▲</button>
+                <button type="button" onclick="moveDown(this)" class="btn btn-light">▼</button>
+                <button type="button" onclick="deleteRow(this)" class="btn btn-danger">✖</button>
+            </td>
+        `;
+        questionsContainer.appendChild(newRow);
+    }
+
+    function moveUp(button) {
+        const row = button.closest('tr');
+        const prevRow = row.previousElementSibling;
+        if (prevRow) {
+            row.parentNode.insertBefore(row, prevRow);
+        }
+    }
+
+    function moveDown(button) {
+        const row = button.closest('tr');
+        const nextRow = row.nextElementSibling;
+        if (nextRow) {
+            row.parentNode.insertBefore(nextRow, row);
+        }
+    }
+
+    function deleteRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+    }
+</script>
+{% endblock %}

@@ -444,3 +444,6 @@ from django.shortcuts import render
 def device_list(request):
     devices = UserActivity.objects.all()
     return render(request, 'device_list.html', {'devices': devices})
+
+def agentEditProfile(request):
+    return render(request, 'agentEditProfile.html')

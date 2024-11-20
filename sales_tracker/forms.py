@@ -696,10 +696,12 @@ class InvoiceForm(forms.Form):
 class ComposeEmailForm(forms.Form):
     template = forms.ModelChoiceField(
         queryset=EmailTemplate.objects.all(),
+
         required=False,
-        empty_label="Select an email template",
         label="Email Template",
+
         widget=forms.Select(attrs={'class': 'form-control'})
+
     )
 
     related_to = forms.ChoiceField(
@@ -738,13 +740,13 @@ class ComposeEmailForm(forms.Form):
 
     cc_address = forms.CharField(
         required=False,
-        label="CC",
+        label="Cc",
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
     bcc_address = forms.CharField(
         required=False,
-        label="BCC",
+        label="Bcc",
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
@@ -763,7 +765,7 @@ class ComposeEmailForm(forms.Form):
 
     send_plain_text = forms.BooleanField(
         required=False,
-        label="Send in Plain Text",
+        label="Send as Plain Text",
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
     )
 
@@ -773,6 +775,7 @@ class ComposeEmailForm(forms.Form):
         required=False,
         label="Attachments"
     )
+
 
 
 
@@ -1283,3 +1286,150 @@ class ManualTimeForm(forms.Form):
         return end_time
 
 
+
+from django import forms
+
+class SurveyForm(forms.Form):
+    # Static fields for the survey
+    name = forms.CharField(max_length=200, label="Survey Name")
+    STATUS_CHOICES = [
+        ('------', '------'),
+        ('draft', 'Draft'),
+        ('public', 'Public '),
+        ('closed', 'Closed'),
+    ]
+    status = forms.ChoiceField(choices=STATUS_CHOICES, label="Status")
+    assigned_to = forms.CharField(max_length=100, label="Assigned To")  # For simplicity, using CharField here
+    description = forms.CharField(widget=forms.Textarea, required=False, label="Description")
+
+    # Satisfaction texts
+    submit_text = forms.CharField(max_length=100, required=False, initial="Submit", label="Submit Text")
+    satisfied_text = forms.CharField(max_length=100, required=False, initial="Satisfied", label="Satisfied Text")
+    neither_text = forms.CharField(max_length=100, required=False, initial="Neither Satisfied nor Dissatisfied", label="Neither Text")
+    dissatisfied_text = forms.CharField(max_length=100, required=False, initial="Dissatisfied", label="Dissatisfied Text")
+
+    # Dynamic questions fields (they will be added dynamically in views)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Initialize dynamic question fields if the form contains dynamic data
+        question_count = 1
+        while True:
+            # Check if question data exists in the form submission
+            question_text_field = f'question{question_count}_text'
+            question_type_field = f'question{question_count}_type'
+
+            if question_text_field in self.data and question_type_field in self.data:
+                self.fields[question_text_field] = forms.CharField(max_length=255, label=f"Question {question_count} Text")
+                self.fields[question_type_field] = forms.ChoiceField(
+                    choices=[('text', 'Text'), ('multiple_choice', 'Multiple Choice')],
+                    label=f"Question {question_count} Type"
+                )
+                question_count += 1
+            else:
+                break
+
+    def clean(self):
+        cleaned_data = super().clean()
+        questions = []
+        
+        # Process the dynamic questions and add them to the cleaned data
+        for question_count in range(1, len(self.fields) // 2 + 1):  # Fields are added in pairs of question text and type
+            question_text = cleaned_data.get(f'question{question_count}_text')
+            question_type = cleaned_data.get(f'question{question_count}_type')
+
+            if question_text and question_type:
+                questions.append({
+                    'text': question_text,
+                    'type': question_type
+                })
+
+        cleaned_data['questions'] = questions
+        return cleaned_data
+
+
+
+from django import forms
+
+from django import forms
+
+from ckeditor.widgets import CKEditorWidget
+
+class KnowledgeBaseForm(forms.Form):
+    title = forms.CharField(
+        label="Title",
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter title'})
+    )
+    
+    status = forms.ChoiceField(
+        label="Status",
+        choices=[('Draft', 'Draft'), ('Published', 'Published')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    revision = forms.CharField(
+        label="Revision",
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter revision number'})
+    )
+
+    body = forms.CharField(
+        label="Body",
+        widget=CKEditorWidget(attrs={'class': 'form-control', 'placeholder': 'Enter body content'})
+    )
+
+    resolution = forms.CharField(
+        label="Resolution",
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter resolution details', 'rows': 5})
+    )
+
+    date_created = forms.DateTimeField(
+        label="Date Created",
+        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'yyyy-mm-dd hh:mm'})
+    )
+
+    date_modified = forms.DateTimeField(
+        label="Date Modified",
+        required=False,
+        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'yyyy-mm-dd hh:mm'})
+    )
+
+    author = forms.ChoiceField(
+        label="Author",
+        choices=[('', 'Select an item'), ('Author1', 'Author 1'), ('Author2', 'Author 2')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    approver = forms.ChoiceField(
+        label="Approver",
+        choices=[('', 'Select an item'), ('Approver1', 'Approver 1'), ('Approver2', 'Approver 2')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+# from django import forms
+
+# class SurveyForm(forms.Form):
+#     subject = forms.CharField(label="Task Subject", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+#     start_date = forms.DateField(label="Start Date", widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+#     due_date = forms.DateField(label="Due Date", widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+    
+#     PRIORITY_CHOICES = [
+#         ('low', 'Low'),
+#         ('medium', 'Medium'),
+#         ('high', 'High'),
+#     ]
+#     priority = forms.ChoiceField(label="Priority", choices=PRIORITY_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    
+#     description = forms.CharField(label="Description", widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=False)
+    
+#     STATUS_CHOICES = [
+#         ('draft', 'Draft'),
+#         ('in_progress', 'In Progress'),
+#         ('completed', 'Completed'),
+#     ]
+#     status = forms.ChoiceField(label="Status", choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    
+#     related_to = forms.CharField(label="Related To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+#     contacts = forms.CharField(label="Assigned To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)

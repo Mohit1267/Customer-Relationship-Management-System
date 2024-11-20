@@ -33,20 +33,18 @@
                 </li>
                 <li>
                     <a href="{% url 'sent-emails/' %}">
-                        <button><i class="as fa-paper-plane"></i> Sent</button>
+                        <button><i class="fas fa-paper-plane"></i> Sent</button>
                     </a>
                 </li>
-                
             </ul>
         </div>
     </div>
 
     <div class="main-content">
-
         <div class="header">
-            <input type="text" placeholder="Search mail">
+            <input type="text" id="searchInput" placeholder="Search mail">
             <div class="icons">
-                <button>🔍</button>
+                <button onclick="searchEmails()">🔍</button>
             </div>
         </div>
 
@@ -87,8 +85,8 @@
                 <label for="email_template">Email Template:</label>
                 <input type="text" id="email_template" name="email_template">
 
-                <label for="id_related_to">Related To:</label>
-                {{ form.related_to }}
+                <label for="related_to">Related To:</label>
+                <input type="text" id="related_to" name="related_to">
 
                 <div class="to-field">
                     <label for="from_address">From:</label>
@@ -122,10 +120,6 @@
                     <input type="checkbox" id="send_plain_text" name="send_plain_text">
                 </div>
 
-                <input type="hidden" name="sent_status" value="false">
-                <input type="hidden" name="created_by" value="{{ user.id }}">
-                <input type="hidden" name="created_at" value="{{ now }}">
-
                 <div class="footer">
                     <button type="submit" class="send-button">Send</button>
                 </div>
@@ -136,6 +130,29 @@
 </div>
 
 <script>
+    function searchEmails() {
+        const searchValue = document.getElementById('searchInput').value.toLowerCase();
+        const inboxEmails = document.querySelectorAll('#inbox .email-item');
+        const sentEmails = document.querySelectorAll('#sent .email-item');
+
+        function filterEmails(emailItems) {
+            emailItems.forEach(email => {
+                const sender = email.querySelector('h5').innerText.toLowerCase();
+                const subject = email.querySelector('.email-preview').innerText.toLowerCase();
+                
+                if (sender.includes(searchValue) || subject.includes(searchValue)) {
+                    email.style.display = 'block';
+                } else {
+                    email.style.display = 'none';
+                }
+            });
+        }
+
+        // Apply the filtering to both inbox and sent emails
+        filterEmails(inboxEmails);
+        filterEmails(sentEmails);
+    }
+
     function showSection(sectionId) {
         document.querySelectorAll('.email-list').forEach((section) => {
             section.classList.remove('active');

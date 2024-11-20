@@ -29,13 +29,15 @@ from users.models import (
     Profile, RegisterUser, Location, AttendanceRecord
 )
 from .models import (
+
     ComposedEmail, MiningData, ContactData, LeadsData, OpportunityData,
     QuotesData, CallingAgent, Schedule_Meeting, Schedule_Calling, DailySalesReport,
     Account, NewPasswords, Task, Contract, Document, agentNotes, projectTemplate,
     Target, Case
+
 )
 from .forms import (
-    MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
+     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
     AgentProjectsForm, ContractForm, SortForm, CaseForm, ManualTimeForm, ProjectTemplateForm,
@@ -1383,7 +1385,7 @@ from django.shortcuts import render, redirect
 def DSR(request):
     if request.method == 'POST':
      
-        return redirect('your_view_name')  
+        return redirect('DSR')  
     return render(request, 'sales_tracker/dsr.html')
 
 
@@ -1681,6 +1683,7 @@ def compose_email(request):
         form = ComposeEmailForm(request.POST, request.FILES)
         if form.is_valid():
             email_template_instance = form.cleaned_data.get('template')
+
             related_to = form.cleaned_data.get('related_to')
             from_address = form.cleaned_data.get('from_address')
             to_address = form.cleaned_data.get('to_address')
@@ -1696,6 +1699,7 @@ def compose_email(request):
                 body = form.cleaned_data.get('body') or "No Content"
 
             try:
+                # Construct the email
                 email = EmailMultiAlternatives(
                     subject=subject,
                     body=body,
@@ -1715,7 +1719,9 @@ def compose_email(request):
                 email.send()
 
                 ComposedEmail.objects.create(
+
                     template=email_template_instance,
+
                     related_to=related_to,
                     from_address=from_address,
                     to_address=to_address,
@@ -1729,15 +1735,16 @@ def compose_email(request):
                 )
 
                 messages.success(request, 'Email sent successfully!')
+                return JsonResponse({'status': 'success', 'message': 'Email sent successfully!'})
+
             except Exception as e:
                 print(f"Failed to send email: {e}")
-                messages.error(request, f'Failed to send email: {e}')
-                return JsonResponse({'status': 'failed', 'message': str(e)})
+                return JsonResponse({'status': 'failed', 'message': f'Failed to send email: {e}'})
 
-            return JsonResponse({'status': 'success', 'message': 'Email sent successfully!'})
         else:
-            messages.error(request, 'There was an error composing the email. Please check your input.')
-            return JsonResponse({'status': 'failed', 'message': 'Invalid form data'})
+            # Print form errors for debugging
+            print("Form validation failed with errors:", form.errors)
+            return JsonResponse({'status': 'failed', 'message': 'Invalid form data', 'errors': form.errors})
 
     else:
         form = ComposeEmailForm()
@@ -1988,7 +1995,7 @@ def agentTemplate(request):
     On GET, it displays an empty form for the user to fill out.
     """
     if request.method == 'POST':
-        form = agentTemplate(request.POST)
+        form = ProjectTemplateForm(request.POST)
         if form.is_valid():
  
             template_name = form.cleaned_data.get('template_name')
@@ -2004,9 +2011,10 @@ def agentTemplate(request):
         else:
             messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
     else:
-        form = agentTemplate() 
+        form = ProjectTemplateForm() 
 
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+
 
 def ViewTemplate(request):
     return render(request, "sales_tracker/viewTemplate.html")
@@ -2337,21 +2345,21 @@ def agentTemplate(request):
 
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})'''
 
-def create_project_template(request):
-    if request.method == 'POST':
-        form = ProjectTemplateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('sales_tracker/agentTemplate.html')  
-    else:
-        form = ProjectTemplateForm()
+# def create_project_template(request):
+#     if request.method == 'POST':
+#         form = ProjectTemplateForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('sales_tracker/agentTemplate.html')  
+#     else:
+#         form = ProjectTemplateForm()
     
-    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+#     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
 
 
 def projectTemplate(request):
     if request.method == 'POST':
-        form = projectTemplate(request.POST)
+        form = AgentProjectsForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('view_templates')  
@@ -2495,6 +2503,127 @@ def InvoiceImport(request):
     return render(request, "sales_tracker/InvoiceImport.html")
 
 
+def createInvoices(request):
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+           
+            return redirect('invoice_list')  
+    else:
+        form = InvoiceForm()
+    return render(request, 'sales_tracker/createInvoices.html', {'form': form})
+
+from django.core.mail import EmailMultiAlternatives
+# from django.http import JsonResponse
+# from django.contrib import messages
+# from .models import ComposedEmail, EmailTemplate
+def compose_email(request):
+    if request.method == 'POST':
+        form = ComposeEmailForm(request.POST)
+        if form.is_valid():
+         
+            email_template_instance = form.cleaned_data.get('template')
+            related_to = form.cleaned_data.get('related_to')
+            from_address = form.cleaned_data.get('from_address')
+            to_address = form.cleaned_data.get('to_address')
+            cc_address = form.cleaned_data.get('cc_address')
+            bcc_address = form.cleaned_data.get('bcc_address')
+            send_plain_text = form.cleaned_data.get('send_plain_text')
+
+            # If a template is selected, use its subject and body
+            if email_template_instance:
+                subject = email_template_instance.subject
+                body = email_template_instance.body
+            else:
+                subject = form.cleaned_data.get('subject')
+                body = form.cleaned_data.get('body')
+
+            print("______________", subject)
+            print("______________", send_plain_text)
+
+            try:
+            
+                email = EmailMultiAlternatives(
+                    subject=subject,
+                    body=body,
+                    from_email=from_address,
+                    to=[to_address],
+                    cc=cc_address.split(',') if cc_address else [],
+                    bcc=bcc_address.split(',') if bcc_address else []
+                )
+
+                if not send_plain_text:
+                   
+                    email.attach_alternative(body, "text/html")
+
+                email.send()
+                print("Email sent successfully!")
+
+                ComposedEmail.objects.create(
+                    template=email_template_instance,
+                    related_to=related_to,
+                    from_address=from_address,
+                    to_address=to_address,
+                    cc_address=cc_address,
+                    bcc_address=bcc_address,
+                    subject=subject,
+                    body=body,
+                    send_plain_text=send_plain_text,
+                    created_by=request.user,
+                    sent_status=True
+                )
+
+                messages.success(request, 'Email sent successfully!')
+            except Exception as e:
+                print(f"Failed to send email: {e}")
+                messages.error(request, f'Failed to send email: {e}')
+                return JsonResponse({'status': 'failed', 'message': str(e)})
+
+            return JsonResponse({'status': 'success', 'message': 'Email sent successfully!'})
+        else:
+            messages.error(request, 'There was an error composing the email. Please check your input.')
+            return JsonResponse({'status': 'failed', 'message': 'Invalid form data'})
+
+    else:
+        form = ComposeEmailForm()
+
+    return render(request, 'sales_tracker/agentemail.html', {'form': form})
+
+
+import imaplib
+import email
+from email.header import decode_header
+
+def fetch_emails():
+    
+    imap_host = 'imap.gmail.com'
+    username = 'pushkarpandey200@gmail.com'
+    password = 'nucz syco dqfd dbcv'
+
+    mail = imaplib.IMAP4_SSL(imap_host)
+    mail.login(username, password)
+    mail.select('inbox')
+
+    status, messages = mail.search(None, 'ALL')
+    email_ids = messages[0].split()
+
+    emails = []
+    for email_id in email_ids[-5:]: 
+        status, msg_data = mail.fetch(email_id, '(RFC822)')
+        for response_part in msg_data:
+            if isinstance(response_part, tuple):
+                msg = email.message_from_bytes(response_part[1])
+                subject, encoding = decode_header(msg['Subject'])[0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(encoding if encoding else 'utf-8')
+                from_ = msg.get('From')
+                emails.append({'subject': subject, 'from': from_})
+
+    mail.logout()
+    return emails
+
+
+
 def upload_import_file(request):
     if request.method == 'POST':
         form = ImportTemplateForm(request.POST, request.FILES)
@@ -2506,6 +2635,89 @@ def upload_import_file(request):
         form = ImportTemplateForm()
 
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from .forms import SurveyForm
+from .models import Survey
+
+def survey_create(request):
+    if request.method == 'POST':
+        form = SurveyForm(request.POST)
+        if form.is_valid():
+            # Create Survey object
+            survey = Survey.objects.create(
+                name=form.cleaned_data['name'],
+                status=form.cleaned_data['status'],
+                assigned_to=form.cleaned_data['assigned_to'],
+                description=form.cleaned_data.get('description', ''),
+                submit_text=form.cleaned_data['submit_text'],
+                satisfied_text=form.cleaned_data['satisfied_text'],
+                neither_text=form.cleaned_data['neither_text'],
+                dissatisfied_text=form.cleaned_data['dissatisfied_text'],
+                questions=json.dumps(form.cleaned_data['questions']),  # Store questions as JSON
+            )
+            return redirect('survey_detail', pk=survey.pk)  # Redirect to view the survey detail
+    else:
+        form = SurveyForm()
+    
+    return render(request, 'sales_tracker/createSurvey.html', {'form': form})
+
+def survey_detail(request, pk):
+    survey = Survey.objects.get(pk=pk)
+    return render(request, 'sales_tracker/surveydetail.html', {'survey': survey})
+
+def survey_list(request):
+    surveys = Survey.objects.all()
+    return render(request, 'sales_tracker/surveyview.html', {'surveys': surveys})
+
+
+from django.shortcuts import render, redirect
+from .forms import KnowledgeBaseForm
+from django.contrib import messages
+
+def KnowledgeBase(request):
+    if request.method == 'POST':
+        form = KnowledgeBaseForm(request.POST)
+        if form.is_valid():
+      
+            print("Title:", form.cleaned_data['title'])
+            print("Status:", form.cleaned_data['status'])
+            print("Revision:", form.cleaned_data['revision'])
+            print("Body:", form.cleaned_data['body'])
+            print("Resolution:", form.cleaned_data['resolution'])
+            print("Date Created:", form.cleaned_data['date_created'])
+            print("Date Modified:", form.cleaned_data['date_modified'])
+            print("Author:", form.cleaned_data['author'])
+            print("Approver:", form.cleaned_data['approver'])
+
+            messages.success(request, "Note created successfully!")
+
+            return redirect('create_note') 
+    else:
+        form = KnowledgeBaseForm()
+
+    return render(request, 'sales_tracker/createKnowledgeBase.html', {'form': form})
+
+
+
+# from django.shortcuts import render
+# from .forms import SurveyForm
+# from django.contrib import messages
+
+# def createSurvey(request):
+#     if request.method == 'POST':
+#         form = SurveyForm(request.POST)
+#         if form.is_valid():
+           
+#             messages.success(request, "Task created successfully!")
+#             form = TaskForm() 
+#         else:
+#             messages.error(request, "There was an error with your submission.")
+#     else:
+#         form = TaskForm()
+
+#     return render(request, 'sales_tracker/createSurvey.html', {'form': form})
+
 
 
 # class DataView(ListView):
