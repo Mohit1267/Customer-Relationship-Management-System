@@ -103,7 +103,8 @@ urlpatterns = [
     path('sent-emails/', views.view_sent_emails, name='sent-emails/'),
     path('createSurvey', views.createSurvey, name='createSurvey'),
     path('viewSurveys', views.viewSurveys, name='viewSurveys'),
-    path('createKnowledgeBase', views.KnowledgeBase, name='createKnowledgeBase'),
+    path('createKnowledgeBase', views.createKnowledgeBase, name='createKnowledgeBase'),
+    path('viewKnowledgeBase', views.viewKnowledgeBase, name='viewKnowledgeBase'),
 
 
 

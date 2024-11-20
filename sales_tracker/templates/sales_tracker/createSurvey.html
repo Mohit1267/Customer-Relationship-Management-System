@@ -13,7 +13,6 @@
 <div class="container-fluid">
     <form method="POST">
         {% csrf_token %}
-
         <div class="row mt-2 mb-2">
             <div class="col-12 text-center moving_title" style="color: white;">
                 Create New Survey
@@ -27,13 +26,30 @@
                 <button type="button" class="btn btn-danger">Cancel</button>
             </div>
         </div>
+
         <div class="row">
-            <!-- Left column -->
+            <!-- Left Column -->
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <label for="name">Name:</label>
+                    <label for="subject">Task Subject:</label>
                     {{ form.subject|as_crispy_field }}
                 </div>
+                <div class="form-group mb-3">
+                    <label for="start_date">Start Date:</label>
+                    {{ form.start_date|as_crispy_field }}
+                </div>
+                <div class="form-group mb-3">
+                    <label for="due_date">Due Date:</label>
+                    {{ form.due_date|as_crispy_field }}
+                </div>
+                <div class="form-group mb-3">
+                    <label for="priority">Priority:</label>
+                    {{ form.priority|as_crispy_field }}
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
                 <div class="form-group mb-3">
                     <label for="status">Status:</label>
                     {{ form.status|as_crispy_field }}
@@ -42,22 +58,18 @@
                     <label for="description">Description:</label>
                     {{ form.description|as_crispy_field }}
                 </div>
-            </div>
-
-            <!-- Right column -->
-            <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <label for="assigned_to">Assigned To:</label>
-                    {{ form.contacts|as_crispy_field }}
+                    <label for="related_to">Related To:</label>
+                    {{ form.related_to|as_crispy_field }}
                 </div>
                 <div class="form-group mb-3">
-                    <!-- <label for="related_to">Related To:</label> -->
-                    {{ form.related_to|as_crispy_field }}
+                    <label for="contacts">Assigned To:</label>
+                    {{ form.contacts|as_crispy_field }}
                 </div>
             </div>
         </div>
 
-        <!-- Questions section -->
+        <!-- Questions Section -->
         <div class="row mt-4">
             <div class="col-12">
                 <h5>Questions:</h5>
@@ -71,7 +83,8 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="questions-container"> <!-- Updated to add ID for targeting -->
+                        <tbody id="questions-container">
+                            <!-- Initial Question Rows -->
                             <tr>
                                 <td>Q1</td>
                                 <td><input type="text" name="question1_text" class="form-control"></td>
@@ -87,60 +100,17 @@
                                     <button type="button" class="btn btn-secondary">✖</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Q2</td>
-                                <td><input type="text" name="question2_text" class="form-control"></td>
-                                <td>
-                                    <select name="question2_type" class="form-control">
-                                        <option value="text">Text</option>
-                                        <option value="multiple_choice">Multiple Choice</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary">▲</button>
-                                    <button type="button" class="btn btn-secondary">▼</button>
-                                    <button type="button" class="btn btn-secondary">✖</button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
-                    <!-- Corrected the onclick attribute -->
                     <button type="button" class="btn btn-secondary" id="new-question-button">New Question</button>
                 </div>
             </div>
         </div>
-
-        <!-- Other Text Fields Section -->
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="submit_text">Submit Text:</label>
-                    <input type="text" name="submit_text" class="form-control" value="Submit">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="satisfied_text">Satisfied Text:</label>
-                    <input type="text" name="satisfied_text" class="form-control" value="Satisfied">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="neither_text">Neither Text:</label>
-                    <input type="text" name="neither_text" class="form-control" value="Neither Satisfied nor Dissatisfied">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="dissatisfied_text">Dissatisfied Text:</label>
-                    <input type="text" name="dissatisfied_text" class="form-control" value="Dissatisfied">
-                </div>
-            </div>
-        </div>
-
-        <!-- Submit and Cancel buttons -->
-        
     </form>
 </div>
 
 <script>
-    let questionCount = 1;  // Starting count based on initial questions Q1 and Q2
+    let questionCount = 1;
 
     document.getElementById('new-question-button').addEventListener('click', function () {
         addNewQuestion();
@@ -148,7 +118,6 @@
 
     function addNewQuestion() {
         questionCount++;
-        
         const questionsContainer = document.getElementById('questions-container');
         const newRow = document.createElement('tr');
         newRow.innerHTML = `

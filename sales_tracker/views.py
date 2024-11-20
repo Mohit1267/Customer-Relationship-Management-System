@@ -41,7 +41,7 @@ from .forms import (
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
     AgentProjectsForm, ContractForm, SortForm, CaseForm, ManualTimeForm, ProjectTemplateForm,
-    ImportTemplateForm
+    ImportTemplateForm, KnowledgeBaseForm
 )
 from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
 from .admin_analysis import (
@@ -1666,15 +1666,22 @@ def viewNotes(request):
     return render(request, "sales_tracker/viewNotes.html",context)
 
 
-def createInvoices(request):
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from .forms import InvoiceForm
+
+def createInvoice(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
         if form.is_valid():
-           
-            return redirect('invoice_list')  
+            # Perform any necessary processing or save the data
+            # For now, just returning a success message
+            return JsonResponse({'message': 'Invoice submitted successfully!'})
     else:
         form = InvoiceForm()
-    return render(request, 'sales_tracker/createInvoices.html', {'form': form})
+    
+    return render(request, 'sales_tracker/createInvoice.html', {'form': form})
+
 
 
 
@@ -2660,7 +2667,7 @@ def createSurvey(request):
         else:
             messages.error(request, "There was an error with your submission.")
     else:
-        form = TaskForm()
+        form = SurveyForm()
 
     return render(request, 'sales_tracker/createSurvey.html', {'form': form})
 
@@ -2668,35 +2675,22 @@ def createSurvey(request):
 def viewSurveys(request):
     return render(request, "sales_tracker/viewSurveys.html")
 
-from django.shortcuts import render, redirect
 from .forms import KnowledgeBaseForm
-from django.contrib import messages
 
-def KnowledgeBase(request):
+def createKnowledgeBase(request):
     if request.method == 'POST':
         form = KnowledgeBaseForm(request.POST)
         if form.is_valid():
-            # Process form data here
-            # For demonstration, let's print the data (in real usage, save it or use it as needed)
-            print("Title:", form.cleaned_data['title'])
-            print("Status:", form.cleaned_data['status'])
-            print("Revision:", form.cleaned_data['revision'])
-            print("Body:", form.cleaned_data['body'])
-            print("Resolution:", form.cleaned_data['resolution'])
-            print("Date Created:", form.cleaned_data['date_created'])
-            print("Date Modified:", form.cleaned_data['date_modified'])
-            print("Author:", form.cleaned_data['author'])
-            print("Approver:", form.cleaned_data['approver'])
-
-            # Show a success message
-            messages.success(request, "Note created successfully!")
-
-            # Redirect to another page or reload the same form (for demo, we reload the same form)
-            return redirect('create_note')  # Replace 'create_note' with the name of your URL pattern
+            # Handle form data here, e.g., save to the database
+            print("Form data:", form.cleaned_data)
+            return render(request, "sales_tracker/createKnowledgeBase.html")  # Success page
     else:
         form = KnowledgeBaseForm()
+    
+    return render(request, "sales_tracker/createKnowledgeBase.html", {"form": form})
 
-    return render(request, 'sales_tracker/createKnowledgeBase.html', {'form': form})
+def viewKnowledgeBase(request):
+    return render(request, "sales_tracker/viewKnowledgeBase.html")
 
 # class DataView(ListView):
 #     template_name = "sales_tracker/data.html"
