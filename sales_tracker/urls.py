@@ -101,12 +101,17 @@ urlpatterns = [
     path('agentemail', views.compose_email, name='agentemail'),
     path('inbox/', views.view_inbox, name='inbox/'),
     path('sent-emails/', views.view_sent_emails, name='sent-emails/'),
+
     path('createSurvey', views.survey_create, name='createSurvey'),
     path('surveydetail', views.survey_detail, name='surveydetail'),
     path('surveyview', views.survey_list, name='surveyview'),
     # path('survey/<int:pk>/', views.survey_detail, name='survey_detail'),
     # path('surveys/', views.survey_list, name='survey_list'),
-    path('createKnowledgeBase', views.KnowledgeBase, name='createKnowledgeBase'),
+    path('createKnowledgeBase', views.createKnowledgeBase, name='createKnowledgeBase'),
+    path('viewKnowledgeBase', views.viewKnowledgeBase, name='viewKnowledgeBase'),
+    
+
+
 
 
 

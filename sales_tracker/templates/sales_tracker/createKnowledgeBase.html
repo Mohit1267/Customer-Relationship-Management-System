@@ -5,82 +5,132 @@
 
 {% block css_link %}
 <link rel="stylesheet" href="{% static 'sales_tracker/createTask.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 {% endblock %}
 
-{% block title %}New Knowledge Base Entry{% endblock %}
+{% block title %}Create Knowledge Base Entry{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data"> 
         {% csrf_token %}
-        
+    
         <div class="row mt-2 mb-2">
             <div class="col-12 text-center moving_title" style="color: white;">
                 Create Knowledge Base Entry
             </div>
         </div>
-        
+    
         <hr>
-        
+
         <div class="row mb-2">
             <div class="col-12 d-flex justify-content-end">
-                <button type="submit" class="button1 mx-2">Save</button>
+                <button type="submit" class="button1 mx-2">Submit</button>
                 <button type="button" class="button2">Cancel</button>
             </div>
         </div>
-        
+
         <div class="row">
-            <div class="col-md-6 pb-5 px-4" style="color: rgb(15, 14, 14);">
-                <!-- Title Field -->
-                <div class="form-group mb-5">
+
+            <div class="col-md-6 pt-5 pb-5 px-4" style="color: rgb(15, 14, 14);">
+                <div class="form-group mb-4">
                     {{ form.title|as_crispy_field }}
                 </div>
-
-                <!-- Status Field -->
-                <div class="form-group mb-5">
+                <div class="form-group mb-4">
                     {{ form.status|as_crispy_field }}
                 </div>
-
-                <!-- Revision Field -->
-                <div class="form-group mb-5">
+                <div class="form-group mb-4">
                     {{ form.revision|as_crispy_field }}
                 </div>
 
-                <!-- Body Field -->
-                <div class="form-group mb-5">
-                    {{ form.body|as_crispy_field }}
-                </div>
+                <label for="body">Body:</label>
+                <div id="editor-container"></div>
+                <input type="hidden" name="body" id="body">
                 
-                <!-- Resolution Field -->
-                <div class="form-group mb-5">
+            </div>
+
+            <div class="col-md-6 pt-5 px-4" style="color:rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
+                <div class="form-group mb-4">
                     {{ form.resolution|as_crispy_field }}
                 </div>
-            </div>
-      
-            <div class="col-md-6 pt-5 px-4" style="color:rgb(15, 14, 14); border-left: 1px solid rgb(15, 14, 14)">
-                <!-- Date Created Field -->
-                <div class="form-group mb-5">
+                <div class="form-group mb-4">
                     {{ form.date_created|as_crispy_field }}
                 </div>
-
-                <!-- Date Modified Field -->
-                <div class="form-group mb-5">
-                    {{ form.date_modified|as_crispy_field }}
+                <div class="form-group mb-4">
+                    <label for="select-date">Select Date:</label>
+                    <input type="date" id="select-date" name="selected_date" class="form-control" required>
                 </div>
-
-                <!-- Author Field -->
-                <div class="form-group mb-5">
+                <div class="form-group mb-4">
                     {{ form.author|as_crispy_field }}
                 </div>
-
-                <!-- Approver Field -->
-                <div class="form-group mb-5">
+                <div class="form-group mb-4">
+                    {{ form.date_modified|as_crispy_field }}
+                    <div class="form-group mb-4">
+                        <label for="select-date">Select Date:</label>
+                        <input type="date" id="select-date" name="selected_date" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group mb-4">
                     {{ form.approver|as_crispy_field }}
                 </div>
             </div>
+
         </div>
     </form>
 </div>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<!-- <script>
+    tinymce.init({
+        selector: '.tinymce-editor',  // Class targeting the 'body' field
+        menubar: false,              // Disable the full menu bar if not needed
+        plugins: 'lists link image table code help',  // Plugins you need
+        toolbar: 'undo redo | bold italic underline | bullist numlist | alignleft aligncenter alignright | link table code | help',
+        height: 300,
+        branding: false,            // Remove "Powered by TinyMCE"
+        content_css: 'default',     // Use default styling
+    });
+</script> -->
+
+<script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.email-list').forEach((section) => {
+            section.classList.remove('active');
+            section.style.display = 'none';
+        });
+
+        const section = document.getElementById(sectionId);
+        section.classList.add('active');
+        section.style.display = 'block';
+    }
+
+    function openComposeModal() {
+        document.getElementById('composeModal').style.display = 'block';
+    }
+
+    function closeComposeModal() {
+        document.getElementById('composeModal').style.display = 'none';
+    }
+
+    var quill = new Quill('#editor-container', {
+        theme: 'snow',
+        placeholder: 'Compose your message...',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'header': 1 }, { 'header': 2 }],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                ['link', 'image']
+            ]
+        }
+    });
+
+    document.querySelector('form').onsubmit = function () {
+        document.getElementById('body').value = quill.root.innerHTML;
+    };
+</script>
 {% endblock %}
 
 {% block javascript %}{% endblock %}

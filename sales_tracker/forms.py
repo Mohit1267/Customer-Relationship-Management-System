@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from ckeditor.fields import RichTextField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
+from ckeditor.widgets import CKEditorWidget
 from .models import (
     EmailTemplate, MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
     Schedule_Meeting, Schedule_Calling, Task, agentNotes, NewPasswords,
@@ -663,33 +664,101 @@ class InvoiceForm(forms.Form):
 
 
 
+from django import forms
+
 class InvoiceForm(forms.Form):
-    title = forms.CharField(max_length=255)
-    customer_name = forms.CharField(max_length=255)
-    due_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-    assigned_to = forms.CharField(max_length=255)
-    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
-    
-    invoice_number = forms.CharField(max_length=100, required=False)
-    quotation_number = forms.CharField(max_length=100, required=False)
-    invoice_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
-    status = forms.ChoiceField(choices=[('open', 'Open'), ('closed', 'Closed'), ('pending', 'Pending')], initial='open')
-    
-    account = forms.CharField(max_length=255)
-    contact = forms.CharField(max_length=255)
-    billing_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
-    shipping_address = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
-    
-    currency = forms.CharField(max_length=10, initial='USD')
-    line_items = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}), required=False)
-    
-    total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
-    discount = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
-    subtotal = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
-    shipping = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
-    adjustment = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
-    tax = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
-    grand_total = forms.DecimalField(max_digits=10, decimal_places=2, required=False)
+    # Overview Section
+    title = forms.CharField(label="Title", max_length=200, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Enter Title'
+    }))
+    invoice_number = forms.CharField(label="Invoice Number", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Enter Invoice Number'
+    }))
+    quote_number = forms.CharField(label="Quote Number", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Enter Quote Number'
+    }))
+    invoice_date = forms.DateField(label="Invoice Date", widget=forms.DateInput(attrs={
+        'class': 'form-control', 'type': 'date'
+    }))
+    due_date = forms.DateField(label="Due Date", widget=forms.DateInput(attrs={
+        'class': 'form-control', 'type': 'date'
+    }))
+    assigned_to = forms.CharField(label="Assigned To", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Assigned To'
+    }))
+    status = forms.ChoiceField(label="Status", choices=[
+        ('pending', 'Pending'), ('paid', 'Paid'), ('cancelled', 'Cancelled')
+    ], widget=forms.Select(attrs={'class': 'form-control'}))
+
+    # Invoices Section
+    account = forms.CharField(label="Account", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Account Name'
+    }))
+    contact = forms.CharField(label="Contact", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Contact Name'
+    }))
+    billing_street = forms.CharField(label="Billing Street", max_length=200, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Billing Street'
+    }))
+    billing_city = forms.CharField(label="Billing City", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Billing City'
+    }))
+    billing_state = forms.CharField(label="Billing State", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Billing State'
+    }))
+    billing_postal_code = forms.CharField(label="Billing Postal Code", max_length=20, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Billing Postal Code'
+    }))
+    billing_country = forms.CharField(label="Billing Country", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Billing Country'
+    }))
+    shipping_street = forms.CharField(label="Shipping Street", max_length=200, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Shipping Street'
+    }))
+    shipping_city = forms.CharField(label="Shipping City", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Shipping City'
+    }))
+    shipping_state = forms.CharField(label="Shipping State", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Shipping State'
+    }))
+    shipping_postal_code = forms.CharField(label="Shipping Postal Code", max_length=20, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Shipping Postal Code'
+    }))
+    shipping_country = forms.CharField(label="Shipping Country", max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control', 'placeholder': 'Shipping Country'
+    }))
+    copy_address = forms.BooleanField(label="Copy Address", required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input'
+    }))
+
+    # Line Items Section
+    currency = forms.ChoiceField(label="Currency", choices=[
+        ('USD', 'USD'), ('EUR', 'EUR'), ('INR', 'INR')
+    ], widget=forms.Select(attrs={'class': 'form-control'}))
+    line_items = forms.CharField(label="Line Items", widget=forms.Textarea(attrs={
+        'class': 'form-control', 'placeholder': 'Enter Line Items'
+    }))
+    total = forms.DecimalField(label="Total", max_digits=10, decimal_places=2, widget=forms.NumberInput(attrs={
+        'class': 'form-control', 'placeholder': 'Total'
+    }))
+    discount = forms.DecimalField(label="Discount (%)", max_digits=5, decimal_places=2, required=False, widget=forms.NumberInput(attrs={
+        'class': 'form-control', 'placeholder': 'Discount (%)'
+    }))
+    subtotal = forms.DecimalField(label="Subtotal", max_digits=10, decimal_places=2, widget=forms.NumberInput(attrs={
+        'class': 'form-control', 'placeholder': 'Subtotal'
+    }))
+    shipping = forms.DecimalField(label="Shipping", max_digits=10, decimal_places=2, required=False, widget=forms.NumberInput(attrs={
+        'class': 'form-control', 'placeholder': 'Shipping'
+    }))
+    shipping_tax = forms.DecimalField(label="Shipping Tax (%)", max_digits=5, decimal_places=2, required=False, widget=forms.NumberInput(attrs={
+        'class': 'form-control', 'placeholder': 'Shipping Tax (%)'
+    }))
+    tax = forms.DecimalField(label="Tax (%)", max_digits=5, decimal_places=2, required=False, widget=forms.NumberInput(attrs={
+        'class': 'form-control', 'placeholder': 'Tax (%)'
+    }))
+    grand_total = forms.DecimalField(label="Grand Total", max_digits=10, decimal_places=2, widget=forms.NumberInput(attrs={
+        'class': 'form-control', 'placeholder': 'Grand Total'
+    }))
 
 
 
@@ -769,7 +838,6 @@ class ComposeEmailForm(forms.Form):
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
     )
 
-    # Updated for multiple file uploads
     attachments = forms.FileField(
         widget=forms.FileInput(attrs={'multiple': False, 'class': 'form-control'}),
         required=False,
@@ -1348,60 +1416,76 @@ class SurveyForm(forms.Form):
         return cleaned_data
 
 
-
 from django import forms
 
 from django import forms
-
-from ckeditor.widgets import CKEditorWidget
 
 class KnowledgeBaseForm(forms.Form):
     title = forms.CharField(
-        label="Title",
-        max_length=100,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter title'})
+        max_length=200,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter the title'
+        }),
+        label="Title *"
     )
-    
     status = forms.ChoiceField(
-        label="Status",
         choices=[('Draft', 'Draft'), ('Published', 'Published')],
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label="Status"
     )
-
-    revision = forms.CharField(
-        label="Revision",
-        required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter revision number'})
+    revision = forms.IntegerField(
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter revision number'
+        }),
+        label="Revision"
     )
-
     body = forms.CharField(
-        label="Body",
-        widget=CKEditorWidget(attrs={'class': 'form-control', 'placeholder': 'Enter body content'})
+        widget=forms.Textarea(attrs={
+            'class': 'tinymce-editor',
+            'placeholder': 'Enter body content',
+        }),
+        label="Body"
     )
-
     resolution = forms.CharField(
-        label="Resolution",
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter resolution details'
+        }),
         required=False,
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter resolution details', 'rows': 5})
+        label="Resolution"
     )
-
     date_created = forms.DateTimeField(
-        label="Date Created",
-        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'yyyy-mm-dd hh:mm'})
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'yyyy-mm-dd hh:mm'
+        }),
+        label="Date Created"
     )
-
+    selected_date = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'class': 'form-control',
+            'type': 'date'
+        }),
+        label="Select Date"
+    )
+    author = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter author name'
+        }),
+        label="Author *"
+    )
     date_modified = forms.DateTimeField(
-        label="Date Modified",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'yyyy-mm-dd hh:mm'
+        }),
         required=False,
-        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'yyyy-mm-dd hh:mm'})
+        label="Date Modified"
     )
-
-    author = forms.ChoiceField(
-        label="Author",
-        choices=[('', 'Select an item'), ('Author1', 'Author 1'), ('Author2', 'Author 2')],
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
     approver = forms.ChoiceField(
         label="Approver",
         choices=[('', 'Select an item'), ('Approver1', 'Approver 1'), ('Approver2', 'Approver 2')],
@@ -1432,4 +1516,4 @@ class KnowledgeBaseForm(forms.Form):
 #     status = forms.ChoiceField(label="Status", choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
     
 #     related_to = forms.CharField(label="Related To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
-#     contacts = forms.CharField(label="Assigned To", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+

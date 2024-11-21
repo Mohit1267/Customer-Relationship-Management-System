@@ -1,5 +1,4 @@
-{% extends "loginbase.html" %}
-
+{% extends "innerbase_copy.html" %}
 {% load static %}
 
 
@@ -7,13 +6,39 @@
 <link rel="stylesheet" href="{% static 'users/profiledetail.css' %}">
 {% endblock %}
 
-
 {% block title %}profile{% endblock %}
-
 
 {% block content %}
 
-<div class="outerdiv">
+<body>
+    <div class="profile-card">
+        <img src="https://i.ibb.co/n0GfyPt/leadslogo.png" alt="Profile Picture">
+        <div class="profile-content">
+            <h2 class="profile-name">John Doe</h2>
+            <p class="profile-title">Web Developer</p>
+            <p class="profile-description">
+                I have 5+ years of experience in full-stack web development. I specialize in creating dynamic and responsive websites for a variety of industries.
+            </p>
+            <ul class="social-media">
+                <li class="social-item"><i class="fa-brands fa-linkedin"></i></li>
+                <li class="social-item"><i class="fa-brands fa-facebook"></i></li>
+                <li class="social-item"><i class="fa-brands fa-instagram"></i></li>
+                <li class="social-item"><i class="fa-brands fa-github"></i></li>
+                <li class="social-item"><i class="fa-brands fa-dribbble"></i></li>
+            </ul>
+        </div>
+        <div class="contact-details">
+            <ul class="contact-list">
+                <li class="contact-item">📞 +1-234-567-8910</li>
+                <li class="contact-item">📧 johndoe@example.com</li>
+                <li class="contact-item">📍 New York, NY</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+
+<!-- <div class="outerdiv">
 <div class="heading">{{user_info|upper}}</div>
 
 <div class = "profile-info">
@@ -28,7 +53,7 @@
 <p><span>Email : </span>{{user.email}}</p>
 </div>
 
-</div>
+</div> -->
 {% endblock %}
         
 {% block javascript %}
