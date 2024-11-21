@@ -9,7 +9,7 @@ from .models import (
     EmailTemplate, MiningData, ContactData, LeadsData, OpportunityData, QuotesData, Document,
     Schedule_Meeting, Schedule_Calling, Task, agentNotes, NewPasswords,
 
-    DailySalesReport, agentProjects, projectTemplate
+    DailySalesReport, agentProjects, projectTemplate, ImportTemplate
 
 )
 
@@ -253,11 +253,6 @@ class Accountform(forms.Form):
             'Employees'
         )
 
-
-
-
-from django import forms
-from .models import Document
 
 class DocumentForm(forms.ModelForm):
     class Meta:
@@ -624,7 +619,6 @@ class NoteForm(forms.ModelForm):
 
 
 class InvoiceForm(forms.Form):
-   
     title = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
     invoice_number = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
     quote_number = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -667,7 +661,6 @@ class InvoiceForm(forms.Form):
 from django import forms
 
 class InvoiceForm(forms.Form):
-    # Overview Section
     title = forms.CharField(label="Title", max_length=200, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Enter Title'
     }))
@@ -690,7 +683,6 @@ class InvoiceForm(forms.Form):
         ('pending', 'Pending'), ('paid', 'Paid'), ('cancelled', 'Cancelled')
     ], widget=forms.Select(attrs={'class': 'form-control'}))
 
-    # Invoices Section
     account = forms.CharField(label="Account", max_length=100, widget=forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': 'Account Name'
     }))
@@ -731,7 +723,7 @@ class InvoiceForm(forms.Form):
         'class': 'form-check-input'
     }))
 
-    # Line Items Section
+
     currency = forms.ChoiceField(label="Currency", choices=[
         ('USD', 'USD'), ('EUR', 'EUR'), ('INR', 'INR')
     ], widget=forms.Select(attrs={'class': 'form-control'}))
@@ -870,25 +862,6 @@ class TargetsForm(forms.Form):
     description = forms.CharField(label='Description', widget=forms.Textarea, required=False)
     assigned_to = forms.CharField(label='Assigned To', max_length=100, required=False)
 
-# class InvoiceForm(forms.ModelForm):
-#     class Meta:
-#         # model = createInvoice
-#         fields = [
-#             'title', 'customer_name', 'due_date', 'assigned_to', 'description',
-#             'invoice_number', 'quotation_number', 'invoice_date', 'status',
-#             'account', 'contact', 'billing_address', 'shipping_address',
-#             'currency', 'line_items', 'total', 'discount', 'subtotal', 
-#             'shipping', 'adjustment', 'tax', 'grand_total'
-#         ]
-#         widgets = {
-#             'due_date': forms.DateInput(attrs={'type': 'date'}),
-#             'invoice_date': forms.DateInput(attrs={'type': 'date'}),
-#             'description': forms.Textarea(attrs={'rows': 3}),
-#             'billing_address': forms.Textarea(attrs={'rows': 2}),
-#             'shipping_address': forms.Textarea(attrs={'rows': 2}),
-#         }
-
-
 
 
 class TargetsListForm(forms.Form):
@@ -991,8 +964,7 @@ class AgentProjectsForm(forms.ModelForm):
         self.fields['project_template'].label = "Project Template"
 
 
-from django import forms
-from .models import projectTemplate
+
 
 class ProjectTemplateForm(forms.ModelForm):
     class Meta:
@@ -1022,18 +994,13 @@ class ProjectTemplateForm(forms.ModelForm):
         self.fields['status'].label = "Status"
         self.fields['priority'].label = "Priority"
 
-
-from django import forms
-
-from .models import ImportTemplate
-
 class ImportTemplateForm(forms.ModelForm):
     class Meta:
         model = ImportTemplate
         fields = ['template_file', 'action_choice']
         widgets = {
             'template_file': forms.FileInput(attrs={'class': 'form-control'}),
-            'action_choice': forms.RadioSelect,  # Use radio buttons for options
+            'action_choice': forms.RadioSelect,
         }
         labels = {
             'template_file': 'Select File',
@@ -1165,7 +1132,7 @@ class ContractForm(forms.Form):
     ('10', '10%'),
     ('20', '20%'),
     ('25', '25%'),
-    ('other', 'Other'),  # Option for custom input
+    ('other', 'Other'),
 ]
     
     
@@ -1200,7 +1167,6 @@ class ContractForm(forms.Form):
         shipping_tax = cleaned_data.get("shipping_tax")
         custom_shipping_tax = cleaned_data.get("custom_shipping_tax")
 
-        # If "Other" is selected, custom_shipping_tax must be filled
         if shipping_tax == "other" and not custom_shipping_tax:
             self.add_error("custom_shipping_tax", "Please specify a custom shipping tax.")
         return cleaned_data
@@ -1353,12 +1319,7 @@ class ManualTimeForm(forms.Form):
             raise forms.ValidationError("End time must be after start time.")
         return end_time
 
-
-
-from django import forms
-
 class SurveyForm(forms.Form):
-    # Static fields for the survey
     name = forms.CharField(max_length=200, label="Survey Name")
     STATUS_CHOICES = [
         ('------', '------'),
@@ -1367,23 +1328,19 @@ class SurveyForm(forms.Form):
         ('closed', 'Closed'),
     ]
     status = forms.ChoiceField(choices=STATUS_CHOICES, label="Status")
-    assigned_to = forms.CharField(max_length=100, label="Assigned To")  # For simplicity, using CharField here
+    assigned_to = forms.CharField(max_length=100, label="Assigned To")
     description = forms.CharField(widget=forms.Textarea, required=False, label="Description")
 
-    # Satisfaction texts
     submit_text = forms.CharField(max_length=100, required=False, initial="Submit", label="Submit Text")
     satisfied_text = forms.CharField(max_length=100, required=False, initial="Satisfied", label="Satisfied Text")
     neither_text = forms.CharField(max_length=100, required=False, initial="Neither Satisfied nor Dissatisfied", label="Neither Text")
     dissatisfied_text = forms.CharField(max_length=100, required=False, initial="Dissatisfied", label="Dissatisfied Text")
 
-    # Dynamic questions fields (they will be added dynamically in views)
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Initialize dynamic question fields if the form contains dynamic data
         question_count = 1
         while True:
-            # Check if question data exists in the form submission
             question_text_field = f'question{question_count}_text'
             question_type_field = f'question{question_count}_type'
 
@@ -1401,8 +1358,7 @@ class SurveyForm(forms.Form):
         cleaned_data = super().clean()
         questions = []
         
-        # Process the dynamic questions and add them to the cleaned data
-        for question_count in range(1, len(self.fields) // 2 + 1):  # Fields are added in pairs of question text and type
+        for question_count in range(1, len(self.fields) // 2 + 1):
             question_text = cleaned_data.get(f'question{question_count}_text')
             question_type = cleaned_data.get(f'question{question_count}_type')
 
@@ -1491,6 +1447,27 @@ class KnowledgeBaseForm(forms.Form):
         choices=[('', 'Select an item'), ('Approver1', 'Approver 1'), ('Approver2', 'Approver 2')],
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+
+
+
+# class InvoiceForm(forms.ModelForm):
+#     class Meta:
+#         # model = createInvoice
+#         fields = [
+#             'title', 'customer_name', 'due_date', 'assigned_to', 'description',
+#             'invoice_number', 'quotation_number', 'invoice_date', 'status',
+#             'account', 'contact', 'billing_address', 'shipping_address',
+#             'currency', 'line_items', 'total', 'discount', 'subtotal', 
+#             'shipping', 'adjustment', 'tax', 'grand_total'
+#         ]
+#         widgets = {
+#             'due_date': forms.DateInput(attrs={'type': 'date'}),
+#             'invoice_date': forms.DateInput(attrs={'type': 'date'}),
+#             'description': forms.Textarea(attrs={'rows': 3}),
+#             'billing_address': forms.Textarea(attrs={'rows': 2}),
+#             'shipping_address': forms.Textarea(attrs={'rows': 2}),
+#         }
+
 
 # from django import forms
 

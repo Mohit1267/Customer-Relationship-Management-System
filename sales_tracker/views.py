@@ -24,6 +24,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView
 from decimal import Decimal
+from django.core.mail import EmailMultiAlternatives
+import imaplib
+import email
+from email.header import decode_header
 
 from users.models import (
     Profile, RegisterUser, Location, AttendanceRecord
@@ -33,17 +37,19 @@ from .models import (
     ComposedEmail, MiningData, ContactData, LeadsData, OpportunityData,
     QuotesData, CallingAgent, Schedule_Meeting, Schedule_Calling, DailySalesReport,
     Account, NewPasswords, Task, Contract, Document, agentNotes, projectTemplate,
-    Target, Case
+    Target, Case, Survey
 
 )
+
 from .forms import (
      MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
     AgentProjectsForm, ContractForm, SortForm, CaseForm, ManualTimeForm, ProjectTemplateForm,
-    ImportTemplateForm, KnowledgeBaseForm
+    ImportTemplateForm, SurveyForm, KnowledgeBaseForm
 )
-from .analysis import generate_bar_chart, TotalDays, generate_bar_chart2
+from .analysis import (generate_bar_chart, TotalDays, generate_bar_chart2)
+
 from .admin_analysis import (
     Att_perct, Late_perct, Mining_Count, Leads_Count, EachMinerTarget,
     Time_worked, Productivity, admin_attendance_graph, dailymining, monthlymining,
@@ -872,7 +878,7 @@ class EmployeeDetail(TemplateView):
         return context
     
 
-# @admin_required
+
 @method_decorator(admin_required, name = 'dispatch')
 class AdminAnalysis(TemplateView):
     template_name = "sales_tracker/admin_analysis.html"
@@ -1380,7 +1386,6 @@ def Dsrview(request):
     return render(request, "sales_tracker/dsrview.html")
 
 
-from django.shortcuts import render, redirect
 
 def DSR(request):
     if request.method == 'POST':
@@ -1523,7 +1528,6 @@ def Agentaccount(request):
 
     return render(request, 'sales_tracker/agentaccount.html', {'form': form})
 
-            # account.save() 
 def viewAccount(request):
     return render(request, "sales_tracker/viewaccount.html")
 
@@ -1674,8 +1678,6 @@ def createInvoice(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
         if form.is_valid():
-            # Perform any necessary processing or save the data
-            # For now, just returning a success message
             return JsonResponse({'message': 'Invoice submitted successfully!'})
     else:
         form = InvoiceForm()
@@ -1706,7 +1708,6 @@ def compose_email(request):
                 body = form.cleaned_data.get('body') or "No Content"
 
             try:
-                # Construct the email
                 email = EmailMultiAlternatives(
                     subject=subject,
                     body=body,
@@ -2324,45 +2325,6 @@ def Resourcecalendar(request):
 def ProjectTask(request):
     return render(request, "sales_tracker/viewprojectTask.html")
 
-'''
-def agentTemplate(request):
-    """
-    Handles the agent project form submission.
-    On POST, it validates and processes the form data.
-    On GET, it displays an empty form for the user to fill out.
-    """
-    if request.method == 'POST':
-        form = AgentTemplate(request.POST)
-        if form.is_valid():
- 
-            template_name = form.cleaned_data.get('template_name')
-            consider_working_days = form.cleaned_data.get('consider_working_days')
-            project_manager = form.cleaned_data.get('project_manager')
-            status = form.cleaned_data.get('status')
-            priority = form.cleaned_data.get('priority')
-
-            form.save()
-
-            messages.success(request, 'Agent project information submitted successfully!')
-            return redirect('agentTemplate') 
-        else:
-            messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
-    else:
-        form = AgentTemplate() 
-
-    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})'''
-
-# def create_project_template(request):
-#     if request.method == 'POST':
-#         form = ProjectTemplateForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('sales_tracker/agentTemplate.html')  
-#     else:
-#         form = ProjectTemplateForm()
-    
-#     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
-
 
 def projectTemplate(request):
     if request.method == 'POST':
@@ -2520,10 +2482,8 @@ def createInvoices(request):
         form = InvoiceForm()
     return render(request, 'sales_tracker/createInvoices.html', {'form': form})
 
-from django.core.mail import EmailMultiAlternatives
-# from django.http import JsonResponse
-# from django.contrib import messages
-# from .models import ComposedEmail, EmailTemplate
+
+
 def compose_email(request):
     if request.method == 'POST':
         form = ComposeEmailForm(request.POST)
@@ -2536,8 +2496,6 @@ def compose_email(request):
             cc_address = form.cleaned_data.get('cc_address')
             bcc_address = form.cleaned_data.get('bcc_address')
             send_plain_text = form.cleaned_data.get('send_plain_text')
-
-            # If a template is selected, use its subject and body
             if email_template_instance:
                 subject = email_template_instance.subject
                 body = email_template_instance.body
@@ -2597,9 +2555,6 @@ def compose_email(request):
     return render(request, 'sales_tracker/agentemail.html', {'form': form})
 
 
-import imaplib
-import email
-from email.header import decode_header
 
 def fetch_emails():
     
@@ -2643,15 +2598,10 @@ def upload_import_file(request):
 
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
-from django.shortcuts import render, redirect
-from .forms import SurveyForm
-from .models import Survey
-
 def survey_create(request):
     if request.method == 'POST':
         form = SurveyForm(request.POST)
         if form.is_valid():
-            # Create Survey object
             survey = Survey.objects.create(
                 name=form.cleaned_data['name'],
                 status=form.cleaned_data['status'],
@@ -2661,10 +2611,9 @@ def survey_create(request):
                 satisfied_text=form.cleaned_data['satisfied_text'],
                 neither_text=form.cleaned_data['neither_text'],
                 dissatisfied_text=form.cleaned_data['dissatisfied_text'],
-                questions=json.dumps(form.cleaned_data['questions']),  # Store questions as JSON
+                questions=json.dumps(form.cleaned_data['questions']),
             )
-            return redirect('survey_detail', pk=survey.pk)  # Redirect to view the survey detail
-    else:
+            return redirect('survey_detail', pk=survey.pk)
         form = SurveyForm()
 
     return render(request, 'sales_tracker/createSurvey.html', {'form': form})
@@ -2684,10 +2633,8 @@ def createKnowledgeBase(request):
     if request.method == 'POST':
         form = KnowledgeBaseForm(request.POST)
         if form.is_valid():
-
-            # Handle form data here, e.g., save to the database
             print("Form data:", form.cleaned_data)
-            return render(request, "sales_tracker/createKnowledgeBase.html")  # Success page
+            return render(request, "sales_tracker/createKnowledgeBase.html")
 
     else:
         form = KnowledgeBaseForm()
@@ -2697,6 +2644,45 @@ def createKnowledgeBase(request):
 def viewKnowledgeBase(request):
     return render(request, "sales_tracker/viewKnowledgeBase.html")
 
+# '''
+# def agentTemplate(request):
+#     """
+#     Handles the agent project form submission.
+#     On POST, it validates and processes the form data.
+#     On GET, it displays an empty form for the user to fill out.
+#     """
+#     if request.method == 'POST':
+#         form = AgentTemplate(request.POST)
+#         if form.is_valid():
+ 
+#             template_name = form.cleaned_data.get('template_name')
+#             consider_working_days = form.cleaned_data.get('consider_working_days')
+#             project_manager = form.cleaned_data.get('project_manager')
+#             status = form.cleaned_data.get('status')
+#             priority = form.cleaned_data.get('priority')
+
+#             form.save()
+
+#             messages.success(request, 'Agent project information submitted successfully!')
+#             return redirect('agentTemplate') 
+#         else:
+#             messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
+#     else:
+#         form = AgentTemplate() 
+
+#     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})'''
+
+
+# def create_project_template(request):
+#     if request.method == 'POST':
+#         form = ProjectTemplateForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('sales_tracker/agentTemplate.html')  
+#     else:
+#         form = ProjectTemplateForm()
+    
+#     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
 
 
 # from django.shortcuts import render
