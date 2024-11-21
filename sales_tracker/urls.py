@@ -105,8 +105,6 @@ urlpatterns = [
     path('createSurvey', views.survey_create, name='createSurvey'),
     path('surveydetail', views.survey_detail, name='surveydetail'),
     path('surveyview', views.survey_list, name='surveyview'),
-    # path('survey/<int:pk>/', views.survey_detail, name='survey_detail'),
-    # path('surveys/', views.survey_list, name='survey_list'),
     path('createKnowledgeBase', views.createKnowledgeBase, name='createKnowledgeBase'),
     path('viewKnowledgeBase', views.viewKnowledgeBase, name='viewKnowledgeBase'),
     
@@ -114,7 +112,8 @@ urlpatterns = [
 
 
 
-
+    # path('survey/<int:pk>/', views.survey_detail, name='survey_detail'),
+    # path('surveys/', views.survey_list, name='survey_list'),
     # path("view_contact", login_required(views.ViewScheduledMeeting), name='view_contact'),  
     # path("agentcalling", login_required((views.schedule_calling_create)), name="agentcalling"),
     # path("viewemail", login_required(views.inbox), name="viewemail"),

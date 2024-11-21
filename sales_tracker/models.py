@@ -197,8 +197,7 @@ class Account(models.Model):
     campaign = models.CharField(max_length=100, blank=True, null=True)
     industry = models.CharField(max_length=100, blank=True, null=True)
     employees = models.IntegerField(blank=True, null=True)
-    # Timestamps
-    created_at = models.DateTimeField(default=datetime.datetime.now)  # Temporary for migration
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -232,9 +231,6 @@ class NewPasswords(models.Model):
         help_text="Password must be at least 8 characters long and include an uppercase, lowercase, number, and special character."
     )
 
-
-
- 
 class Schedule_Meeting(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
@@ -375,9 +371,6 @@ class DailySalesReport(models.Model):
         verbose_name_plural = "Daily Sales Reports"
         ordering = ['-date']  
 
-
-
-
 class agentNotes(models.Model):
     RELATED_TO_CHOICES = [
         ('', ' '),
@@ -404,43 +397,6 @@ class agentNotes(models.Model):
 
     def __str__(self):
         return self.subject
-
-    
-'''
-class createInvoices(models.Model):
- 
-    title = models.CharField(max_length=255)
-    customer_name = models.CharField(max_length=255)
-    due_date = models.DateField()
-    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    description = models.TextField(blank=True)
-
-
-    invoice_number = models.CharField(max_length=100, blank=True)
-    quotation_number = models.CharField(max_length=100, blank=True)
-    invoice_date = models.DateField(null=True, blank=True)
-    status = models.CharField(max_length=100, choices=[('Open', 'Open'), ('Closed', 'Closed'), ('Pending', 'Pending')], default='Open')
-
-    account = models.CharField(max_length=255, blank=True)
-    contact = models.CharField(max_length=255, blank=True)
-    billing_address = models.TextField(blank=True)
-    shipping_address = models.TextField(blank=True)
-
-
-    currency = models.CharField(max_length=10, choices=[('USD', 'USD'), ('EUR', 'EUR'), ('GBP', 'GBP')], default='USD')
-    line_items = models.TextField(blank=True)  # For simplicity, you can use JSON or a dedicated model for line items
-
-  
-    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    shipping = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    adjustment = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    tax = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    grand_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-
-    def __str__(self):
-        return self.title'''
 
 
 
@@ -469,10 +425,6 @@ class agentProjects(models.Model):
     def __str__(self):
         return self.name
     
-
-
-
-from django.db import models
 
 class Contract(models.Model):
     contract_title = models.CharField(max_length=100)
@@ -517,8 +469,6 @@ class Contract(models.Model):
 
 
 
-from django.db import models
-
 class Target(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -546,10 +496,6 @@ class Target(models.Model):
     def __str__(self):
 
         return f"{self.first_name} {self.last_name}"
-
-
-
-
 
 class Case(models.Model):
     CASE_STATES = [
@@ -586,10 +532,6 @@ class Case(models.Model):
         return f"{self.case_number} - {self.subject}"
 
 
-
-
-from django.db import models
-
 class projectTemplate(models.Model):
     STATUS_CHOICES = [
         ('draft', 'Draft'),
@@ -617,7 +559,6 @@ class projectTemplate(models.Model):
         return self.template_name
 
 
-from django.db import models
 
 class ImportTemplate(models.Model):
     template_file = models.FileField(upload_to='import_templates/')
@@ -643,10 +584,6 @@ class EmailTemplate(models.Model):
 
     def _str_(self):
         return self.name
-
-
-
-
 
 class ComposedEmail(models.Model):
     """Model to store composed email details."""
@@ -695,10 +632,6 @@ class ComposedEmail(models.Model):
     def _str_(self):
         return f"Email to {self.to_address} - Subject: {self.subject[:50]}"
 
-
-from django.db import models
-import json
-
 class Survey(models.Model):
     STATUS_CHOICES = [
         ('-------', '-------' ),
@@ -717,13 +650,48 @@ class Survey(models.Model):
     neither_text = models.CharField(max_length=100, default="Neither Satisfied nor Dissatisfied")
     dissatisfied_text = models.CharField(max_length=100, default="Dissatisfied")
     
-    # Save dynamic questions as JSON for flexibility
     questions = models.JSONField(default=list)
 
     def __str__(self):
         return self.name
 
 
+
+# '''
+# class createInvoices(models.Model):
+ 
+#     title = models.CharField(max_length=255)
+#     customer_name = models.CharField(max_length=255)
+#     due_date = models.DateField()
+#     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+#     description = models.TextField(blank=True)
+
+
+#     invoice_number = models.CharField(max_length=100, blank=True)
+#     quotation_number = models.CharField(max_length=100, blank=True)
+#     invoice_date = models.DateField(null=True, blank=True)
+#     status = models.CharField(max_length=100, choices=[('Open', 'Open'), ('Closed', 'Closed'), ('Pending', 'Pending')], default='Open')
+
+#     account = models.CharField(max_length=255, blank=True)
+#     contact = models.CharField(max_length=255, blank=True)
+#     billing_address = models.TextField(blank=True)
+#     shipping_address = models.TextField(blank=True)
+
+
+#     currency = models.CharField(max_length=10, choices=[('USD', 'USD'), ('EUR', 'EUR'), ('GBP', 'GBP')], default='USD')
+#     line_items = models.TextField(blank=True)  # For simplicity, you can use JSON or a dedicated model for line items
+
+  
+#     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+#     discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+#     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+#     shipping = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+#     adjustment = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+#     tax = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+#     grand_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+#     def __str__(self):
+#         return self.title'''
 
 
 # from django.db import models
