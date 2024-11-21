@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     background-color: #E0EAF6;
     font-family: Arial, sans-serif;
@@ -18,8 +17,6 @@ td {
     color: #495057;
 }
 
-
-/* Container for main content */
 .miner-content {
     background-color: #E0EAF6;
     padding: 20px;
@@ -28,7 +25,6 @@ td {
     align-items: center;
 }
 
-/* Filter and Search Container */
 .filter-search-container {
     display: flex;
     justify-content: space-between;
@@ -93,7 +89,6 @@ td {
     gap: 20px;
 }
 
-/* Filter Form Fields */
 label {
     font-weight: bold;
     margin-bottom: 5px;
@@ -106,7 +101,6 @@ select {
     border-radius: 4px;
 }
 
-/* Filter Form Buttons */
 .buttons {
     grid-column: span 2;
     display: flex;
@@ -140,14 +134,12 @@ select {
     background-color: #c82333;
 }
 
-/* Pie Chart Image */
 .attpiechart {
     max-width: 100%;
     height: auto;
     margin: 20px;
 }
 
-/* Mining Info Cards */
 .mining-info-container {
     display: flex;
     gap: 20px;
@@ -171,7 +163,6 @@ select {
     color: #ffffff;
 }
 
-/* Miner Table */
 .minerTable {
     width: 100%;
     border-collapse: collapse;
@@ -199,7 +190,6 @@ select {
     cursor: pointer;
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
     .filter-search-container {
         flex-direction: column;
