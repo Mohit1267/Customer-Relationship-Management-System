@@ -9,21 +9,22 @@
 
 <div class="miner-content">
 
-   
+
     <div class="filter-search-container">
 
-            
+
         <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                style="width: 200px;">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        
-        <button id="filter-btn" class="filter-button" onclick="clearFilters()">Filter</button>
+
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
 
     </div>
-    
+
     <div id="filter-section" class="filter-section" style="display: none;">
-    
+
         <form method="GET" action="{% url 'lead_data' %}">
             <div class="inside-filter-container">
                 <label for="time_frame">Select Time Frame:</label>
@@ -36,7 +37,7 @@
                     <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
                 </select>
             </div>
-    
+
             <div class="state-filter-container">
                 <label for="state-filter">State:</label>
                 <select name="state" id="state-filter">
@@ -70,7 +71,7 @@
                     <option value="WB">West Bengal</option>
                 </select>
             </div>
-    
+
             <div class="zone-filter-container">
                 <label for="zone-filter">Zone:</label>
                 <select name="zone" id="zone-filter">
@@ -81,7 +82,7 @@
                     <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
                 </select>
             </div>
-    
+
             <div class="buttons">
                 <button type="submit" class="button">Apply Filter</button>
                 <button type="button" class="button" onclick="clearFilters()">Clear</button>
@@ -89,81 +90,81 @@
         </form>
     </div>
 
-       
-            <img class="attpiechart" src="{% static 'Mining_Count.png' %}" alt="Attendance Chart">
 
-            <div class="mining-info-container">
-                <div class="card">
-                    <h1 class="total">Total Minings: {{ Total_Mining }}</h1>
-                </div>
-                <div class="card">
-                    <h1 class="expected">Expected Minings: {{ Exp_Mining }}</h1>
-                </div>
-            </div>
-      
-            <table class="minerTable">
-              <thead>
-                  <tr>
-                      <th>Miner Name</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for miners in Miner %}
-                  <tr>
-                      <td>{{ miners.user.username }}</td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-</div>  
+    <img class="attpiechart" src="{% static 'Mining_Count.png' %}" alt="Attendance Chart">
+
+    <div class="mining-info-container">
+        <div class="card">
+            <h1 class="total">Total Minings: {{ Total_Mining }}</h1>
+        </div>
+        <div class="card">
+            <h1 class="expected">Expected Minings: {{ Exp_Mining }}</h1>
+        </div>
+    </div>
+
+    <table class="minerTable">
+        <thead>
+            <tr>
+                <th>Miner Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for miners in Miner %}
+            <tr>
+                <td>{{ miners.user.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <script>
     function toggleFilter() {
-            var filterForm = document.getElementById("filterForm");
-            filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
-        }
-    
-        function clearForm() {
-            document.getElementById("subject").value = "";
-            document.getElementById("contact").value = "";
-            document.getElementById("priority").value = "";
-            document.getElementById("status").value = "";
-            document.getElementById("contacts").value = "";
-            document.getElementById("assignedTo").value = "";
-        }
-    
-        function performSearch() {
-      
-            var subject = document.getElementById("subject").value.toLowerCase();
-            var contact = document.getElementById("contact").value.toLowerCase();
-            var priority = document.getElementById("priority").value.toLowerCase();
-            var status = document.getElementById("status").value.toLowerCase();
-            var contacts = document.getElementById("contacts").value.toLowerCase();
-            var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "grid" : "none";
+    }
 
-            console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
+    function clearForm() {
+        document.getElementById("subject").value = "";
+        document.getElementById("contact").value = "";
+        document.getElementById("priority").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("contacts").value = "";
+        document.getElementById("assignedTo").value = "";
+    }
 
-            var rows = document.querySelectorAll("table tbody tr");
-    
-            rows.forEach(function(row) {
-                var rowSubject = row.cells[0].innerText.toLowerCase();
-                var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
-                var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
-                var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
-                var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
-                var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
+    function performSearch() {
 
-                var match = (!subject || rowSubject.includes(subject)) &&
-                            (!contact || rowContact.includes(contact)) &&
-                            (!priority || rowPriority.includes(priority)) &&
-                            (!status || rowStatus.includes(status)) &&
-                            (!contacts || rowContacts.includes(contacts)) &&
-                            (!assignedTo || rowAssignedTo.includes(assignedTo));
+        var subject = document.getElementById("subject").value.toLowerCase();
+        var contact = document.getElementById("contact").value.toLowerCase();
+        var priority = document.getElementById("priority").value.toLowerCase();
+        var status = document.getElementById("status").value.toLowerCase();
+        var contacts = document.getElementById("contacts").value.toLowerCase();
+        var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
 
-                console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
+        console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
 
-                row.style.display = match ? "" : "none";
-            });
-        }
-  </script>
+        var rows = document.querySelectorAll("table tbody tr");
+
+        rows.forEach(function (row) {
+            var rowSubject = row.cells[0].innerText.toLowerCase();
+            var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
+            var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
+            var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
+            var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
+            var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
+
+            var match = (!subject || rowSubject.includes(subject)) &&
+                (!contact || rowContact.includes(contact)) &&
+                (!priority || rowPriority.includes(priority)) &&
+                (!status || rowStatus.includes(status)) &&
+                (!contacts || rowContacts.includes(contacts)) &&
+                (!assignedTo || rowAssignedTo.includes(assignedTo));
+
+            console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
+
+            row.style.display = match ? "" : "none";
+        });
+    }
+</script>
 {% endblock %}
