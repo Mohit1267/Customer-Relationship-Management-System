@@ -50,6 +50,16 @@ INSTALLED_APPS = [
     'ckeditor',
 ]
 
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 'auto',
+    },
+}
+
 #my edit
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 

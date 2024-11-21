@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'sales_tracker/viewTask.css' %}">
 {% endblock %}
 
-{% block title %}Create Knowledge Base Entry{% endblock %}
+{% block title %}\Knowledge Base Entries{% endblock %}
 
 {% block content %}
 
@@ -25,24 +25,9 @@
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title">
             </div>
+            
             <div class="form-group">
-                <label for="status">Status:</label>
-                <select id="status" name="status">
-                    <option value="">-- Select Status --</option>
-                    <option value="draft">Draft</option>
-                    <option value="published">Published</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="author">Author:</label>
-                <input type="text" id="author" name="author">
-            </div>
-            <div class="form-group">
-                <label for="approver">Approver:</label>
-                <input type="text" id="approver" name="approver">
-            </div>
-            <div class="form-group">
-                <label for="revision">Revision:</label>
+                <label for="revision">Assigned To:</label>
                 <input type="text" id="revision" name="revision">
             </div>
         </div>
@@ -80,7 +65,35 @@
 <script>
     function toggleFilter() {
         var filterForm = document.getElementById("filterForm");
-        filterForm.style.display = filterForm.style.display === "none" ? "grid" : "none";
+        filterForm.style.display = (filterForm.style.display === "block") ? "none" : "block";
+    }
+    
+    function clearForm() {
+        document.getElementById("date").value = "";
+        document.getElementById("startTime").value = "";
+        document.getElementById("endTime").value = "";
+        document.getElementById("createdDate").value = "";
+        document.getElementById("timeAttribution").value = "";
+        document.getElementById("summary").value = "";
+    }
+
+    function performSearch() {
+        var date = document.getElementById("date").value;
+        var startTime = document.getElementById("startTime").value;
+        var endTime = document.getElementById("endTime").value;
+        var createdDate = document.getElementById("createdDate").value;
+        var timeAttribution = document.getElementById("timeAttribution").value;
+        var summary = document.getElementById("summary").value;
+
+        var results = "Search results for: \n" +
+                      "Date: " + date + "\n" +
+                      "Start Time: " + startTime + "\n" +
+                      "End Time: " + endTime + "\n" +
+                      "Created Date: " + createdDate + "\n" +
+                      "Time Attribution: " + timeAttribution + "\n" +
+                      "Summary: " + summary;
+
+        document.getElementById("searchResults").innerText = results;
     }
 </script>
 
