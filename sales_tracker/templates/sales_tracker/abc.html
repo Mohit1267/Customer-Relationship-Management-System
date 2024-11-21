@@ -1,180 +1,170 @@
-{% extends "innerbase_copy.html" %}
-{% load crispy_forms_filters %}
-{% load crispy_forms_tags %}
+{% extends "adminbase1.html" %}
 {% load static %}
-
+{% block title %}Calling agent dashboard{% endblock %}
 {% block css_link %}
-<link rel="stylesheet" href="{% static 'sales_tracker/createTask.css' %}">
+<link rel="stylesheet" href="{% static 'sales_tracker/MinerActivity.css' %}">
 {% endblock %}
 
-{% block title %}New Survey{% endblock %}
-
 {% block content %}
-<div class="container-fluid">
-    <form method="POST">
-        {% csrf_token %}
 
-        <div class="row mt-2 mb-2">
-            <div class="col-12 text-center moving_title" style="color: white;">
-                Create New Survey
-            </div>
-        </div>
+<div class="miner-content">
 
-        <hr>
-        
-        <div class="row mt-4 mb-2">
-            <div class="col-12 d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary mx-2">Save</button>
-                <button type="button" class="btn btn-secondary">Cancel</button>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-secondary text-white" data-toggle="collapse" data-target="#basic-section" style="cursor: pointer;">
-                        <strong>BASIC</strong>
-                    </div>
-                    <div id="basic-section" class="collapse show">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label for="name">Name:</label>
-                                        {{ form.subject|as_crispy_field }}
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="status">Status:</label>
-                                        {{ form.status|as_crispy_field }}
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="description">Description:</label>
-                                        {{ form.description|as_crispy_field }}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label for="assigned_to">Assigned To:</label>
-                                        {{ form.contacts|as_crispy_field }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="filter-search-container">
 
-        <div class="row mt-4">
-            <div class="col-12">
-                <h5>Questions:</h5>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Question</th>
-                                <th>Text</th>
-                                <th>Type</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="questions-container"> 
-                            <tr>
-                                <td>Q1</td>
-                                <td><input type="text" name="question1_text" class="form-control"></td>
-                                <td>
-                                    <select name="question1_type" class="form-control">
-                                        <option value="text">Text</option>
-                                        <option value="multiple_choice">Multiple Choice</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary">▲</button>
-                                    <button type="button" class="btn btn-secondary">▼</button>
-                                    <button type="button" class="btn btn-danger">✖</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button type="button" class="btn btn-secondary" id="new-question-button">New Question</button>
-                </div>
-            </div>
-        </div>
 
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="submit_text">Submit Text:</label>
-                    <input type="text" name="submit_text" class="form-control" value="Submit">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="satisfied_text">Satisfied Text:</label>
-                    <input type="text" name="satisfied_text" class="form-control" value="Satisfied">
-                </div>
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                style="width: 200px;">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        <button id="filter-btn" class="filter-button" onclick="toggleFilter()">Filter</button>
+
+    </div>
+
+    <div id="filter-section" class="filter-section" style="display: none;">
+
+        <form method="GET" action="{% url 'lead_data' %}">
+            <div class="inside-filter-container">
+                <label for="time_frame">Select Time Frame:</label>
+                <select name="time_frame" id="time_frame">
+                    <option value="all" disabled selected hidden>Select Time Frame</option>
+                    <option value="today" {% if time_frame == "today" %}selected{% endif %}>Today</option>
+                    <option value="weekly" {% if time_frame == "weekly" %}selected{% endif %}>Weekly</option>
+                    <option value="monthly" {% if time_frame == "monthly" %}selected{% endif %}>Monthly</option>
+                    <option value="quarterly" {% if time_frame == "quarterly" %}selected{% endif %}>Quarterly</option>
+                    <option value="yearly" {% if time_frame == "yearly" %}selected{% endif %}>Yearly</option>
+                </select>
             </div>
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="neither_text">Neither Text:</label>
-                    <input type="text" name="neither_text" class="form-control" value="Neither Satisfied nor Dissatisfied">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="dissatisfied_text">Dissatisfied Text:</label>
-                    <input type="text" name="dissatisfied_text" class="form-control" value="Dissatisfied">
-                </div>
+
+            <div class="state-filter-container">
+                <label for="state-filter">State:</label>
+                <select name="state" id="state-filter">
+                    <option value="all" disabled selected hidden>Select State</option>
+                    <option value="AP">Andhra Pradesh</option>
+                    <option value="AR">Arunachal Pradesh</option>
+                    <option value="AS">Assam</option>
+                    <option value="BR">Bihar</option>
+                    <option value="CG">Chhattisgarh</option>
+                    <option value="GA">Goa</option>
+                    <option value="GJ">Gujarat</option>
+                    <option value="HR">Haryana</option>
+                    <option value="HP">Himachal Pradesh</option>
+                    <option value="JH">Jharkhand</option>
+                    <option value="KA">Karnataka</option>
+                    <option value="KL">Kerala</option>
+                    <option value="MP">Madhya Pradesh</option>
+                    <option value="MH">Maharashtra</option>
+                    <option value="MN">Manipur</option>
+                    <option value="ML">Meghalaya</option>
+                    <option value="MZ">Mizoram</option>
+                    <option value="NL">Nagaland</option>
+                    <option value="OD">Odisha</option>
+                    <option value="PB">Punjab</option>
+                    <option value="SK">Sikkim</option>
+                    <option value="TN">Tamil Nadu</option>
+                    <option value="TG">Telangana</option>
+                    <option value="TR">Tripura</option>
+                    <option value="UP">Uttar Pradesh</option>
+                    <option value="UT">Uttarakhand</option>
+                    <option value="WB">West Bengal</option>
+                </select>
             </div>
+
+            <div class="zone-filter-container">
+                <label for="zone-filter">Zone:</label>
+                <select name="zone" id="zone-filter">
+                    <option value="all" disabled selected hidden>Select Zone</option>
+                    <option value="North" {% if zone == "North" %}selected{% endif %}>North</option>
+                    <option value="South" {% if zone == "South" %}selected{% endif %}>South</option>
+                    <option value="East" {% if zone == "East" %}selected{% endif %}>East</option>
+                    <option value="West" {% if zone == "West" %}selected{% endif %}>West</option>
+                </select>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="button">Apply Filter</button>
+                <button type="button" class="button" onclick="clearFilters()">Clear</button>
+            </div>
+        </form>
+    </div>
+
+
+    <img class="attpiechart" src="{% static 'Mining_Count.png' %}" alt="Attendance Chart">
+
+    <div class="mining-info-container">
+        <div class="card">
+            <h1 class="total">Total Minings: {{ Total_Mining }}</h1>
         </div>
-    </form>
+        <div class="card">
+            <h1 class="expected">Expected Minings: {{ Exp_Mining }}</h1>
+        </div>
+    </div>
+
+    <table class="minerTable">
+        <thead>
+            <tr>
+                <th>Miner Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for miners in Miner %}
+            <tr>
+                <td>{{ miners.user.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 <script>
-    let questionCount = 1;
-
-    document.getElementById('new-question-button').addEventListener('click', function () {
-        addNewQuestion();
-    });
-
-    function addNewQuestion() {
-        questionCount++;
-        
-        const questionsContainer = document.getElementById('questions-container');
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>Q${questionCount}</td>
-            <td><input type="text" name="question${questionCount}_text" class="form-control"></td>
-            <td>
-                <select name="question${questionCount}_type" class="form-control">
-                    <option value="text">Text</option>
-                    <option value="multiple_choice">Multiple Choice</option>
-                </select>
-            </td>
-            <td>
-                <button type="button" onclick="moveUp(this)" class="btn btn-light">▲</button>
-                <button type="button" onclick="moveDown(this)" class="btn btn-light">▼</button>
-                <button type="button" onclick="deleteRow(this)" class="btn btn-danger">✖</button>
-            </td>
-        `;
-        questionsContainer.appendChild(newRow);
+    function toggleFilter() {
+        var filterForm = document.getElementById("filterForm");
+        filterForm.style.display = (filterForm.style.display === "none" || filterForm.style.display === "") ? "grid" : "none";
     }
 
-    function moveUp(button) {
-        const row = button.closest('tr');
-        const prevRow = row.previousElementSibling;
-        if (prevRow) {
-            row.parentNode.insertBefore(row, prevRow);
-        }
+    function clearForm() {
+        document.getElementById("subject").value = "";
+        document.getElementById("contact").value = "";
+        document.getElementById("priority").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("contacts").value = "";
+        document.getElementById("assignedTo").value = "";
     }
 
-    function moveDown(button) {
-        const row = button.closest('tr');
-        const nextRow = row.nextElementSibling;
-        if (nextRow) {
-            row.parentNode.insertBefore(nextRow, row);
-        }
-    }
+    function performSearch() {
 
-    function deleteRow(button) {
-        const row = button.closest('tr');
-        row.remove();
+        var subject = document.getElementById("subject").value.toLowerCase();
+        var contact = document.getElementById("contact").value.toLowerCase();
+        var priority = document.getElementById("priority").value.toLowerCase();
+        var status = document.getElementById("status").value.toLowerCase();
+        var contacts = document.getElementById("contacts").value.toLowerCase();
+        var assignedTo = document.getElementById("assignedTo").value.toLowerCase();
+
+        console.log("Filter values - Subject:", subject, "Contact:", contact, "Priority:", priority, "Status:", status, "Contacts:", contacts, "Assigned To:", assignedTo);
+
+        var rows = document.querySelectorAll("table tbody tr");
+
+        rows.forEach(function (row) {
+            var rowSubject = row.cells[0].innerText.toLowerCase();
+            var rowContact = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
+            var rowPriority = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
+            var rowStatus = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
+            var rowContacts = row.cells[4] ? row.cells[4].innerText.toLowerCase() : "";
+            var rowAssignedTo = row.cells[5] ? row.cells[5].innerText.toLowerCase() : "";
+
+            var match = (!subject || rowSubject.includes(subject)) &&
+                (!contact || rowContact.includes(contact)) &&
+                (!priority || rowPriority.includes(priority)) &&
+                (!status || rowStatus.includes(status)) &&
+                (!contacts || rowContacts.includes(contacts)) &&
+                (!assignedTo || rowAssignedTo.includes(assignedTo));
+
+            console.log("Row content - Subject:", rowSubject, "Contact:", rowContact, "Match:", match);
+
+            row.style.display = match ? "" : "none";
+        });
     }
 </script>
 {% endblock %}
