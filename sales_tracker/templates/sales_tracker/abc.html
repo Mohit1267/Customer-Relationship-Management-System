@@ -1,0 +1,180 @@
+{% extends "innerbase_copy.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'sales_tracker/createTask.css' %}">
+{% endblock %}
+
+{% block title %}New Survey{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="row mt-2 mb-2">
+            <div class="col-12 text-center moving_title" style="color: white;">
+                Create New Survey
+            </div>
+        </div>
+
+        <hr>
+        
+        <div class="row mt-4 mb-2">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary mx-2">Save</button>
+                <button type="button" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white" data-toggle="collapse" data-target="#basic-section" style="cursor: pointer;">
+                        <strong>BASIC</strong>
+                    </div>
+                    <div id="basic-section" class="collapse show">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="name">Name:</label>
+                                        {{ form.subject|as_crispy_field }}
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="status">Status:</label>
+                                        {{ form.status|as_crispy_field }}
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="description">Description:</label>
+                                        {{ form.description|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="assigned_to">Assigned To:</label>
+                                        {{ form.contacts|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <h5>Questions:</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Text</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="questions-container"> 
+                            <tr>
+                                <td>Q1</td>
+                                <td><input type="text" name="question1_text" class="form-control"></td>
+                                <td>
+                                    <select name="question1_type" class="form-control">
+                                        <option value="text">Text</option>
+                                        <option value="multiple_choice">Multiple Choice</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary">▲</button>
+                                    <button type="button" class="btn btn-secondary">▼</button>
+                                    <button type="button" class="btn btn-danger">✖</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-secondary" id="new-question-button">New Question</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label for="submit_text">Submit Text:</label>
+                    <input type="text" name="submit_text" class="form-control" value="Submit">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="satisfied_text">Satisfied Text:</label>
+                    <input type="text" name="satisfied_text" class="form-control" value="Satisfied">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label for="neither_text">Neither Text:</label>
+                    <input type="text" name="neither_text" class="form-control" value="Neither Satisfied nor Dissatisfied">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="dissatisfied_text">Dissatisfied Text:</label>
+                    <input type="text" name="dissatisfied_text" class="form-control" value="Dissatisfied">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    let questionCount = 1;
+
+    document.getElementById('new-question-button').addEventListener('click', function () {
+        addNewQuestion();
+    });
+
+    function addNewQuestion() {
+        questionCount++;
+        
+        const questionsContainer = document.getElementById('questions-container');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>Q${questionCount}</td>
+            <td><input type="text" name="question${questionCount}_text" class="form-control"></td>
+            <td>
+                <select name="question${questionCount}_type" class="form-control">
+                    <option value="text">Text</option>
+                    <option value="multiple_choice">Multiple Choice</option>
+                </select>
+            </td>
+            <td>
+                <button type="button" onclick="moveUp(this)" class="btn btn-light">▲</button>
+                <button type="button" onclick="moveDown(this)" class="btn btn-light">▼</button>
+                <button type="button" onclick="deleteRow(this)" class="btn btn-danger">✖</button>
+            </td>
+        `;
+        questionsContainer.appendChild(newRow);
+    }
+
+    function moveUp(button) {
+        const row = button.closest('tr');
+        const prevRow = row.previousElementSibling;
+        if (prevRow) {
+            row.parentNode.insertBefore(row, prevRow);
+        }
+    }
+
+    function moveDown(button) {
+        const row = button.closest('tr');
+        const nextRow = row.nextElementSibling;
+        if (nextRow) {
+            row.parentNode.insertBefore(nextRow, row);
+        }
+    }
+
+    function deleteRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+    }
+</script>
+{% endblock %}

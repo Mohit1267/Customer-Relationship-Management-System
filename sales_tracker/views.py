@@ -37,7 +37,7 @@ from .models import (
 
 )
 from .forms import (
-    MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
+     MiningForm, ContactForm, LeadForm, OpportunityForm, QuoteForm, agentmeeting,
     DocumentForm, TaskForm, agentcalling, NoteForm, InvoiceForm, DSRForm,
     AccountForm, PasswordForm, ComposeEmailForm, TargetsForm, TargetsListForm,
     AgentProjectsForm, ContractForm, SortForm, CaseForm, ManualTimeForm, ProjectTemplateForm,
@@ -2002,7 +2002,7 @@ def agentTemplate(request):
     On GET, it displays an empty form for the user to fill out.
     """
     if request.method == 'POST':
-        form = agentTemplate(request.POST)
+        form = ProjectTemplateForm(request.POST)
         if form.is_valid():
  
             template_name = form.cleaned_data.get('template_name')
@@ -2018,9 +2018,10 @@ def agentTemplate(request):
         else:
             messages.error(request, 'There was an error submitting the agent project information. Please check your input.')
     else:
-        form = agentTemplate() 
+        form = ProjectTemplateForm() 
 
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+
 
 def ViewTemplate(request):
     return render(request, "sales_tracker/viewTemplate.html")
@@ -2351,21 +2352,21 @@ def agentTemplate(request):
 
     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})'''
 
-def create_project_template(request):
-    if request.method == 'POST':
-        form = ProjectTemplateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('sales_tracker/agentTemplate.html')  
-    else:
-        form = ProjectTemplateForm()
+# def create_project_template(request):
+#     if request.method == 'POST':
+#         form = ProjectTemplateForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('sales_tracker/agentTemplate.html')  
+#     else:
+#         form = ProjectTemplateForm()
     
-    return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
+#     return render(request, 'sales_tracker/agentTemplate.html', {'form': form})
 
 
 def projectTemplate(request):
     if request.method == 'POST':
-        form = projectTemplate(request.POST)
+        form = AgentProjectsForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('view_templates')  
@@ -2527,8 +2528,8 @@ def compose_email(request):
     if request.method == 'POST':
         form = ComposeEmailForm(request.POST)
         if form.is_valid():
-            # Fetch form data
-            email_template_instance = form.cleaned_data.get('template')  # This returns an EmailTemplate object or None
+         
+            email_template_instance = form.cleaned_data.get('template')
             related_to = form.cleaned_data.get('related_to')
             from_address = form.cleaned_data.get('from_address')
             to_address = form.cleaned_data.get('to_address')
@@ -2548,7 +2549,7 @@ def compose_email(request):
             print("______________", send_plain_text)
 
             try:
-                # Send as plain text or HTML email using EmailMultiAlternatives
+            
                 email = EmailMultiAlternatives(
                     subject=subject,
                     body=body,
@@ -2559,14 +2560,12 @@ def compose_email(request):
                 )
 
                 if not send_plain_text:
-                    # If HTML format is selected, attach the body as HTML
+                   
                     email.attach_alternative(body, "text/html")
 
-                # Send the email
                 email.send()
                 print("Email sent successfully!")
 
-                # Save email to the database
                 ComposedEmail.objects.create(
                     template=email_template_instance,
                     related_to=related_to,
@@ -2587,7 +2586,6 @@ def compose_email(request):
                 messages.error(request, f'Failed to send email: {e}')
                 return JsonResponse({'status': 'failed', 'message': str(e)})
 
-            # Return success response
             return JsonResponse({'status': 'success', 'message': 'Email sent successfully!'})
         else:
             messages.error(request, 'There was an error composing the email. Please check your input.')
@@ -2599,31 +2597,25 @@ def compose_email(request):
     return render(request, 'sales_tracker/agentemail.html', {'form': form})
 
 
-
-
-
-
 import imaplib
 import email
 from email.header import decode_header
 
 def fetch_emails():
-    # Email server connection
+    
     imap_host = 'imap.gmail.com'
     username = 'pushkarpandey200@gmail.com'
     password = 'nucz syco dqfd dbcv'
 
-    # Connect to the email server
     mail = imaplib.IMAP4_SSL(imap_host)
     mail.login(username, password)
     mail.select('inbox')
 
-    # Search for all emails
     status, messages = mail.search(None, 'ALL')
     email_ids = messages[0].split()
 
     emails = []
-    for email_id in email_ids[-5:]:  # Fetch last 5 emails
+    for email_id in email_ids[-5:]: 
         status, msg_data = mail.fetch(email_id, '(RFC822)')
         for response_part in msg_data:
             if isinstance(response_part, tuple):
@@ -2651,29 +2643,40 @@ def upload_import_file(request):
 
     return render(request, 'sales_tracker/targetimport.html', {'form': form})
 
-
-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import SurveyForm
-from django.contrib import messages
+from .models import Survey
 
-def createSurvey(request):
+def survey_create(request):
     if request.method == 'POST':
         form = SurveyForm(request.POST)
         if form.is_valid():
-            # Process form data (for now, we just display a success message)
-            messages.success(request, "Task created successfully!")
-            form = TaskForm()  # Reset the form after submission
-        else:
-            messages.error(request, "There was an error with your submission.")
+            # Create Survey object
+            survey = Survey.objects.create(
+                name=form.cleaned_data['name'],
+                status=form.cleaned_data['status'],
+                assigned_to=form.cleaned_data['assigned_to'],
+                description=form.cleaned_data.get('description', ''),
+                submit_text=form.cleaned_data['submit_text'],
+                satisfied_text=form.cleaned_data['satisfied_text'],
+                neither_text=form.cleaned_data['neither_text'],
+                dissatisfied_text=form.cleaned_data['dissatisfied_text'],
+                questions=json.dumps(form.cleaned_data['questions']),  # Store questions as JSON
+            )
+            return redirect('survey_detail', pk=survey.pk)  # Redirect to view the survey detail
     else:
         form = SurveyForm()
 
     return render(request, 'sales_tracker/createSurvey.html', {'form': form})
 
+def survey_detail(request, pk):
+    survey = Survey.objects.get(pk=pk)
+    return render(request, 'sales_tracker/surveydetail.html', {'survey': survey})
 
-def viewSurveys(request):
-    return render(request, "sales_tracker/viewSurveys.html")
+def survey_list(request):
+    surveys = Survey.objects.all()
+    return render(request, 'sales_tracker/surveyview.html', {'surveys': surveys})
+
 
 from .forms import KnowledgeBaseForm
 
@@ -2681,9 +2684,11 @@ def createKnowledgeBase(request):
     if request.method == 'POST':
         form = KnowledgeBaseForm(request.POST)
         if form.is_valid():
+
             # Handle form data here, e.g., save to the database
             print("Form data:", form.cleaned_data)
             return render(request, "sales_tracker/createKnowledgeBase.html")  # Success page
+
     else:
         form = KnowledgeBaseForm()
     
@@ -2691,6 +2696,28 @@ def createKnowledgeBase(request):
 
 def viewKnowledgeBase(request):
     return render(request, "sales_tracker/viewKnowledgeBase.html")
+
+
+
+# from django.shortcuts import render
+# from .forms import SurveyForm
+# from django.contrib import messages
+
+# def createSurvey(request):
+#     if request.method == 'POST':
+#         form = SurveyForm(request.POST)
+#         if form.is_valid():
+           
+#             messages.success(request, "Task created successfully!")
+#             form = TaskForm() 
+#         else:
+#             messages.error(request, "There was an error with your submission.")
+#     else:
+#         form = TaskForm()
+
+#     return render(request, 'sales_tracker/createSurvey.html', {'form': form})
+
+
 
 # class DataView(ListView):
 #     template_name = "sales_tracker/data.html"
